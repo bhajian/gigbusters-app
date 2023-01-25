@@ -2,7 +2,7 @@ import {StyleSheet, Dimensions} from "react-native";
 
 const styles = StyleSheet.create({
     container: {
-
+        backgroundColor: '#ffffff',
     },
     searchBarContainer: {
         flexDirection: "row",

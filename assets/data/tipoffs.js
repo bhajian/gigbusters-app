@@ -20,7 +20,7 @@ const tipoffs= [
         numberOfLikes: 20
     },
     {
-        id: '2',
+        id: '2.2',
         to: {
             id: 'u2',
             username: 'yekidige',
@@ -35,6 +35,86 @@ const tipoffs= [
         },
         sentAt: '2m',
         content: 'Lorem Some more BS.',
+        numberOfReplies: 11,
+        numberOfLikes: 20
+    },
+    {
+        id: '3',
+        to: {
+            id: 'u3',
+            username: 'sevomi',
+            name: 'sevomi dige',
+            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+        },
+        from: {
+            id: 'u33',
+            username: 'Anonymous',
+            name: 'Anonymous',
+            image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',
+        },
+        sentAt: '2m',
+        content: 'Blah blah blah.',
+        image: 'https://imagez.tmz.com/image/5b/4by3/2021/09/10/5b10a66978ed4dcfb0dda357e50d574e_md.jpg',
+        numberOfReplies: 11,
+        numberOfLikes: 20
+    },
+    {
+        id: '3',
+        to: {
+            id: 'u3',
+            username: 'sevomi',
+            name: 'sevomi dige',
+            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+        },
+        from: {
+            id: 'u33',
+            username: 'Anonymous',
+            name: 'Anonymous',
+            image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',
+        },
+        sentAt: '2m',
+        content: 'Blah blah blah.',
+        image: 'https://imagez.tmz.com/image/5b/4by3/2021/09/10/5b10a66978ed4dcfb0dda357e50d574e_md.jpg',
+        numberOfReplies: 11,
+        numberOfLikes: 20
+    },
+    {
+        id: '3',
+        to: {
+            id: 'u3',
+            username: 'sevomi',
+            name: 'sevomi dige',
+            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+        },
+        from: {
+            id: 'u33',
+            username: 'Anonymous',
+            name: 'Anonymous',
+            image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',
+        },
+        sentAt: '2m',
+        content: 'Blah blah blah.',
+        image: 'https://imagez.tmz.com/image/5b/4by3/2021/09/10/5b10a66978ed4dcfb0dda357e50d574e_md.jpg',
+        numberOfReplies: 11,
+        numberOfLikes: 20
+    },
+    {
+        id: '3',
+        to: {
+            id: 'u3',
+            username: 'sevomi',
+            name: 'sevomi dige',
+            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+        },
+        from: {
+            id: 'u33',
+            username: 'Anonymous',
+            name: 'Anonymous',
+            image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',
+        },
+        sentAt: '2m',
+        content: 'Blah blah blah.',
+        image: 'https://imagez.tmz.com/image/5b/4by3/2021/09/10/5b10a66978ed4dcfb0dda357e50d574e_md.jpg',
         numberOfReplies: 11,
         numberOfLikes: 20
     },

@@ -74,6 +74,7 @@ const HomeTabNavigator = props => {
             {...screenProps}
             updateAuthState={props.updateAuthState}
           />
+
         )}
       </Tab.Screen>
       <Tab.Screen

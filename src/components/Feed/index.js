@@ -1,13 +1,13 @@
 import React from "react";
 import {FlatList, StyleSheet} from "react-native";
-import TipOff from "../Reviewable";
+import Reviewable from "../Reviewable";
 import tipoffs from "../../../assets/data/tipoffs";
 
 export default function Feed() {
     return (
         <FlatList
             data={tipoffs}
-            renderItem={({item}) => <TipOff tipoff={item} />}
+            renderItem={({item}) => <Reviewable tipoff={item} />}
             keyExtractor={(item) => item.id}
         />
     );

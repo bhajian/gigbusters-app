@@ -2,10 +2,11 @@ import { StatusBar } from 'expo-status-bar';
 import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import awsconfig from './src/backend/aws-exports';
 import {Amplify, Auth} from "aws-amplify";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import Router from "./src/navigations/Router";
 import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
+import NewTipoffButton from "./src/components/NewTipoffButton";
 Amplify.configure(awsconfig);
 
 export default function App() {
