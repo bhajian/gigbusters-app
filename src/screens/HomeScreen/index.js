@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, ImageBackground, Pressable, StyleSheet} from 'react-native';
-import TipOff from '../../components/TipOff';
+import TipOff from '../../components/Reviewable';
 import tipoffs from '../../../assets/data/tipoffs';
 import styles from './styles';
 import Feed from '../../components/Feed';

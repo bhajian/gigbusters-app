@@ -92,7 +92,7 @@ const HomeTabNavigator = props => {
         options={{
           tabBarActiveTintColor: Colors.light.tint,
           tabBarIcon: ({color}) => (
-            <Fontisto name="search" size={25} color={color} />
+            <Fontisto name="react" size={25} color={color} />
           ),
         }}
       />

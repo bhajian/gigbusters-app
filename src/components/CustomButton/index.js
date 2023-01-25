@@ -55,25 +55,28 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
-    borderRadius: 5,
+    borderRadius: 10,
     justifyContent: 'center',
+    height: 50
   },
   icon: {
     padding: 0,
     color: '#ffffff',
-    fontSize: 18,
+    fontSize: 25,
     paddingRight: 10,
   },
   container_PRIMARY: {
-    backgroundColor: '#5B67CA',
+    backgroundColor: '#ff6200',
   },
 
   container_SECONDARY: {
-    borderColor: '#5B67CA',
+    borderColor: '#f89e7a',
     borderWidth: 2,
   },
 
-  container_TERTIARY: {},
+  container_TERTIARY: {
+
+  },
 
   text: {
     fontWeight: 'bold',

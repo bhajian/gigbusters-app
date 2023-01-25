@@ -1,48 +1,118 @@
 import React from 'react';
-import {View, Text} from 'react-native';
-import CustomButton from '../CustomButton';
+import {View, Text, Pressable, StyleSheet} from 'react-native';
+import {FontAwesome5} from "@expo/vector-icons";
 
 const SocialSignInButtons = () => {
-  const onSignInFacebook = () => {
-    console.warn('onSignInFacebook');
-  };
+    const onSignInFacebook = () => {
+        console.warn('onSignInFacebook');
+    };
 
-  const onSignInGoogle = () => {
-    console.warn('onSignInGoogle');
-  };
+    const onSignInGoogle = () => {
+        console.warn('onSignInGoogle');
+    };
 
-  const onSignInApple = () => {
-    console.warn('onSignInApple');
-  };
+    const onSignInApple = () => {
+        console.warn('onSignInApple');
+    };
 
-  return (
-    <>
-      <CustomButton
-        text="Sign In with Facebook"
-        onPress={onSignInFacebook}
-        bgColor="#E7EAF4"
-        fgColor="#4765A9"
-        iconCategory="FontAwesome5"
-        iconName="facebook"
-      />
-      <CustomButton
-        text="Sign In with Google"
-        onPress={onSignInGoogle}
-        bgColor="#FAE9EA"
-        fgColor="#DD4D44"
-        iconCategory="FontAwesome5"
-        iconName="google"
-      />
-      <CustomButton
-        text="Sign In with Apple"
-        onPress={onSignInApple}
-        bgColor="#e3e3e3"
-        fgColor="#363636"
-        iconCategory="FontAwesome5"
-        iconName="apple"
-      />
-    </>
-  );
+    return (
+        <>
+            <View style={styles.login_social_separator}>
+                <View style={styles.login_social_separator_line}/>
+                <Text style={styles.login_social_separator_text}>{'or'}</Text>
+                <View style={styles.login_social_separator_line}/>
+            </View>
+
+            <View style={styles.login_social_buttons}>
+                <Pressable
+                    onPress={onSignInFacebook}
+                    style={styles.FB_container}>
+                    <FontAwesome5
+                        style={styles.icon}
+                        name={"facebook"}
+                    />
+                </Pressable>
+
+                <Pressable
+                    onPress={onSignInFacebook}
+                    style={styles.GOOG_container}>
+                    <FontAwesome5
+                        style={styles.icon}
+                        name={"google"}
+                    />
+                </Pressable>
+                <Pressable
+                    onPress={onSignInFacebook}
+                    style={styles.APPL_container}>
+                    <FontAwesome5
+                        style={styles.icon}
+                        name={"apple"}
+                    />
+                </Pressable>
+            </View>
+        </>
+    );
 };
+
+const styles = StyleSheet.create({
+    FB_container: {
+        width: 45,
+        padding: 10,
+        marginVertical: 5,
+        marginHorizontal: 2,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 45,
+        justifyContent: 'center',
+        backgroundColor: '#4f75f5',
+    },
+    GOOG_container: {
+        width: 45,
+        padding: 10,
+        marginVertical: 5,
+        marginHorizontal: 2,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 45,
+        justifyContent: 'center',
+        backgroundColor: 'rgba(234,49,43,0.83)',
+    },
+    APPL_container: {
+        width: 45,
+        padding: 10,
+        marginVertical: 5,
+        marginHorizontal: 2,
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 45,
+        justifyContent: 'center',
+        backgroundColor: 'rgba(114,113,113,0.65)',
+    },
+    icon: {
+        padding: 0,
+        color: '#ffffff',
+        fontSize: 26,
+    },
+    login_social_separator: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    login_social_separator_line: {
+        flex: 1,
+        width: '100%',
+        height: 1,
+        backgroundColor: '#E0E0E0',
+    },
+    login_social_separator_text: {
+        marginHorizontal: 10,
+        color: '#808080',
+        fontSize: 16,
+    },
+    login_social_buttons: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
+});
 
 export default SocialSignInButtons;

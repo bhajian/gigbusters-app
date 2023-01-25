@@ -1,6 +1,6 @@
 import React from "react";
 import {FlatList, StyleSheet} from "react-native";
-import TipOff from "../../components/TipOff";
+import TipOff from "../Reviewable";
 import tipoffs from "../../../assets/data/tipoffs";
 
 export default function Feed() {

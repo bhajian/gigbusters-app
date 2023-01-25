@@ -14,7 +14,7 @@ export default function MainContainer({tipoff}) {
             </View>
             <View style={styles.contentContainer}>
                 <Text>{tipoff.content}</Text>
-                {!!tipoff.image && <Image source={{uri: tipoff.image}} style={styles.image} />}
+
             </View>
             <Footer tweet={tipoff} />
         </View>

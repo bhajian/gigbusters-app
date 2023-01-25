@@ -2,17 +2,27 @@ import {StyleSheet} from "react-native";
 
 const styles = StyleSheet.create({
     root: {
-      backgroundColor: "#ffffff",
-      alignItems: "center",
-      padding: 50,
+        backgroundColor: "#ffffff",
+        alignItems: "center",
+        paddingBottom: 10,
+        paddingTop: 20,
+        paddingLeft: 40,
+        paddingRight: 40,
+        height: 800,
     },
     logo: {
         width: '70%',
         maxWidth: 300,
         maxHeight: 200,
     },
-    username: {
-        marginTop: 40
+    components: {
+        marginTop: 25
+    },
+    socialButtons: {
+        marginTop: 30
+    },
+    signupButton: {
+        marginTop: 30
     },
 });
 

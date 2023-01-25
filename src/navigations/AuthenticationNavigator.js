@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import SignIn from '../screens/SignInScreen';
 import SignUp from '../screens/SignUpScreen';
-import ConfirmSignUp from '../screens/ConfirmSignUp';
+import Verification from '../screens/Verification';
 import {createStackNavigator} from '@react-navigation/stack';
 
 const AuthenticationStack = createStackNavigator();
+
 const AuthenticationNavigator = props => {
 
   return (
@@ -16,8 +17,8 @@ const AuthenticationNavigator = props => {
       </AuthenticationStack.Screen>
       <AuthenticationStack.Screen name="SignUp" component={SignUp} />
       <AuthenticationStack.Screen
-        name="ConfirmSignUp"
-        component={ConfirmSignUp}
+        name="Verification"
+        component={Verification}
       />
     </AuthenticationStack.Navigator>
   );

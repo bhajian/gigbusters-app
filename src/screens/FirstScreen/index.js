@@ -9,7 +9,7 @@ import Logo from '../../../assets/images/gossip.jpeg';
 import styles from './styles';
 import CustomButton from "../../components/CustomButton";
 
-const FirstScreen: () => Node = () => {
+export default function App() {
 
     const navigation = useNavigation();
 
@@ -45,4 +45,3 @@ const FirstScreen: () => Node = () => {
     );
 };
 
-export default FirstScreen;
