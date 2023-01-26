@@ -6,7 +6,7 @@ import React, {useEffect, useState} from "react";
 import {NavigationContainer} from "@react-navigation/native";
 import Router from "./src/navigations/Router";
 import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
-import NewTipoffButton from "./src/components/NewTipoffButton";
+import NewReviewButton from "./src/components/NewReviewButton";
 Amplify.configure(awsconfig);
 
 export default function App() {

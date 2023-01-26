@@ -11,7 +11,7 @@ import {
   Switch,
 } from 'react-native';
 import {API, graphqlOperation, Auth, Storage} from 'aws-amplify';
-import UserAvatar from 'react-native-user-avatar';
+
 import {useNavigation} from '@react-navigation/native';
 // import * as Permissions from 'expo-permissions';
 // import * as ImagePicker from 'expo-image-picker';
@@ -23,13 +23,19 @@ import ProfilePicture from '../../components/ProfilePicture';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import CustomSwitch from '../../components/CustomSwitch';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import UserAvatar from "@muhzi/react-native-user-avatar";
+import {Ionicons} from "@expo/vector-icons";
 
 
 export default function NewTipoffScreen({navigation, route}) {
-  let contact = route.params.contact;
+  let contact = route.params? route.params.contact : {
+    name: 'behnam',
+    image: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250',
+    id: 1
+  };
 
   const [senderId, setSenderId] = useState('');
-  const [receiverId, setReceiverId] = useState(contact.id);
+  // const [receiverId, setReceiverId] = useState(contact.id);
   const [isPrivate, setIsPrivate] = useState(false);
   const togglePrivateSwitch = () =>
     setIsPrivate(previousState => !previousState);
@@ -42,10 +48,10 @@ export default function NewTipoffScreen({navigation, route}) {
   // const navigation = useNavigation();
 
   async function getCurrentUserId() {
-    const currentUser = await Auth.currentAuthenticatedUser();
-    if (currentUser) {
-      setSenderId(currentUser.attributes.sub);
-    }
+    // const currentUser = await Auth.currentAuthenticatedUser();
+    // if (currentUser) {
+    //   setSenderId(currentUser.attributes.sub);
+    // }
   }
 
   const getPermissionAsync = async () => {
@@ -111,11 +117,15 @@ export default function NewTipoffScreen({navigation, route}) {
                 <Text style={styles.closeIcon}> Back </Text>
               </View>
             </TouchableOpacity>
-            <UserAvatar size={30} name={contact.name} src={contact.image} />
+            <UserAvatar
+                size={35}
+                active
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2900&q=80"
+            />
             <Text style={styles.contactName}>{contact.name}</Text>
           </View>
-          <TouchableOpacity style={styles.button} onPress={onPostTipoff}>
-            <FontAwesome name="paper-plane" size={25} color="white" />
+          <TouchableOpacity style={styles.button} onPress={pickImage}>
+            <Ionicons name="enter" size={25} color="white" />
           </TouchableOpacity>
         </View>
 
@@ -191,7 +201,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.light.tint,
     borderRadius: 10,
-    width: 60,
+    width: 70,
     height: 40,
     alignItems: 'center',
     justifyContent: 'center',

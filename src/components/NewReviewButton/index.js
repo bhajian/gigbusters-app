@@ -4,24 +4,25 @@ import Colors from '../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from '@react-navigation/native';
 import PhonebookModal from '../PhonebookModal';
+import {AntDesign} from "@expo/vector-icons";
 
-export default function NewTipoffButton() {
+export default function NewReviewButton() {
   const [isModalVisible, setModalVisible] = useState(false);
-  const toggleModal = () => {
-    setModalVisible(!isModalVisible);
-  };
+  // const toggleModal = () => {
+  //   setModalVisible(!isModalVisible);
+  // };
   const navigation = useNavigation();
   const onPress = () => {
-    navigation.navigate('NewTipoff');
+    navigation.navigate('NewReview');
   };
 
   return (
     <TouchableOpacity
       style={styles.button}
       activeOpacity={0.8}
-      onPress={toggleModal}>
-      <FontAwesome name="paper-plane" size={27} color="white" />
-      <PhonebookModal visibility={isModalVisible} onClose={toggleModal} />
+      onPress={onPress}>
+      <AntDesign name="plus" size={27} color="white" />
+      {/*<PhonebookModal visibility={isModalVisible} onClose={onPress} />*/}
     </TouchableOpacity>
   );
 }

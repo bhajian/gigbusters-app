@@ -4,10 +4,9 @@ import { API, graphqlOperation, Auth } from 'aws-amplify';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Colors from "../../../constants/Colors";
 
-const Footer = ({ tweet }) => {
-
-    console.log(tweet);
+export default function Footer({review}) {
 
     const [user, setUser] = useState(null);
     const [myLike, setMyLike] = useState(null);
@@ -16,17 +15,12 @@ const Footer = ({ tweet }) => {
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
-                <Feather name={"message-circle"} size={20} color={'grey'}/>
-                <Text style={styles.number}>{tweet.numberOfReplies}</Text>
+                <Feather name={"message-circle"} size={25} color={Colors.light.tint}/>
+                <Text style={styles.number}>{review.numberOfReplies}</Text>
             </View>
+
             <View style={styles.iconContainer}>
-                <TouchableOpacity>
-                    <AntDesign name="hearto" size={20} color="grey" />
-                </TouchableOpacity>
-                <Text style={styles.number}>{tweet.numberOfLikes}</Text>
-            </View>
-            <View style={styles.iconContainer}>
-                <EvilIcons name={"share-google"} size={28} color={'grey'}/>
+                <EvilIcons name={"share-google"} size={35} color={Colors.light.tint}/>
             </View>
         </View>
     )
@@ -49,5 +43,3 @@ const styles = StyleSheet.create({
     },
 });
 
-
-export default Footer;

@@ -59,7 +59,7 @@ const tipoffs= [
         numberOfLikes: 20
     },
     {
-        id: '3',
+        id: '3.5',
         to: {
             id: 'u3',
             username: 'sevomi',
@@ -79,7 +79,7 @@ const tipoffs= [
         numberOfLikes: 20
     },
     {
-        id: '3',
+        id: '4',
         to: {
             id: 'u3',
             username: 'sevomi',
@@ -99,7 +99,7 @@ const tipoffs= [
         numberOfLikes: 20
     },
     {
-        id: '3',
+        id: '5',
         to: {
             id: 'u3',
             username: 'sevomi',
@@ -119,7 +119,7 @@ const tipoffs= [
         numberOfLikes: 20
     },
     {
-        id: '3',
+        id: '1.3',
         to: {
             id: 'u3',
             username: 'sevomi',

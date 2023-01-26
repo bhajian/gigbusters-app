@@ -12,7 +12,10 @@ export default function RatingStack({ratings}) {
 
     return (
         <View style={styles.mainContainer}>
-
+            <View style={styles.numberContainer}>
+                <Text style={styles.text}>Rating:</Text>
+                <Text style={styles.average}>{ratings.id}/5 </Text>
+            </View>
             <View style={styles.starColContainer}>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
@@ -64,12 +67,7 @@ export default function RatingStack({ratings}) {
                         <ProgressBar  progress={0.25} color={Colors.light.tint} />
                     </View>
                 </View>
-            </View>
-            <View style={styles.numberContainer}>
-                <Text style={styles.text}>Average Rating: </Text>
-                <Text style={styles.average}>{ratings}</Text>
-                <Text style={styles.text}> with {ratings} Reviews</Text>
-
+                <Text style={styles.text}> {ratings.numberOfReplies} reviews</Text>
             </View>
 
         </View>
@@ -79,12 +77,12 @@ export default function RatingStack({ratings}) {
 const styles = StyleSheet.create({
     mainContainer:{
         marginRight: 5,
-        flexDirection: 'column',
+        flexDirection: 'row',
         width: '100%',
     },
     numberContainer: {
-        // width: '20%',
-        flexDirection: 'row',
+        paddingTop: 5,
+        flexDirection: 'column',
     },
     starRowContainer: {
         flexDirection: 'row',
@@ -95,8 +93,8 @@ const styles = StyleSheet.create({
     },
     starColContainer: {
         flexDirection: 'column',
-        // justifyContent: 'left',
         width: '80%',
+        padding: 8,
     },
     average: {
         color: Colors.light.tint,
@@ -109,7 +107,7 @@ const styles = StyleSheet.create({
         // color: Colors.light.tint,
         marginTop: 5,
         fontSize: 15,
-        textAlign: 'center',
+        textAlign: 'left',
         // fontWeight: 'bold'
     },
     progressBar: {

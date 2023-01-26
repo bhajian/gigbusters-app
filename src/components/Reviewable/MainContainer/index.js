@@ -1,66 +1,59 @@
 import React from "react";
-import {Image, Text, View, StyleSheet, Pressable} from "react-native";
-import Footer from "./Footer";
-import EvilIcons from "react-native-vector-icons/EvilIcons";
-import Colors from "../../../constants/Colors";
+import {Image, Pressable, StyleSheet, Text, View} from "react-native";
+import ProfilePicture from "../../ProfilePicture";
+import {Button} from "react-native-paper";
 import RatingStack from "../../RatingStack";
-import {FontAwesome5} from "@expo/vector-icons";
+import Footer from "../Footer";
 
-export default function MainContainer({tipoff}) {
+export default function MainContainer({review}) {
     async function onItemPressed() {
         console.log('Iam pressed!')
     }
-
     return (
-        <View style={styles.mainContainer}>
-            <Pressable onPress={onItemPressed}>
-                <View style={styles.userIdContainer}>
-                    <Text style={styles.toName} >{tipoff.to.name}</Text>
-                    <View style={styles.iconContainer}>
-                        <EvilIcons name={"share-google"} size={28} color={Colors.light.tabIconSelected}/>
+        <Pressable onPress={onItemPressed}>
+            <View style={styles.container}>
+                <View style={styles.infoContainer}>
+                    <View style={styles.info}>
+                        <Text style={styles.text} >Toronto</Text>
                     </View>
-                </View>
-                <View style={styles.userIdContainer}>
-                    <FontAwesome5
-                        style={styles.contentContainer}
-                        name={"tiktok"}
-                    />
-                    <Text style={styles.fromName}>ID: {tipoff.from.id}</Text>
-                </View>
+                    <View style={styles.info}>
+                        <Text style={styles.text} >10$/hr</Text>
+                    </View>
+                    <View style={styles.info}>
+                        <Text style={styles.text} >Personal Trainer</Text>
+                    </View>
 
-
+                </View>
                 <View style={styles.contentContainer}>
-                    <RatingStack ratings={tipoff.id}/>
+                    <RatingStack ratings={review}/>
                 </View>
-
-            </Pressable>
-            <Footer tweet={tipoff} />
-        </View>
+            </View>
+        </Pressable>
     );
 }
 
 const styles = StyleSheet.create({
-    mainContainer:{
-        width: '80%',
-        // flex: 1,
+    container: {
+        width: '100%',
+        // padding: 15,
     },
-    userIdContainer: {
+    infoContainer: {
+        width: '100%',
         flexDirection: 'row',
-        // justifyContent: "space-between",
     },
-    toName: {
-        marginHorizontal: 5,
-        fontWeight: 'bold'
+    info: {
+        color: '#fff',
+        borderRadius: 50,
+        textAlign: 'center',
+        backgroundColor: '#afafaf',
+        marginHorizontal: 2
     },
-    fromName: {
-        marginHorizontal: 5,
-        // color: 'grey'
-    },
-    sentAt: {
-        marginHorizontal: 5,
-    },
-    contentContainer: {
-        marginTop: 5,
-        marginLeft: 5,
-    },
+    text: {
+        paddingHorizontal: 4,
+        paddingVertical: 3,
+        marginHorizontal: 4,
+        marginTop: 1,
+        marginBottom: 4,
+        color: '#fff',
+    }
 });

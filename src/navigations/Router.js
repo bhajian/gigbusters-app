@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import HomeTabNavigator from './HomeTabNavigator';
-import NewTipoffScreen from '../screens/NewTipOff';
+import NewReviewScreen from '../screens/NewReview';
 import EditProfileScreen from '../screens/ProfileScreen/EditProfileScreen';
 import EditEmailScreen from '../screens/ProfileScreen/EditEmailScreen';
 import UpgradePremiumScreen from '../screens/UpgradePremiumScreen';
@@ -25,8 +25,8 @@ const Router = props => {
       </Stack.Screen>
 
       <Stack.Screen
-        name={'NewTipoff'}
-        component={NewTipoffScreen}
+        name={'NewReview'}
+        component={NewReviewScreen}
         options={{
           headerShown: false,
         }}
