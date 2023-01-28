@@ -1,51 +1,121 @@
-import CustomInput from "../CustomInput";
-import CustomButton from "../CustomButton";
-import {StyleSheet, View} from "react-native";
-import React, {useEffect, useState} from 'react';
+import React, { Component } from "react";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import { ListItem, SearchBar } from "react-native-elements";
+// import filter from "lodash.filter";
 
-const SearchBar = (props) => {
-    const [searchText, setSearchText] = useState('');
+const DATA = [
+    {
+        id: "1",
+        title: "Data Structures",
+    },
+    {
+        id: "2",
+        title: "STL",
+    },
+    {
+        id: "3",
+        title: "C++",
+    },
+    {
+        id: "4",
+        title: "Java",
+    },
+    {
+        id: "5",
+        title: "Python",
+    },
+    {
+        id: "6",
+        title: "CP",
+    },
+    {
+        id: "7",
+        title: "ReactJs",
+    },
+    {
+        id: "8",
+        title: "NodeJs",
+    },
+    {
+        id: "9",
+        title: "MongoDb",
+    },
+    {
+        id: "10",
+        title: "ExpressJs",
+    },
+    {
+        id: "11",
+        title: "PHP",
+    },
+    {
+        id: "12",
+        title: "MySql",
+    },
+];
 
+const Item = ({ title }) => {
     return (
-        <View style={styles.searchBarContainer}>
-            <CustomInput
-                style={styles.searchInput}
-                iconCategory="Fontisto"
-                iconName="search"
-                value={searchText}
-                setValue={setSearchText}
-            />
-            {/*<CustomButton*/}
-            {/*    text=""*/}
-            {/*    style={styles.searchButton}*/}
-            {/*    iconCategory="FontAwesome5"*/}
-            {/*    iconName="search"*/}
-            {/*/>*/}
+        <View style={styles.item}>
+            <Text>{title}</Text>
         </View>
     );
 };
 
-export default SearchBar;
+const renderItem = ({ item }) => <Item title={item.title} />;
+class Search extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: false,
+            data: DATA,
+            error: null,
+            searchValue: "",
+        };
+        this.arrayholder = DATA;
+    }
+
+    searchFunction = (text) => {
+        const updatedData = this.arrayholder.filter((item) => {
+            const item_data = `${item.title.toUpperCase()})`;
+            const text_data = text.toUpperCase();
+            return item_data.indexOf(text_data) > -1;
+        });
+        this.setState({ data: updatedData, searchValue: text });
+    };
+
+    render() {
+        return (
+            <View style={styles.container}>
+                <SearchBar
+                    placeholder="Search Here..."
+                    lightTheme
+                    // round
+                    value={this.state.searchValue}
+                    onChangeText={(text) => this.searchFunction(text)}
+                    autoCorrect={false}
+                />
+                <FlatList
+                    data={this.state.data}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                />
+            </View>
+        );
+    }
+}
+
+export default Search;
 
 const styles = StyleSheet.create({
-    searchBarContainer: {
-        flexDirection: "row",
-        height: 55,
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'grey',
-        paddingTop: 0,
-        paddingBottom: 0,
-        backgroundColor: 'white',
+    container: {
+        marginTop: 30,
+        padding: 2,
     },
-    searchInput: {
-        marginVertical: 10,
-        marginHorizontal: 7,
-        maxWidth: '95%'
-    },
-    searchButton: {
-        marginTop: 5,
-        marginLeft: 5,
-        paddingHorizontal: 15,
-        maxWidth: '12%',
+    item: {
+        backgroundColor: "#efefea",
+        padding: 8,
+        marginVertical: 2,
+        marginHorizontal: 16,
     },
 });

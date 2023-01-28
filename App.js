@@ -4,16 +4,15 @@ import awsconfig from './src/backend/aws-exports';
 import {Amplify, Auth} from "aws-amplify";
 import React, {useEffect, useState} from "react";
 import {NavigationContainer} from "@react-navigation/native";
-import Router from "./src/navigations/Router";
+import RootRouter from "./src/navigations/RootRouter";
 import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
-import NewReviewButton from "./src/components/NewReviewButton";
 Amplify.configure(awsconfig);
 
 export default function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState('initializing');
   useEffect(() => {
     checkAuthState()
-        .then()
+        .then(() => {console.log('')})
         .catch(e => {
           console.error(e);
         });
@@ -21,7 +20,7 @@ export default function App() {
 
   async function checkAuthState() {
     try {
-      const currentUser = await Auth.currentAuthenticatedUser()
+      // const currentUser = await Auth.currentAuthenticatedUser()
       setUserLoggedIn('loggedIn')
     } catch (err) {
       setUserLoggedIn('loggedOut')
@@ -35,7 +34,7 @@ export default function App() {
       <NavigationContainer>
         {isUserLoggedIn === 'initializing' && <Initializing />}
         {isUserLoggedIn === 'loggedIn' && (
-            <Router updateAuthState={updateAuthState} />
+            <RootRouter updateAuthState={updateAuthState} />
         )}
         {isUserLoggedIn === 'loggedOut' && (
             <AuthenticationNavigator updateAuthState={updateAuthState} />

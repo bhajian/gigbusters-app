@@ -35,25 +35,22 @@ export default function MainContainer({review}) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        // padding: 15,
     },
     infoContainer: {
         width: '100%',
         flexDirection: 'row',
     },
     info: {
-        color: '#fff',
         borderRadius: 50,
-        textAlign: 'center',
         backgroundColor: '#afafaf',
         marginHorizontal: 2
     },
     text: {
         paddingHorizontal: 4,
-        paddingVertical: 3,
+        paddingVertical: 4,
         marginHorizontal: 4,
         marginTop: 1,
-        marginBottom: 4,
+        marginBottom: 2,
         color: '#fff',
     }
 });

@@ -12,13 +12,6 @@ export default function PhonebookModal(props) {
             isVisible={props.visibility}
             style={styles.modal}
         >
-            <View style={styles.modalTop}>
-                <TouchableOpacity onPress={props.onClose} style={styles.closeButton}>
-                    <Text style={styles.cancelButton}>
-                        Cancel
-                    </Text>
-                </TouchableOpacity>
-            </View>
             <PhoneBook
                 inModal={true}
                 modalClose={props.onClose}
@@ -31,17 +24,15 @@ const styles = StyleSheet.create({
     modal: {
         width: '100%',
         marginLeft: 0,
-        paddingTop: 40,
+        paddingTop: 0,
     },
     cancelButton:{
+        paddingTop: 10,
         margin: 15,
         fontSize: 17,
         color: Colors.light.tint,
     },
-    modalTop:{
-        height: 50,
-        backgroundColor: 'white',
-    },
+
     button: {
         backgroundColor: Colors.light.tint,
         position: 'absolute',

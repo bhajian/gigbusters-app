@@ -15,7 +15,7 @@ const ProfileScreen = (props) => {
     }, []);
 
     async function setCurrentUserData() {
-        const currentUser = await Auth.currentAuthenticatedUser();
+        // const currentUser = await Auth.currentAuthenticatedUser();
         if(currentUser) {
 
         }
@@ -23,7 +23,7 @@ const ProfileScreen = (props) => {
 
     async function signOut() {
         try {
-            await Auth.signOut();
+            // await Auth.signOut();
             props.updateAuthState('loggedOut');
         } catch (error) {
             console.log('Error signing out: ', error);

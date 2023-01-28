@@ -3,6 +3,7 @@ import SignIn from '../screens/SignInScreen';
 import SignUp from '../screens/SignUpScreen';
 import Verification from '../screens/Verification';
 import {createStackNavigator} from '@react-navigation/stack';
+import ForgotPassword from '../screens/ForgotPassword';
 
 const AuthenticationStack = createStackNavigator();
 
@@ -20,6 +21,10 @@ const AuthenticationNavigator = props => {
         name="Verification"
         component={Verification}
       />
+        <AuthenticationStack.Screen
+            name="ForgotPassword"
+            component={ForgotPassword}
+        />
     </AuthenticationStack.Navigator>
   );
 };

@@ -17,7 +17,8 @@ const PhoneBookScreen = props => {
   };
 
   const loadContacts = async () => {
-    const currentUser = await Auth.currentAuthenticatedUser();
+    const currentUser = ''
+    // const currentUser = await Auth.currentAuthenticatedUser();
     if (currentUser) {
       const userData = await API.graphql({
         query: getUser,

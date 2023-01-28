@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeTabNavigator from './HomeTabNavigator';
+import TabNavigator from './TabNavigator';
 import NewReviewScreen from '../screens/NewReview';
 import EditProfileScreen from '../screens/ProfileScreen/EditProfileScreen';
 import EditEmailScreen from '../screens/ProfileScreen/EditEmailScreen';
@@ -8,30 +8,9 @@ import UpgradePremiumScreen from '../screens/UpgradePremiumScreen';
 
 const Stack = createNativeStackNavigator();
 
-const Router = props => {
+export function HomeNavigation(props) {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name={'Home'}
-        options={{
-          headerShown: false,
-        }}>
-        {screenProps => (
-          <HomeTabNavigator
-            {...screenProps}
-            updateAuthState={props.updateAuthState}
-          />
-        )}
-      </Stack.Screen>
-
-      <Stack.Screen
-        name={'NewReview'}
-        component={NewReviewScreen}
-        options={{
-          headerShown: false,
-        }}
-      />
-
       <Stack.Screen
         name={'EditProfile'}
         component={EditProfileScreen}
@@ -58,5 +37,3 @@ const Router = props => {
     </Stack.Navigator>
   );
 };
-
-export default Router;
