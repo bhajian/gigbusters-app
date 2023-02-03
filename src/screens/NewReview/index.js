@@ -63,7 +63,7 @@ export default function NewTipoffScreen({navigation, route}) {
 
     useEffect(() => {
         getPermissionAsync().then(e => {
-            getCurrentUserId();
+            getCurrentUserId().then(r => {});
         });
     }, []);
 

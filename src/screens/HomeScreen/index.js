@@ -9,19 +9,17 @@ import {FontAwesome5, MaterialIcons} from "@expo/vector-icons";
 import PhonebookModal from "../../components/PhonebookModal";
 import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
+import {SearchCategory} from "../../components/SearchCategory";
+import {Slider} from "react-native-elements";
 
 const HomeScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
     const navigation = useNavigation();
 
-    const toggleModal = () => {
-        setModalVisible(!isModalVisible);
-    };
-
     useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
-            headerLargeTitle: true,
+            headerLargeTitle: false,
             headerLeftContainerStyle: {
                 left: 10,
             },
@@ -38,7 +36,7 @@ const HomeScreen = props => {
             ),
             headerRight: () => (
                 <Pressable
-                    onPress={toggleModal}
+                    // onPress={toggleModal}
                     style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
@@ -51,7 +49,7 @@ const HomeScreen = props => {
                     />
                     <PhonebookModal
                         visibility={isModalVisible}
-                        onClose={toggleModal}
+                        // onClose={toggleModal}
                     />
                 </Pressable>
             ),
@@ -68,7 +66,12 @@ const HomeScreen = props => {
 
     return (
         <View style={styles.container}>
-
+            <SearchCategory navigation={navigation} />
+            <SearchCategory navigation={navigation} />
+            <Slider
+                // value={this.state.value}
+                // onValueChange={(value) => this.setState({value})}
+            />
         </View>
     );
 };

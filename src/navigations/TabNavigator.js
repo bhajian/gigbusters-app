@@ -14,6 +14,7 @@ import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import PhonebookModal from '../components/PhonebookModal';
 import {FontAwesome5, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
+import {HomeNavigation} from "./HomeNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -22,14 +23,23 @@ const TabNavigator = props => {
     return (
         <Tab.Navigator screenOptions={{}}>
             <Tab.Screen
-                name={'Home'}>
+                name={'Home'}
+                options={{
+                    tabBarActiveTintColor: Colors.light.tint,
+                    headerShown: false,
+                    tabBarIcon: ({color}) => (
+                        <Fontisto name="home" size={25} color={color}/>
+                    ),
+                }}
+            >
                 {screenProps => (
-                    <HomeScreen
+                    <HomeNavigation
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />
 
                 )}
+
             </Tab.Screen>
             <Tab.Screen
                 name={'Match'}

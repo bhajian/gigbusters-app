@@ -18,6 +18,7 @@ import ReviewTypePicker from "../../../components/ReviewTypePicker";
 import DropDownPicker from "react-native-dropdown-picker";
 import {Searchbar} from "react-native-paper";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import {SearchCategory} from "../../../components/SearchCategory";
 
 
 export default function NewReviewTopContainer({contact, pickImage, navigation}) {
@@ -57,10 +58,7 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
             </View>
             <View style={styles.headerExtensionContainer}>
                 <ReviewTypePicker />
-                <TouchableOpacity style={styles.searchInput}>
-                    <Fontisto name="search" size={17} color="grey" />
-                    <Text> Search </Text>
-                </TouchableOpacity>
+                <SearchCategory navigation={navigation} />
             </View>
         </View>
     );
