@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ImageBackground, Pressable, } from 'react-native';
+import {View, Text, ImageBackground, Pressable, FlatList,} from 'react-native';
 import styles from './styles';
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -11,6 +11,8 @@ import {SearchCategory} from "../../components/SearchCategory";
 import ChoiceSelector from "../../components/ChoiceSelector";
 import {LocationSelector} from "../../components/LocationSearch";
 import Slider from "@react-native-community/slider";
+import users from '../../../assets/data/users';
+import ReferralReviewItem from "../../components/ReferralRequestItem";
 
 const HomeScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -93,7 +95,11 @@ const HomeScreen = props => {
                 </View>
             </View>
             <View style={styles.activityContainer}>
-
+                <FlatList
+                    data={users}
+                    renderItem={({item}) => <ReferralReviewItem item={item} />}
+                    keyExtractor={item => item.id}
+                />
             </View>
         </View>
     );
