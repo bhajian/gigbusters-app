@@ -4,6 +4,7 @@ import HomeScreen from "../screens/HomeScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,14 @@ export function HomeNavigation(props) {
             <Stack.Screen
                 name={'SearchCategory'}
                 component={SearchCategory}
+                options={{
+                    headerShown: false,
+                    animation: "fade_from_bottom",
+                }}
+            />
+            <Stack.Screen
+                name={'LocationSelectorScreen'}
+                component={LocationSelectorScreen}
                 options={{
                     headerShown: false,
                     animation: "fade_from_bottom",

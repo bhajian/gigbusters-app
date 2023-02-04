@@ -96,7 +96,8 @@ export default ChoiceSelector;
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 30,
+        marginTop: 10,
+        marginHorizontal: 5,
         padding: 2,
         flexDirection: 'row',
         flexWrap: 'wrap',

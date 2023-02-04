@@ -1,14 +1,11 @@
 import React, {useState} from "react";
 import { View, TextInput, Text, FlatList, Pressable } from "react-native";
-import styles from './styles.js';
-import {useNavigation} from '@react-navigation/native';
+import styles from './styles';
 import SuggestionRow from "./SuggestionRow";
-
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {Input} from "react-native-elements";
 
-
-const DestinationSearchScreen = (props) => {
+const LocationSelectorScreen = (props) => {
 
     // const navigation = useNavigation();
     return (
@@ -22,8 +19,8 @@ const DestinationSearchScreen = (props) => {
                 }}
                 fetchDetails
                 styles={{
-                    textInputContainer: styles.searchButton,
-                    textInput: styles.searchButtonText,
+                    // textInputContainer: styles.searchButton,
+                    // textInput: styles.searchButtonText,
                 }}
                 query={{
                     key: 'AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s',
@@ -32,16 +29,21 @@ const DestinationSearchScreen = (props) => {
                 }}
                 textInputProps={{
                     InputComp: Input,
-                    leftIcon: { type: 'MaterialIcons', name: 'place' },
+                    // leftIcon: { type: 'MaterialIcons', name: 'place' },
                     errorStyle: { color: 'red' },
                 }}
                 suppressDefaultStyles
                 renderRow={(item) => <SuggestionRow item={item} />}
                 currentLocation={true}
                 currentLocationLabel='Current location'
+                onPress={(data, details = null) => {
+                    props.navigation.goBack()
+                }}
+
             />
         </View>
     );
 };
 
-export default DestinationSearchScreen;
+export default LocationSelectorScreen;
+

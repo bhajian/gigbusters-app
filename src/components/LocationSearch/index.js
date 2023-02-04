@@ -1,19 +1,30 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {useNavigation} from "@react-navigation/native";
+import {MaterialIcons} from "@expo/vector-icons";
+import CountryFlag from "react-native-country-flag";
 
-export function SearchCategory({navigation}) {
+export function LocationSelector({}) {
+    const [location, setLocation] = useState('');
 
+    const navigation = useNavigation();
     function onPress() {
-        navigation.navigate('SearchCategory');
+        navigation.navigate('LocationSelectorScreen',{
+            // Passing params to NESTED navigator screen:
+            screen: 'NewReview',
+            params: {  },
+        });
     };
 
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.searchInput} onPress={onPress}>
-                <Fontisto name="search" size={17} color="grey" />
-                <Text> Search </Text>
+                <View style={styles.searchTextIcon}>
+                    <MaterialIcons name="place" size={17} color="grey" />
+                    <Text> Select a Location </Text>
+                </View>
+                <CountryFlag isoCode="ca" size={15} />
             </TouchableOpacity>
         </View>
     )
@@ -23,12 +34,15 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
         marginHorizontal: 10,
-        width: '100%'
+        width: '95%'
     },
     searchBarContainer: {
         flexDirection: "row",
         borderBottomColor: 'grey',
         backgroundColor: 'white',
+    },
+    searchTextIcon: {
+        flexDirection: "row",
     },
     searchInput: {
         backgroundColor: '#e8e8e8',
@@ -41,6 +55,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginVertical: 5,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         padding: 10,
     },
     searchButton: {

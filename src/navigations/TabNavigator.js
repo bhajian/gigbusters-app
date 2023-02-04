@@ -2,19 +2,12 @@ import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import ProfileScreen from '../screens/ProfileScreen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import PhoneBookScreen from '../screens/PhoneBookScreen';
 import Colors from '../constants/Colors';
-import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
-import ProfilePicture from '../components/ProfilePicture';
-import ReviewScreen from '../screens/ReviewScreen';
-import HomeScreen from '../screens/HomeScreen';
-import PhoneBook from '../components/PhoneBook';
 import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import PhonebookModal from '../components/PhonebookModal';
 import {FontAwesome5, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
 import {HomeNavigation} from "./HomeNavigation";
+import MatchingScreen from "../screens/MatchingScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -43,7 +36,7 @@ const TabNavigator = props => {
             </Tab.Screen>
             <Tab.Screen
                 name={'Match'}
-                component={PhoneBookScreen}
+                component={MatchingScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerLargeTitle: true,

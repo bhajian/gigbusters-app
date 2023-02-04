@@ -1,18 +1,21 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ImageBackground, Pressable, StyleSheet, Animated} from 'react-native';
+import {View, Text, ImageBackground, Pressable, } from 'react-native';
 import styles from './styles';
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import {FontAwesome5, MaterialIcons} from "@expo/vector-icons";
+import {FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import PhonebookModal from "../../components/PhonebookModal";
 import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../components/SearchCategory";
-import {Input, Slider} from "react-native-elements";
 import ChoiceSelector from "../../components/ChoiceSelector";
+import {LocationSelector} from "../../components/LocationSearch";
+import Slider from "@react-native-community/slider";
 
 const HomeScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
+    const [locationMax, setLocationMax] = useState(10);
+    const [priceMax, setPriceMax] = useState(10);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -26,12 +29,7 @@ const HomeScreen = props => {
                 <Fontisto name="home" size={25} color={color}/>
             ),
             headerTitle: () => (
-                <MaterialIcons
-                    name="rate-review"
-                    size={25}
-                    color={Colors.light.tint}
-                    style={{marginRight: 15}}
-                />
+                <Text> Request a worker</Text>
             ),
             headerRight: () => (
                 <Pressable
@@ -40,8 +38,8 @@ const HomeScreen = props => {
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
                     })}>
-                    <FontAwesome5
-                        name="plus"
+                    <MaterialCommunityIcons
+                        name="email-send"
                         size={25}
                         color={Colors.light.tint}
                         style={{marginRight: 15}}
@@ -65,18 +63,38 @@ const HomeScreen = props => {
 
     return (
         <View style={styles.container}>
-            <SearchCategory navigation={navigation} />
+            <View style={styles.criteriaContainer}>
+                <SearchCategory navigation={navigation} />
+                <ChoiceSelector/>
+                <View style={styles.locationContainer}>
+                    <Text>Within: {locationMax} km of  </Text>
+                    <Slider
+                        value={locationMax}
+                        onValueChange={setLocationMax}
+                        step={1}
+                        maximumValue={150}
+                        minimumValue={1}
+                        thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
+                        // trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                    />
+                    <LocationSelector />
+                </View>
+                <View style={styles.sliderContainer}>
+                    <Text>Max Price/hr: {priceMax} $$  </Text>
+                    <Slider
+                        value={5}
+                        onValueChange={setPriceMax}
+                        step={1}
+                        maximumValue={1000}
+                        minimumValue={1}
+                        thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
+                        trackStyle={{ height: 5, backgroundColor: '#5e5e5e' }}
+                    />
+                </View>
+            </View>
+            <View style={styles.activityContainer}>
 
-            <Slider
-                // value={this.state.value}
-                // onValueChange={(value) => this.setState({value})}
-                thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
-                trackStyle={{ height: 5, backgroundColor: 'transparent' }}
-            />
-            <ChoiceSelector/>
-
-
-
+            </View>
         </View>
     );
 };

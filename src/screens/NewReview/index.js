@@ -23,6 +23,7 @@ import {AirbnbRating, Rating} from "react-native-ratings";
 import Logo from "../../../assets/images/review.png";
 import ReviewTypePicker from "../../components/ReviewTypePicker";
 import NewReviewTopContainer from "./NewReviewTopContainer";
+import {LocationSelector} from "../../components/LocationSearch";
 
 
 export default function NewTipoffScreen({navigation, route}) {
@@ -143,6 +144,7 @@ export default function NewTipoffScreen({navigation, route}) {
                     </TouchableOpacity>
                     {/*<Image 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2900&q=80'}} />*/}
                 </View>
+                <LocationSelector />
 
                 <View style={styles.newMessageSetting}>
                     <CustomSwitch
