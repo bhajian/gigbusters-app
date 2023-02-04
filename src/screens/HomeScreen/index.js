@@ -8,7 +8,7 @@ import PhonebookModal from "../../components/PhonebookModal";
 import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../components/SearchCategory";
-import {Slider} from "react-native-elements";
+import {Input, Slider} from "react-native-elements";
 import ChoiceSelector from "../../components/ChoiceSelector";
 
 const HomeScreen = props => {
@@ -66,7 +66,7 @@ const HomeScreen = props => {
     return (
         <View style={styles.container}>
             <SearchCategory navigation={navigation} />
-            <SearchCategory navigation={navigation} />
+
             <Slider
                 // value={this.state.value}
                 // onValueChange={(value) => this.setState({value})}
@@ -74,6 +74,9 @@ const HomeScreen = props => {
                 trackStyle={{ height: 5, backgroundColor: 'transparent' }}
             />
             <ChoiceSelector/>
+
+
+
         </View>
     );
 };
