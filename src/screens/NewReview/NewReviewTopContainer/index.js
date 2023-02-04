@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     headerExtensionContainer: {
         width: '90%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         padding: 15,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',

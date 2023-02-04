@@ -33,7 +33,6 @@ export default function NewTipoffScreen({navigation, route}) {
     };
 
     const [senderId, setSenderId] = useState('');
-    // const [receiverId, setReceiverId] = useState(contact.id);
     const [isPrivate, setIsPrivate] = useState(false);
     const togglePrivateSwitch = () =>
         setIsPrivate(previousState => !previousState);

@@ -22,7 +22,8 @@ export function SearchCategory({navigation}) {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
-        margin: 10,
+        // margin: 10,
+        width: '100%'
     },
     searchBarContainer: {
         flexDirection: "row",

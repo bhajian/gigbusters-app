@@ -1,8 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ImageBackground, Pressable, StyleSheet} from 'react-native';
+import {View, Text, ImageBackground, Pressable, StyleSheet, Animated} from 'react-native';
 import styles from './styles';
-import Feed from '../../components/Feed';
-import NewReviewButton from '../../components/NewReviewButton';
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {FontAwesome5, MaterialIcons} from "@expo/vector-icons";
@@ -11,6 +9,7 @@ import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../components/SearchCategory";
 import {Slider} from "react-native-elements";
+import ChoiceSelector from "../../components/ChoiceSelector";
 
 const HomeScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
@@ -71,7 +70,10 @@ const HomeScreen = props => {
             <Slider
                 // value={this.state.value}
                 // onValueChange={(value) => this.setState({value})}
+                thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
+                trackStyle={{ height: 5, backgroundColor: 'transparent' }}
             />
+            <ChoiceSelector/>
         </View>
     );
 };
