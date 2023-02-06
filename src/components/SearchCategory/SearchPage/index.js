@@ -103,7 +103,7 @@ class SearchCategory extends Component {
                         <TouchableOpacity
                             onPress={() => this.props.navigation.goBack()}
                             style={styles.closeButton}>
-                            <Text style={styles.closeIcon}> Cancel </Text>
+                            <Text style={styles.closeText}> Cancel </Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         padding: 20,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
-        marginTop: 30,
+        marginTop: 40,
     },
     headerLeft: {
         flexDirection: 'row',
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
         width: '100%',
     },
     searchTextContainer: {
-        backgroundColor: '#e8e8e8',
+        backgroundColor: '#eaebf6',
         width: '80%',
         borderColor: '#e8e8e8',
         borderWidth: 1,
@@ -174,10 +174,11 @@ const styles = StyleSheet.create({
     closeButton: {
         marginLeft: 5,
         flexDirection: 'row',
-        marginTop: 7,
+        alignSelf: 'center',
+        // marginTop: 7,
         paddingEnd: 10,
     },
-    closeIcon: {
+    closeText: {
         fontSize: 17,
         color: Colors.light.tint,
     },

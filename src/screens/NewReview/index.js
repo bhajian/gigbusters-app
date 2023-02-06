@@ -104,7 +104,6 @@ export default function NewTipoffScreen({navigation, route}) {
     return (
         <SafeAreaView style={styles.container}>
             <NewReviewTopContainer contact={contact} pickImage={pickImage} navigation={navigation}/>
-
             <View style={styles.newTweetContainer}>
                 <View style={styles.ratingContainer}>
                     <Text style={styles.text} >Rating: </Text>

@@ -6,6 +6,7 @@ import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 import RequestReferralScreen from "../screens/ReferralRequest";
+import RequestCompletedScreen from "../screens/RequestCompletedScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,13 @@ export function HomeNavigation(props) {
                 options={{
                     headerShown: false,
                     animation: "fade_from_bottom",
+                }}
+            />
+            <Stack.Screen
+                name={'RequestReferralCompletedScreen'}
+                component={RequestCompletedScreen}
+                options={{
+                    headerShown: false,
                 }}
             />
         </Stack.Navigator>

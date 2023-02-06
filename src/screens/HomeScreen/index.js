@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ImageBackground, Pressable, FlatList,} from 'react-native';
+import {View, Text, ImageBackground, Pressable, FlatList, ScrollView,} from 'react-native';
 import styles from './styles';
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -16,8 +16,8 @@ import ReferralReviewItem from "../../components/ReferralRequestItem";
 
 const HomeScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
-    const [locationMax, setLocationMax] = useState(10);
-    const [priceMax, setPriceMax] = useState(10);
+    const [locationMax, setLocationMax] = useState(50);
+    const [priceMax, setPriceMax] = useState(20);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -35,7 +35,7 @@ const HomeScreen = props => {
             ),
             headerRight: () => (
                 <Pressable
-                    // onPress={toggleModal}
+                    onPress={onSubmitPress}
                     style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
@@ -63,6 +63,11 @@ const HomeScreen = props => {
         })
     }, [navigation]);
 
+    function onSubmitPress() {
+        navigation.navigate('RequestReferralCompletedScreen');
+        // console.log('Hello')
+    };
+
     return (
         <View style={styles.container}>
             <View style={styles.criteriaContainer}>
@@ -74,6 +79,7 @@ const HomeScreen = props => {
                         value={locationMax}
                         onValueChange={setLocationMax}
                         step={1}
+                        minimumTrackTintColor={Colors.light.tint}
                         maximumValue={150}
                         minimumValue={1}
                         thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
@@ -87,7 +93,8 @@ const HomeScreen = props => {
                         value={5}
                         onValueChange={setPriceMax}
                         step={1}
-                        maximumValue={1000}
+                        minimumTrackTintColor={Colors.light.tint}
+                        maximumValue={200}
                         minimumValue={1}
                         thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
                         trackStyle={{ height: 5, backgroundColor: '#5e5e5e' }}

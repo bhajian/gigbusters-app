@@ -2,22 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {
     StyleSheet,
     TouchableOpacity,
-    SafeAreaView,
-    TextInput,
-    Platform,
-    Image,
     View,
     Text,
-    Switch,
 } from 'react-native';
 import Colors from '../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import UserAvatar from "@muhzi/react-native-user-avatar";
-import {EvilIcons, FontAwesome5, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import { Ionicons} from "@expo/vector-icons";
 import ReviewTypePicker from "../../../components/ReviewTypePicker";
-import DropDownPicker from "react-native-dropdown-picker";
-import {Searchbar} from "react-native-paper";
-import Fontisto from "react-native-vector-icons/Fontisto";
 import {SearchCategory} from "../../../components/SearchCategory";
 
 
@@ -31,7 +23,6 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
     useEffect(() => {
 
     }, []);
-
 
     return (
         <View style={styles.topContainer}>

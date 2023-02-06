@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ImageBackground, Pressable, } from 'react-native';
+import {View, Text, ImageBackground, Pressable, Image,} from 'react-native';
 import styles from './styles';
 import {useNavigation} from "@react-navigation/native";
+import Tada from "../../../assets/images/tada.png"
 
-const RequestReferralScreen = props => {
+const RequestCompletedScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationMax, setLocationMax] = useState(10);
     const [priceMax, setPriceMax] = useState(10);
@@ -15,10 +16,14 @@ const RequestReferralScreen = props => {
 
     return (
         <View style={styles.container}>
-
-            <Text>Hi</Text>
+            <Image
+                source={Tada}
+                style={[styles.logo]}
+                resizeMode="contain"
+            />
+            <Text>Request</Text>
         </View>
     );
 };
 
-export default RequestReferralScreen;
+export default RequestCompletedScreen;

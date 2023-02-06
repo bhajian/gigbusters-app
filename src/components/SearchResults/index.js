@@ -1,7 +1,7 @@
 import React from "react";
 import {View, FlatList} from "react-native";
 import feed from '../../../assets/data/feed';
-import Post from '../../components/Post';
+import Post from '../Post';
 
 const SearchResults = (props) => {
     return (

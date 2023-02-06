@@ -33,8 +33,8 @@ export function LocationSelector({}) {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
-        marginHorizontal: 10,
-        width: '95%'
+        // marginHorizontal: 10,
+        width: '100%'
     },
     searchBarContainer: {
         flexDirection: "row",
@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     searchInput: {
-        backgroundColor: '#e8e8e8',
+        backgroundColor: '#eaebf6',
         width: '90%',
         borderColor: '#e8e8e8',
         borderWidth: 1,

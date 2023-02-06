@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     searchInput: {
-        backgroundColor: '#e8e8e8',
+        backgroundColor: '#eaebf6',
         width: '90%',
         borderColor: '#e8e8e8',
         borderWidth: 1,
