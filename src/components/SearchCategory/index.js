@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {useNavigation} from "@react-navigation/native";
+import Colors from "../../constants/Colors";
 
 export function SearchCategory({navigation}) {
 
@@ -23,7 +24,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
         marginHorizontal: 10,
-        width: '100%'
+        width: '80%'
     },
     searchBarContainer: {
         flexDirection: "row",
@@ -31,8 +32,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     searchInput: {
-        backgroundColor: '#eaebf6',
-        width: '90%',
+        backgroundColor: Colors.light.grey,
+        // width: '100%',
         borderColor: '#e8e8e8',
         borderWidth: 1,
         borderTopWidth: 0,

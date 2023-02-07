@@ -16,7 +16,7 @@ const Footer = ({ tweet }) => {
     return (
         <View style={styles.container}>
             <View style={styles.iconContainer}>
-                <Feather name={"message-circle"} size={20} color={'grey'}/>
+                <Feather name={"message-circle"} size={20} color={Colors.dark.grey}/>
                 <Text style={styles.number}>{tweet.numberOfReplies}</Text>
             </View>
             <View style={styles.iconContainer}>
@@ -26,7 +26,7 @@ const Footer = ({ tweet }) => {
                 <Text style={styles.number}>{tweet.numberOfLikes}</Text>
             </View>
             <View style={styles.iconContainer}>
-                <EvilIcons name={"share-google"} size={28} color={'grey'}/>
+                <EvilIcons name={"share-google"} size={28} color={Colors.dark.grey}/>
             </View>
         </View>
     )

@@ -55,9 +55,10 @@ const DATA = [
     },
 ];
 
-const Item = ({ title }) => {
+const Item = ({ id, title }) => {
     return (
         <TouchableOpacity
+            key={id}
             onPress={() => {}}
             style={styles.buttonSelector}>
             <Text style={styles.buttonText}>{title}</Text>
@@ -77,16 +78,12 @@ class ChoiceSelector extends Component {
         this.arrayholder = DATA;
     }
 
-
-
     render() {
         return (
             <View style={styles.container}>
-
                 {this.state.data.map((item, i) => {
                     return(Item(item))
                 })}
-
             </View>
         );
     }

@@ -16,14 +16,12 @@ import {API, graphqlOperation, Auth, Storage} from 'aws-amplify';
 import {v4 as uuidv4} from 'uuid';
 import Colors from '../../constants/Colors';
 import CustomSwitch from '../../components/CustomSwitch';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import UserAvatar from "@muhzi/react-native-user-avatar";
 import {EvilIcons, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import {AirbnbRating, Rating} from "react-native-ratings";
-import Logo from "../../../assets/images/review.png";
-import ReviewTypePicker from "../../components/ReviewTypePicker";
+
 import NewReviewTopContainer from "./NewReviewTopContainer";
-import {LocationSelector} from "../../components/LocationSearch";
+import {RatingBar} from "@aashu-dubey/react-native-rating-bar";
+import {Icon} from "react-native-elements";
 
 
 export default function NewTipoffScreen({navigation, route}) {
@@ -41,6 +39,7 @@ export default function NewTipoffScreen({navigation, route}) {
     const toggleAnonymousSwitch = () =>
         setIsAnonymous(previousState => !previousState);
     const [tipoff, setTipoff] = useState('');
+    const [rating, setRating] = useState(2.5);
     const [imageUrl, setImageUrl] = useState('');
 
     // const navigation = useNavigation();
@@ -106,14 +105,63 @@ export default function NewTipoffScreen({navigation, route}) {
             <NewReviewTopContainer contact={contact} pickImage={pickImage} navigation={navigation}/>
             <View style={styles.newTweetContainer}>
                 <View style={styles.ratingContainer}>
-                    <Text style={styles.text} >Rating: </Text>
-                    <Rating
-                        imageSize={30}
-                        // onFinishRating={ratingCompleted}
-                        type="custom"
-                        style={{ paddingVertical: 5, }}
-                        ratingColor={Colors.light.tint}
-                        ratingBackgroundColor='#e9eff6'
+                    <Text style={styles.ratingText} >Rating: </Text>
+                    <RatingBar
+                        initialRating={2.5}
+                        minRating={1}
+                        direction="horizontal"
+                        allowHalfRating
+                        unratedColor={Colors.light.grey}
+                        itemCount={5}
+                        itemPadding={1}
+                        itemSize={40}
+                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={40} />}
+                        onRatingUpdate={setRating}
+                    />
+                </View>
+                <View style={styles.ratingContainer}>
+                    <Text style={styles.detailRatingText} >Punctuality: </Text>
+                    <RatingBar
+                        initialRating={2.5}
+                        minRating={1}
+                        direction="horizontal"
+                        allowHalfRating
+                        unratedColor={Colors.light.grey}
+                        itemCount={5}
+                        itemPadding={1}
+                        itemSize={25}
+                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25} />}
+                        onRatingUpdate={setRating}
+                    />
+                </View>
+                <View style={styles.ratingContainer}>
+                    <Text style={styles.detailRatingText} >Price: </Text>
+                    <RatingBar
+                        initialRating={2.5}
+                        minRating={1}
+                        direction="horizontal"
+                        allowHalfRating
+                        unratedColor={Colors.light.grey}
+                        itemCount={5}
+                        itemPadding={1}
+                        itemSize={25}
+                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25} />}
+                        onRatingUpdate={setRating}
+                    />
+                </View>
+                <View style={styles.ratingContainer}>
+                    <Text style={styles.detailRatingText} >Quality: </Text>
+                    <RatingBar
+                        initialRating={2.5}
+                        minRating={1}
+                        direction="horizontal"
+                        allowHalfRating
+                        unratedColor={Colors.light.grey}
+                        itemCount={5}
+                        itemPadding={1}
+                        itemSize={25}
+                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25} />}
+                        onRatingUpdate={setRating}
                     />
                 </View>
                 <View style={styles.inputsContainer}>
@@ -122,7 +170,7 @@ export default function NewTipoffScreen({navigation, route}) {
                         onChangeText={value => setTipoff(value)}
                         multiline={true}
                         style={styles.reviewInput}
-                        placeholder={"What's happening?"}
+                        placeholder={"Review..."}
                     />
                 </View>
 
@@ -223,13 +271,21 @@ const styles = StyleSheet.create({
     },
     ratingContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: 'center'
     },
-    text: {
+    ratingText: {
         paddingVertical: 10,
         marginHorizontal: 4,
         fontSize: 25,
         textAlignVertical: 'bottom',
+    },
+    detailRatingText: {
+        paddingVertical: 10,
+        marginHorizontal: 4,
+        fontSize: 20,
+        textAlignVertical: 'bottom',
+
     },
     newTweetContainer: {
         zIndex: -10,
@@ -238,8 +294,7 @@ const styles = StyleSheet.create({
         width: '100%'
     },
     inputsContainer: {
-        marginLeft: 5,
-        backgroundColor: '#e9eff6',
+        backgroundColor: Colors.light.grey,
     },
     reviewInput: {
         height: 150,

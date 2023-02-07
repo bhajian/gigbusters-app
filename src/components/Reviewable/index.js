@@ -7,24 +7,30 @@ import Footer from "./Footer";
 
 export default function Reviewable({tipoff}) {
 
+    async function onItemPressed() {
+        console.log('Iam pressed!')
+    }
+
     return (
         <View style={styles.container}>
-            <View style={styles.topContainer}>
-                <PhotoContainer
-                    user={tipoff.to}
-                />
-                <IdContainer
-                    review={tipoff}
-                />
-            </View>
-            <View style={styles.mainContainer}>
-                <MainContainer
-                    review={tipoff}
-                />
-                <Footer
-                    review={tipoff}
-                />
-            </View>
+            <Pressable onPress={onItemPressed}>
+                <View style={styles.topContainer}>
+                    <PhotoContainer
+                        user={tipoff.to}
+                    />
+                    <IdContainer
+                        review={tipoff}
+                    />
+                </View>
+                <View style={styles.mainContainer}>
+                    <MainContainer
+                        review={tipoff}
+                    />
+                </View>
+            </Pressable>
+            <Footer
+                review={tipoff}
+            />
         </View>
     );
 }

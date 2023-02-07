@@ -4,6 +4,9 @@ import Colors from "../../constants/Colors";
 import {ProgressBar} from "react-native-paper";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import {FontAwesome} from "@expo/vector-icons";
+import {Icon} from "react-native-elements";
+import {RatingBar} from "@aashu-dubey/react-native-rating-bar";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 export default function RatingStack({ratings}) {
     async function onItemPressed() {
@@ -19,7 +22,7 @@ export default function RatingStack({ratings}) {
             <View style={styles.starColContainer}>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
-                        <FontAwesome name={"star"}  color={'grey'}/>
+                        <FontAwesome name={"star"}  color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
                         <ProgressBar  progress={0.75} color={Colors.light.tint} />
@@ -27,8 +30,8 @@ export default function RatingStack({ratings}) {
                 </View>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
                         <ProgressBar  progress={0.25} color={Colors.light.tint} />
@@ -36,9 +39,9 @@ export default function RatingStack({ratings}) {
                 </View>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
                         <ProgressBar  progress={0.25} color={Colors.light.tint} />
@@ -46,10 +49,10 @@ export default function RatingStack({ratings}) {
                 </View>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
                         <ProgressBar  progress={0.55} color={Colors.light.tint} />
@@ -57,17 +60,20 @@ export default function RatingStack({ratings}) {
                 </View>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
-                        <FontAwesome name={"star"} color={'grey'}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
+                        <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
                         <ProgressBar  progress={0.25} color={Colors.light.tint} />
                     </View>
                 </View>
                 <Text style={styles.text}> {ratings.numberOfReplies} reviews</Text>
+            </View>
+            <View style={styles.contentContainer}>
+                <AntDesign name="right" size={20} color={Colors.light.tint} />
             </View>
 
         </View>

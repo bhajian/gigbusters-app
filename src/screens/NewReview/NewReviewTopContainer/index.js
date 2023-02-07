@@ -3,7 +3,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     View,
-    Text,
+    Text, TextInput,
 } from 'react-native';
 import Colors from '../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -11,6 +11,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import { Ionicons} from "@expo/vector-icons";
 import ReviewTypePicker from "../../../components/ReviewTypePicker";
 import {SearchCategory} from "../../../components/SearchCategory";
+import CustomInput from "../../../components/CustomInput";
 
 
 export default function NewReviewTopContainer({contact, pickImage, navigation}) {
@@ -37,7 +38,7 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
                         </View>
                     </TouchableOpacity>
                     <UserAvatar
-                        size={35}
+                        size={40}
                         active
                         src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
                     />
@@ -48,8 +49,17 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
                 </TouchableOpacity>
             </View>
             <View style={styles.headerExtensionContainer}>
-                <ReviewTypePicker />
-                <SearchCategory navigation={navigation} />
+                <View style={styles.searchContainer}>
+                    <ReviewTypePicker style={styles.reviewType} />
+                    <SearchCategory style={styles.searchCategory} navigation={navigation} />
+                </View>
+                <View style={styles.accoountContainer}>
+                    <TextInput
+                        value={value}
+                        onChangeText={setValue}
+                        style={styles.accoountInput}
+                    />
+                </View>
             </View>
         </View>
     );
@@ -58,30 +68,36 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
 const styles = StyleSheet.create({
     searchInput: {
         flexDirection: "row",
-        paddingTop: 7,
-        paddingLeft: 7,
         marginHorizontal: 7,
         width: '80%',
         backgroundColor: '#eae8e8',
         borderRadius: 10,
     },
     headerExtensionContainer: {
-        width: '90%',
-        flexDirection: 'row',
-        // justifyContent: 'space-between',
+        width: '100%',
         padding: 15,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },
-    accoountSearch: {
-        backgroundColor: '#e9eff6',
+    searchContainer: {
+        flexDirection: 'row',
+        zIndex: 10,
+        width: '100%',
+    },
+    accoountContainer: {
+        flexDirection: 'row',
+        marginVertical: 10,
+    },
+    accoountInput: {
+        backgroundColor: Colors.light.grey,
         padding: 10,
         alignItems: 'center',
         alignContent: 'center',
-        width: '70%'
+        width: '100%',
+        borderRadius: 5
     },
     headerContainer: {
-        zIndex: -1,
+        // zIndex: -1,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
@@ -131,12 +147,6 @@ const styles = StyleSheet.create({
         fontSize: 25,
         textAlignVertical: 'bottom',
     },
-    newTweetContainer: {
-        zIndex: -10,
-        flexDirection: 'column',
-        padding: 15,
-        width: '100%'
-    },
     inputsContainer: {
         marginLeft: 5,
         backgroundColor: '#e9eff6',
@@ -178,4 +188,10 @@ const styles = StyleSheet.create({
         transform: [{scaleX: 0.7}, {scaleY: 0.7}],
         marginTop: 5,
     },
+    reviewType:{
+        width: '15%'
+    },
+    searchCategory:{
+        width: '75%'
+    }
 });

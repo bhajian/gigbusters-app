@@ -4,6 +4,7 @@ import NewReviewScreen from '../screens/NewReview';
 import ReviewScreen from "../screens/ReviewScreen";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import SearchCategory from "../components/SearchCategory/SearchPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,14 @@ export function ReviewNavigation(props) {
                 component={NewReviewScreen}
                 options={{
                     headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name={'SearchCategory'}
+                component={SearchCategory}
+                options={{
+                    headerShown: false,
+                    animation: "fade_from_bottom",
                 }}
             />
         </Stack.Navigator>

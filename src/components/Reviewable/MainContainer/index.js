@@ -4,31 +4,28 @@ import ProfilePicture from "../../ProfilePicture";
 import {Button} from "react-native-paper";
 import RatingStack from "../../RatingStack";
 import Footer from "../Footer";
+import Colors from "../../../constants/Colors";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 export default function MainContainer({review}) {
-    async function onItemPressed() {
-        console.log('Iam pressed!')
-    }
-    return (
-        <Pressable onPress={onItemPressed}>
-            <View style={styles.container}>
-                <View style={styles.infoContainer}>
-                    <View style={styles.info}>
-                        <Text style={styles.text} >Toronto</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.text} >10$/hr</Text>
-                    </View>
-                    <View style={styles.info}>
-                        <Text style={styles.text} >Personal Trainer</Text>
-                    </View>
 
+    return (
+        <View style={styles.container}>
+            <View style={styles.infoContainer}>
+                <View style={styles.info}>
+                    <Text style={styles.text} >Toronto</Text>
                 </View>
-                <View style={styles.contentContainer}>
-                    <RatingStack ratings={review}/>
+                <View style={styles.info}>
+                    <Text style={styles.text} >10$/hr</Text>
+                </View>
+                <View style={styles.info}>
+                    <Text style={styles.text} >Personal Trainer</Text>
                 </View>
             </View>
-        </Pressable>
+            <View style={styles.contentContainer}>
+                <RatingStack ratings={review}/>
+            </View>
+        </View>
     );
 }
 
@@ -42,7 +39,7 @@ const styles = StyleSheet.create({
     },
     info: {
         borderRadius: 50,
-        backgroundColor: '#afafaf',
+        backgroundColor: Colors.light.grey,
         marginHorizontal: 2
     },
     text: {
@@ -51,6 +48,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
         marginTop: 1,
         marginBottom: 2,
-        color: '#fff',
+        color: '#000',
     }
 });

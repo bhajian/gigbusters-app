@@ -38,15 +38,17 @@ export default function ReviewTypePicker() {
                     fontSize: 10
                 }}
                 style={{
-                    backgroundColor: "#e9eff6",
+                    backgroundColor: Colors.light.grey,
                     borderWidth: 0,
+                    // height: 30,
+                    // width: 75,
                 }}
                 dropDownContainerStyle={{
                     borderWidth: 0,
-                    backgroundColor: "#e9eff6",
+                    backgroundColor: Colors.light.grey,
+                    maxHeight: '100%'
                 }}
                 zIndexInverse={1000}
-
             />
         </View>
     );
@@ -54,10 +56,8 @@ export default function ReviewTypePicker() {
 
 const styles = StyleSheet.create({
     container: {
-        width: 80,
-        paddingRight: 3,
-        // borderBottomWidth: 0.5,
-        // borderColor: 'grey'
+        width: 75,
+        paddingRight: 1,
     },
     icons: {
         fontSize: 25,

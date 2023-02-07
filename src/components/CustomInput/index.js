@@ -9,7 +9,6 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-
 const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, iconCategory, iconName}) => {
 
     const renderIcon = (iconCategory, iconName) => {

@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     },
     searchBarContainer: {
         flexDirection: "row",
+        width: '100%',
         // justifyContent: 'space-between',
         // height: 75,
         // borderBottomWidth: 0.5,
@@ -30,10 +31,10 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         backgroundColor: '#ffffff',
-        height: '100%'
+        // height: '100%',
+        // marginTop: 180,
     },
     iconContainer: {
-        // marginTop: 1,
         borderWidth: 1,
         width: 30,
         height: 30,

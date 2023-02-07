@@ -20,9 +20,7 @@ export default function IdContainer({review}) {
                     <Text style={styles.fromName}>ID: {review.from.id}</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.iconContainer}>
-                <AntDesign name="hearto" size={20} color="grey" />
-            </TouchableOpacity>
+
         </View>
     );
 }
