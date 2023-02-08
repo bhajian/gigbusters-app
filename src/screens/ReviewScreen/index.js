@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
     View,
     Text,
@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import Feed from "../../components/Feed";
+import FameorbitFeed from "../../components/FameorbitFeed";
 import {FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
@@ -19,11 +19,21 @@ import NewReviewButton from "../../components/NewReviewButton";
 import {SearchCategory} from "../../components/SearchCategory";
 import ProfilePicture from "../../components/ProfilePicture";
 import PhonebookModal from "../../components/PhonebookModal";
+import {BottomSheetModal, BottomSheetModalProvider} from "@gorhom/bottom-sheet";
+import {RadioButton} from "react-native-paper";
+import ReviewableSearch from "../../components/ReviewableSearch";
 
 
 export default function SearchScreen(props) {
     const [searchText, setSearchText] = useState('');
+
     const navigation = useNavigation();
+
+    const bottomSheetModalRef = useRef(null);
+    const handlePresentPress = () => bottomSheetModalRef.current.present()
+    const handleSheetChanges = useCallback((index) => {
+        console.log('handleSheetChanges', index);
+    }, []);
 
     useEffect(() => {
         navigation.setOptions({
@@ -41,7 +51,7 @@ export default function SearchScreen(props) {
             },
             headerRight: () => (
                 <Pressable
-                    // onPress={onSubmitPress}
+                    onPress={handlePresentPress}
                     style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
@@ -67,8 +77,13 @@ export default function SearchScreen(props) {
 
     return (
         <SafeAreaView style={styles.contentContainer}>
-            <Feed/>
+            <FameorbitFeed/>
             <NewReviewButton/>
+            <ReviewableSearch
+                bottomSheetModalRef={bottomSheetModalRef}
+                handleSheetChanges={handleSheetChanges}
+            />
+
         </SafeAreaView>
     )
 };

@@ -1,10 +1,11 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import NewReviewScreen from '../screens/NewReview';
+import NewReviewScreen from '../screens/NewReviewScreen';
 import ReviewScreen from "../screens/ReviewScreen";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import SearchCategory from "../components/SearchCategory/SearchPage";
+import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +24,7 @@ export function ReviewNavigation(props) {
                 }}
             />
             <Stack.Screen
-                name={'NewReview'}
+                name={'NewReviewScreen'}
                 component={NewReviewScreen}
                 options={{
                     headerShown: false,
@@ -35,6 +36,13 @@ export function ReviewNavigation(props) {
                 options={{
                     headerShown: false,
                     animation: "fade_from_bottom",
+                }}
+            />
+            <Stack.Screen
+                name={'ReviewableProfileScreen'}
+                component={ReviewableProfileScreen}
+                options={{
+                    headerShown: false,
                 }}
             />
         </Stack.Navigator>

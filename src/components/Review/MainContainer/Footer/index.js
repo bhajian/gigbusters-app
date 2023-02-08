@@ -4,6 +4,7 @@ import { API, graphqlOperation, Auth } from 'aws-amplify';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
+import Colors from "../../../../constants/Colors";
 
 const Footer = ({ tweet }) => {
 

@@ -1,13 +1,13 @@
 import React from "react";
 import {FlatList, StyleSheet} from "react-native";
-import Reviewable from "../Reviewable";
 import tipoffs from "../../../assets/data/tipoffs";
+import Review from "../Review";
 
-export default function Feed() {
+export default function ProfileReviews() {
     return (
         <FlatList
             data={tipoffs}
-            renderItem={({item}) => <Reviewable tipoff={item} />}
+            renderItem={({item}) => <Review tipoff={item} />}
             keyExtractor={(item) => item.id}
         />
     );

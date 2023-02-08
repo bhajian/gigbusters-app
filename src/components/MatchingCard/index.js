@@ -63,8 +63,8 @@ const MatchingCard = props => {
 
 const styles = StyleSheet.create({
     card: {
-        width: '100%',
-        height: '100%',
+        width: '97%',
+        height: '97%',
         borderRadius: 10,
         backgroundColor: '#fefefe',
         shadowColor: '#000',
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         textAlignVertical: 'bottom',
         fontSize: 20,
-        fontWeight: 'bold',
+        fontWeight: '500',
     },
     contentContainer: {
         width: '100%',

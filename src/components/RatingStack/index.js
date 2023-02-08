@@ -72,10 +72,6 @@ export default function RatingStack({ratings}) {
                 </View>
                 <Text style={styles.text}> {ratings.numberOfReplies} reviews</Text>
             </View>
-            <View style={styles.contentContainer}>
-                <AntDesign name="right" size={20} color={Colors.light.tint} />
-            </View>
-
         </View>
     );
 }
@@ -85,6 +81,9 @@ const styles = StyleSheet.create({
         marginRight: 5,
         flexDirection: 'row',
         width: '100%',
+    },
+    ratingStackContainer: {
+        width: '60%'
     },
     numberContainer: {
         paddingTop: 5,

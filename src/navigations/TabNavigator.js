@@ -32,7 +32,6 @@ const TabNavigator = props => {
                     />
 
                 )}
-
             </Tab.Screen>
             <Tab.Screen
                 name={'Match'}

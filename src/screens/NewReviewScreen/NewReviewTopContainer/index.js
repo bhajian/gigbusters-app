@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
     StyleSheet,
     TouchableOpacity,
     View,
-    Text, TextInput,
+    Text, TextInput, Button,
 } from 'react-native';
 import Colors from '../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -12,9 +12,11 @@ import { Ionicons} from "@expo/vector-icons";
 import ReviewTypePicker from "../../../components/ReviewTypePicker";
 import {SearchCategory} from "../../../components/SearchCategory";
 import CustomInput from "../../../components/CustomInput";
+import SocialNetworkSelector from "../SocialNetworkSelector";
+import {BottomSheetModal, BottomSheetModalProvider} from "@gorhom/bottom-sheet";
 
 
-export default function NewReviewTopContainer({contact, pickImage, navigation}) {
+export default function NewReviewTopContainer({contact, pickImage, navigation, bottomSheetModalRef}) {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('phone');
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -25,16 +27,19 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
 
     }, []);
 
+    const handlePresentPress = () => bottomSheetModalRef.current.present()
+
+
     return (
         <View style={styles.topContainer}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerLeft}>
                     <TouchableOpacity
                         onPress={() => navigation.goBack()}
-                        style={styles.closeButton}>
-                        <View style={styles.closeButton}>
-                            <FontAwesome name="chevron-left" style={styles.closeIcon}/>
-                            <Text style={styles.closeIcon}>  </Text>
+                        style={styles.backButton}>
+                        <View style={styles.backButton}>
+                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
+                            <Text style={styles.backIcon}>  </Text>
                         </View>
                     </TouchableOpacity>
                     <UserAvatar
@@ -50,14 +55,22 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
             </View>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
-                    <ReviewTypePicker style={styles.reviewType} />
+                    {/*<ReviewTypePicker style={styles.reviewType} />*/}
+
+                    <TouchableOpacity
+                        onPress={handlePresentPress}
+                        style={styles.backButton}>
+                        <View style={styles.typeSelectButton}>
+                            <Ionicons name="ios-share-social-sharp" size={30} color="white"/>
+                        </View>
+                    </TouchableOpacity>
                     <SearchCategory style={styles.searchCategory} navigation={navigation} />
                 </View>
-                <View style={styles.accoountContainer}>
+                <View style={styles.accountContainer}>
                     <TextInput
                         value={value}
                         onChangeText={setValue}
-                        style={styles.accoountInput}
+                        style={styles.accountInput}
                     />
                 </View>
             </View>
@@ -66,16 +79,9 @@ export default function NewReviewTopContainer({contact, pickImage, navigation}) 
 }
 
 const styles = StyleSheet.create({
-    searchInput: {
-        flexDirection: "row",
-        marginHorizontal: 7,
-        width: '80%',
-        backgroundColor: '#eae8e8',
-        borderRadius: 10,
-    },
     headerExtensionContainer: {
         width: '100%',
-        padding: 15,
+        padding: 10,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },
@@ -86,9 +92,17 @@ const styles = StyleSheet.create({
     },
     accoountContainer: {
         flexDirection: 'row',
-        marginVertical: 10,
+        marginTop: 10,
     },
-    accoountInput: {
+    typeSelectButton: {
+        backgroundColor: Colors.light.tint,
+        width: 45,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 10
+    },
+    accountInput: {
         backgroundColor: Colors.light.grey,
         padding: 10,
         alignItems: 'center',
@@ -110,17 +124,20 @@ const styles = StyleSheet.create({
         paddingStart: 5,
         paddingEnd: 10,
     },
-    closeButton: {
+    backButton: {
         flexDirection: 'row',
         marginTop: 7,
         paddingEnd: 10,
     },
-    closeIcon: {
+    backIcon: {
         fontSize: 17,
         color: Colors.light.tint,
     },
     contactName: {
-        padding: 10,
+        paddingStart: 10,
+        fontSize: 18,
+        fontWeight: '500',
+        alignSelf: 'center'
     },
     button: {
         backgroundColor: Colors.light.tint,
@@ -137,61 +154,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
     },
-    ratingContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between'
-    },
-    text: {
-        paddingVertical: 10,
-        marginHorizontal: 4,
-        fontSize: 25,
-        textAlignVertical: 'bottom',
-    },
-    inputsContainer: {
-        marginLeft: 5,
-        backgroundColor: '#e9eff6',
-    },
-    reviewInput: {
-        height: 150,
-        maxHeight: 300,
-        fontSize: 20,
-        padding: 5,
-    },
-    pickImage: {
-        // borderWidth: 1,
-        // borderColor: Colors.light.tint,
-        borderRadius: 5,
-        marginVertical: 10,
-        marginHorizontal: 2,
-    },
-    settingText: {
-        fontSize: 15,
-        marginVertical: 10,
-    },
-    imageContainer: {
-        width: '100%',
-        // height: 150,
-        flexDirection: 'row',
-    },
-    newMessageSetting: {
-        bottom: 0,
-        flexDirection: 'row',
-        margin: 5,
-
-    },
     topContainer: {
         backgroundColor: '#ffffff',
-        // height: 125,
         width: '100%',
-    },
-    privateSwitch: {
-        transform: [{scaleX: 0.7}, {scaleY: 0.7}],
-        marginTop: 5,
     },
     reviewType:{
         width: '15%'
     },
     searchCategory:{
         width: '75%'
-    }
+    },
+    bottomSheetContainer: {
+        flex: 1,
+        padding: 24,
+        justifyContent: 'center',
+        backgroundColor: 'grey',
+    },
+    contentContainer: {
+        flex: 1,
+        alignItems: 'center',
+    },
 });

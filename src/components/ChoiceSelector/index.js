@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, {Component, useState} from "react";
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
 import { ListItem, SearchBar } from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Colors from "../../constants/Colors";
 // import filter from "lodash.filter";
 
 const DATA = [
@@ -55,34 +56,60 @@ const DATA = [
     },
 ];
 
-const Item = ({ id, title }) => {
-    return (
-        <TouchableOpacity
-            key={id}
-            onPress={() => {}}
-            style={styles.buttonSelector}>
-            <Text style={styles.buttonText}>{title}</Text>
-        </TouchableOpacity>
-    );
-};
-
 class ChoiceSelector extends Component {
     constructor(props) {
         super(props);
+        DATA.map((item, i) => {
+            item.key = i
+            item.backgroundColor = Colors.light.grey
+            item.textColor = '#000'
+        })
+
         this.state = {
             loading: false,
             data: DATA,
             error: null,
-            searchValue: "",
-        };
-        this.arrayholder = DATA;
+            selectedValue: "",
+        }
+    }
+
+    changeColor = key => {
+        let data = JSON.parse(JSON.stringify(this.state.data))
+        let selectedValue = ''
+        for (let x = 0; x < this.state.data.length; x++) {
+            if (this.state.data[x].key == key) {
+                data[x].backgroundColor = Colors.light.tint
+                data[x].textColor = '#fff'
+                selectedValue = data[x].title
+            }else {
+                data[x].backgroundColor = Colors.light.grey
+                data[x].textColor = '#000'
+            }
+            this.setState({
+                data: data,
+                selectedValue: selectedValue
+            })
+        }
+        console.log(selectedValue)
     }
 
     render() {
         return (
             <View style={styles.container}>
                 {this.state.data.map((item, i) => {
-                    return(Item(item))
+                    return(
+                        <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                                this.setState({
+                                    selectedValue: item.title
+                                })
+                                this.changeColor(i)
+                            }}
+                            style={[styles.buttonSelector, {backgroundColor: item.backgroundColor}]}>
+                            <Text style={{color: item.textColor}}>{item.title}</Text>
+                        </TouchableOpacity>
+                    )
                 })}
             </View>
         );
@@ -102,13 +129,9 @@ const styles = StyleSheet.create({
         width: '90%'
     },
     buttonSelector:{
-        backgroundColor: '#bfbfbf',
         marginHorizontal: 3,
         marginVertical: 3,
         padding: 5,
         borderRadius: 5,
     },
-    buttonText: {
-        color: '#FFFFFF'
-    }
 });

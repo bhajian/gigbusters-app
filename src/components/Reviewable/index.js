@@ -4,11 +4,12 @@ import PhotoContainer from "./PhotoContainer";
 import IdContainer from "./IdContainer";
 import MainContainer from "./MainContainer";
 import Footer from "./Footer";
+import {useNavigation} from "@react-navigation/native";
 
 export default function Reviewable({tipoff}) {
-
+    const navigation = useNavigation();
     async function onItemPressed() {
-        console.log('Iam pressed!')
+        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoff});
     }
 
     return (

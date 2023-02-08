@@ -22,8 +22,13 @@ export default function MainContainer({review}) {
                     <Text style={styles.text} >Personal Trainer</Text>
                 </View>
             </View>
-            <View style={styles.contentContainer}>
-                <RatingStack ratings={review}/>
+            <View style={styles.mainContainer}>
+                <View style={styles.ratingStackContainer}>
+                    <RatingStack ratings={review}/>
+                </View>
+                <View style={styles.contentContainer}>
+                    <AntDesign name="right" size={20} color={Colors.light.tint} />
+                </View>
             </View>
         </View>
     );
@@ -32,6 +37,14 @@ export default function MainContainer({review}) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
+        flexDirection: 'columns'
+    },
+    mainContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    ratingStackContainer: {
+        width: '90%'
     },
     infoContainer: {
         width: '100%',
@@ -49,5 +62,6 @@ const styles = StyleSheet.create({
         marginTop: 1,
         marginBottom: 2,
         color: '#000',
-    }
+    },
+
 });

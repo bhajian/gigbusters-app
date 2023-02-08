@@ -12,7 +12,7 @@ export function LocationSelector({}) {
     function onPress() {
         navigation.navigate('LocationSelectorScreen',{
             // Passing params to NESTED navigator screen:
-            screen: 'NewReview',
+            screen: 'NewReviewScreen',
             params: {  },
         });
     };

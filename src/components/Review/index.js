@@ -3,7 +3,7 @@ import {Image, StyleSheet, View} from "react-native";
 import LeftContainer from "./LeftContainer";
 import MainContainer from "./MainContainer";
 
-export default function TipOff({tipoff}) {
+export default function Review({tipoff}) {
     return (
         <View style={styles.container}>
             <LeftContainer
