@@ -16,11 +16,7 @@ import {FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-
 import Colors from "../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
 import NewReviewButton from "../../components/NewReviewButton";
-import {SearchCategory} from "../../components/SearchCategory";
 import ProfilePicture from "../../components/ProfilePicture";
-import PhonebookModal from "../../components/PhonebookModal";
-import {BottomSheetModal, BottomSheetModalProvider} from "@gorhom/bottom-sheet";
-import {RadioButton} from "react-native-paper";
 import ReviewableSearch from "../../components/ReviewableSearch";
 
 
@@ -32,7 +28,7 @@ export default function SearchScreen(props) {
     const bottomSheetModalRef = useRef(null);
     const handlePresentPress = () => bottomSheetModalRef.current.present()
     const handleSheetChanges = useCallback((index) => {
-        console.log('handleSheetChanges', index);
+
     }, []);
 
     useEffect(() => {
@@ -83,7 +79,6 @@ export default function SearchScreen(props) {
                 bottomSheetModalRef={bottomSheetModalRef}
                 handleSheetChanges={handleSheetChanges}
             />
-
         </SafeAreaView>
     )
 };

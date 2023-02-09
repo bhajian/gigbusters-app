@@ -69,9 +69,9 @@ const HomeScreen = props => {
     };
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.criteriaContainer}>
-                <SearchCategory navigation={navigation} />
+                {/*<SearchCategory navigation={navigation} />*/}
                 <ChoiceSelector/>
                 <View style={styles.locationContainer}>
                     <Text>Within: {locationMax} km of  </Text>
@@ -102,13 +102,13 @@ const HomeScreen = props => {
                 </View>
             </View>
             <View style={styles.activityContainer}>
-                <FlatList
-                    data={users}
-                    renderItem={({item}) => <ReferralReviewItem item={item} />}
-                    keyExtractor={item => item.id}
-                />
+                {/*<FlatList*/}
+                {/*    data={users}*/}
+                {/*    renderItem={({item}) => <ReferralReviewItem item={item} />}*/}
+                {/*    keyExtractor={item => item.id}*/}
+                {/*/>*/}
             </View>
-        </View>
+        </ScrollView>
     );
 };
 

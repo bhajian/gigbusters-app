@@ -11,9 +11,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import { Ionicons} from "@expo/vector-icons";
 import ReviewTypePicker from "../../../components/ReviewTypePicker";
 import {SearchCategory} from "../../../components/SearchCategory";
-import CustomInput from "../../../components/CustomInput";
-import SocialNetworkSelector from "../SocialNetworkSelector";
-import {BottomSheetModal, BottomSheetModalProvider} from "@gorhom/bottom-sheet";
+import Feather from "react-native-vector-icons/Feather";
 
 
 export default function NewReviewTopContainer({contact, pickImage, navigation, bottomSheetModalRef}) {
@@ -37,10 +35,8 @@ export default function NewReviewTopContainer({contact, pickImage, navigation, b
                     <TouchableOpacity
                         onPress={() => navigation.goBack()}
                         style={styles.backButton}>
-                        <View style={styles.backButton}>
-                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
-                            <Text style={styles.backIcon}>  </Text>
-                        </View>
+                        <FontAwesome name="chevron-left" style={styles.backIcon}/>
+                        <Text style={styles.backIcon}>  Back </Text>
                     </TouchableOpacity>
                     <UserAvatar
                         size={40}
@@ -55,23 +51,20 @@ export default function NewReviewTopContainer({contact, pickImage, navigation, b
             </View>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
-                    {/*<ReviewTypePicker style={styles.reviewType} />*/}
-
                     <TouchableOpacity
-                        onPress={handlePresentPress}
-                        style={styles.backButton}>
+                        onPress={handlePresentPress}>
                         <View style={styles.typeSelectButton}>
-                            <Ionicons name="ios-share-social-sharp" size={30} color="white"/>
+                            <Feather name="search" size={30} color="white"/>
                         </View>
                     </TouchableOpacity>
-                    <SearchCategory style={styles.searchCategory} navigation={navigation} />
-                </View>
-                <View style={styles.accountContainer}>
                     <TextInput
                         value={value}
                         onChangeText={setValue}
                         style={styles.accountInput}
                     />
+                </View>
+                <View style={styles.accountContainer}>
+
                 </View>
             </View>
         </View>
@@ -104,10 +97,11 @@ const styles = StyleSheet.create({
     },
     accountInput: {
         backgroundColor: Colors.light.grey,
+        marginHorizontal: 10,
         padding: 10,
         alignItems: 'center',
         alignContent: 'center',
-        width: '100%',
+        width: '85%',
         borderRadius: 5
     },
     headerContainer: {
@@ -128,6 +122,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginTop: 7,
         paddingEnd: 10,
+        alignItems: 'center'
     },
     backIcon: {
         fontSize: 17,

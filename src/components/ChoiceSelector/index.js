@@ -16,43 +16,43 @@ const DATA = [
     },
     {
         id: "3",
-        title: "C++",
+        title: "Lawn mower",
     },
     {
         id: "4",
-        title: "Java",
+        title: "Software Engineer",
     },
     {
         id: "5",
-        title: "Python",
+        title: "Snow Plow",
     },
     {
         id: "6",
-        title: "CP",
+        title: "Moving",
     },
     {
         id: "7",
-        title: "ReactJs",
+        title: "Sales Rep",
     },
     {
         id: "8",
-        title: "NodeJs",
+        title: "Cashier",
     },
     {
         id: "9",
-        title: "MongoDb",
+        title: "Cooking",
     },
     {
         id: "10",
-        title: "ExpressJs",
+        title: "Cleaning",
     },
     {
         id: "11",
-        title: "PHP",
+        title: "Personal Trainer",
     },
     {
         id: "12",
-        title: "MySql",
+        title: "Tennis Coach",
     },
 ];
 

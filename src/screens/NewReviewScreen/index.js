@@ -44,7 +44,7 @@ export default function NewReviewScreen({navigation, route}) {
     const snapPoints = useMemo(() => ['25%', '50%'], []);
     const bottomSheetModalRef = useRef(null);
     const handleSheetChanges = useCallback((index) => {
-        console.log('handleSheetChanges', index);
+
     }, []);
 
     // const navigation = useNavigation();
