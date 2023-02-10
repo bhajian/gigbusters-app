@@ -90,15 +90,14 @@ export default function ReviewableSearch({bottomSheetModalRef, handleSheetChange
                         <View style={styles.ratingContainer}>
                             <Text style={styles.ratingText}>Rating: </Text>
                             <RatingBar
-                                initialRating={2.5}
+                                initialRating={3}
                                 minRating={1}
                                 direction="horizontal"
-                                allowHalfRating
                                 unratedColor={Colors.light.grey}
                                 itemCount={5}
                                 itemPadding={1}
-                                itemSize={35}
-                                itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={35} />}
+                                itemSize={30}
+                                itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={30} />}
                                 onRatingUpdate={setRating}
                             />
                         </View>
@@ -127,13 +126,14 @@ const styles = StyleSheet.create({
 
     },
     mainContainer: {
-
+        width: '100%',
+        flexDirection: 'column',
+        // backgroundColor: 'red'
     },
     locationContainer: {
-        width: '80%',
-        marginTop: 5,
-        backgroundColor: '#ffffff',
+        backgroundColor: '#fff',
         borderColor: '#bdb8b8',
+        marginVertical: 10,
         marginHorizontal: 10,
         height: 120,
         borderWidth: 0,
@@ -144,11 +144,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        marginHorizontal: 10,
     },
     ratingText: {
         paddingVertical: 5,
-        marginHorizontal: 4,
-        fontSize: 25,
+        fontSize: 20,
         fontWeight: '500',
         textAlignVertical: 'bottom',
     },

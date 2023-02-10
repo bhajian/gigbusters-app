@@ -10,19 +10,22 @@ const styles = StyleSheet.create({
         height: '95%',
         backgroundColor: 'white',
         flexDirection: 'row',
+
     },
     textInputContainer:{
         width: ScreenWidth - 100,
         height: 40,
         borderRadius: 5,
         paddingStart: 5,
-        backgroundColor: '#eaebf6'
+        backgroundColor: '#eaebf6',
+
     },
     closeButton: {
-        width: '15%',
+        width: '20%',
         marginLeft: 5,
         marginTop: 7,
         paddingEnd: 10,
+        alignItems: 'center',
     },
     closeText: {
         color: Colors.light.tint,

@@ -27,11 +27,11 @@ export default function ReviewableProfileScreen({navigation, route}) {
             <View>
                 <ReviewableProfileTopContainer reviewable={contact.to} navigation={navigation}/>
             </View>
-            <ScrollView >
+            <View >
                 <View style={styles.reviewsList}>
                     <ProfileReviews/>
                 </View>
-            </ScrollView>
+            </View>
         </SafeAreaView>
     );
 }
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
+        // padding: 2,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },

@@ -5,8 +5,10 @@ import SearchCategory from "../components/SearchCategory/SearchPage";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
-import RequestReferralScreen from "../screens/ReferralRequest";
-import RequestCompletedScreen from "../screens/RequestCompletedScreen";
+import RequestReferralScreen from "../screens/HomeScreen/ReferralRequest";
+import RequestCompletedScreen from "../screens/HomeScreen/RequestCompletedScreen";
+import ReferralActivityScreen from "../screens/ReferralActivityScreen";
+import ReferralItemScreen from "../screens/ReferralActivityScreen/ReferralItemScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +52,20 @@ export function HomeNavigation(props) {
             <Stack.Screen
                 name={'RequestReferralCompletedScreen'}
                 component={RequestCompletedScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name={'ReferralActivityScreen'}
+                component={ReferralActivityScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name={'ReferralItemScreen'}
+                component={ReferralItemScreen}
                 options={{
                     headerShown: false,
                 }}

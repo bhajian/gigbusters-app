@@ -7,18 +7,22 @@ const styles = StyleSheet.create({
     },
     criteriaContainer: {
         backgroundColor: '#ffffff',
-        borderBottomColor: '#bdb8b8',
-        borderBottomWidth: 2,
+        borderBottomColor: '#d3cfcf',
+        borderBottomWidth: 1,
         padding: 10,
     },
     activityContainer: {
-        marginTop: 30,
+        marginTop: 20,
         backgroundColor: '#ffffff',
         borderColor: '#d3cfcf',
         marginHorizontal: 15,
         height: 200,
-        borderWidth: 2,
+        borderWidth: 1,
         borderRadius: 15,
+        padding: 5,
+    },
+    activityHeaderContainer: {
+        flexDirection: 'row',
         padding: 5,
     },
     sliderContainer: {

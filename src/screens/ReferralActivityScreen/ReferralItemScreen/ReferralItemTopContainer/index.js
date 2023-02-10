@@ -5,16 +5,17 @@ import {
     View,
     Text, TextInput,
 } from 'react-native';
-import Colors from '../../../constants/Colors';
+import Colors from '../../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
-import RatingStack from "../../../components/RatingStack";
+import {useNavigation} from "@react-navigation/native";
 
-export default function ReviewableProfileTopContainer({reviewable, navigation}) {
+export default function ReferralItemTopContainer({reviewable}) {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('phone');
     const [searchQuery, setSearchQuery] = React.useState('');
+    const navigation = useNavigation();
 
     useEffect(() => {
 
@@ -32,16 +33,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                             <Text style={styles.closeIcon}> </Text>
                         </View>
                     </TouchableOpacity>
-                    <UserAvatar
-                        size={35}
-                        active
-                        src={reviewable.image}
-                    />
-                    <Text style={styles.contactName}>{reviewable.name}</Text>
                 </View>
-                <TouchableOpacity style={styles.shareButton}>
-                    <EvilIcons name={"share-google"} size={30} color={Colors.light.tint}/>
-                </TouchableOpacity>
             </View>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
@@ -55,9 +47,6 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                         <View style={styles.info}>
                             <Text style={styles.textTag} >Personal Trainer</Text>
                         </View>
-                    </View>
-                    <View style={styles.ratingStackContainer}>
-                        <RatingStack ratings={reviewable}/>
                     </View>
                 </View>
             </View>

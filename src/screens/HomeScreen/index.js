@@ -3,7 +3,7 @@ import {View, Text, ImageBackground, Pressable, FlatList, ScrollView,} from 'rea
 import styles from './styles';
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import {FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
+import {FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import PhonebookModal from "../../components/PhonebookModal";
 import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
@@ -12,13 +12,21 @@ import ChoiceSelector from "../../components/ChoiceSelector";
 import {LocationSelector} from "../../components/LocationSearch";
 import Slider from "@react-native-community/slider";
 import users from '../../../assets/data/users';
-import ReferralReviewItem from "../../components/ReferralRequestItem";
+import ReferralRequestItem from "../../components/ReferralRequestItem";
 
 const HomeScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationMax, setLocationMax] = useState(50);
     const [priceMax, setPriceMax] = useState(20);
-    const navigation = useNavigation();
+    const navigation = useNavigation()
+
+    function referralActivityClickHandler() {
+        navigation.navigate('ReferralActivityScreen');
+    }
+
+    function onSubmitPress() {
+        navigation.navigate('RequestReferralScreen')
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -63,11 +71,6 @@ const HomeScreen = props => {
         })
     }, [navigation]);
 
-    function onSubmitPress() {
-        navigation.navigate('RequestReferralCompletedScreen');
-        // console.log('Hello')
-    };
-
     return (
         <ScrollView style={styles.container}>
             <View style={styles.criteriaContainer}>
@@ -90,7 +93,7 @@ const HomeScreen = props => {
                 <View style={styles.sliderContainer}>
                     <Text>Max Price/hr: {priceMax} $$  </Text>
                     <Slider
-                        value={5}
+                        value={priceMax}
                         onValueChange={setPriceMax}
                         step={1}
                         minimumTrackTintColor={Colors.light.tint}
@@ -102,9 +105,12 @@ const HomeScreen = props => {
                 </View>
             </View>
             <View style={styles.activityContainer}>
-                <Text style={{margin: 5}}>Activities:</Text>
-                <ReferralReviewItem item={users[0]} />
-                <ReferralReviewItem item={users[1]} />
+                <View style={styles.activityHeaderContainer}>
+                    <Ionicons name="file-tray-full-outline" size={25} color={Colors.dark.grey}/>
+                    <Text style={{margin: 5, color: Colors.dark.grey}}>Referral Activities</Text>
+                </View>
+                <ReferralRequestItem handler={referralActivityClickHandler} item={users[0]} />
+                <ReferralRequestItem handler={referralActivityClickHandler} item={users[1]} />
             </View>
         </ScrollView>
     );

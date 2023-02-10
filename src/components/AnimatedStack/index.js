@@ -122,7 +122,7 @@ const AnimatedStack = props => {
             />
             <Animated.Image
               source={Nope}
-              style={[styles.like, {right: 10}, nopeStyle]}
+              style={[styles.like, {right: 10,}, nopeStyle]}
               resizeMode="contain"
             />
             {renderItem({item: currentProfile})}
