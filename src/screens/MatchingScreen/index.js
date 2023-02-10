@@ -24,24 +24,13 @@ const MatchingScreen = () => {
   useEffect(() => {
     navigation.setOptions({
       tabBarActiveTintColor: Colors.light.tint,
-      // headerLargeTitle: true,
       tabBarIcon: ({color}) => (
-          <Fontisto name="react" size={25} color={color}/>
+          <Octicons name="stack" size={25} color={color}/>
       ),
       headerTitle: () => (
           <View style={{marginHorizontal: 15}}>
-              {/*<Octicons*/}
-              {/*    name="cross-reference"*/}
-              {/*    size={25}*/}
-              {/*    color={Colors.light.tint}*/}
-              {/*    style={{marginRight: 15}}*/}
-              {/*/>*/}
           </View>
       ),
-      headerSearchBarOptions: {
-        placeholder: "Search ..",
-        // onFocus: ()=>{navigation.navigate('SearchCategory')}
-      },
       headerRight: () => (
           <Pressable
               // onPress={handlePresentPress}
