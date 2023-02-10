@@ -16,7 +16,7 @@ const MatchingCard = props => {
                     active
                     src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
                 />
-                <Text style={styles.contactName}>Matthew broh</Text>
+                <Text style={styles.contactName}>Matthew Rathier</Text>
             </View>
             <View style={styles.contentContainer}>
                 <ImageBackground
@@ -63,8 +63,8 @@ const MatchingCard = props => {
 
 const styles = StyleSheet.create({
     card: {
-        width: '97%',
-        height: '97%',
+        width: '100%',
+        height: '100%',
         borderRadius: 10,
         backgroundColor: '#fefefe',
         shadowColor: '#000',
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.36,
         shadowRadius: 6.68,
-        elevation: 15,
+        elevation: 55,
     },
     connectButton: {
         backgroundColor: Colors.light.tint,
@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     contactName: {
+        margin: 10,
         paddingTop: 10,
         paddingLeft: 10,
         textAlignVertical: 'bottom',
@@ -101,14 +102,15 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     contentContainer: {
-        width: '100%',
+        width: '95%',
+        alignSelf: 'center',
         height: '100%',
-        borderRadius: 10,
     },
     image: {
         width: '100%',
-        // height: '70%',
-        borderRadius: 5,
+        // height: '60%',
+        // borderRadius: 15,
+        // borderWidth: 0.5,
         // overflow: 'hidden',
     },
     cardInner: {
@@ -126,17 +128,18 @@ const styles = StyleSheet.create({
         lineHeight: 25,
     },
     tagsContainer: {
-        padding: 10,
-        // width: '100%',
+        paddingVertical: 10,
+        width: '100%',
         flexDirection: 'row',
+        justifyContent: 'flex-start'
     },
     infoContainer: {
-        padding: 10,
+        padding: 5,
         justifyContent: 'flex-start',
         alignContent: 'flex-start'
     },
     tag: {
-        borderRadius: 50,
+        borderRadius: 10,
         backgroundColor: Colors.light.tint,
         marginHorizontal: 2
     },

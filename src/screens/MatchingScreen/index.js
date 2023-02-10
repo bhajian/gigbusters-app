@@ -1,9 +1,14 @@
-import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, Text, Pressable} from 'react-native';
 import MatchingCard from '../../components/MatchingCard';
 import users from '../../../assets/data/users';
 
 import AnimatedStack from '../../components/AnimatedStack';
+import Colors from "../../constants/Colors";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import {FontAwesome, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
+import ProfilePicture from "../../components/ProfilePicture";
+import {useNavigation} from "@react-navigation/native";
 
 const MatchingScreen = () => {
   const onSwipeLeft = user => {
@@ -13,6 +18,57 @@ const MatchingScreen = () => {
   const onSwipeRight = user => {
     console.warn('swipe right: ', user.name);
   };
+
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    navigation.setOptions({
+      tabBarActiveTintColor: Colors.light.tint,
+      // headerLargeTitle: true,
+      tabBarIcon: ({color}) => (
+          <Fontisto name="react" size={25} color={color}/>
+      ),
+      headerTitle: () => (
+          <View style={{marginHorizontal: 15}}>
+              {/*<Octicons*/}
+              {/*    name="cross-reference"*/}
+              {/*    size={25}*/}
+              {/*    color={Colors.light.tint}*/}
+              {/*    style={{marginRight: 15}}*/}
+              {/*/>*/}
+          </View>
+      ),
+      headerSearchBarOptions: {
+        placeholder: "Search ..",
+        // onFocus: ()=>{navigation.navigate('SearchCategory')}
+      },
+      headerRight: () => (
+          <Pressable
+              // onPress={handlePresentPress}
+              style={({pressed}) => ({
+                opacity: pressed ? 0.5 : 1,
+                marginRight: 10,
+              })}>
+            <FontAwesome
+                name="envelope-o"
+                size={25}
+                color={Colors.light.tint}
+                style={{marginHorizontal: 15}}
+            />
+          </Pressable>
+      ),
+      headerLeft: () => (
+          <View style={{marginHorizontal: 15}}>
+              <MaterialCommunityIcons
+                  name="bell-ring-outline"
+                  size={25}
+                  color={Colors.light.tint}
+                  style={{marginRight: 15}}
+              />
+          </View>
+      ),
+    })
+  }, [navigation]);
 
   return (
       <View style={styles.pageContainer}>

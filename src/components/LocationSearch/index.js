@@ -4,6 +4,7 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import {useNavigation} from "@react-navigation/native";
 import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
+import Colors from "../../constants/Colors";
 
 export function LocationSelector({}) {
     const [location, setLocation] = useState('');
@@ -45,14 +46,13 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     searchInput: {
-        backgroundColor: '#eaebf6',
-        width: '90%',
-        borderColor: '#e8e8e8',
-        borderWidth: 1,
+        backgroundColor: Colors.light.grey,
+        borderColor: '#c9c6c6',
+        borderWidth: 0.5,
         borderTopWidth: 0,
         borderLeftWidth: 0,
         borderRightWidth: 0,
-        borderRadius: 10,
+        borderRadius: 5,
         marginVertical: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',

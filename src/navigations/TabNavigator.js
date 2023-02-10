@@ -8,6 +8,7 @@ import {FontAwesome5, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
 import {HomeNavigation} from "./HomeNavigation";
 import MatchingScreen from "../screens/MatchingScreen";
+import {ProfileNavigation} from "./ProfileNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -65,7 +66,7 @@ const TabNavigator = props => {
                     ),
                 }}>
                 {screenProps => (
-                    <ProfileScreen
+                    <ProfileNavigation
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />

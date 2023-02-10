@@ -102,11 +102,9 @@ const HomeScreen = props => {
                 </View>
             </View>
             <View style={styles.activityContainer}>
-                {/*<FlatList*/}
-                {/*    data={users}*/}
-                {/*    renderItem={({item}) => <ReferralReviewItem item={item} />}*/}
-                {/*    keyExtractor={item => item.id}*/}
-                {/*/>*/}
+                <Text style={{margin: 5}}>Activities:</Text>
+                <ReferralReviewItem item={users[0]} />
+                <ReferralReviewItem item={users[1]} />
             </View>
         </ScrollView>
     );

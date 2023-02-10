@@ -60,7 +60,6 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
                 backdropComponent={renderBackdrop}
             >
                 <BottomSheetView
-                    style={styles.contentContainerStyle}
                     enableFooterMarginAdjustment={true}
                     style={styles.bottomSheetContentContainer}>
                     <View style={styles.titleContainer}>

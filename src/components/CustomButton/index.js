@@ -3,6 +3,8 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Entypo from "react-native-vector-icons/Entypo";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
 const CustomButton = ({
   onPress,
@@ -12,17 +14,24 @@ const CustomButton = ({
   fgColor,
   iconCategory,
   iconName,
+  iconStyle,
   style,
 }) => {
   const renderIcon = (iconCategory, iconName) => {
     if (iconCategory === 'Fontisto') {
-      return <Fontisto style={styles.icon} name={iconName} />;
+      return <Fontisto style={[styles.icon, iconStyle]} name={iconName} />;
+    }
+    if (iconCategory === 'Entypo') {
+      return <Entypo style={[styles.icon, iconStyle]} name={iconName} />;
+    }
+    if (iconCategory === 'MaterialCommunityIcons') {
+      return <MaterialCommunityIcons style={[styles.icon, iconStyle]} name={iconName} />;
     }
     if (iconCategory === 'FontAwesome5') {
-      return <FontAwesome5 style={styles.icon} name={iconName} />;
+      return <FontAwesome5 style={[styles.icon, iconStyle]} name={iconName} />;
     }
     if (iconCategory === 'FontAwesome') {
-      return <FontAwesome style={styles.icon} name={iconName} />;
+      return <FontAwesome style={[styles.icon, iconStyle]} name={iconName} />;
     }
   };
 
@@ -35,7 +44,7 @@ const CustomButton = ({
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor} : {},
       ]}>
-      {renderIcon(iconCategory, iconName)}
+
       <Text
         style={[
           styles.text,
@@ -44,20 +53,21 @@ const CustomButton = ({
         ]}>
         {text}
       </Text>
+      {renderIcon(iconCategory, iconName)}
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    // width: '100%',
     padding: 10,
     marginVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
     justifyContent: 'center',
-    height: 50
+
   },
   icon: {
     padding: 0,
@@ -68,16 +78,13 @@ const styles = StyleSheet.create({
   container_PRIMARY: {
     backgroundColor: '#ff6200',
   },
-
   container_SECONDARY: {
     borderColor: '#f89e7a',
     borderWidth: 2,
   },
-
   container_TERTIARY: {
 
   },
-
   text: {
     fontWeight: 'bold',
     color: 'white',

@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
     activityContainer: {
         marginTop: 30,
         backgroundColor: '#ffffff',
-        borderColor: '#bdb8b8',
+        borderColor: '#d3cfcf',
         marginHorizontal: 15,
-        height: 250,
+        height: 200,
         borderWidth: 2,
         borderRadius: 15,
         padding: 5,

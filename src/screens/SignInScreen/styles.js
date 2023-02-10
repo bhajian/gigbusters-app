@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
         maxHeight: 200,
     },
     components: {
+        width: '100%',
         marginTop: 25
     },
     socialButtons: {

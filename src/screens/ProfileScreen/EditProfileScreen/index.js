@@ -25,14 +25,6 @@ const EditProfileScreen = (props) => {
 
     }, []);
 
-
-
-
-
-
-
-
-
     const onEditEmailPressed = () => {
         navigation.navigate('EditEmail');
     };
@@ -40,12 +32,14 @@ const EditProfileScreen = (props) => {
     return (
         <ScrollView style={styles.container} >
             <View style={styles.topContainer} >
-                <UserAvatar size={100} name={name} src={image} />
-
+                <UserAvatar
+                    size={80}
+                    name="John doe"
+                    // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                />
             </View>
 
             <View style={styles.settingsContainer}>
-
                 <CustomSettingRow
                     name="Account ID"
                     value={accountId}
@@ -111,15 +105,6 @@ const EditProfileScreen = (props) => {
                     iconName="book"
                     editable={true}
                     multiline={true}
-                />
-            </View>
-
-            <View style={styles.bottomContainer}>
-                <CustomButton
-
-                    text="Save"
-                    bgColor={Colors.light.tint}
-                    fgColor="#FFFFFF"
                 />
             </View>
 

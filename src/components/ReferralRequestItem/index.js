@@ -5,7 +5,7 @@ export default function ReferralReviewItem({item}) {
     return (
         <View style={styles.container}>
             <Image source={{uri: item.image}} style={styles.image} />
-            <Text>
+            <Text style={styles.titleContainer}>
                 {item.name}
             </Text>
         </View>
@@ -21,7 +21,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         padding: 15,
-        borderBottomWidth: 0.5,
+        borderTopWidth: 0.5,
         borderColor: 'grey'
+    },
+    titleContainer: {
+        fontWeight: '500',
+        marginHorizontal: 10,
     }
 });
