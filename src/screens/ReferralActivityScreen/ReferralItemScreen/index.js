@@ -7,7 +7,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import people from "../../../../assets/data/tipoffs";
 import ReferralRequestItem from "../../../components/ReferralRequestItem";
 import ReferralItemTopContainer from "./ReferralItemTopContainer";
-export default function ReferralItemScreen({route}) {
+export default function ReferralItemScreen({route, item}) {
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationMax, setLocationMax] = useState(10);
     const [priceMax, setPriceMax] = useState(10);
@@ -20,7 +20,7 @@ export default function ReferralItemScreen({route}) {
     return (
         <View style={styles.container}>
             <View style={styles.topContainer}>
-                <ReferralItemTopContainer />
+                <ReferralItemTopContainer item = {item} />
             </View>
             <FlatList
                 data={people}

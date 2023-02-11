@@ -12,7 +12,7 @@ export default function App() {
   const [isUserLoggedIn, setUserLoggedIn] = useState('initializing');
   useEffect(() => {
     checkAuthState()
-        .then(() => {console.log('')})
+        .then(() => {})
         .catch(e => {
           console.error(e);
         });
@@ -20,7 +20,7 @@ export default function App() {
 
   async function checkAuthState() {
     try {
-      // const currentUser = await Auth.currentAuthenticatedUser()
+      const currentUser = await Auth.currentAuthenticatedUser()
       setUserLoggedIn('loggedIn')
     } catch (err) {
       setUserLoggedIn('loggedOut')

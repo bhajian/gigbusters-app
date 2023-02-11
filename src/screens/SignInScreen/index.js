@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Image, useWindowDimensions, ScrollView, Text} from 'react-native';
+import {View, Image, useWindowDimensions, ScrollView, Text, Alert} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Logo from '../../../assets/images/review.png';
 import styles from './styles';
@@ -9,18 +9,24 @@ import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {Auth} from 'aws-amplify';
 
 function SignInScreen(props) {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('b.hajian@gmail.com');
+    const [password, setPassword] = useState('Be200513!');
 
     const {height} = useWindowDimensions();
     const navigation = useNavigation();
 
     async function onSignInPressed() {
         try {
-            // await Auth.signIn(username, password);
+            const user = await Auth.signIn(username, password)
             props.updateAuthState('loggedIn');
         } catch (error) {
-            console.log('❌ Error signing in...', error);
+            console.log('❌ Error signing in...', error.message);
+            if(error.name !== 'InvalidParameterException'){
+                Alert.alert(error.message)
+            } else{
+                Alert.alert('Sorry Something went wrong or something is missing.')
+            }
+
         }
     }
 

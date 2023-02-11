@@ -14,7 +14,7 @@ export default function ReferralRequestItem({item, handler}) {
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>
                     <Image source={{uri: item.image}} style={styles.image} />
-                    <Text style={styles.titleContainer}>
+                    <Text style={styles.titleText}>
                         {item.name}
                     </Text>
                 </View>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    titleContainer: {
+    titleText: {
         fontWeight: '500',
         marginHorizontal: 10,
     },

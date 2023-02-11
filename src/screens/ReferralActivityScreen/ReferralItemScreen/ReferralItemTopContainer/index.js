@@ -3,7 +3,7 @@ import {
     StyleSheet,
     TouchableOpacity,
     View,
-    Text, TextInput,
+    Text, TextInput, Image,
 } from 'react-native';
 import Colors from '../../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -11,7 +11,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import {useNavigation} from "@react-navigation/native";
 
-export default function ReferralItemTopContainer({reviewable}) {
+export default function ReferralItemTopContainer({item}) {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('phone');
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -37,15 +37,26 @@ export default function ReferralItemTopContainer({reviewable}) {
             </View>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
+                    <View style={styles.leftContainer}>
+                        {/*<Image source={{uri: item.image}} style={styles.image} />*/}
+                        {/*<Text style={styles.titleText}>*/}
+                        {/*    {item.name}*/}
+                        {/*</Text>*/}
+                    </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
                             <Text style={styles.textTag} >Toronto</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >10$/hr</Text>
+                            <Text style={styles.textTag} >9AM-10PM</Text>
                         </View>
+                    </View>
+                    <View style={styles.infoContainer}>
                         <View style={styles.info}>
                             <Text style={styles.textTag} >Personal Trainer</Text>
+                        </View>
+                        <View style={styles.info}>
+                            <Text style={styles.textTag} >15$/hr</Text>
                         </View>
                     </View>
                 </View>

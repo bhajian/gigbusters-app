@@ -1,0 +1,15 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-fameorbitportal-dev-141714-authRole",
+      "UnauthRoleArn": "arn:aws:iam::341450653870:role/amplify-fameorbitportal-dev-141714-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::341450653870:role/amplify-fameorbitportal-dev-141714-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-fameorbitportal-dev-141714-deployment",
+      "UnauthRoleName": "amplify-fameorbitportal-dev-141714-unauthRole",
+      "StackName": "amplify-fameorbitportal-dev-141714",
+      "StackId": "arn:aws:cloudformation:us-east-1:341450653870:stack/amplify-fameorbitportal-dev-141714/0972f9c0-a265-11ed-a52c-123b6a4fc8d5",
+      "AmplifyAppId": "d17o6gmg8653tv"
+    }
+  }
+}

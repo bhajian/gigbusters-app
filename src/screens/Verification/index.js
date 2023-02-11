@@ -13,7 +13,7 @@ export default function ConfirmSignUp({navigation, route}) {
 
     async function resendConfirmationCode() {
         try {
-            // await Auth.resendSignUp(username);
+            await Auth.resendSignUp(username);
             console.log('code resent successfully');
         } catch (err) {
             console.log('error resending code: ', err);
@@ -26,7 +26,7 @@ export default function ConfirmSignUp({navigation, route}) {
 
     async function confirmSignUp() {
         try {
-            // await Auth.confirmSignUp(username, authCode);
+            await Auth.confirmSignUp(username, authCode);
             console.log('✅ Code confirmed');
             navigation.navigate('SignIn');
         } catch (error) {
