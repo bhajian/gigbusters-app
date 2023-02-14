@@ -8,11 +8,13 @@ import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
 import Lottie from 'lottie-react-native';
 import loadingAnim from './assets/animations/135788-happy-delivery.json'
 import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
+import {ProfileService} from "./src/backend/ProfileService";
 
 Amplify.configure(awsconfig);
 
 export default function App() {
     const [userStatus, setUserStatus] = useState('initializing')
+    const profileService = new ProfileService()
 
     useEffect(() => {
         checkAuthState()
@@ -26,6 +28,7 @@ export default function App() {
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
+            const profiles = await profileService.pullProfiles()
             setUserStatus('loggedIn')
         } catch (err) {
             setUserStatus('loggedOut')

@@ -11,7 +11,17 @@ import {ProfileService} from "../../backend/ProfileService";
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
     const [currentUser, setCurrentUser] = useState(null);
-    const [currentProfile, setCurrentProfile] = useState({});
+    const [currentProfile, setCurrentProfile] = useState({
+        name: 'John Doe',
+        accountNumber: '456-789-123',
+        email: {
+            email: 'john.doe@gmail.com',
+            verified: true
+        },
+        phone: {
+            phone: '+1(648)565-9988'
+        }
+    });
     const profileService = new ProfileService()
 
     useEffect(() => {
@@ -52,13 +62,13 @@ const ProfileScreen = (props) => {
                     {currentProfile.name}
                 </Text>
                 <Text style={styles.email} >
-                    Email: {(currentProfile & currentProfile.email ? currentProfile.email.email : "john.doe@gmail.com")}
+                    Email: {(currentProfile ? currentProfile.email.email : "")}
                 </Text>
                 <Text style={styles.phone} >
-                    Phone: {(currentProfile & currentProfile.phone ? currentProfile.phone.phone : "+1(648)565-9988")}
+                    Phone: {(currentProfile ? currentProfile.phone.phone : "")}
                 </Text>
                 <Text style={styles.accountNumber} >
-                    ID: {(currentProfile ? currentProfile.accountCode : "456-789-123")}
+                    ID: {(currentProfile ? currentProfile.accountCode : "")}
                 </Text>
             </View>
 
