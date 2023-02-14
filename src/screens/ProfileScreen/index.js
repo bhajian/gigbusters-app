@@ -6,22 +6,21 @@ import {useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
 import UserAvatar from 'react-native-user-avatar';
 import {LocationSelector} from "../../components/LocationSearch";
-import ReferralReviewItem from "../../components/ReferralRequestItem";
-import users from "../../../assets/data/users";
 import {ProfileService} from "../../backend/ProfileService";
 
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
     const [currentUser, setCurrentUser] = useState(null);
+    const [currentProfile, setCurrentProfile] = useState({});
     const profileService = new ProfileService()
 
     useEffect(() => {
-        setCurrentUserData().then(r => {})
+        getCurrentUserData().then(r => {})
     }, []);
 
-    async function setCurrentUserData() {
-
-        console.log(profileService.getProfiles())
+    async function getCurrentUserData() {
+        const profiles = profileService.getProfiles()
+        setCurrentProfile(profiles[0])
     }
 
     async function signOut() {
@@ -46,20 +45,20 @@ const ProfileScreen = (props) => {
             <View style={styles.topContainer} >
                 <UserAvatar
                     size={80}
-                    name="John doe"
+                    name={currentProfile.name}
                     // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
                 />
                 <Text style={styles.name} >
-                    {(currentUser ? currentUser.name : "John Doe")}
+                    {currentProfile.name}
                 </Text>
                 <Text style={styles.email} >
-                    Email: {(currentUser ? currentUser.email : "john.doe@gmail.com")}
+                    Email: {(currentProfile ? currentProfile.email.email : "john.doe@gmail.com")}
                 </Text>
                 <Text style={styles.phone} >
-                    Phone: {(currentUser ? currentUser.phone : "+1(648)565-9988")}
+                    Phone: {(currentProfile ? currentProfile.phone.phone : "+1(648)565-9988")}
                 </Text>
                 <Text style={styles.accountNumber} >
-                    ID: {(currentUser ? currentUser.accountId : "456-789-123")}
+                    ID: {(currentProfile ? currentProfile.accountCode : "456-789-123")}
                 </Text>
             </View>
 

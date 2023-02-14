@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from "react";
 import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet, SafeAreaView, ScrollView} from "react-native";
-import {API, Auth} from "aws-amplify";
 import {useNavigation} from "@react-navigation/native";
 import CustomSettingRowButton from "../../../components/CustomSettingRowButton";
-import CustomButton from "../../../components/CustomButton";
-import Colors from "../../../constants/Colors";
 import CustomSettingRow from "../../../components/CustomSettingRow";
-import {getAllContact} from "../../../components/PhonebookLibrary";
-import uuid from 'react-native-uuid';
 import UserAvatar from 'react-native-user-avatar';
+import {ProfileService} from "../../../backend/ProfileService";
 
 
 const EditProfileScreen = (props) => {
+    const [currentProfile, setCurrentProfile] = useState({});
+    const profileService = new ProfileService()
+
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
@@ -21,9 +20,15 @@ const EditProfileScreen = (props) => {
     const [image, setImage] = useState("");
 
     const navigation = useNavigation();
-    useEffect(() => {
 
+    useEffect(() => {
+        getCurrentUserData().then(r => {})
     }, []);
+
+    async function getCurrentUserData() {
+        const profiles = profileService.getProfiles()
+        setCurrentProfile(profiles[0])
+    }
 
     const onEditEmailPressed = () => {
         navigation.navigate('EditEmail');
@@ -34,7 +39,7 @@ const EditProfileScreen = (props) => {
             <View style={styles.topContainer} >
                 <UserAvatar
                     size={80}
-                    name="John doe"
+                    name={currentProfile.name}
                     // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
                 />
             </View>
@@ -42,7 +47,7 @@ const EditProfileScreen = (props) => {
             <View style={styles.settingsContainer}>
                 <CustomSettingRow
                     name="Account ID"
-                    value={accountId}
+                    value={currentProfile.accountCode}
                     iconCategory="FontAwesome5"
                     iconName="id-card"
                     editable={false}
@@ -50,7 +55,7 @@ const EditProfileScreen = (props) => {
 
                 <CustomSettingRow
                     name="Name"
-                    value={name}
+                    value={currentProfile.name}
                     setValue={setName}
                     iconCategory="Fontisto"
                     iconName="person"
