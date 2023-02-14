@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
-import styles from './styles';
+import jobAnim from "../../../assets/animations/107800-login-leady.json";
+import Lottie from "lottie-react-native";
 
 const SignUpScreen = () => {
     const [email, setEmail] = useState('');
@@ -26,10 +27,13 @@ const SignUpScreen = () => {
                 },
             });
 
-            console.log('✅ Sign-up Confirmed');
-            navigation.navigate('Verification', {usernameParam: lowerEmail});
+            navigation.navigate('Verification',
+                {
+                    usernameParam: lowerEmail,
+                    passwordParam: password,
+                });
         } catch (error) {
-            console.log('❌ Error signing up...', error);
+            Alert.alert(error.message)
         }
     }
 
@@ -52,38 +56,36 @@ const SignUpScreen = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Text style={styles.title}>Sign Up</Text>
-                <CustomInput
-                    placeholder="Email"
-                    value={email}
-                    setValue={setEmail}
-                    iconCategory="Fontisto"
-                    iconName="email"
+                <Lottie
+                    style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
+                    source={jobAnim}
+                    autoPlay
+                    loop
                 />
-                <CustomInput
-                    placeholder="Phone"
-                    value={phone}
-                    setValue={setPhone}
-                    iconCategory="Fontisto"
-                    iconName="phone"
-                />
-                <CustomInput
-                    placeholder="Password"
-                    value={password}
-                    setValue={setPassword}
-                    secureTextEntry
-                    iconCategory="FontAwesome5"
-                    iconName="key"
-                />
-                <CustomInput
-                    placeholder="Repeat Password"
-                    value={passwordRepeat}
-                    setValue={setPasswordRepeat}
-                    secureTextEntry
-                    iconCategory="FontAwesome5"
-                    iconName="key"
-                />
-
+                <View style={styles.form}>
+                    <CustomInput
+                        placeholder="Email [UserName]"
+                        value={email}
+                        setValue={setEmail}
+                        iconCategory="Fontisto"
+                        iconName="email"
+                    />
+                    <CustomInput
+                        placeholder="Phone [Optional]"
+                        value={phone}
+                        setValue={setPhone}
+                        iconCategory="Fontisto"
+                        iconName="phone"
+                    />
+                    <CustomInput
+                        placeholder="Password"
+                        value={password}
+                        setValue={setPassword}
+                        secureTextEntry
+                        iconCategory="FontAwesome5"
+                        iconName="key"
+                    />
+                </View>
                 <CustomButton
                     text="Register"
                     style={styles.component}
@@ -101,15 +103,13 @@ const SignUpScreen = () => {
                     </Text>
                 </Text>
 
-                {/*<SocialSignInButtons />*/}
-
                 <CustomButton
                     text="Have an account? Sign in"
                     onPress={onSignInPress}
                     type="TERTIARY"
                 />
                 <CustomButton
-                    text="Confirm your account"
+                    text="Verify an existing account"
                     onPress={onConfirmCodePress}
                     type="TERTIARY"
                 />
@@ -119,3 +119,43 @@ const SignUpScreen = () => {
 };
 
 export default SignUpScreen;
+
+const styles = StyleSheet.create({
+    root: {
+        backgroundColor: "#ffffff",
+        // alignItems: "center",
+        paddingBottom: 10,
+        paddingTop: 20,
+        paddingLeft: 50,
+        paddingRight: 50,
+        height: 800,
+    },
+    form: {
+        marginTop: 15,
+    },
+    logo: {
+        width: '70%',
+        maxWidth: 300,
+        maxHeight: 200,
+        marginBottom: 30
+    },
+    component: {
+        marginTop: 20
+    },
+    title: {
+        marginTop: 20,
+        paddingBottom: 90,
+        textAlign: "justify",
+        fontSize: 40,
+        color: "#ff6200"
+    },
+    link: {
+        color: "#ff6200"
+    },
+    text: {
+        marginTop: 20,
+    },
+    registerButton: {
+        marginTop: 40,
+    },
+});

@@ -1,3 +1,4 @@
+import {Auth} from "aws-amplify";
 
 const awsmobile = {
     "aws_project_region": "us-east-1",
@@ -62,6 +63,17 @@ const awsmobile = {
         //     redirectSignOut: 'http://example:3000/logout/',
         //     responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code
         // }
+    },
+    API: {
+        endpoints: [
+            {
+                name: "ProfileApi",
+                endpoint: "https://api.dev2.fameorbit.com",
+                custom_header: async () => {
+                    return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }
+                }
+            }
+        ]
     }
 };
 

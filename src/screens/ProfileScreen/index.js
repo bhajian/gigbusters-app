@@ -8,20 +8,20 @@ import UserAvatar from 'react-native-user-avatar';
 import {LocationSelector} from "../../components/LocationSearch";
 import ReferralReviewItem from "../../components/ReferralRequestItem";
 import users from "../../../assets/data/users";
+import {ProfileService} from "../../backend/ProfileService";
 
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
     const [currentUser, setCurrentUser] = useState(null);
+    const profileService = new ProfileService()
 
     useEffect(() => {
-        setCurrentUserData()
+        setCurrentUserData().then(r => {})
     }, []);
 
     async function setCurrentUserData() {
-        // const currentUser = await Auth.currentAuthenticatedUser();
-        if(currentUser) {
 
-        }
+        console.log(profileService.getProfiles())
     }
 
     async function signOut() {

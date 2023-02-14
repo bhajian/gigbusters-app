@@ -6,7 +6,7 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import styles from './styles';
 
-export default function ConfirmSignUp({navigation, route}) {
+export default function ForgetPasswordScreen({navigation, route}) {
     const {usernameParam} = (route.params ? route.params : '');
     const [authCode, setAuthCode] = useState('');
     const [username, setUsername] = useState(usernameParam);
@@ -40,7 +40,7 @@ export default function ConfirmSignUp({navigation, route}) {
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <Text style={styles.title}>Verification</Text>
+                <Text style={styles.title}>Forget Password</Text>
                 <CustomInput
                     placeholder="Email"
                     value={username}
@@ -59,11 +59,6 @@ export default function ConfirmSignUp({navigation, route}) {
                     text="Confirm Code"
                     onPress={confirmSignUp}
                     style={styles.component}
-                />
-                <CustomButton
-                    text="Register a new account"
-                    onPress={onBackToSignUpPress}
-                    type="TERTIARY"
                 />
                 <Text style={styles.text}>
                     Didn't receive the verification code? {' '}

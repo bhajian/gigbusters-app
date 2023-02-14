@@ -6,13 +6,14 @@ import {NavigationContainer} from "@react-navigation/native";
 import RootRouter from "./src/navigations/RootRouter";
 import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
 import Lottie from 'lottie-react-native';
-import loadingAnim from './assets/animations/136078-feesbee-section-2.json'
-
+import loadingAnim from './assets/animations/135788-happy-delivery.json'
+import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
 
 Amplify.configure(awsconfig);
 
 export default function App() {
-    const [isUserLoggedIn, setUserLoggedIn] = useState('initializing');
+    const [userStatus, setUserStatus] = useState('initializing')
+
     useEffect(() => {
         checkAuthState()
             .then(() => {
@@ -25,24 +26,31 @@ export default function App() {
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
-            setUserLoggedIn('loggedIn')
+            setUserStatus('loggedIn')
         } catch (err) {
-            setUserLoggedIn('loggedOut')
+            setUserStatus('loggedOut')
         }
     }
 
-    function updateAuthState(isUserLoggedIn) {
-        setUserLoggedIn(isUserLoggedIn)
+    function updateAuthState(userStatus) {
+        setUserStatus(userStatus)
     }
 
     return (
         <NavigationContainer>
-            {isUserLoggedIn === 'initializing' && <Initializing/>}
-            {isUserLoggedIn === 'loggedIn' && (
+            {userStatus === 'initializing' && <Initializing/>}
+            {userStatus === 'loggedIn' && (
                 <RootRouter updateAuthState={updateAuthState}/>
             )}
-            {isUserLoggedIn === 'loggedOut' && (
-                <AuthenticationNavigator updateAuthState={updateAuthState}/>
+            {userStatus === 'loggedOut' && (
+                <AuthenticationNavigator
+                    updateAuthState={updateAuthState}
+                />
+            )}
+            {userStatus === 'profileCreation' && (
+                <ProfileCreationNavigator
+                    updateAuthState={updateAuthState}
+                />
             )}
         </NavigationContainer>
     );

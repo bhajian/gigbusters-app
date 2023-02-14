@@ -8,8 +8,9 @@ import styles from './styles';
 import Fontisto from "react-native-vector-icons/Fontisto";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {AntDesign} from "@expo/vector-icons";
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, iconCategory, iconName}) => {
+const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, iconCategory, iconName, editable}) => {
 
     const renderIcon = (iconCategory, iconName) => {
         if (iconCategory === "Fontisto") {
@@ -20,6 +21,9 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, icon
         }
         if (iconCategory === "FontAwesome") {
             return <FontAwesome style={styles.icon} name={iconName} />
+        }
+        if (iconCategory === "AntDesign") {
+            return <AntDesign style={styles.icon} name={iconName} />
         }
     }
 
@@ -33,6 +37,7 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, icon
                 placeholder={placeholder}
                 style={styles.input}
                 secureTextEntry={secureTextEntry}
+                editable={editable}
             />
         </View>
     );

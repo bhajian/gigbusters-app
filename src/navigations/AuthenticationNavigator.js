@@ -4,6 +4,8 @@ import SignUp from '../screens/SignUpScreen';
 import Verification from '../screens/Verification';
 import {createStackNavigator} from '@react-navigation/stack';
 import ForgotPassword from '../screens/ForgotPassword';
+import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen";
+import ForgetPasswordScreen from "../screens/ForgotPassword";
 
 const AuthenticationStack = createStackNavigator();
 
@@ -13,17 +15,33 @@ const AuthenticationNavigator = props => {
         <AuthenticationStack.Navigator headerShown="false">
             <AuthenticationStack.Screen name="SignIn">
                 {screenProps => (
-                    <SignIn {...screenProps} updateAuthState={props.updateAuthState}/>
+                    <SignIn
+                        {...screenProps}
+                        updateAuthState={props.updateAuthState}
+                    />
                 )}
             </AuthenticationStack.Screen>
-            <AuthenticationStack.Screen name="SignUp" component={SignUp}/>
             <AuthenticationStack.Screen
-                name="Verification"
-                component={Verification}
+                name="SignUp"
+                component={SignUp}
             />
             <AuthenticationStack.Screen
+                name="Verification"
+            >
+                {screenProps => (
+                    <Verification
+                        {...screenProps}
+                        updateAuthState={props.updateAuthState}
+                    />
+                )}
+            </AuthenticationStack.Screen>
+            <AuthenticationStack.Screen
                 name="ForgotPassword"
-                component={ForgotPassword}
+                component={ForgetPasswordScreen}
+            />
+            <AuthenticationStack.Screen
+                name="CreateProfileScreen"
+                component={CreateProfileScreen}
             />
         </AuthenticationStack.Navigator>
     );
