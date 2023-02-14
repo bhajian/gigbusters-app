@@ -2,15 +2,14 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, ImageBackground, Pressable, Image, TouchableOpacity,} from 'react-native';
 import styles from './styles';
 import {useNavigation} from "@react-navigation/native";
-import Tada from "../../../../assets/images/tada.png"
-import Wait from "../../../../assets/images/wait.png"
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {Ionicons} from "@expo/vector-icons";
+import Lottie from "lottie-react-native";
+import workingAnim from '../../../../assets/animations/135788-happy-delivery.json'
+import waitAnim from '../../../../assets/animations/135948-high-striker.json'
+import celebrationAnim from '../../../../assets/animations/94588-celebration.json'
 
 export default function RequestCompletedScreen({route}) {
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [locationMax, setLocationMax] = useState(10);
-    const [priceMax, setPriceMax] = useState(10);
     const navigation = useNavigation();
 
     useEffect(() => {
@@ -41,19 +40,25 @@ export default function RequestCompletedScreen({route}) {
                 </View>
             </View>
 
-            <Image
-                source={Tada}
-                style={styles.tadaPhoto}
-                resizeMode="contain"
+
+            <Lottie
+                style={{height: 300, width: 300, alignSelf: 'center', marginTop: 20}}
+                source={celebrationAnim}
+                autoPlay
+                loop
             />
+
             <Text style={styles.informationText}>You have now submitted your request.
                 Please sit tight, someone will respond
                 to your request shortly.</Text>
-            <Image
-                source={Wait}
-                style={styles.waitPhoto}
-                resizeMode="contain"
+
+            <Lottie
+                style={{height: 200, width: 200, alignSelf: 'center', marginTop: 10}}
+                source={waitAnim}
+                autoPlay
+                loop
             />
+
         </View>
     )
 };

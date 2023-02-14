@@ -17,6 +17,7 @@ function SignInScreen(props) {
 
     async function onSignInPressed() {
         try {
+            props.updateAuthState('initializing');
             const user = await Auth.signIn(username, password)
             props.updateAuthState('loggedIn');
         } catch (error) {

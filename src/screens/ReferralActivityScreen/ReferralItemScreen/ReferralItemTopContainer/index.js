@@ -7,9 +7,8 @@ import {
 } from 'react-native';
 import Colors from '../../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import UserAvatar from "@muhzi/react-native-user-avatar";
-import EvilIcons from "react-native-vector-icons/EvilIcons";
 import {useNavigation} from "@react-navigation/native";
+import users from '../../../../../assets/data/users';
 
 export default function ReferralItemTopContainer({item}) {
     const [open, setOpen] = useState(false);
@@ -38,10 +37,10 @@ export default function ReferralItemTopContainer({item}) {
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
                     <View style={styles.leftContainer}>
-                        {/*<Image source={{uri: item.image}} style={styles.image} />*/}
-                        {/*<Text style={styles.titleText}>*/}
-                        {/*    {item.name}*/}
-                        {/*</Text>*/}
+                        <Image source={{uri: users[0].image}} style={styles.image} />
+                        <Text style={styles.titleText}>
+                            {users[0].name}
+                        </Text>
                     </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>

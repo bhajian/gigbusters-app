@@ -9,24 +9,24 @@ const AuthenticationStack = createStackNavigator();
 
 const AuthenticationNavigator = props => {
 
-  return (
-    <AuthenticationStack.Navigator headerShown="false">
-      <AuthenticationStack.Screen name="SignIn">
-        {screenProps => (
-          <SignIn {...screenProps} updateAuthState={props.updateAuthState} />
-        )}
-      </AuthenticationStack.Screen>
-      <AuthenticationStack.Screen name="SignUp" component={SignUp} />
-      <AuthenticationStack.Screen
-        name="Verification"
-        component={Verification}
-      />
-        <AuthenticationStack.Screen
-            name="ForgotPassword"
-            component={ForgotPassword}
-        />
-    </AuthenticationStack.Navigator>
-  );
+    return (
+        <AuthenticationStack.Navigator headerShown="false">
+            <AuthenticationStack.Screen name="SignIn">
+                {screenProps => (
+                    <SignIn {...screenProps} updateAuthState={props.updateAuthState}/>
+                )}
+            </AuthenticationStack.Screen>
+            <AuthenticationStack.Screen name="SignUp" component={SignUp}/>
+            <AuthenticationStack.Screen
+                name="Verification"
+                component={Verification}
+            />
+            <AuthenticationStack.Screen
+                name="ForgotPassword"
+                component={ForgotPassword}
+            />
+        </AuthenticationStack.Navigator>
+    );
 };
 
 export default AuthenticationNavigator;

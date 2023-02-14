@@ -84,15 +84,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     closeButton: {
-        backgroundColor: '#fff',
-        borderRadius: 10,
         width: 70,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
     },
     closeButtonText: {
-        color: Colors.light.tint
+        color: Colors.light.tint,
+        fontSize: 17,
+        fontWeight: '400'
     }
 });
 
