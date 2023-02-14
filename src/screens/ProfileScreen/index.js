@@ -52,10 +52,10 @@ const ProfileScreen = (props) => {
                     {currentProfile.name}
                 </Text>
                 <Text style={styles.email} >
-                    Email: {(currentProfile ? currentProfile.email.email : "john.doe@gmail.com")}
+                    Email: {(currentProfile & currentProfile.email ? currentProfile.email.email : "john.doe@gmail.com")}
                 </Text>
                 <Text style={styles.phone} >
-                    Phone: {(currentProfile ? currentProfile.phone.phone : "+1(648)565-9988")}
+                    Phone: {(currentProfile & currentProfile.phone ? currentProfile.phone.phone : "+1(648)565-9988")}
                 </Text>
                 <Text style={styles.accountNumber} >
                     ID: {(currentProfile ? currentProfile.accountCode : "456-789-123")}
