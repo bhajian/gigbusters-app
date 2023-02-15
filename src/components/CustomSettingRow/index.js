@@ -7,6 +7,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 const CustomSettingRow = ({ onPress,
                               name,
                               value,
+                              placeholder,
                               setValue,
                               bgColor,
                               fgColor,
@@ -43,6 +44,7 @@ const CustomSettingRow = ({ onPress,
                         editable={editable}
                         selectTextOnFocus={editable}
                         onChangeText={setValue}
+                        placeholder={placeholder}
                     >
                         {value}
                     </TextInput>
@@ -58,7 +60,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     settingItem:{
-        flexDirection: "row",
+        flexDirection: "column",
         borderBottomWidth: 1,
         borderBottomColor: 'lightgrey',
         justifyContent: "space-between",
@@ -70,7 +72,8 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     settingValueContainer:{
-        marginRight: 10,
+        marginHorizontal: 5,
+        width: '100%',
     },
     settingName: {
         color: "grey",
@@ -80,11 +83,11 @@ const styles = StyleSheet.create({
         color: "grey",
     },
     settingValue: {
-        paddingRight: 10,
+        paddingHorizontal: 5,
     },
     settingValueDisabled: {
         color: "grey",
-        paddingRight: 10,
+        paddingHorizontal: 5,
     },
     pressableSetting: {
         flexDirection: "row",

@@ -6,7 +6,7 @@ import {NavigationContainer} from "@react-navigation/native";
 import RootRouter from "./src/navigations/RootRouter";
 import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
 import Lottie from 'lottie-react-native';
-import loadingAnim from './assets/animations/135788-happy-delivery.json'
+import loadingAnim from './assets/animations/136078-feesbee-section-2.json'
 import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
 import {ProfileService} from "./src/backend/ProfileService";
 

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         alignItems: "center",
         paddingBottom: 10,
-        paddingTop: 20,
+        paddingTop: 10,
         paddingLeft: 40,
         paddingRight: 40,
         height: 800,
@@ -17,13 +17,13 @@ const styles = StyleSheet.create({
     },
     components: {
         width: '100%',
-        marginTop: 25
+        marginTop: 15,
     },
     socialButtons: {
-        marginTop: 30
+        marginTop: 10
     },
     signupButton: {
-        marginTop: 30
+        marginTop: 10
     },
 });
 

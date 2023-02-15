@@ -1,20 +1,19 @@
-import React, {useState} from "react";
+import React from "react";
 import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet} from "react-native";
 import {Auth} from "aws-amplify";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import CustomButton from "../../../components/CustomButton";
-import CustomInput from "../../../components/CustomInput";
+import PhoneInput from 'react-native-phone-input'
 
-const EditEmailScreen = (props) => {
-    const [username, setUsername] = useState('b.hajian@gmail.com');
+const EditPhoneScreen = (props) => {
 
-    async function onNextPressed() {
-        const user = await Auth.currentAuthenticatedUser();
-
-        const result = await Auth.updateUserAttributes(user, {
-            name: username,
-        });
-        console.log(result);
+    async function signOut() {
+        try {
+            await Auth.signOut();
+            props.updateAuthState('loggedOut');
+        } catch (error) {
+            console.log('Error signing out: ', error);
+        }
     }
 
     return (
@@ -25,21 +24,14 @@ const EditEmailScreen = (props) => {
             <View style={styles.mainContainer}>
                 <View style={styles.settingItem}>
                     <View style={styles.settingNameContainer}>
-                        <FontAwesome5 name="envelope" style={styles.settingIcon}/>
-                        <Text style={styles.settingName}> Email </Text>
+                        <FontAwesome5 name="phone" style={styles.settingIcon}/>
+                        <Text style={styles.settingName}> Phone </Text>
                     </View>
                     <View style={styles.settingValueContainer}>
-                        <CustomInput
-                            placeholder="Username"
-                            iconCategory="Fontisto"
-                            iconName="email"
-                            value={username}
-                            setValue={setUsername}
-                        />
+                        <PhoneInput />
                     </View>
                 </View>
                 <CustomButton
-                    onPress={onNextPressed}
                     style={styles.nextButton}
                     text="Next Step"
                     bgColor="#E3E8F1"
@@ -50,7 +42,7 @@ const EditEmailScreen = (props) => {
     )
 };
 
-export default EditEmailScreen;
+export default EditPhoneScreen;
 
 const styles = StyleSheet.create({
     container: {
@@ -69,12 +61,10 @@ const styles = StyleSheet.create({
         margin: 20,
         marginTop: 5,
     },
-    settingsContainer:{
-        margin: 10,
-        marginTop: 5,
-    },
     settingItem:{
         flexDirection: "column",
+        borderBottomWidth: 1,
+        borderBottomColor: 'lightgrey',
         justifyContent: "space-between",
     },
     settingNameContainer:{
@@ -92,8 +82,21 @@ const styles = StyleSheet.create({
     settingIcon: {
         color: "grey",
     },
+    settingValue: {
+
+    },
+    settingBioValue: {
+        textAlignVertical: 'top',
+    },
+    settingPhoneValue: {
+        color: "grey",
+    },
+    settingEmailValue: {
+        color: "grey",
+    },
     pressableSetting: {
         flexDirection: "row",
+
     },
 });
 

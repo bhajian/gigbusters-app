@@ -19,20 +19,18 @@ const CustomSettingRowButton = ({onPress, name, value, bgColor, fgColor, iconCat
 
     return (
         <View style={styles.settingsContainer}>
-            <View style={styles.settingItem}>
+            <Pressable style={styles.settingItem} onPress={onPress}>
                 <View style={styles.settingNameContainer}>
                     {renderIcon(iconCategory, iconName)}
                     <Text style={styles.settingName}>{name}</Text>
                 </View>
                 <View style={styles.settingValueContainer}>
-                    <Pressable style={styles.pressableSetting} onPress={onPress}>
-                        <Text style={styles.settingValue} >
-                            {value}
-                        </Text>
-                        <FontAwesome name="chevron-right" style={styles.settingIcon}/>
-                    </Pressable>
+                    <Text style={styles.settingValue} >
+                        {value}
+                    </Text>
+                    <FontAwesome name="chevron-right" style={styles.settingIcon}/>
                 </View>
-            </View>
+            </Pressable>
         </View>
     );
 };
@@ -55,6 +53,7 @@ const styles = StyleSheet.create({
         paddingBottom: 5,
     },
     settingValueContainer:{
+        flexDirection: "row",
         marginRight: 10,
     },
     settingName: {
@@ -66,7 +65,8 @@ const styles = StyleSheet.create({
     },
     settingValue: {
         color: "grey",
-        paddingRight: 10,
+        paddingRight: 15,
+        alignItems: 'center'
     },
     pressableSetting: {
         flexDirection: "row",

@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
-import CustomInput from '../../components/CustomInput';
-import CustomButton from '../../components/CustomButton';
+import CustomInput from '../../../components/CustomInput';
+import CustomButton from '../../../components/CustomButton';
 import Lottie from "lottie-react-native";
-import jobAnim from "../../../assets/animations/107800-login-leady.json";
+import jobAnim from "../../../../assets/animations/107800-login-leady.json";
 
-export default function VerificationScreen({navigation, route, updateAuthState}) {
+export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
     const {usernameParam, passwordParam} = (route.params ? route.params : '');
     const [authCode, setAuthCode] = useState('');
     const [username, setUsername] = useState(usernameParam);

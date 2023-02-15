@@ -9,8 +9,6 @@ import Colors from '../../../constants/Colors';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import { Ionicons} from "@expo/vector-icons";
-import ReviewTypePicker from "../../../components/ReviewTypePicker";
-import {SearchCategory} from "../../../components/SearchCategory";
 import Feather from "react-native-vector-icons/Feather";
 
 

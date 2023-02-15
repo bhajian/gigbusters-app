@@ -1,11 +1,26 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet, SafeAreaView, ScrollView} from "react-native";
+import {
+    View,
+    Text,
+    ImageBackground,
+    Pressable,
+    TextInput,
+    StyleSheet,
+    SafeAreaView,
+    ScrollView,
+    Dimensions
+} from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import CustomSettingRowButton from "../../../components/CustomSettingRowButton";
 import CustomSettingRow from "../../../components/CustomSettingRow";
 import UserAvatar from 'react-native-user-avatar';
 import {ProfileService} from "../../../backend/ProfileService";
+import Colors from "../../../constants/Colors";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import {AntDesign} from "@expo/vector-icons";
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const EditProfileScreen = (props) => {
     const [currentProfile, setCurrentProfile] = useState({});
@@ -22,6 +37,33 @@ const EditProfileScreen = (props) => {
     const navigation = useNavigation();
 
     useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            tabBarIcon: ({color}) => (
+                <Fontisto name="home" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text> Edit Profile</Text>
+            ),
+            headerRight: () => (
+                <Pressable
+                    onPress={onSavePress}
+                    style={({pressed}) => ({
+                        opacity: pressed ? 0.5 : 1,
+                        marginRight: 10,
+                    })}>
+                    <Text style={{color: '#1d7bc4', fontSize: 18}}>Save</Text>
+                </Pressable>
+            ),
+            // headerLeft: () => (
+            //
+            // )
+        })
+
         getCurrentUserData().then(r => {})
     }, []);
 
@@ -30,23 +72,43 @@ const EditProfileScreen = (props) => {
         setCurrentProfile(profiles[0])
     }
 
+    const onSavePress = () => {
+        console.log('save clicked')
+    }
+
+    const onPhotoPressed = () => {
+        console.log('change photo')
+    }
+
     const onEditEmailPressed = () => {
-        navigation.navigate('EditEmail');
+        navigation.navigate('VerifyPasswordScreen', {changeObject: 'email'});
+    }
+
+    const onEditPhonePressed = () => {
+        navigation.navigate('VerifyPasswordScreen', {changeObject: 'phone'});
     };
 
     return (
         <ScrollView style={styles.container} >
             <View style={styles.topContainer} >
-                <UserAvatar
-                    size={80}
-                    name={currentProfile.name}
-                    // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
-                />
+                <Pressable
+                    style={styles.photoChange}
+                    onPress={onPhotoPressed}
+                >
+                    <UserAvatar
+                        size={80}
+                        name={currentProfile.name}
+                        style={styles.avatar}
+                        // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                    />
+                    <Text style={styles.editPhoto}>Edit</Text>
+                </Pressable>
             </View>
 
             <View style={styles.settingsContainer}>
                 <CustomSettingRow
                     name="Account ID"
+                    placeholder="Account ID"
                     value={currentProfile.accountCode}
                     iconCategory="FontAwesome5"
                     iconName="id-card"
@@ -55,6 +117,7 @@ const EditProfileScreen = (props) => {
 
                 <CustomSettingRow
                     name="Name"
+                    placeholder="Name"
                     value={currentProfile.name}
                     setValue={setName}
                     iconCategory="Fontisto"
@@ -63,7 +126,7 @@ const EditProfileScreen = (props) => {
                 />
 
                 <CustomSettingRowButton
-
+                    onPress={onEditPhonePressed}
                     name="Phone"
                     value={phone}
                     iconCategory="FontAwesome5"
@@ -71,7 +134,7 @@ const EditProfileScreen = (props) => {
                 />
 
                 <CustomSettingRowButton
-
+                    onPress={onEditEmailPressed}
                     name="Email"
                     value={email}
                     iconCategory="FontAwesome5"
@@ -79,7 +142,7 @@ const EditProfileScreen = (props) => {
                 />
 
                 <CustomSettingRowButton
-
+                    // onPress={onEditSettingPressed}
                     name="Setting"
                     value=""
                     iconCategory="FontAwesome5"
@@ -87,7 +150,6 @@ const EditProfileScreen = (props) => {
                 />
 
                 <CustomSettingRowButton
-
                     name="Help"
                     value=""
                     iconCategory="FontAwesome5"
@@ -95,7 +157,6 @@ const EditProfileScreen = (props) => {
                 />
 
                 <CustomSettingRowButton
-
                     name="Language"
                     value="English"
                     iconCategory="FontAwesome5"
@@ -104,6 +165,7 @@ const EditProfileScreen = (props) => {
 
                 <CustomSettingRow
                     name="Bio"
+                    placeholder="Bio"
                     value={bio}
                     setValue={setBio}
                     iconCategory="FontAwesome"
@@ -126,7 +188,7 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         marginTop: 30,
-        height: 200,
+        height: 100,
         alignItems: "center",
     },
     bottomContainer:{
@@ -147,7 +209,6 @@ const styles = StyleSheet.create({
     settingNameContainer:{
         flexDirection: "row",
         marginLeft: 10,
-
     },
     settingValueContainer:{
         marginRight: 10,
@@ -174,6 +235,17 @@ const styles = StyleSheet.create({
     },
     pressableSetting: {
         flexDirection: "row",
+    },
+    photoChange: {
+        flexDirection: 'column'
+    },
+    avatar: {
+
+    },
+    editPhoto: {
+        color: 'blue',
+        alignSelf: 'center',
+        marginTop: 3
     },
 });
 

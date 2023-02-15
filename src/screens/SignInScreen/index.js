@@ -29,6 +29,7 @@ function SignInScreen(props) {
                 props.updateAuthState('profileCreation');
             }
         } catch (error) {
+            props.updateAuthState('loggedOut');
             if(error.name !== 'InvalidParameterException'){
                 Alert.alert(error.message)
             } else{
@@ -49,7 +50,7 @@ function SignInScreen(props) {
         <ScrollView showsVerticalScrollIndicator={true}>
             <View style={styles.root}>
                 <Lottie
-                    style={{height: 200, width: 200, alignSelf: 'center', marginTop: 5}}
+                    style={{height: 200, width: 250, alignSelf: 'center', marginTop: 5}}
                     source={jobAnim}
                     autoPlay
                     loop

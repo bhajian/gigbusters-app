@@ -5,7 +5,6 @@ const profilePath = '/profile'
 let profiles = []
 export class ProfileService {
 
-    // profiles = []
     constructor() {
 
     }

@@ -1,20 +1,31 @@
 import React, {useState} from "react";
-import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet} from "react-native";
+import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet, Alert} from "react-native";
 import {Auth} from "aws-amplify";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
+import {useNavigation} from "@react-navigation/native";
 
-const EditEmailScreen = (props) => {
-    const [username, setUsername] = useState('b.hajian@gmail.com');
+const VerifyPasswordScreen = ({route}) => {
+    const {changeObject} = (route.params ? route.params : '');
+
+    const [password, setPassword] = useState('');
+    const navigation = useNavigation();
+
 
     async function onNextPressed() {
-        const user = await Auth.currentAuthenticatedUser();
+        try{
+            const currentTime = new Date()
+            const currentUser = await Auth.currentAuthenticatedUser()
+            const username = currentUser.attributes.email
+            await Auth.signIn(username, password)
+            navigation.navigate((changeObject === 'email'?
+                'EditEmailScreen' : 'EditPhoneScreen'),
+                {currentTime: currentTime.getMilliseconds()});
+        } catch (e){
+            Alert.alert(e.message)
+        }
 
-        const result = await Auth.updateUserAttributes(user, {
-            name: username,
-        });
-        console.log(result);
     }
 
     return (
@@ -25,16 +36,16 @@ const EditEmailScreen = (props) => {
             <View style={styles.mainContainer}>
                 <View style={styles.settingItem}>
                     <View style={styles.settingNameContainer}>
-                        <FontAwesome5 name="envelope" style={styles.settingIcon}/>
-                        <Text style={styles.settingName}> Email </Text>
+                        <FontAwesome5 name="key" style={styles.settingIcon}/>
+                        <Text style={styles.settingName}> Verify Your Password </Text>
                     </View>
                     <View style={styles.settingValueContainer}>
                         <CustomInput
-                            placeholder="Username"
-                            iconCategory="Fontisto"
-                            iconName="email"
-                            value={username}
-                            setValue={setUsername}
+                            placeholder="Password"
+                            iconCategory="FontAwesome5"
+                            iconName="key"
+                            setValue={setPassword}
+                            secureTextEntry
                         />
                     </View>
                 </View>
@@ -50,7 +61,7 @@ const EditEmailScreen = (props) => {
     )
 };
 
-export default EditEmailScreen;
+export default VerifyPasswordScreen;
 
 const styles = StyleSheet.create({
     container: {

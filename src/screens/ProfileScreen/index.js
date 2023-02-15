@@ -134,20 +134,6 @@ const ProfileScreen = (props) => {
                     bgColor="#E3E8F1"
                     fgColor="#000000"
                 />
-                <View style={styles.doubleButton}>
-                    <CustomButton
-                        text="Referral Activities"
-                        style={styles.activityButton}
-                        bgColor="#E3E8F1"
-                        fgColor="#000000"
-                    />
-                    <CustomButton
-                        text="Matched Activities"
-                        style={styles.activityButton}
-                        bgColor="#E3E8F1"
-                        fgColor="#000000"
-                    />
-                </View>
                 <CustomButton
                     text="Sign Out"
                     onPress={signOut}
@@ -155,9 +141,7 @@ const ProfileScreen = (props) => {
                     bgColor="#E3E8F1"
                     fgColor="#FB1F1F"
                 />
-
             </View>
-
         </ScrollView>
     )
 };
@@ -216,6 +200,7 @@ const styles = StyleSheet.create({
     },
     bottomContainer: {
         margin: 20,
+        marginTop: 10,
     },
     name:{
         fontSize: 25,

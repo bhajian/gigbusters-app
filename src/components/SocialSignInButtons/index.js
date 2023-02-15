@@ -57,7 +57,6 @@ const SocialSignInButtons = () => {
 const styles = StyleSheet.create({
     FB_container: {
         width: 45,
-        padding: 10,
         marginVertical: 5,
         marginHorizontal: 2,
         flexDirection: 'row',
@@ -111,7 +110,7 @@ const styles = StyleSheet.create({
     login_social_buttons: {
         flexDirection: 'row',
         justifyContent: 'center',
-        marginTop: 20,
+        marginTop: 15,
     },
 });
 
