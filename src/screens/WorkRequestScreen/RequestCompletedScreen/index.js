@@ -36,7 +36,7 @@ export default function RequestCompletedScreen({route}) {
             </View>
             <ScrollView>
                 <Lottie
-                    style={{height: 350, width: 350, alignSelf: 'center', marginTop: 20}}
+                    style={{height: 350, width: 350, alignSelf: 'center', marginTop: 5}}
                     source={celebrationAnim}
                     autoPlay
                     loop

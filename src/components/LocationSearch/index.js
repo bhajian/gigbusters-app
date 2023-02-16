@@ -8,13 +8,12 @@ import Colors from "../../constants/Colors";
 
 export function LocationSelector({}) {
     const [location, setLocation] = useState('');
-
     const navigation = useNavigation();
     function onPress() {
         navigation.navigate('LocationSelectorScreen',{
-            // Passing params to NESTED navigator screen:
             screen: 'NewReviewScreen',
             params: {  },
+            navigation: navigation
         });
     };
 

@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
         height: '100%',
-        paddingTop: 40,
+        // paddingTop: 40,
     },
     headerExtensionContainer: {
         width: '100%',

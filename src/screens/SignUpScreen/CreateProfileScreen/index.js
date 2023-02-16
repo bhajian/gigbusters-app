@@ -14,20 +14,24 @@ import {ProfileService} from "../../../backend/ProfileService";
 const CreateProfileScreen = (props) => {
 
     let email = ''
-    let phone = ''
     const subscription = ''
+    const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
     const [accountType, setAccountType] = useState('');
-    const navigation = useNavigation();
     const profileService = new ProfileService()
 
     async function onNextPressed() {
         try {
+            if(!accountType ){
+                throw new Error('Please Select Account Type')
+            }
+            if(!name ){
+                throw new Error('Name is required')
+            }
             props.updateAuthState('initializing');
             const currentUser = await Auth.currentAuthenticatedUser()
             email = currentUser.attributes.email
-            phone = currentUser.attributes.phone_number ?
-                currentUser.attributes.phone_number : ''
+
             const profile = await profileService.createProfile({
                 name: name,
                 subscription: subscription,
@@ -63,6 +67,13 @@ const CreateProfileScreen = (props) => {
                         setValue={setName}
                         iconCategory="AntDesign"
                         iconName="profile"
+                    />
+                    <CustomInput
+                        placeholder="Phone [Optional]"
+                        value={phone}
+                        setValue={setPhone}
+                        iconCategory="Fontisto"
+                        iconName="phone"
                     />
                     <RadioButton.Group
                         onValueChange={setAccountType}

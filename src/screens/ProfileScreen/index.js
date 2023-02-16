@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {View, Text, StyleSheet, ScrollView} from "react-native";
 import {API, Auth} from "aws-amplify";
 import CustomButton from "../../components/CustomButton";
-import {useNavigation} from "@react-navigation/native";
+import {useIsFocused, useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
 import UserAvatar from 'react-native-user-avatar';
 import {LocationSelector} from "../../components/LocationSearch";
@@ -10,18 +10,12 @@ import {ProfileService} from "../../backend/ProfileService";
 
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
-    const [currentUser, setCurrentUser] = useState(null);
-    const [currentProfile, setCurrentProfile] = useState({
-        name: 'John Doe',
-        accountNumber: '456-789-123',
-        email: {
-            email: 'john.doe@gmail.com',
-            verified: true
-        },
-        phone: {
-            phone: '+1(648)565-9988'
-        }
-    });
+    const [name, setName] = useState('');
+    const [accountNumber, setAccountNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [accountType, setAccountType] = useState('USER')
+
     const profileService = new ProfileService()
 
     useEffect(() => {
@@ -29,13 +23,28 @@ const ProfileScreen = (props) => {
     }, []);
 
     async function getCurrentUserData() {
-        const profiles = profileService.getProfiles()
-        setCurrentProfile(profiles[0])
+        const profile = profileService.getProfile()
+        if(profile && profile.accountCode){
+            setAccountNumber(profile.accountCode)
+        }
+        if(profile && profile.accountType){
+            setAccountType(profile.accountType)
+        }
+        if(profile && profile.name){
+            setName(profile.name)
+        }
+        if(profile && profile.email && profile.email.email){
+            setEmail(profile.email.email)
+        }
+        if(profile && profile.phone && profile.phone.phone){
+            setPhone(profile.phone.phone)
+        }
     }
 
     async function signOut() {
         try {
             await Auth.signOut();
+            profileService.clearProfile()
             props.updateAuthState('loggedOut');
         } catch (error) {
             console.log('Error signing out: ', error);
@@ -50,25 +59,41 @@ const ProfileScreen = (props) => {
         navigation.navigate('EditProfile');
     };
 
+    const onSwitchProfilePressed = async() => {
+        try{
+            const profile = profileService.getProfile()
+            if(accountType === 'WORKER'){
+                profile.accountType = 'USER'
+            } else{
+                profile.accountType = 'WORKER'
+            }
+            setAccountType(profile.accountType)
+            await profileService.updateProfile(profile)
+            props.updateAccountType(profile.accountType)
+        } catch (e) {
+            console.log(e)
+        }
+    };
+
     return (
         <ScrollView style={styles.container} >
             <View style={styles.topContainer} >
                 <UserAvatar
                     size={80}
-                    name={currentProfile.name}
+                    name={name}
                     // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
                 />
                 <Text style={styles.name} >
-                    {currentProfile.name}
+                    {name}
                 </Text>
                 <Text style={styles.email} >
-                    Email: {(currentProfile ? currentProfile.email.email : "")}
+                    Email: {email}
                 </Text>
                 <Text style={styles.phone} >
-                    Phone: {(currentProfile ? currentProfile.phone.phone : "")}
+                    Phone: {phone}
                 </Text>
                 <Text style={styles.accountNumber} >
-                    ID: {(currentProfile ? currentProfile.accountCode : "")}
+                    ID: {accountNumber}
                 </Text>
             </View>
 
@@ -127,9 +152,11 @@ const ProfileScreen = (props) => {
                     bgColor="#E3E8F1"
                     fgColor="#000000"
                 />
+
                 <CustomButton
-                    text="Change to Business Account"
-                    onPress={onUpgradePressed}
+                    text={'Switch to ' +
+                        (accountType === 'USER'? 'Worker': 'Consumer')+ ' Account'}
+                    onPress={onSwitchProfilePressed}
                     style={styles.regularButton}
                     bgColor="#E3E8F1"
                     fgColor="#000000"

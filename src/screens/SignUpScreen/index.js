@@ -10,20 +10,22 @@ import Lottie from "lottie-react-native";
 
 const SignUpScreen = () => {
     const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [passwordRepeat, setPasswordRepeat] = useState('');
     const navigation = useNavigation();
 
     async function onRegisterPressed() {
         try {
+            if(password != passwordRepeat){
+                throw new Error('Password does not match!')
+            }
             var lowerEmail = email.toLowerCase();
             const {user, userSub} = await Auth.signUp({
                 username: lowerEmail,
                 password,
                 attributes: {
                     email: lowerEmail,
-                    phone_number: phone,
+                    phone_number: ''
                 },
             });
 
@@ -71,16 +73,17 @@ const SignUpScreen = () => {
                         iconName="email"
                     />
                     <CustomInput
-                        placeholder="Phone [Optional]"
-                        value={phone}
-                        setValue={setPhone}
-                        iconCategory="Fontisto"
-                        iconName="phone"
-                    />
-                    <CustomInput
                         placeholder="Password"
                         value={password}
                         setValue={setPassword}
+                        secureTextEntry
+                        iconCategory="FontAwesome5"
+                        iconName="key"
+                    />
+                    <CustomInput
+                        placeholder="Repeat Password"
+                        value={passwordRepeat}
+                        setValue={setPasswordRepeat}
                         secureTextEntry
                         iconCategory="FontAwesome5"
                         iconName="key"

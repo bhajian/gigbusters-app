@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     informationText:{
-        margin: 15,
+        marginHorizontal: 15,
         fontWeight: '600'
     },
     imageContainer: {

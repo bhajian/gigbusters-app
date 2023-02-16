@@ -22,8 +22,8 @@ function SignInScreen(props) {
         try {
             props.updateAuthState('initializing');
             const user = await Auth.signIn(username, password)
-            const profiles = await profileService.pullProfiles()
-            if(profiles.length > 0){
+            const profile = await profileService.pullProfile()
+            if(profile){
                 props.updateAuthState('loggedIn');
             } else {
                 props.updateAuthState('profileCreation');

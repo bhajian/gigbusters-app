@@ -25,18 +25,18 @@ export default function ReferralActivityScreen({route}) {
 
     return (
         <View style={styles.container}>
-            <View style={styles.topContainer}>
-                <View style={styles.headerContainer}>
-                    <View style={styles.headerLeft}>
-                        <TouchableOpacity
-                            onPress={() => navigation.goBack()}
-                            style={styles.backButton}>
-                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
-                            <Text style={styles.backIcon}>  Back </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
+            {/*<View style={styles.topContainer}>*/}
+                {/*<View style={styles.headerContainer}>*/}
+                {/*    <View style={styles.headerLeft}>*/}
+                {/*        <TouchableOpacity*/}
+                {/*            onPress={() => navigation.goBack()}*/}
+                {/*            style={styles.backButton}>*/}
+                {/*            <FontAwesome name="chevron-left" style={styles.backIcon}/>*/}
+                {/*            <Text style={styles.backIcon}>  Back </Text>*/}
+                {/*        </TouchableOpacity>*/}
+                {/*    </View>*/}
+                {/*</View>*/}
+            {/*</View>*/}
             <FlatList
                 data={users}
                 renderItem={({item}) => <ReferralRequestItem handler={referralActivityClickHandler} item={item} />}

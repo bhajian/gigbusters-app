@@ -5,52 +5,23 @@ import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
 
-const EditEmailScreen = (props) => {
+const EditPhotoScreen = (props) => {
     const [username, setUsername] = useState('');
 
-    async function onNextPressed() {
+    async function onEditPressed() {
         const user = await Auth.currentAuthenticatedUser();
 
-        const result = await Auth.updateUserAttributes(user, {
-            name: username,
-        });
-        console.log(result);
     }
 
     return (
         <View style={styles.container} >
-            <View style={styles.topContainer} >
 
-            </View>
-            <View style={styles.mainContainer}>
-                <View style={styles.settingItem}>
-                    <View style={styles.settingNameContainer}>
-                        <FontAwesome5 name="envelope" style={styles.settingIcon}/>
-                        <Text style={styles.settingName}> Email </Text>
-                    </View>
-                    <View style={styles.settingValueContainer}>
-                        <CustomInput
-                            placeholder="Username"
-                            iconCategory="Fontisto"
-                            iconName="email"
-                            value={username}
-                            setValue={setUsername}
-                        />
-                    </View>
-                </View>
-                <CustomButton
-                    onPress={onNextPressed}
-                    style={styles.nextButton}
-                    text="Next Step"
-                    bgColor="#E3E8F1"
-                    fgColor="#000000"
-                />
-            </View>
+
         </View>
     )
 };
 
-export default EditEmailScreen;
+export default EditPhotoScreen;
 
 const styles = StyleSheet.create({
     container: {

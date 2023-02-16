@@ -17,26 +17,22 @@ import UserAvatar from 'react-native-user-avatar';
 import {ProfileService} from "../../../backend/ProfileService";
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import {AntDesign} from "@expo/vector-icons";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
+const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
-    const [currentProfile, setCurrentProfile] = useState({});
-    const profileService = new ProfileService()
 
-    const [id, setId] = useState("");
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
-    const [email, setEmail] = useState("");
-    const [accountId, setAccountId] = useState("");
-    const [bio, setBio] = useState("");
-    const [image, setImage] = useState("");
+    const [name, setName] = useState('');
+    const [accountNumber, setAccountNumber] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [bio, setBio] = useState('');
+    const [image, setImage] = useState('');
 
     const navigation = useNavigation();
 
     useEffect(() => {
+        getCurrentUserData().then(r => {})
+
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
             headerLargeTitle: false,
@@ -56,7 +52,7 @@ const EditProfileScreen = (props) => {
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
                     })}>
-                    <Text style={{color: '#1d7bc4', fontSize: 18}}>Save</Text>
+                    <Text style={{color: '#0f66a9', fontSize: 18}}>Save</Text>
                 </Pressable>
             ),
             // headerLeft: () => (
@@ -64,40 +60,63 @@ const EditProfileScreen = (props) => {
             // )
         })
 
-        getCurrentUserData().then(r => {})
+
     }, []);
 
     async function getCurrentUserData() {
-        const profiles = profileService.getProfiles()
-        setCurrentProfile(profiles[0])
+        const profile = profileService.getProfile()
+        if(profile && profile.accountCode){
+            setAccountNumber(profile.accountCode)
+        }
+        if(profile && profile.name){
+            setName(profile.name)
+        }
+        if(profile && profile.bio){
+            setBio(profile.bio)
+        }
+        if(profile && profile.email && profile.email.email){
+            setEmail(profile.email.email)
+        }
+        if(profile && profile.phone && profile.phone.phone){
+            setPhone(profile.phone.phone)
+        }
     }
 
-    const onSavePress = () => {
-        console.log('save clicked')
-    }
+    const onSavePress = async () => {
+        try{
+            const profile = profileService.getProfile()
+            profile.name = name
+            profile.bio = bio
+            await profileService.updateProfile(profile)
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
+        }
+    };
 
     const onPhotoPressed = () => {
         console.log('change photo')
     }
 
-    const onEditEmailPressed = () => {
-        navigation.navigate('VerifyPasswordScreen', {changeObject: 'email'});
-    }
-
     const onEditPhonePressed = () => {
-        navigation.navigate('VerifyPasswordScreen', {changeObject: 'phone'});
+        navigation.navigate('VerifyPasswordScreen',
+            {
+                changeObject: 'phone',
+                phone: phone
+            });
     };
 
     return (
         <ScrollView style={styles.container} >
+
             <View style={styles.topContainer} >
                 <Pressable
                     style={styles.photoChange}
-                    onPress={onPhotoPressed}
+                    onPress={onSavePress}
                 >
                     <UserAvatar
                         size={80}
-                        name={currentProfile.name}
+                        name={name}
                         style={styles.avatar}
                         // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
                     />
@@ -109,60 +128,20 @@ const EditProfileScreen = (props) => {
                 <CustomSettingRow
                     name="Account ID"
                     placeholder="Account ID"
-                    value={currentProfile.accountCode}
+                    value={accountNumber}
                     iconCategory="FontAwesome5"
                     iconName="id-card"
                     editable={false}
                 />
-
                 <CustomSettingRow
                     name="Name"
                     placeholder="Name"
-                    value={currentProfile.name}
+                    value={name}
                     setValue={setName}
                     iconCategory="Fontisto"
                     iconName="person"
                     editable={true}
                 />
-
-                <CustomSettingRowButton
-                    onPress={onEditPhonePressed}
-                    name="Phone"
-                    value={phone}
-                    iconCategory="FontAwesome5"
-                    iconName="phone"
-                />
-
-                <CustomSettingRowButton
-                    onPress={onEditEmailPressed}
-                    name="Email"
-                    value={email}
-                    iconCategory="FontAwesome5"
-                    iconName="envelope"
-                />
-
-                <CustomSettingRowButton
-                    // onPress={onEditSettingPressed}
-                    name="Setting"
-                    value=""
-                    iconCategory="FontAwesome5"
-                    iconName="cog"
-                />
-
-                <CustomSettingRowButton
-                    name="Help"
-                    value=""
-                    iconCategory="FontAwesome5"
-                    iconName="question-circle"
-                />
-
-                <CustomSettingRowButton
-                    name="Language"
-                    value="English"
-                    iconCategory="FontAwesome5"
-                    iconName="globe"
-                />
-
                 <CustomSettingRow
                     name="Bio"
                     placeholder="Bio"
@@ -172,6 +151,39 @@ const EditProfileScreen = (props) => {
                     iconName="book"
                     editable={true}
                     multiline={true}
+                />
+                <CustomSettingRowButton
+                    onPress={onEditPhonePressed}
+                    name="Phone"
+                    value={phone}
+                    iconCategory="FontAwesome5"
+                    iconName="phone"
+                />
+                <CustomSettingRowButton
+                    // onPress={onEditEmailPressed}
+                    name="Email"
+                    value={email}
+                    iconCategory="FontAwesome5"
+                    iconName="envelope"
+                />
+                <CustomSettingRowButton
+                    // onPress={onEditSettingPressed}
+                    name="Setting"
+                    value=""
+                    iconCategory="FontAwesome5"
+                    iconName="cog"
+                />
+                <CustomSettingRowButton
+                    name="Help"
+                    value=""
+                    iconCategory="FontAwesome5"
+                    iconName="question-circle"
+                />
+                <CustomSettingRowButton
+                    name="Language"
+                    value="English"
+                    iconCategory="FontAwesome5"
+                    iconName="globe"
                 />
             </View>
 

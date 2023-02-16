@@ -7,11 +7,9 @@ import CustomInput from "../../../components/CustomInput";
 import {useNavigation} from "@react-navigation/native";
 
 const VerifyPasswordScreen = ({route}) => {
-    const {changeObject} = (route.params ? route.params : '');
-
+    const {changeObject, phone} = (route.params ? route.params : '');
     const [password, setPassword] = useState('');
     const navigation = useNavigation();
-
 
     async function onNextPressed() {
         try{
@@ -21,7 +19,10 @@ const VerifyPasswordScreen = ({route}) => {
             await Auth.signIn(username, password)
             navigation.navigate((changeObject === 'email'?
                 'EditEmailScreen' : 'EditPhoneScreen'),
-                {currentTime: currentTime.getMilliseconds()});
+                {
+                    currentTime: currentTime.getMilliseconds(),
+                    phoneParam: phone
+                });
         } catch (e){
             Alert.alert(e.message)
         }
@@ -47,15 +48,17 @@ const VerifyPasswordScreen = ({route}) => {
                             setValue={setPassword}
                             secureTextEntry
                         />
+                        <CustomButton
+                            onPress={onNextPressed}
+                            style={styles.nextButton}
+                            text="Next Step"
+                            bgColor="#E3E8F1"
+                            fgColor="#000000"
+                        />
                     </View>
+
                 </View>
-                <CustomButton
-                    onPress={onNextPressed}
-                    style={styles.nextButton}
-                    text="Next Step"
-                    bgColor="#E3E8F1"
-                    fgColor="#000000"
-                />
+
             </View>
         </View>
     )

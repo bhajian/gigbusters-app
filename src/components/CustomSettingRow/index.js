@@ -45,9 +45,8 @@ const CustomSettingRow = ({ onPress,
                         selectTextOnFocus={editable}
                         onChangeText={setValue}
                         placeholder={placeholder}
-                    >
-                        {value}
-                    </TextInput>
+                        value={value}
+                    />
                 </View>
             </View>
         </View>

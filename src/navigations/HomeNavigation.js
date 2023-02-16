@@ -1,12 +1,12 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import HomeScreen from "../screens/HomeScreen";
+import WorkRequestScreen from "../screens/WorkRequestScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
-import RequestReferralScreen from "../screens/HomeScreen/ReferralRequest";
-import RequestCompletedScreen from "../screens/HomeScreen/RequestCompletedScreen";
+import RequestReferralScreen from "../screens/WorkRequestScreen/ReferralRequest";
+import RequestCompletedScreen from "../screens/WorkRequestScreen/RequestCompletedScreen";
 import ReferralActivityScreen from "../screens/ReferralActivityScreen";
 import ReferralItemScreen from "../screens/ReferralActivityScreen/ReferralItemScreen";
 
@@ -17,7 +17,7 @@ export function HomeNavigation(props) {
         <Stack.Navigator>
             <Stack.Screen
                 name={'HomeScreen'}
-                component={HomeScreen}
+                component={WorkRequestScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     tabBarIcon: ({color}) => (
@@ -33,14 +33,7 @@ export function HomeNavigation(props) {
                     animation: "fade_from_bottom",
                 }}
             />
-            <Stack.Screen
-                name={'LocationSelectorScreen'}
-                component={LocationSelectorScreen}
-                options={{
-                    headerShown: false,
-                    animation: "fade_from_bottom",
-                }}
-            />
+
             <Stack.Screen
                 name={'RequestReferralScreen'}
                 component={RequestReferralScreen}

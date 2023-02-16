@@ -28,7 +28,7 @@ export default function App() {
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
-            const profiles = await profileService.pullProfiles()
+            const profile = await profileService.pullProfile()
             setUserStatus('loggedIn')
         } catch (err) {
             setUserStatus('loggedOut')

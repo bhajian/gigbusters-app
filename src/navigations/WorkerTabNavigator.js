@@ -4,15 +4,16 @@ import ProfileScreen from '../screens/ProfileScreen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../constants/Colors';
 import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FontAwesome5, MaterialIcons, Octicons} from "@expo/vector-icons";
+import {FontAwesome5, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
 import {HomeNavigation} from "./HomeNavigation";
 import MatchingScreen from "../screens/MatchingScreen";
 import {ProfileNavigation} from "./ProfileNavigation";
+import ReferralActivityScreen from "../screens/ReferralActivityScreen";
 
 const Tab = createBottomTabNavigator();
 
-const TabNavigator = props => {
+const WorkerTabNavigator = props => {
 
     return (
         <Tab.Navigator screenOptions={{}}>
@@ -20,14 +21,14 @@ const TabNavigator = props => {
                 name={'Home'}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
-                    headerShown: false,
+                    headerShown: true,
                     tabBarIcon: ({color}) => (
-                        <Fontisto name="home" size={25} color={color}/>
+                        <Octicons name="stack" size={25} color={color}/>
                     ),
                 }}
             >
                 {screenProps => (
-                    <HomeNavigation
+                    <MatchingScreen
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />
@@ -35,13 +36,13 @@ const TabNavigator = props => {
                 )}
             </Tab.Screen>
             <Tab.Screen
-                name={'Match'}
-                component={MatchingScreen}
+                name={'Activity Log'}
+                component={ReferralActivityScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerLargeTitle: true,
                     tabBarIcon: ({color}) => (
-                        <Octicons name="stack" size={25} color={color}/>
+                        <Ionicons name="file-tray-full" size={25} color={color}/>
                     ),
                 }}
             />
@@ -69,6 +70,7 @@ const TabNavigator = props => {
                     <ProfileNavigation
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
+                        updateAccountType={props.updateAccountType}
                     />
                 )}
             </Tab.Screen>
@@ -76,7 +78,7 @@ const TabNavigator = props => {
     );
 };
 
-export default TabNavigator;
+export default WorkerTabNavigator;
 
 const styles = StyleSheet.create({
     closeButton: {

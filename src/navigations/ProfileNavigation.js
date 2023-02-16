@@ -1,6 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import TabNavigator from './TabNavigator';
+import ConsumerTabNavigator from './ConsumerTabNavigator';
 import NewReviewScreen from '../screens/NewReviewScreen';
 import EditProfileScreen from '../screens/ProfileScreen/EditProfileScreen';
 import EditEmailScreen from '../screens/ProfileScreen/EditEmailScreen';
@@ -25,6 +25,7 @@ export function ProfileNavigation(props) {
                     <ProfileScreen
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
+                        updateAccountType={props.updateAccountType}
                     />
                 )}
             </Stack.Screen>

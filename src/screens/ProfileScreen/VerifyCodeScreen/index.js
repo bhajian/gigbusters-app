@@ -7,34 +7,25 @@ import Lottie from "lottie-react-native";
 import jobAnim from "../../../../assets/animations/107800-login-leady.json";
 
 export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
-    const {usernameParam, passwordParam} = (route.params ? route.params : '');
+    const {phoneParam} = (route.params ? route.params : '');
     const [authCode, setAuthCode] = useState('');
-    const [username, setUsername] = useState(usernameParam);
+    const [phone, setPhone] = useState(phoneParam);
 
     async function resendConfirmationCode() {
         try {
-            await Auth.resendSignUp(username);
+            await Auth.resendSignUp(phone.toString());
         } catch (error) {
             Alert.alert(error.message)
         }
     }
-    const onBackToSignUpPress = () => {
-        navigation.navigate('SignUp');
-    };
+    // const onBackToSignUpPress = () => {
+    //     navigation.navigate('SignUp');
+    // };
     async function VerifyAccount() {
         try {
-            updateAuthState('initializing');
-            await Auth.confirmSignUp(username, authCode);
-            if(username && passwordParam){
-                const user = await Auth.signIn(username, passwordParam)
-                console.log('verification:')
-                console.log(user)
 
-                updateAuthState('profileCreation');
-            } else{
-                updateAuthState('loggedOut');
-                navigation.navigate('SignIn');
-            }
+            await Auth.confirmSignUp(phone, authCode);
+
         } catch (error) {
             Alert.alert(error.message)
             if(error.name === 'NotAuthorizedException'){
@@ -56,11 +47,10 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
                 <View style={styles.form}>
                     <CustomInput
                         placeholder="Email"
-                        value={username}
-                        setValue={setUsername}
+                        value={phone}
                         iconCategory="Fontisto"
                         iconName="email"
-                        editable={(!usernameParam? true : false)}
+                        editable={false}
                     />
                     <CustomInput
                         placeholder="Code"
@@ -77,7 +67,7 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
                 />
                 <CustomButton
                     text="Register a new account"
-                    onPress={onBackToSignUpPress}
+                    // onPress={onBackToSignUpPress}
                     type="TERTIARY"
                 />
                 <Text style={styles.text}>

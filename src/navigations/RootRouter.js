@@ -1,24 +1,68 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import TabNavigator from './TabNavigator';
+import ConsumerTabNavigator from './ConsumerTabNavigator';
+import WorkerTabNavigator from "./WorkerTabNavigator";
+import {ProfileService} from "../backend/ProfileService";
+import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 
 const Stack = createNativeStackNavigator();
 
 const RootRouter = props => {
+    const profileService = new ProfileService()
+    const profile = profileService.getProfile()
+    const [accountType, setAccountType] = useState(profile.accountType)
+
+    useEffect(() => {
+        getCurrentUserData().then(r => {})
+    }, []);
+
+    async function getCurrentUserData() {
+
+    }
+    function updateAccountType(type) {
+        setAccountType(type)
+    }
+
     return (
         <Stack.Navigator>
+            {accountType === 'USER' && (
+                <Stack.Screen
+                    name={'Consumer'}
+                    options={{
+                        headerShown: false,
+                    }}>
+                    {screenProps => (
+                        <ConsumerTabNavigator
+                            {...screenProps}
+                            updateAuthState={props.updateAuthState}
+                            updateAccountType={updateAccountType}
+                        />
+                    )}
+                </Stack.Screen>
+            )}
+            {accountType === 'WORKER' && (
+                <Stack.Screen
+                    name={'Worker'}
+                    options={{
+                        headerShown: false,
+                    }}>
+                    {screenProps => (
+                        <WorkerTabNavigator
+                            {...screenProps}
+                            updateAuthState={props.updateAuthState}
+                            updateAccountType={updateAccountType}
+                        />
+                    )}
+                </Stack.Screen>
+            )}
             <Stack.Screen
-                name={'App'}
+                name={'LocationSelectorScreen'}
+                component={LocationSelectorScreen}
                 options={{
                     headerShown: false,
-                }}>
-                {screenProps => (
-                    <TabNavigator
-                        {...screenProps}
-                        updateAuthState={props.updateAuthState}
-                    />
-                )}
-            </Stack.Screen>
+                    animation: "fade_from_bottom",
+                }}
+            />
         </Stack.Navigator>
     );
 };

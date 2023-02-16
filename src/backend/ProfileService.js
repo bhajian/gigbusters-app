@@ -2,28 +2,41 @@ import {API} from "aws-amplify";
 
 const profileApiName = 'ProfileApi'
 const profilePath = '/profile'
-let profiles = []
+let profile = null
 export class ProfileService {
 
     constructor() {
 
     }
-    async pullProfiles() {
+    async pullProfile() {
         const data = {}
-        profiles = await API.get(profileApiName, profilePath, data)
-        return profiles
+        const profiles = await API.get(profileApiName, profilePath, data)
+        profile = (profiles[0] ? profiles[0] : null)
+        return profile
     }
 
-    async createProfile(profile) {
+    async createProfile(profileData) {
         const data = {
-            body: profile,
+            body: profileData,
         }
         const res = await API.post(profileApiName, profilePath, data)
-        profiles.push(res)
+        profile = (res ? res : null)
         return res
     }
 
-    getProfiles() {
-        return profiles
+    async updateProfile(profileData) {
+        const data = {
+            body: profileData,
+        }
+        const res = await API.put(profileApiName, profilePath, data)
+        profile = res
+        return res
+    }
+
+    clearProfile() {
+        profile = null
+    }
+    getProfile() {
+        return profile
     }
 }

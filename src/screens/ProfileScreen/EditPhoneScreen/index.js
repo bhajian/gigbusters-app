@@ -1,19 +1,32 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet} from "react-native";
-import {Auth} from "aws-amplify";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import CustomButton from "../../../components/CustomButton";
-import PhoneInput from 'react-native-phone-input'
+import PhoneInput from 'react-phone-number-input/react-native-input'
+import {ProfileService} from "../../../backend/ProfileService";
+import {useNavigation} from "@react-navigation/native";
 
-const EditPhoneScreen = (props) => {
+const EditPhoneScreen = ({route}) => {
+    const profileService = new ProfileService()
+    const profile = profileService.getProfile()
+    const {phoneParam} = (route.params ? route.params : '');
+    const [phone, setPhone] = useState(phoneParam);
+    const navigation = useNavigation();
 
-    async function signOut() {
-        try {
-            await Auth.signOut();
-            props.updateAuthState('loggedOut');
-        } catch (error) {
-            console.log('Error signing out: ', error);
+    useEffect(() => {
+        getCurrentUserData().then(r => {})
+    }, []);
+
+    async function getCurrentUserData() {
+        if(profile && profile.phone && profile.phone.phone){
+            setPhone(profile.phone.phone)
         }
+    }
+    async function onNextPress() {
+
+        navigation.navigate('VerifyCodeScreen', {
+            phoneParam: phone
+        })
     }
 
     return (
@@ -28,10 +41,15 @@ const EditPhoneScreen = (props) => {
                         <Text style={styles.settingName}> Phone </Text>
                     </View>
                     <View style={styles.settingValueContainer}>
-                        <PhoneInput />
+                        <PhoneInput
+                            countrySelectProps={{ unicodeFlags: true }}
+                            value={phone}
+                            onChange={setPhone}
+                        />
                     </View>
                 </View>
                 <CustomButton
+                    onPress={onNextPress}
                     style={styles.nextButton}
                     text="Next Step"
                     bgColor="#E3E8F1"

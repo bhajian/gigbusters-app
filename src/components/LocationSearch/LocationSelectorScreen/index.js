@@ -4,16 +4,13 @@ import styles from './styles';
 import SuggestionRow from "./SuggestionRow";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import {Input} from "react-native-elements";
-// navigator.geolocation = require('@react-native-community/geolocation');
+import {useNavigation} from "@react-navigation/native";
 
 const LocationSelectorScreen = (props) => {
+    const navigation = useNavigation();
 
-
-
-    // const navigation = useNavigation();
     return (
         <View style={styles.container}>
-
             <GooglePlacesAutocomplete
                 placeholder='Location..'
                 onPress={(data, details = null) => {
@@ -32,15 +29,15 @@ const LocationSelectorScreen = (props) => {
                 }}
                 suppressDefaultStyles
                 renderRow={(item) => <SuggestionRow item={item} />}
-                currentLocation={true}
-                currentLocationLabel='Current location'
+                // currentLocation={true}
+                // currentLocationLabel='Current location'
                 onPress={(data, details = null) => {
-                    props.navigation.goBack()
+                    navigation.goBack()
                 }}
 
             />
             <TouchableOpacity
-                onPress={() => props.navigation.goBack()}
+                onPress={() => navigation.goBack()}
                 style={styles.closeButton}>
                 <Text style={styles.closeText}> Cancel </Text>
             </TouchableOpacity>

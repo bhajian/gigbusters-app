@@ -11,10 +11,9 @@ import {SearchCategory} from "../../components/SearchCategory";
 import ChoiceSelector from "../../components/ChoiceSelector";
 import {LocationSelector} from "../../components/LocationSearch";
 import Slider from "@react-native-community/slider";
-import users from '../../../assets/data/users';
-import ReferralRequestItem from "../../components/ReferralRequestItem";
 
-const HomeScreen = props => {
+
+const WorkRequestScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationMax, setLocationMax] = useState(50);
     const [priceMax, setPriceMax] = useState(20);
@@ -104,16 +103,16 @@ const HomeScreen = props => {
                     />
                 </View>
             </View>
-            <View style={styles.activityContainer}>
-                <View style={styles.activityHeaderContainer}>
-                    <Ionicons name="file-tray-full-outline" size={25} color={Colors.dark.grey}/>
-                    <Text style={{margin: 5, color: Colors.dark.grey}}>Referral Activities</Text>
-                </View>
-                <ReferralRequestItem handler={referralActivityClickHandler} item={users[0]} />
-                <ReferralRequestItem handler={referralActivityClickHandler} item={users[1]} />
-            </View>
+            {/*<View style={styles.activityContainer}>*/}
+            {/*    <View style={styles.activityHeaderContainer}>*/}
+            {/*        <Ionicons name="file-tray-full-outline" size={25} color={Colors.dark.grey}/>*/}
+            {/*        <Text style={{margin: 5, color: Colors.dark.grey}}>Referral Activities</Text>*/}
+            {/*    </View>*/}
+            {/*    <ReferralRequestItem handler={referralActivityClickHandler} item={users[0]} />*/}
+            {/*    <ReferralRequestItem handler={referralActivityClickHandler} item={users[1]} />*/}
+            {/*</View>*/}
         </ScrollView>
     );
 };
 
-export default HomeScreen;
+export default WorkRequestScreen;
