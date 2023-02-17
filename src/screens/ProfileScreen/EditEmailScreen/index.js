@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     settingItem:{
-        flexDirection: "column",
+        // flexDirection: "column",
         justifyContent: "space-between",
     },
     settingNameContainer:{

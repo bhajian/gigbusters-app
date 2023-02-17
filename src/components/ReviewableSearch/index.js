@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     },
     mainContainer: {
         width: '100%',
-        flexDirection: 'column',
+        // flexDirection: 'column',
         // backgroundColor: 'red'
     },
     locationContainer: {

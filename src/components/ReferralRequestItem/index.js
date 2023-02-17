@@ -1,5 +1,5 @@
 import React from "react";
-import {Image, Pressable, StyleSheet, Text, View} from "react-native";
+import {Image, Pressable, StyleSheet, Text, TextInput, View} from "react-native";
 import Colors from "../../constants/Colors";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
@@ -17,6 +17,7 @@ export default function ReferralRequestItem({item, handler}) {
                     <Text style={styles.titleText}>
                         {item.name}
                     </Text>
+
                 </View>
                 <View style={styles.rightContainer}>
                     <View style={styles.infoContainer}>
@@ -67,9 +68,9 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
     },
     infoContainer: {
-        flexDirection: 'columns',
-        marginHorizontal: 15,
-        justifyContent: 'flex-end'
+        // flexDirection: 'columns',
+        // marginHorizontal: 15,
+        // justifyContent: 'flex-end'
     },
     info: {
         borderRadius: 50,

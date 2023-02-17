@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     },
     numberContainer: {
         paddingTop: 5,
-        flexDirection: 'column',
+        // flexDirection: 'column',
     },
     starRowContainer: {
         flexDirection: 'row',
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         paddingEnd: 2,
     },
     starColContainer: {
-        flexDirection: 'column',
+        // flexDirection: 'column',
         width: '80%',
         padding: 8,
     },

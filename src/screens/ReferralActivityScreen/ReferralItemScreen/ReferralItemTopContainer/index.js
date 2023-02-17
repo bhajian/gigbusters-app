@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         borderRadius: 5
     },
     infoContainer: {
-        flexDirection: 'columns',
+        // flexDirection: 'columns',
     },
     info: {
         borderRadius: 50,

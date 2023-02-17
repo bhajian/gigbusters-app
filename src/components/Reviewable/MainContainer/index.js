@@ -37,7 +37,7 @@ export default function MainContainer({review}) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        flexDirection: 'columns'
+        // flexDirection: 'columns'
     },
     mainContainer: {
         flexDirection: 'row',

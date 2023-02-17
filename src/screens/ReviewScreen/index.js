@@ -20,7 +20,7 @@ import ProfilePicture from "../../components/ProfilePicture";
 import ReviewableSearch from "../../components/ReviewableSearch";
 
 
-export default function SearchScreen(props) {
+export default function ReviewScreen(props) {
     const [searchText, setSearchText] = useState('');
 
     const navigation = useNavigation();

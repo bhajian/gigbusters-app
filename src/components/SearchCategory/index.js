@@ -4,14 +4,14 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import {useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
 
-export function SearchCategory({navigation}) {
+export function SearchCategory({navigation, style}) {
 
     function onPress() {
         navigation.navigate('SearchCategory');
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[style, styles.container]}>
             <TouchableOpacity style={styles.searchInput} onPress={onPress}>
                 <Fontisto name="search" size={17} color="grey" />
                 <Text> Search </Text>
@@ -23,8 +23,7 @@ export function SearchCategory({navigation}) {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
-        marginHorizontal: 10,
-        width: '80%'
+        // width: '100%'
     },
     searchBarContainer: {
         flexDirection: "row",
@@ -39,7 +38,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 0,
         borderLeftWidth: 0,
         borderRightWidth: 0,
-        borderRadius: 10,
+        borderRadius: 5,
         marginVertical: 5,
         flexDirection: 'row',
         padding: 10,

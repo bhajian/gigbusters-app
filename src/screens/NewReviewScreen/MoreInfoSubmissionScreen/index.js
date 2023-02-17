@@ -1,29 +1,36 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, ImageBackground, Pressable, FlatList, ScrollView, StyleSheet, Dimensions,} from 'react-native';
-import Colors from "../../constants/Colors";
+import {
+    View,
+    Text,
+    ImageBackground,
+    Pressable,
+    FlatList,
+    ScrollView,
+    StyleSheet,
+    Dimensions,
+    TouchableOpacity,
+} from 'react-native';
+import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
-import PhonebookModal from "../../components/PhonebookModal";
-import ProfilePicture from "../../components/ProfilePicture";
+import PhonebookModal from "../../../components/PhonebookModal";
+import ProfilePicture from "../../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
-import {SearchCategory} from "../../components/SearchCategory";
-import ChoiceSelector from "../../components/ChoiceSelector";
-import {LocationSelector} from "../../components/LocationSearch";
+import {SearchCategory} from "../../../components/SearchCategory";
+import ChoiceSelector from "../../../components/ChoiceSelector";
+import {LocationSelector} from "../../../components/LocationSearch";
 import Slider from "@react-native-community/slider";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 
-const WorkRequestScreen = props => {
+const MoreInfoSubmissionScreen = props => {
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationMax, setLocationMax] = useState(50);
     const [priceMax, setPriceMax] = useState(20);
     const navigation = useNavigation()
 
-    function referralActivityClickHandler() {
-        navigation.navigate('ReferralActivityScreen');
-    }
-
     function onSubmitPress() {
-        navigation.navigate('RequestReferralScreen')
+        navigation.navigate('ReviewScreen')
     }
 
     useEffect(() => {
@@ -42,11 +49,20 @@ const WorkRequestScreen = props => {
             headerRight: () => (
                 <Pressable
                     onPress={onSubmitPress}
-                    style={[({pressed}) => ({
+                    style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
-                    }), styles.submitButton]}>
-                    <Text style={styles.submitButtonText}>Request</Text>
+                    })}>
+                    <MaterialCommunityIcons
+                        name="email-send"
+                        size={25}
+                        color={Colors.light.tint}
+                        style={{marginRight: 15}}
+                    />
+                    <PhonebookModal
+                        visibility={isModalVisible}
+                        // onClose={toggleModal}
+                    />
                 </Pressable>
             ),
             headerLeft: () => (
@@ -63,6 +79,21 @@ const WorkRequestScreen = props => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.criteriaContainer}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.headerLeft}>
+                        <TouchableOpacity
+                            onPress={() => navigation.goBack()}
+                            style={styles.backButton}>
+                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
+                            <Text style={styles.backIcon}>  Back </Text>
+                        </TouchableOpacity>
+
+                    </View>
+                    <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                        <Text style={styles.buttonText}>Submit</Text>
+                        {/*<Ionicons name="enter" size={25} color="white"/>*/}
+                    </TouchableOpacity>
+                </View>
                 <SearchCategory navigation={navigation} style={{marginHorizontal: 10 }}/>
                 <ChoiceSelector/>
                 <View style={styles.locationContainer}>
@@ -78,38 +109,54 @@ const WorkRequestScreen = props => {
                     />
                     <LocationSelector style={{marginTop: 10}} />
                 </View>
-                <View style={styles.sliderContainer}>
-                    <Text>Max Price/hr: {priceMax} $$  </Text>
-                    <Slider
-                        value={priceMax}
-                        onValueChange={setPriceMax}
-                        step={1}
-                        minimumTrackTintColor={Colors.light.tint}
-                        maximumValue={200}
-                        minimumValue={1}
-                        thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
-                        trackStyle={{ height: 5, backgroundColor: '#5e5e5e' }}
-                    />
-                </View>
             </View>
-            {/*<View style={styles.activityContainer}>*/}
-            {/*    <View style={styles.activityHeaderContainer}>*/}
-            {/*        <Ionicons name="file-tray-full-outline" size={25} color={Colors.dark.grey}/>*/}
-            {/*        <Text style={{margin: 5, color: Colors.dark.grey}}>Referral Activities</Text>*/}
-            {/*    </View>*/}
-            {/*    <ReferralRequestItem handler={referralActivityClickHandler} item={users[0]} />*/}
-            {/*    <ReferralRequestItem handler={referralActivityClickHandler} item={users[1]} />*/}
-            {/*</View>*/}
+
         </ScrollView>
     );
 };
 
-export default WorkRequestScreen;
+export default MoreInfoSubmissionScreen;
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 20,
         backgroundColor: '#ffffff',
         height: '100%'
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginHorizontal: 10,
+        paddingBottom: 10,
+        borderBottomWidth: 0.5,
+        borderBottomColor: 'lightgrey',
+    },
+    headerLeft: {
+        flexDirection: 'row',
+        paddingStart: 5,
+        paddingEnd: 10,
+    },
+    backButton: {
+        flexDirection: 'row',
+        marginTop: 7,
+        paddingEnd: 10,
+        alignItems: 'center'
+    },
+    backIcon: {
+        fontSize: 17,
+        color: Colors.light.tint,
+    },
+    button: {
+        backgroundColor: Colors.light.tint,
+        borderRadius: 10,
+        width: 70,
+        height: 37,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 14,
     },
     criteriaContainer: {
         backgroundColor: '#ffffff',
@@ -164,20 +211,20 @@ const styles = StyleSheet.create({
         width: '70%',
         marginLeft: 25,
     },
-    button: {
-        backgroundColor: 'white',
-        width: 200,
-        height: 40,
-        borderRadius: 10,
-        marginTop: 15,
-        marginLeft: 25,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    buttonText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
+    // button: {
+    //     backgroundColor: 'white',
+    //     width: 200,
+    //     height: 40,
+    //     borderRadius: 10,
+    //     marginTop: 15,
+    //     marginLeft: 25,
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
+    // buttonText: {
+    //     fontSize: 16,
+    //     fontWeight: 'bold',
+    // },
     searchButton: {
         backgroundColor: '#e5e0e0',
         width: Dimensions.get('screen').width - 20,
@@ -196,16 +243,5 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 10,
         zIndex: 1
-    },
-    submitButton: {
-        backgroundColor: Colors.light.tint,
-        borderRadius: 10,
-        width: 70,
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    submitButtonText: {
-        color: '#fff'
     },
 });

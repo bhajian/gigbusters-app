@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     settingItem:{
-        flexDirection: "column",
+        // flexDirection: "column",
         borderBottomWidth: 1,
         borderBottomColor: 'lightgrey',
         justifyContent: "space-between",

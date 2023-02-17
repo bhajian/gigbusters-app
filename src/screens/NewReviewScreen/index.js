@@ -21,6 +21,7 @@ import NewReviewTopContainer from "./NewReviewTopContainer";
 import {RatingBar} from "@aashu-dubey/react-native-rating-bar";
 import {Icon} from "react-native-elements";
 import SocialNetworkSelector from "./SocialNetworkSelector";
+import {useNavigation} from "@react-navigation/native";
 
 
 export default function NewReviewScreen({navigation, route}) {
@@ -47,7 +48,7 @@ export default function NewReviewScreen({navigation, route}) {
 
     }, []);
 
-    // const navigation = useNavigation();
+
 
     async function getCurrentUserId() {
         // const currentUser = await Auth.currentAuthenticatedUser();
@@ -118,7 +119,7 @@ export default function NewReviewScreen({navigation, route}) {
             </View>
             <ScrollView >
 
-            <View style={styles.newTweetContainer}>
+            <View style={styles.newReviewContainer}>
                 <View style={styles.ratingContainer}>
                     <Text style={styles.ratingText}>Rating: </Text>
                     <RatingBar
@@ -204,7 +205,6 @@ export default function NewReviewScreen({navigation, route}) {
                             }}
                         />
                     </TouchableOpacity>
-                    {/*<Image 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2900&q=80'}} />*/}
                 </View>
 
                 <View style={styles.newMessageSetting}>
@@ -239,7 +239,7 @@ const styles = StyleSheet.create({
         flex: 1,
         // alignItems: 'flex-start',
         // alignSelf: 'flex-start',
-        paddingTop: 50,
+        paddingTop: 40,
         backgroundColor: 'white',
         height: '100%',
     },
@@ -310,9 +310,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlignVertical: 'bottom',
     },
-    newTweetContainer: {
+    newReviewContainer: {
         zIndex: -10,
-        flexDirection: 'column',
+        // flexDirection: 'column',
         paddingHorizontal: 15,
         padding: 5,
         width: '100%'
@@ -320,13 +320,16 @@ const styles = StyleSheet.create({
     inputsContainer: {
         backgroundColor: Colors.light.grey,
         marginTop: 5,
+        borderRadius: 5,
     },
     reviewInput: {
+        textAlignVertical: 'top',
         height: 170,
         maxHeight: 300,
         fontSize: 20,
         margin: 5,
         padding: 5,
+        borderRadius: 15,
     },
     pickImage: {
         // borderWidth: 1,
@@ -347,8 +350,7 @@ const styles = StyleSheet.create({
     newMessageSetting: {
         bottom: 0,
         flexDirection: 'row',
-        margin: 5,
-
+        marginHorizontal: 5,
     },
     topContainer: {
         backgroundColor: '#ffffff',

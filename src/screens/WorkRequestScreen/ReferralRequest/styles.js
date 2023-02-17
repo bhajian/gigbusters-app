@@ -5,11 +5,11 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
         height: '100%',
-        paddingTop: 40,
+        paddingTop: 35,
     },
     headerExtensionContainer: {
         width: '100%',
-        padding: 10,
+        paddingHorizontal: 10,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },
@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         margin: 10,
     },
     reviewInput: {
+        textAlignVertical: 'top',
         height: 200,
         maxHeight: 300,
         fontSize: 20,
@@ -72,6 +73,9 @@ const styles = StyleSheet.create({
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    submitButtonText: {
+        color: '#fff'
     },
 });
 

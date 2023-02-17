@@ -249,7 +249,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     photoChange: {
-        flexDirection: 'column'
+        // flexDirection: 'column'
     },
     avatar: {
 

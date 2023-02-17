@@ -10,13 +10,15 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import { Ionicons} from "@expo/vector-icons";
 import Feather from "react-native-vector-icons/Feather";
+import PhoneInput from "react-phone-number-input/react-native-input";
+import {useNavigation} from "@react-navigation/native";
 
 
-export default function NewReviewTopContainer({contact, pickImage, navigation, bottomSheetModalRef}) {
+export default function NewReviewTopContainer({contact, bottomSheetModalRef}) {
     const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('phone');
+    const [value, setValue] = useState('');
     const [searchQuery, setSearchQuery] = React.useState('');
-
+    const navigation = useNavigation();
     const onChangeSearch = query => setSearchQuery(query);
 
     useEffect(() => {
@@ -24,6 +26,10 @@ export default function NewReviewTopContainer({contact, pickImage, navigation, b
     }, []);
 
     const handlePresentPress = () => bottomSheetModalRef.current.present()
+
+    function onSubmitPress(){
+        navigation.navigate('MoreInfoSubmissionScreen');
+    }
 
 
     return (
@@ -36,6 +42,15 @@ export default function NewReviewTopContainer({contact, pickImage, navigation, b
                         <FontAwesome name="chevron-left" style={styles.backIcon}/>
                         <Text style={styles.backIcon}>  Back </Text>
                     </TouchableOpacity>
+
+                </View>
+                <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                    <Text style={styles.buttonText}>Next</Text>
+                    {/*<Ionicons name="enter" size={25} color="white"/>*/}
+                </TouchableOpacity>
+            </View>
+            <View style={styles.headerExtensionContainer}>
+                <View style={styles.avatarContainer}>
                     <UserAvatar
                         size={40}
                         active
@@ -43,11 +58,6 @@ export default function NewReviewTopContainer({contact, pickImage, navigation, b
                     />
                     <Text style={styles.contactName}>{contact.name}</Text>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={pickImage}>
-                    <Ionicons name="enter" size={25} color="white"/>
-                </TouchableOpacity>
-            </View>
-            <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
                     <TouchableOpacity
                         onPress={handlePresentPress}>
@@ -55,11 +65,18 @@ export default function NewReviewTopContainer({contact, pickImage, navigation, b
                             <Feather name="search" size={30} color="white"/>
                         </View>
                     </TouchableOpacity>
-                    <TextInput
+                    <PhoneInput
+                        countrySelectProps={{ unicodeFlags: true }}
                         value={value}
-                        onChangeText={setValue}
+                        onChange={setValue}
                         style={styles.accountInput}
                     />
+                    {/*<TextInput*/}
+                    {/*    placeholder={'Phone'}*/}
+                    {/*    value={value}*/}
+                    {/*    onChangeText={setValue}*/}
+                    {/*    style={styles.accountInput}*/}
+                    {/*/>*/}
                 </View>
                 <View style={styles.accountContainer}>
 
@@ -73,11 +90,16 @@ const styles = StyleSheet.create({
     headerExtensionContainer: {
         width: '100%',
         padding: 10,
-        borderBottomWidth: 0.5,
+        // borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
+    },
+    avatarContainer: {
+        flexDirection: 'row',
+        marginHorizontal: 7
     },
     searchContainer: {
         flexDirection: 'row',
+        marginTop: 15,
         zIndex: 10,
         width: '100%',
     },
@@ -96,7 +118,7 @@ const styles = StyleSheet.create({
     accountInput: {
         backgroundColor: Colors.light.grey,
         marginHorizontal: 10,
-        padding: 10,
+        padding: 5,
         alignItems: 'center',
         alignContent: 'center',
         width: '85%',
@@ -104,10 +126,12 @@ const styles = StyleSheet.create({
     },
     headerContainer: {
         // zIndex: -1,
-        width: '100%',
+        // width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 15,
+        // paddingHorizontal: 10,
+        marginHorizontal: 10,
+        paddingBottom: 10,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },
@@ -136,20 +160,17 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.light.tint,
         borderRadius: 10,
         width: 70,
-        height: 40,
+        height: 37,
         alignItems: 'center',
         justifyContent: 'center',
     },
     buttonText: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
         color: 'white',
-        fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 14,
     },
     topContainer: {
         backgroundColor: '#ffffff',
-        width: '100%',
+        // width: '100%',
     },
     reviewType:{
         width: '15%'

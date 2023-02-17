@@ -6,7 +6,7 @@ import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
 
-export function LocationSelector({}) {
+export function LocationSelector({style}) {
     const [location, setLocation] = useState('');
     const navigation = useNavigation();
     function onPress() {
@@ -18,7 +18,7 @@ export function LocationSelector({}) {
     };
 
     return (
-        <View style={styles.container}>
+        <View style={[style, styles.container]}>
             <TouchableOpacity style={styles.searchInput} onPress={onPress}>
                 <View style={styles.searchTextIcon}>
                     <MaterialIcons name="place" size={17} color="grey" />
@@ -55,7 +55,10 @@ const styles = StyleSheet.create({
         marginVertical: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
+        alignItems: 'center',
+        height: 40,
+        padding: 5,
+        paddingHorizontal: 10,
     },
     searchButton: {
         marginTop: 10,

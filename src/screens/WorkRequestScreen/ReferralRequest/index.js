@@ -33,7 +33,7 @@ export default function RequestReferralScreen({route}) {
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity style={styles.submitButton} onPress={submitRequest}>
-                        <Ionicons name="enter" size={25} color="white"/>
+                        <Text style={styles.submitButtonText}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </View>
