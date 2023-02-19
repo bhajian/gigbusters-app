@@ -13,7 +13,7 @@ export default function NewReviewButton() {
     // };
     const navigation = useNavigation();
     const onPress = () => {
-        navigation.navigate('NewReviewScreen');
+        navigation.navigate('AccountSearchReviewScreen', {navigation: navigation});
     };
 
     return (

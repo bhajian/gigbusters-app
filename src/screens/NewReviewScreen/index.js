@@ -22,6 +22,9 @@ import {RatingBar} from "@aashu-dubey/react-native-rating-bar";
 import {Icon} from "react-native-elements";
 import SocialNetworkSelector from "./SocialNetworkSelector";
 import {useNavigation} from "@react-navigation/native";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import UserAvatar from "@muhzi/react-native-user-avatar";
+import Feather from "react-native-vector-icons/Feather";
 
 
 export default function NewReviewScreen({navigation, route}) {
@@ -49,7 +52,6 @@ export default function NewReviewScreen({navigation, route}) {
     }, []);
 
 
-
     async function getCurrentUserId() {
         // const currentUser = await Auth.currentAuthenticatedUser();
         // if (currentUser) {
@@ -68,7 +70,8 @@ export default function NewReviewScreen({navigation, route}) {
 
     useEffect(() => {
         getPermissionAsync().then(e => {
-            getCurrentUserId().then(r => {});
+            getCurrentUserId().then(r => {
+            });
         });
     }, []);
 
@@ -105,98 +108,82 @@ export default function NewReviewScreen({navigation, route}) {
         return '';
     };
 
+    function onSubmitPress() {
+        navigation.navigate('MoreInfoSubmissionScreen');
+    }
 
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-                <NewReviewTopContainer
-                    bottomSheetModalRef ={bottomSheetModalRef}
-                    contact={contact}
-                    pickImage={pickImage}
-                    navigation={navigation}
-                />
+            <View style={styles.headerContainer}>
+                <View style={styles.headerLeft}>
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={styles.backButton}>
+                        <FontAwesome name="chevron-left" style={styles.backIcon}/>
+                        <Text style={styles.backIcon}> Back </Text>
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                    <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
             </View>
-            <ScrollView >
+            <View style={styles.headerExtensionContainer}>
+                <View style={styles.avatarReviewerContainer}>
+                    <UserAvatar
+                        size={35}
+                        active
+                        src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                    />
+                    <TouchableOpacity style={styles.reviewerName}>
+                        <Text style={styles.reviewerText}>{contact.name}</Text>
+                        <Feather name="chevron-down" size={20}/>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.avatarRevieweeContainer}>
+                    <UserAvatar
+                        size={35}
+                        active
+                        src="https://m.media-amazon.com/images/M/MV5BMjE4MDI3NDI2Nl5BMl5BanBnXkFtZTcwNjE5OTQwOA@@._V1_.jpg"
+                    />
+                    <Text style={styles.revieweeName}> Katy Perry </Text>
+                </View>
+            </View>
 
             <View style={styles.newReviewContainer}>
-                <View style={styles.ratingContainer}>
-                    <Text style={styles.ratingText}>Rating: </Text>
-                    <RatingBar
-                        initialRating={2.5}
-                        minRating={1}
-                        direction="horizontal"
-                        allowHalfRating
-                        unratedColor={Colors.light.grey}
-                        itemCount={5}
-                        itemPadding={1}
-                        itemSize={35}
-                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={35} />}
-                        onRatingUpdate={setRating}
-                    />
+                <View style={styles.reviewInputContainer}>
+                    <View style={styles.ratingContainer}>
+                        <Text style={styles.ratingText}>Rating: </Text>
+                        <RatingBar
+                            initialRating={3}
+                            minRating={0}
+                            direction="horizontal"
+                            allowHalfRating
+                            unratedColor={Colors.light.grey}
+                            itemCount={5}
+                            itemPadding={1}
+                            itemSize={25}
+                            itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25}/>}
+                            onRatingUpdate={setRating}
+                        />
+                    </View>
+                    <View style={styles.inputsContainer}>
+                        <TextInput
+                            value={tipoff}
+                            onChangeText={value => setTipoff(value)}
+                            multiline={true}
+                            style={styles.reviewInput}
+                            placeholder={"Review..."}
+                        />
+                    </View>
                 </View>
-                <View style={styles.ratingContainer}>
-                    <Text style={styles.detailRatingText}>Punctuality: </Text>
-                    <RatingBar
-                        initialRating={2.5}
-                        minRating={1}
-                        direction="horizontal"
-                        allowHalfRating
-                        unratedColor={Colors.light.grey}
-                        itemCount={5}
-                        itemPadding={1}
-                        itemSize={25}
-                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25} />}
-                        onRatingUpdate={setRating}
-                    />
-                </View>
-                <View style={styles.ratingContainer}>
-                    <Text style={styles.detailRatingText} >Price: </Text>
-                    <RatingBar
-                        initialRating={2.5}
-                        minRating={1}
-                        direction="horizontal"
-                        allowHalfRating
-                        unratedColor={Colors.light.grey}
-                        itemCount={5}
-                        itemPadding={1}
-                        itemSize={25}
-                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25} />}
-                        onRatingUpdate={setRating}
-                    />
-                </View>
-                <View style={styles.ratingContainer}>
-                    <Text style={styles.detailRatingText} >Quality: </Text>
-                    <RatingBar
-                        initialRating={2.5}
-                        minRating={1}
-                        direction="horizontal"
-                        allowHalfRating
-                        unratedColor={Colors.light.grey}
-                        itemCount={5}
-                        itemPadding={1}
-                        itemSize={25}
-                        itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25} />}
-                        onRatingUpdate={setRating}
-                    />
-                </View>
-                <View style={styles.inputsContainer}>
-                    <TextInput
-                        value={tipoff}
-                        onChangeText={value => setTipoff(value)}
-                        multiline={true}
-                        style={styles.reviewInput}
-                        placeholder={"Review..."}
-                    />
-                </View>
-
-                <View style={styles.imageContainer}>
+                <View style={styles.imageSelectorContainer}>
                     <TouchableOpacity onPress={pickImage} style={styles.pickImage}>
-                        <MaterialCommunityIcons name="image-plus" style={{fontSize: 65, color: Colors.light.grey}} />
+                        <MaterialCommunityIcons name="image-plus" style={{fontSize: 65, color: Colors.light.grey}}/>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={pickImage} style={styles.pickImage}>
                         <Image
-                            source={{uri : 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250'}}
+                            source={{uri: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250'}}
                             style={{
                                 width: 50,
                                 height: 50,
@@ -206,30 +193,11 @@ export default function NewReviewScreen({navigation, route}) {
                         />
                     </TouchableOpacity>
                 </View>
-
-                <View style={styles.newMessageSetting}>
-                    <CustomSwitch
-                        iconCategory={'FontAwesome5'}
-                        iconName={'lock'}
-                        isEnabled={isPrivate}
-                        toggleSwitch={togglePrivateSwitch}
-                        name={'Private'}
-                    />
-                    <CustomSwitch
-                        iconCategory={'FontAwesome5'}
-                        iconName={'user-secret'}
-                        isEnabled={isAnonymous}
-                        toggleSwitch={toggleAnonymousSwitch}
-                        name={'Anonymous'}
-                    />
-                </View>
             </View>
-        </ScrollView>
-        <SocialNetworkSelector
-            handleSheetChanges={handleSheetChanges}
-            bottomSheetModalRef={bottomSheetModalRef}
-        />
-
+            <SocialNetworkSelector
+                handleSheetChanges={handleSheetChanges}
+                bottomSheetModalRef={bottomSheetModalRef}
+            />
         </SafeAreaView>
     );
 }
@@ -237,33 +205,24 @@ export default function NewReviewScreen({navigation, route}) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        // alignItems: 'flex-start',
-        // alignSelf: 'flex-start',
         paddingTop: 40,
         backgroundColor: 'white',
         height: '100%',
     },
     headerExtensionContainer: {
-        width: '100%',
-        flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 15,
-        borderBottomWidth: 0.5,
+        marginHorizontal: 15,
         borderBottomColor: 'lightgrey',
+        // backgroundColor: 'grey'
     },
     headerContainer: {
-        zIndex: -1,
-        width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 15,
-        borderBottomWidth: 0.5,
+        marginHorizontal: 15,
         borderBottomColor: 'lightgrey',
     },
     headerLeft: {
         flexDirection: 'row',
-        paddingStart: 5,
-        paddingEnd: 10,
     },
     closeButton: {
         flexDirection: 'row',
@@ -274,33 +233,40 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: Colors.light.tint,
     },
-    contactName: {
+    reviewerName: {
+        marginHorizontal: 10,
+        padding: 5,
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: Colors.light.grey,
+        borderRadius: 5,
+    },
+    revieweeName: {
         padding: 10,
+        color: Colors.light.tint
     },
     button: {
         backgroundColor: Colors.light.tint,
         borderRadius: 10,
         width: 70,
-        height: 40,
+        height: 35,
         alignItems: 'center',
         justifyContent: 'center',
     },
     buttonText: {
-        paddingHorizontal: 20,
-        paddingVertical: 10,
         color: 'white',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 14,
     },
     ratingContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
         alignItems: 'center',
+        alignSelf: 'flex-end'
     },
     ratingText: {
         paddingVertical: 5,
         marginHorizontal: 4,
-        fontSize: 25,
+        fontSize: 16,
         fontWeight: '500',
         textAlignVertical: 'bottom',
     },
@@ -310,15 +276,24 @@ const styles = StyleSheet.create({
         fontSize: 20,
         textAlignVertical: 'bottom',
     },
+    reviewInputContainer: {
+        // zIndex: -10,
+        // paddingHorizontal: 15,
+        // height: 500,
+        // backgroundColor: 'grey'
+    },
     newReviewContainer: {
-        zIndex: -10,
-        // flexDirection: 'column',
+        // zIndex: -10,
         paddingHorizontal: 15,
-        padding: 5,
-        width: '100%'
+        // height: '100%',
+        justifyContent: 'space-between',
+        // backgroundColor: 'green',
+        flex: 1,
+        // justifyContent: 'flex-end',
+        // alignItems: 'center'
     },
     inputsContainer: {
-        backgroundColor: Colors.light.grey,
+        // backgroundColor: Colors.light.grey,
         marginTop: 5,
         borderRadius: 5,
     },
@@ -332,8 +307,6 @@ const styles = StyleSheet.create({
         borderRadius: 15,
     },
     pickImage: {
-        // borderWidth: 1,
-        // borderColor: Colors.light.tint,
         borderRadius: 5,
         marginVertical: 10,
         marginHorizontal: 2,
@@ -342,10 +315,10 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginVertical: 10,
     },
-    imageContainer: {
-        width: '100%',
-        // height: 150,
+    imageSelectorContainer: {
+        alignSelf: 'flex-end',
         flexDirection: 'row',
+        // justifyContent: 'flex-end'
     },
     newMessageSetting: {
         bottom: 0,
@@ -354,8 +327,23 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         backgroundColor: '#ffffff',
-        // height: 125,
         width: '100%',
+    },
+    avatarReviewerContainer: {
+        flexDirection: 'row',
+        marginHorizontal: 7,
+        marginTop: 10,
+    },
+    avatarRevieweeContainer: {
+        flexDirection: 'row',
+        marginHorizontal: 7,
+        marginTop: 10,
+    },
+    backButton: {
+        flexDirection: 'row',
+        marginTop: 7,
+        paddingEnd: 10,
+        alignItems: 'center'
     },
     privateSwitch: {
         transform: [{scaleX: 0.7}, {scaleY: 0.7}],

@@ -40,13 +40,11 @@ export default function NewReviewTopContainer({contact, bottomSheetModalRef}) {
                         onPress={() => navigation.goBack()}
                         style={styles.backButton}>
                         <FontAwesome name="chevron-left" style={styles.backIcon}/>
-                        <Text style={styles.backIcon}>  Back </Text>
+                        <Text style={styles.backIcon}> Back </Text>
                     </TouchableOpacity>
-
                 </View>
                 <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
                     <Text style={styles.buttonText}>Next</Text>
-                    {/*<Ionicons name="enter" size={25} color="white"/>*/}
                 </TouchableOpacity>
             </View>
             <View style={styles.headerExtensionContainer}>
@@ -58,28 +56,13 @@ export default function NewReviewTopContainer({contact, bottomSheetModalRef}) {
                     />
                     <Text style={styles.contactName}>{contact.name}</Text>
                 </View>
-                <View style={styles.searchContainer}>
-                    <TouchableOpacity
-                        onPress={handlePresentPress}>
-                        <View style={styles.typeSelectButton}>
-                            <Feather name="search" size={30} color="white"/>
-                        </View>
-                    </TouchableOpacity>
-                    <PhoneInput
-                        countrySelectProps={{ unicodeFlags: true }}
-                        value={value}
-                        onChange={setValue}
-                        style={styles.accountInput}
+                <View style={styles.avatarContainer}>
+                    <UserAvatar
+                        size={40}
+                        active
+                        src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
                     />
-                    {/*<TextInput*/}
-                    {/*    placeholder={'Phone'}*/}
-                    {/*    value={value}*/}
-                    {/*    onChangeText={setValue}*/}
-                    {/*    style={styles.accountInput}*/}
-                    {/*/>*/}
-                </View>
-                <View style={styles.accountContainer}>
-
+                    <Text style={styles.contactName}>{contact.name}</Text>
                 </View>
             </View>
         </View>
@@ -89,7 +72,7 @@ export default function NewReviewTopContainer({contact, bottomSheetModalRef}) {
 const styles = StyleSheet.create({
     headerExtensionContainer: {
         width: '100%',
-        padding: 10,
+        marginTop: 10,
         // borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },

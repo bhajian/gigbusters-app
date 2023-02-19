@@ -94,21 +94,12 @@ const MoreInfoSubmissionScreen = props => {
                         {/*<Ionicons name="enter" size={25} color="white"/>*/}
                     </TouchableOpacity>
                 </View>
-                <SearchCategory navigation={navigation} style={{marginHorizontal: 10 }}/>
-                <ChoiceSelector/>
                 <View style={styles.locationContainer}>
-                    <Text>Within: {locationMax} km of  </Text>
-                    <Slider
-                        value={locationMax}
-                        onValueChange={setLocationMax}
-                        step={1}
-                        minimumTrackTintColor={Colors.light.tint}
-                        maximumValue={150}
-                        minimumValue={1}
-                        thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
-                    />
                     <LocationSelector style={{marginTop: 10}} />
                 </View>
+                <SearchCategory navigation={navigation} style={{marginHorizontal: 10 }}/>
+                <ChoiceSelector/>
+
             </View>
 
         </ScrollView>
@@ -119,7 +110,7 @@ export default MoreInfoSubmissionScreen;
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 20,
+        paddingTop: 40,
         backgroundColor: '#ffffff',
         height: '100%'
     },
@@ -193,7 +184,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         borderColor: '#bdb8b8',
         marginHorizontal: 10,
-        height: 120,
         borderWidth: 0,
         borderRadius: 15,
         padding: 5,

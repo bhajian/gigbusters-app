@@ -7,6 +7,7 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import SearchCategory from "../components/SearchCategory/SearchPage";
 import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
 import MoreInfoSubmissionScreen from "../screens/NewReviewScreen/MoreInfoSubmissionScreen";
+import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchReviewScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,13 @@ export function ReviewNavigation(props) {
             <Stack.Screen
                 name={'MoreInfoSubmissionScreen'}
                 component={MoreInfoSubmissionScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name={'AccountSearchReviewScreen'}
+                component={AccountSearchReviewScreen}
                 options={{
                     headerShown: false,
                 }}
