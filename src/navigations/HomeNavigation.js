@@ -5,7 +5,7 @@ import SearchCategory from "../components/SearchCategory/SearchPage";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
-import RequestReferralScreen from "../screens/WorkRequestScreen/ReferralRequest";
+import WorkerRequestCompletionScreen from "../screens/WorkRequestScreen/WorkerRequestCompletionScreen";
 import RequestCompletedScreen from "../screens/WorkRequestScreen/RequestCompletedScreen";
 import ReferralActivityScreen from "../screens/ReferralActivityScreen";
 import ReferralItemScreen from "../screens/ReferralActivityScreen/ReferralItemScreen";
@@ -36,7 +36,7 @@ export function HomeNavigation(props) {
 
             <Stack.Screen
                 name={'RequestReferralScreen'}
-                component={RequestReferralScreen}
+                component={WorkerRequestCompletionScreen}
                 options={{
                     headerShown: false,
                     animation: "fade_from_bottom",

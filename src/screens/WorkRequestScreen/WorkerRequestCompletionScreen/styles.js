@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     inputsContainer: {
-        backgroundColor: Colors.light.grey,
+        // backgroundColor: Colors.light.grey,
         margin: 10,
     },
     reviewInput: {
@@ -61,16 +61,33 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         margin: 10
     },
+    imageSelectorContainer: {
+        backgroundColor: Colors.light.grey,
+        flexDirection: 'row',
+    },
     imageContainer: {
         width: '100%',
         // height: 150,
+        // flexDirection: 'row',
+    },
+    reviewerName: {
+        marginHorizontal: 10,
+        padding: 5,
+        alignItems: 'center',
         flexDirection: 'row',
+        backgroundColor: Colors.light.grey,
+        borderRadius: 5,
+    },
+    avatarReviewerContainer: {
+        flexDirection: 'row',
+        marginHorizontal: 7,
+        marginTop: 10,
     },
     submitButton: {
         backgroundColor: Colors.light.tint,
         borderRadius: 10,
         width: 70,
-        height: 40,
+        height: 35,
         alignItems: 'center',
         justifyContent: 'center',
     },
