@@ -22,26 +22,14 @@ export default function ReferralItemTopContainer({item}) {
 
     return (
         <View style={styles.topContainer}>
-            <View style={styles.headerContainer}>
-                <View style={styles.headerLeft}>
-                    <TouchableOpacity
-                        onPress={() => navigation.goBack()}
-                        style={styles.closeButton}>
-                        <View style={styles.closeButton}>
-                            <FontAwesome name="chevron-left" style={styles.closeIcon}/>
-                            <Text style={styles.closeIcon}> </Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-            </View>
             <View style={styles.headerExtensionContainer}>
+                <View style={styles.leftContainer}>
+                    <Image source={{uri: users[0].image}} style={styles.image} />
+                    <Text style={styles.titleText}>
+                        {users[0].name}
+                    </Text>
+                </View>
                 <View style={styles.searchContainer}>
-                    <View style={styles.leftContainer}>
-                        <Image source={{uri: users[0].image}} style={styles.image} />
-                        <Text style={styles.titleText}>
-                            {users[0].name}
-                        </Text>
-                    </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
                             <Text style={styles.textTag} >Toronto</Text>
@@ -77,8 +65,15 @@ const styles = StyleSheet.create({
         paddingStart: 5,
         paddingEnd: 10,
     },
+    image: {
+        width: 40,
+        height: 40,
+        borderRadius: 2,
+    },
     headerExtensionContainer: {
         width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         paddingHorizontal: 10,
         padding: 5,
         borderBottomWidth: 0.5,
@@ -196,7 +191,7 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         backgroundColor: '#ffffff',
-        // height: 125,
+        // flexDirection: 'row',
         width: '100%',
     },
     privateSwitch: {

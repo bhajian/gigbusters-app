@@ -23,7 +23,7 @@ export default function ReferralActivityScreen({route}) {
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={users}
-                renderItem={({item}) => <ReferralRequestItem item={item} />}
+                renderItem={({item}) => <ReferralRequestItem item={item} handler={referralActivityClickHandler} />}
                 keyExtractor={(item) => item.id}
             />
         </SafeAreaView>

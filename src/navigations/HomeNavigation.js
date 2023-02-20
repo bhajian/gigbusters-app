@@ -56,13 +56,6 @@ export function HomeNavigation(props) {
                     headerShown: false,
                 }}
             />
-            <Stack.Screen
-                name={'ReferralItemScreen'}
-                component={ReferralItemScreen}
-                options={{
-                    headerShown: false,
-                }}
-            />
         </Stack.Navigator>
     );
 };

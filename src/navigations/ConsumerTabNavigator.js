@@ -10,6 +10,7 @@ import {HomeNavigation} from "./HomeNavigation";
 import MatchingScreen from "../screens/MatchingScreen";
 import {ProfileNavigation} from "./ProfileNavigation";
 import ReferralActivityScreen from "../screens/ReferralActivityScreen";
+import {ConsumerActivityNavigation} from "./ConsumerActivityNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,7 +38,7 @@ const ConsumerTabNavigator = props => {
             </Tab.Screen>
             <Tab.Screen
                 name={'Activity'}
-                component={ReferralActivityScreen}
+                component={ConsumerActivityNavigation}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerLargeTitle: true,

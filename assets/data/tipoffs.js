@@ -23,8 +23,8 @@ const tipoffs= [
         id: '2.2',
         to: {
             id: 'u2',
-            username: 'yekidige',
-            name: 'yeki dige',
+            username: 'shajarian',
+            name: 'John Scott junior',
             image: 'https://i1.sndcdn.com/artworks-000024763187-b73dus-t500x500.jpg',
         },
         from: {
@@ -42,8 +42,8 @@ const tipoffs= [
         id: '3',
         to: {
             id: 'u3',
-            username: 'sevomi',
-            name: 'sevomi dige',
+            username: 'Scotthitch',
+            name: 'scott hitchcock',
             image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
         },
         from: {
@@ -62,9 +62,9 @@ const tipoffs= [
         id: '3.5',
         to: {
             id: 'u3',
-            username: 'sevomi',
-            name: 'sevomi dige',
-            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+            username: 'realdonaldtrump',
+            name: 'Donald J Trump',
+            image: 'https://media.vanityfair.com/photos/63efe8107538a36bcf4a59df/master/w_2560%2Cc_limit/1228756580',
         },
         from: {
             id: 'u33',
@@ -81,13 +81,13 @@ const tipoffs= [
     {
         id: '4',
         to: {
-            id: 'u3',
-            username: 'sevomi',
-            name: 'sevomi dige',
-            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+            id: 'u4',
+            username: 'JenniS',
+            name: 'Jennifer',
+            image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/wh-aniston-markle-1577208133.jpg?crop=0.482xw:0.965xh;0.0208xw,0&resize=640:*',
         },
         from: {
-            id: 'u33',
+            id: 'u5',
             username: 'Anonymous',
             name: 'Anonymous',
             image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',
@@ -101,10 +101,10 @@ const tipoffs= [
     {
         id: '5',
         to: {
-            id: 'u3',
-            username: 'sevomi',
-            name: 'sevomi dige',
-            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+            id: 'u5',
+            username: 'Mamadjeffery',
+            name: 'Mammad Jeffery',
+            image: 'https://static.more.com/wp-content/uploads/2014/07/25214432/SEI_74430577.jpg',
         },
         from: {
             id: 'u33',
@@ -119,15 +119,15 @@ const tipoffs= [
         numberOfLikes: 20
     },
     {
-        id: '1.3',
+        id: '6',
         to: {
-            id: 'u3',
-            username: 'sevomi',
-            name: 'sevomi dige',
-            image: 'https://imgix.ranker.com/user_node_img/111/2217894/original/2217894-photo-u178?auto=format&q=60&fit=crop&fm=pjpg&dpr=2&w=375',
+            id: 'u6',
+            username: 'Naomimi',
+            name: 'Naomi mimimi',
+            image: 'https://back.3blmedia.com/sites/default/files/styles/ratio_3_2/public/triplepundit/wide/emma%20watson.jpg?h=c03c160b',
         },
         from: {
-            id: 'u33',
+            id: 'u6',
             username: 'Anonymous',
             name: 'Anonymous',
             image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',

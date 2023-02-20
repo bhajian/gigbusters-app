@@ -7,6 +7,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import people from "../../../../assets/data/tipoffs";
 import ReferralRequestItem from "../../../components/ReferralRequestItem";
 import ReferralItemTopContainer from "./ReferralItemTopContainer";
+import ApplicantRequestItem from "../../../components/ApplicantRequestItem";
 export default function ReferralItemScreen({route, item}) {
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationMax, setLocationMax] = useState(10);
@@ -14,8 +15,8 @@ export default function ReferralItemScreen({route, item}) {
     const navigation = useNavigation();
 
     useEffect(() => {
-        navigation.navigate('')
-    }, [navigation]);
+
+    }, []);
 
     return (
         <View style={styles.container}>
@@ -24,7 +25,7 @@ export default function ReferralItemScreen({route, item}) {
             </View>
             <FlatList
                 data={people}
-                renderItem={({item}) => <ReferralRequestItem item={item.to} />}
+                renderItem={({item}) => <ApplicantRequestItem item={item.to} />}
                 keyExtractor={(item) => item.id}
             />
 
