@@ -7,13 +7,11 @@ import {
 } from 'react-native';
 
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
-import {RadioButton} from "react-native-paper";
 import Colors from "../../../constants/Colors";
-import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
-import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
+import AccountSearchReviewScreen from "./index";
 
-export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetChanges}) {
+export default function AccontSearchBottomSheet({bottomSheetModalRef, handleSheetChanges}) {
     const [value, setValue] = React.useState('phone')
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
 
@@ -47,7 +45,7 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
     }, []);
 
     // variables
-    const snapPoints = useMemo(() => ['90%', '90%'], []);
+    const snapPoints = useMemo(() => ['25%', '80%'], []);
 
     return (
         <BottomSheetModalProvider>
@@ -70,60 +68,7 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
                         <View></View>
                     </View>
                     <View style={styles.mainContainer}>
-                        <RadioButton.Group
-                            onValueChange={setValue}
-                            value={value}
-                        >
-                            <View style={styles.radioRow}>
-                                <Entypo
-                                    style={styles.icon}
-                                    name={"phone"}
-                                />
-                                <RadioButton.Item label="Phone" value="phone" style={styles.radioButton} />
-                            </View>
-                            <View style={styles.radioRow}>
-                                <Entypo
-                                    style={styles.icon}
-                                    name={"instagram"}
-                                />
-                                <RadioButton.Item label="Instagram" value="instagram" style={styles.radioButton} />
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"tiktok"}
-                                />
-                                <RadioButton.Item label="Tiktok" value="tiktok" style={styles.radioButton}/>
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"twitter"}
-                                />
-                                <RadioButton.Item label="Twitter" value="twitter" style={styles.radioButton}/>
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"linkedin"}
-                                />
-                                <RadioButton.Item label="Linkedin" value="linkedin" style={styles.radioButton}/>
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"facebook"}
-                                />
-                                <RadioButton.Item label="Facebook" value="facebook" style={styles.radioButton}/>
-                            </View>
-                            <View style={styles.radioRow}>
-                                <MaterialCommunityIcons
-                                    style={styles.icon}
-                                    name={"web"}
-                                />
-                                <RadioButton.Item label="Web" value="web" style={styles.radioButton}/>
-                            </View>
-                        </RadioButton.Group>
+                        <AccountSearchReviewScreen />
                     </View>
                 </BottomSheetView>
             </BottomSheetModal>
@@ -143,6 +88,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     sheetContainer: {
+        // marginHorizontal: 6,
         backgroundColor: 'white',
         borderRadius: 16,
         shadowColor: 'rgba(0,0,0,0.75)',
@@ -183,13 +129,10 @@ const styles = StyleSheet.create({
     radioButton: {
         fontWeight: '500',
         width: 350,
-        // backgroundColor: 'green',
-        // flexDirection: 'row',
-        // justifyContent: 'space-between',
-        // flex: 4
+
     },
     icon: {
-        // marginRight: 3,
+
         fontSize: 20,
         color: Colors.light.tint
     }

@@ -61,6 +61,7 @@ const ProfileScreen = (props) => {
 
     const onSwitchProfilePressed = async() => {
         try{
+            props.updateAuthState('initializing')
             const profile = profileService.getProfile()
             if(accountType === 'WORKER'){
                 profile.accountType = 'USER'
@@ -70,6 +71,7 @@ const ProfileScreen = (props) => {
             setAccountType(profile.accountType)
             await profileService.updateProfile(profile)
             props.updateAccountType(profile.accountType)
+            props.updateAuthState('loggedIn')
         } catch (e) {
             console.log(e)
         }

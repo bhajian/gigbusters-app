@@ -15,7 +15,7 @@ export function ReviewNavigation(props) {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name={'All'}
+                name={'MainReview'}
                 component={ReviewScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,

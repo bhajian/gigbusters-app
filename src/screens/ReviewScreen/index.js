@@ -22,9 +22,7 @@ import ReviewableSearch from "../../components/ReviewableSearch";
 
 export default function ReviewScreen(props) {
     const [searchText, setSearchText] = useState('');
-
     const navigation = useNavigation();
-
     const bottomSheetModalRef = useRef(null);
     const handlePresentPress = () => bottomSheetModalRef.current.present()
     const handleSheetChanges = useCallback((index) => {

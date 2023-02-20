@@ -30,7 +30,7 @@ const MoreInfoSubmissionScreen = props => {
     const navigation = useNavigation()
 
     function onSubmitPress() {
-        navigation.navigate('ReviewScreen')
+        navigation.navigate('MainReview')
     }
 
     useEffect(() => {

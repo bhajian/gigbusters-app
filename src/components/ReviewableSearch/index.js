@@ -153,7 +153,6 @@ const styles = StyleSheet.create({
         textAlignVertical: 'bottom',
     },
     sheetContainer: {
-        marginHorizontal: 6,
         backgroundColor: 'white',
         borderRadius: 16,
         shadowColor: 'rgba(0,0,0,0.75)',

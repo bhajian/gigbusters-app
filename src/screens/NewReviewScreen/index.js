@@ -8,7 +8,7 @@ import {
     Image,
     View,
     Text,
-    Switch, ScrollView, Button,
+    Switch, ScrollView, Button, Dimensions, KeyboardAvoidingView,
 } from 'react-native';
 import {API, graphqlOperation, Auth, Storage} from 'aws-amplify';
 // import * as Permissions from 'expo-permissions';
@@ -25,8 +25,9 @@ import {useNavigation} from "@react-navigation/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
+import AccontSearchBottomSheet from "./AccountSearchReviewScreen/AccontSearchBottomSheet";
 
-
+let {width, height} = Dimensions.get('window')
 export default function NewReviewScreen({navigation, route}) {
     let contact = route.params ? route.params.contact : {
         name: 'behnam',
@@ -34,21 +35,13 @@ export default function NewReviewScreen({navigation, route}) {
         id: 1
     };
 
-    const [senderId, setSenderId] = useState('');
-    const [isPrivate, setIsPrivate] = useState(false);
-    const togglePrivateSwitch = () =>
-        setIsPrivate(previousState => !previousState);
-    const [isAnonymous, setIsAnonymous] = useState(false);
-    const toggleAnonymousSwitch = () =>
-        setIsAnonymous(previousState => !previousState);
-    const [tipoff, setTipoff] = useState('');
+    const [review, setReview] = useState('');
     const [rating, setRating] = useState(2.5);
     const [imageUrl, setImageUrl] = useState('');
     const [accountType, setAccountType] = useState('');
     const snapPoints = useMemo(() => ['25%', '50%'], []);
     const bottomSheetModalRef = useRef(null);
     const handleSheetChanges = useCallback((index) => {
-
     }, []);
 
 
@@ -69,6 +62,7 @@ export default function NewReviewScreen({navigation, route}) {
     };
 
     useEffect(() => {
+        bottomSheetModalRef.current.present()
         getPermissionAsync().then(e => {
             getCurrentUserId().then(r => {
             });
@@ -112,116 +106,136 @@ export default function NewReviewScreen({navigation, route}) {
         navigation.navigate('MoreInfoSubmissionScreen');
     }
 
+    function onReviewerPress() {
+
+    }
+
+    function onRevieweePress() {
+        bottomSheetModalRef.current.present()
+    }
+
+    function handlePresentPress()
+    {
+        bottomSheetModalRef.current.present()
+    }
+
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.headerContainer}>
-                <View style={styles.headerLeft}>
-                    <TouchableOpacity
-                        onPress={() => navigation.goBack()}
-                        style={styles.backButton}>
-                        <FontAwesome name="chevron-left" style={styles.backIcon}/>
-                        <Text style={styles.backIcon}> Back </Text>
+        <KeyboardAvoidingView style={styles.container} behavior="padding" >
+            <ScrollView>
+                <View style={styles.headerContainer}>
+                    <View style={styles.headerLeft}>
+                        <TouchableOpacity
+                            onPress={() => navigation.goBack()}
+                            style={styles.backButton}>
+                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
+                            <Text style={styles.backIcon}> Back </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                        <Text style={styles.buttonText}>Next</Text>
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
-                    <Text style={styles.buttonText}>Next</Text>
+                <View style={styles.newReviewContainer}>
+                    <View style={styles.reviewUsersContainer}>
+                        <View style={styles.avatarReviewerContainer}>
+                            <UserAvatar
+                                size={35}
+                                active
+                                src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                            />
+                            <TouchableOpacity style={styles.reviewerName} onPress={onReviewerPress}>
+                                <Text style={styles.reviewerText}>Behnam</Text>
+                                <Feather name="chevron-down" size={20}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.avatarRevieweeContainer}>
+                            <UserAvatar
+                                size={35}
+                                active
+                                src="https://m.media-amazon.com/images/M/MV5BMjE4MDI3NDI2Nl5BMl5BanBnXkFtZTcwNjE5OTQwOA@@._V1_.jpg"
+                            />
+                            <TouchableOpacity style={styles.revieweeName} onPress={onRevieweePress}>
+                                <Text style={styles.revieweeText}> Katy Perry </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.reviewInputContainer}>
+                        <View style={styles.ratingContainer}>
+                            <Text style={styles.ratingText}>Rating: </Text>
+                            <RatingBar
+                                initialRating={3}
+                                minRating={0}
+                                direction="horizontal"
+                                allowHalfRating
+                                unratedColor={Colors.light.grey}
+                                itemCount={5}
+                                itemPadding={1}
+                                itemSize={25}
+                                itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25}/>}
+                                onRatingUpdate={setRating}
+                            />
+                        </View>
+                        <View style={styles.inputsContainer}>
+                            <TextInput
+                                value={review}
+                                onChangeText={value => setReview(value)}
+                                multiline={true}
+                                style={styles.reviewInput}
+                                placeholder={"Review..."}
+                            />
+                        </View>
+                    </View>
+                </View>
+            </ScrollView>
+            <View style={styles.imageSelectorContainer}>
+                <TouchableOpacity onPress={onReviewerPress} style={styles.pickImage}>
+                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 50, color: 'white'}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={pickImage} style={styles.pickImage}>
+                    <Image
+                        source={{uri: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250'}}
+                        style={{
+                            width: 40,
+                            height: 40,
+                            borderRadius: 5,
+                            marginVertical: 5
+                        }}
+                    />
                 </TouchableOpacity>
             </View>
-            <View style={styles.headerExtensionContainer}>
-                <View style={styles.avatarReviewerContainer}>
-                    <UserAvatar
-                        size={35}
-                        active
-                        src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
-                    />
-                    <TouchableOpacity style={styles.reviewerName}>
-                        <Text style={styles.reviewerText}>{contact.name}</Text>
-                        <Feather name="chevron-down" size={20}/>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.avatarRevieweeContainer}>
-                    <UserAvatar
-                        size={35}
-                        active
-                        src="https://m.media-amazon.com/images/M/MV5BMjE4MDI3NDI2Nl5BMl5BanBnXkFtZTcwNjE5OTQwOA@@._V1_.jpg"
-                    />
-                    <Text style={styles.revieweeName}> Katy Perry </Text>
-                </View>
-            </View>
-
-            <View style={styles.newReviewContainer}>
-                <View style={styles.reviewInputContainer}>
-                    <View style={styles.ratingContainer}>
-                        <Text style={styles.ratingText}>Rating: </Text>
-                        <RatingBar
-                            initialRating={3}
-                            minRating={0}
-                            direction="horizontal"
-                            allowHalfRating
-                            unratedColor={Colors.light.grey}
-                            itemCount={5}
-                            itemPadding={1}
-                            itemSize={25}
-                            itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25}/>}
-                            onRatingUpdate={setRating}
-                        />
-                    </View>
-                    <View style={styles.inputsContainer}>
-                        <TextInput
-                            value={tipoff}
-                            onChangeText={value => setTipoff(value)}
-                            multiline={true}
-                            style={styles.reviewInput}
-                            placeholder={"Review..."}
-                        />
-                    </View>
-                </View>
-                <View style={styles.imageSelectorContainer}>
-                    <TouchableOpacity onPress={pickImage} style={styles.pickImage}>
-                        <MaterialCommunityIcons name="image-plus" style={{fontSize: 65, color: Colors.light.grey}}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={pickImage} style={styles.pickImage}>
-                        <Image
-                            source={{uri: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250'}}
-                            style={{
-                                width: 50,
-                                height: 50,
-                                borderRadius: 5,
-                                marginVertical: 10
-                            }}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <SocialNetworkSelector
+            <AccontSearchBottomSheet
                 handleSheetChanges={handleSheetChanges}
                 bottomSheetModalRef={bottomSheetModalRef}
             />
-        </SafeAreaView>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        paddingTop: 40,
+        paddingTop: 50,
         backgroundColor: 'white',
         height: '100%',
-    },
-    headerExtensionContainer: {
-        justifyContent: 'space-between',
-        marginHorizontal: 15,
-        borderBottomColor: 'lightgrey',
-        // backgroundColor: 'grey'
     },
     headerContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginHorizontal: 15,
         borderBottomColor: 'lightgrey',
+        // backgroundColor: 'grey'
     },
     headerLeft: {
+        flexDirection: 'row',
+    },
+    newReviewContainer: {
+        paddingHorizontal: 15,
+    },
+    reviewUsersContainer: {
+
+    },
+    imageSelectorContainer: {
+        backgroundColor: Colors.light.grey,
         flexDirection: 'row',
     },
     closeButton: {
@@ -282,16 +296,7 @@ const styles = StyleSheet.create({
         // height: 500,
         // backgroundColor: 'grey'
     },
-    newReviewContainer: {
-        // zIndex: -10,
-        paddingHorizontal: 15,
-        // height: '100%',
-        justifyContent: 'space-between',
-        // backgroundColor: 'green',
-        flex: 1,
-        // justifyContent: 'flex-end',
-        // alignItems: 'center'
-    },
+
     inputsContainer: {
         // backgroundColor: Colors.light.grey,
         marginTop: 5,
@@ -308,17 +313,12 @@ const styles = StyleSheet.create({
     },
     pickImage: {
         borderRadius: 5,
-        marginVertical: 10,
+        marginVertical: 5,
         marginHorizontal: 2,
     },
     settingText: {
         fontSize: 15,
         marginVertical: 10,
-    },
-    imageSelectorContainer: {
-        alignSelf: 'flex-end',
-        flexDirection: 'row',
-        // justifyContent: 'flex-end'
     },
     newMessageSetting: {
         bottom: 0,
@@ -349,5 +349,8 @@ const styles = StyleSheet.create({
         transform: [{scaleX: 0.7}, {scaleY: 0.7}],
         marginTop: 5,
     },
-
+    backIcon: {
+        fontSize: 17,
+        color: Colors.light.tint,
+    }
 });
