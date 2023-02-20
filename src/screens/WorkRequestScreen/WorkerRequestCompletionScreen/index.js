@@ -8,7 +8,7 @@ import {
     Image,
     TextInput,
     ScrollView,
-    KeyboardAvoidingView,
+    KeyboardAvoidingView, Platform,
 } from 'react-native';
 import styles from './styles';
 import {useNavigation} from "@react-navigation/native";
@@ -34,7 +34,10 @@ export default function WorkerRequestCompletionScreen({route}) {
     }
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="padding" >
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
             <View style={styles.topContainer}>
                 <View style={styles.headerContainer}>
                     <View style={styles.headerLeft}>
@@ -81,7 +84,6 @@ export default function WorkerRequestCompletionScreen({route}) {
                 <TouchableOpacity style={styles.pickImage}>
                     <MaterialCommunityIcons name="image-plus" style={{fontSize: 50, color: 'white'}}/>
                 </TouchableOpacity>
-
                     {users.map((item, i) => {
                         return(
                             <TouchableOpacity style={styles.pickImage}>
@@ -97,7 +99,6 @@ export default function WorkerRequestCompletionScreen({route}) {
                             </TouchableOpacity>
                         )
                     })}
-
             </View>
 
         </KeyboardAvoidingView>

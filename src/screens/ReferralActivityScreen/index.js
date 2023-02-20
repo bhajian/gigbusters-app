@@ -26,11 +26,6 @@ export default function ReferralActivityScreen({route}) {
                 renderItem={({item}) => <ReferralRequestItem item={item} />}
                 keyExtractor={(item) => item.id}
             />
-            {/*<FlatList*/}
-            {/*    data={users}*/}
-            {/*    renderItem={({item}) => <TextInput>{item.name}</TextInput>}*/}
-            {/*    keyExtractor={(item) => item.id}*/}
-            {/*/>*/}
         </SafeAreaView>
 
     );

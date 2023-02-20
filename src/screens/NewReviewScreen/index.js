@@ -121,7 +121,10 @@ export default function NewReviewScreen({navigation, route}) {
 
 
     return (
-        <KeyboardAvoidingView style={styles.container} behavior="padding" >
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+        >
             <ScrollView>
                 <View style={styles.headerContainer}>
                     <View style={styles.headerLeft}>

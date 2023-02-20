@@ -8,6 +8,7 @@ import SearchCategory from "../components/SearchCategory/SearchPage";
 import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
 import MoreInfoSubmissionScreen from "../screens/NewReviewScreen/MoreInfoSubmissionScreen";
 import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchReviewScreen";
+import RequestCompletedScreen from "../screens/NewReviewScreen/RequestCompletedScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +44,13 @@ export function ReviewNavigation(props) {
             <Stack.Screen
                 name={'ReviewableProfileScreen'}
                 component={ReviewableProfileScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
+            <Stack.Screen
+                name={'RequestCompletedScreen'}
+                component={RequestCompletedScreen}
                 options={{
                     headerShown: false,
                 }}
