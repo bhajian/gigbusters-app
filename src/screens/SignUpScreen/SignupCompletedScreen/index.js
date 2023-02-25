@@ -5,6 +5,7 @@ import Lottie from "lottie-react-native";
 import waitAnim from '../../../../assets/animations/135948-high-striker.json'
 import celebrationAnim from '../../../../assets/animations/112134-fireworks-teal-and-red.json'
 import Colors from "../../../constants/Colors";
+import CustomButton from "../../../components/CustomButton";
 
 export default function SignupCompletedScreen({route}) {
     const navigation = useNavigation();
@@ -43,11 +44,11 @@ export default function SignupCompletedScreen({route}) {
                     Please sit tight, someone will respond
                     to your request shortly.</Text>
 
-                <Lottie
-                    style={{height: 150, width: 150, alignSelf: 'center', marginTop: 5}}
-                    source={waitAnim}
-                    autoPlay
-                    loop
+
+                <CustomButton
+                    text="Close & Continue"
+                    style={styles.component}
+                    // onPress={onNextPressed}
                 />
             </ScrollView>
 

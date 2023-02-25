@@ -30,7 +30,7 @@ export default function WorkerRequestCompletionScreen({route}) {
     }, [navigation]);
 
     function submitRequest() {
-        navigation.navigate('RequestReferralCompletedScreen')
+        navigation.navigate('RequestCompletedScreen')
     }
 
     return (

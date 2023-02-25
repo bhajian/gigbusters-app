@@ -1,5 +1,35 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+    FlatList,
+    SafeAreaView, StyleSheet, TextInput, View,
+} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
+import users from '../../../assets/data/users'
+import ReferralRequestItem from "../../components/ReferralRequestItem";
 import Colors from "../../constants/Colors";
+
+export default function RequestActivityScreen({route}) {
+    const navigation = useNavigation();
+
+    useEffect(() => {
+
+    }, [navigation]);
+
+    function referralActivityClickHandler() {
+        navigation.navigate('RequestDetailScreen');
+    }
+
+    return (
+        <SafeAreaView style={styles.container}>
+            <FlatList
+                data={users}
+                renderItem={({item}) => <ReferralRequestItem item={item} handler={referralActivityClickHandler} />}
+                keyExtractor={(item) => item.id}
+            />
+        </SafeAreaView>
+
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -75,4 +105,3 @@ const styles = StyleSheet.create({
     },
 });
 
-export default styles;

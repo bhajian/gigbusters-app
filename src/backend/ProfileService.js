@@ -8,7 +8,7 @@ export class ProfileService {
     constructor() {
 
     }
-    async pullProfile() {
+    async fetchProfile() {
         const data = {}
         const profiles = await API.get(profileApiName, profilePath, data)
         profile = (profiles[0] ? profiles[0] : null)
@@ -38,5 +38,9 @@ export class ProfileService {
     }
     getProfile() {
         return profile
+    }
+
+    changeAndVerifyPhone(props) {
+
     }
 }

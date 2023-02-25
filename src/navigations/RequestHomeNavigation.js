@@ -4,15 +4,13 @@ import WorkRequestScreen from "../screens/WorkRequestScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 import WorkerRequestCompletionScreen from "../screens/WorkRequestScreen/WorkerRequestCompletionScreen";
 import RequestCompletedScreen from "../screens/WorkRequestScreen/RequestCompletedScreen";
-import ReferralActivityScreen from "../screens/ReferralActivityScreen";
-import ReferralItemScreen from "../screens/ReferralActivityScreen/ReferralItemScreen";
+import RequestActivityScreen from "../screens/RequestActivityScreen";
 
 const Stack = createNativeStackNavigator();
 
-export function HomeNavigation(props) {
+export function RequestHomeNavigation(props) {
     return (
         <Stack.Navigator>
             <Stack.Screen
@@ -43,15 +41,15 @@ export function HomeNavigation(props) {
                 }}
             />
             <Stack.Screen
-                name={'RequestReferralCompletedScreen'}
+                name={'RequestCompletedScreen'}
                 component={RequestCompletedScreen}
                 options={{
                     headerShown: false,
                 }}
             />
             <Stack.Screen
-                name={'ReferralActivityScreen'}
-                component={ReferralActivityScreen}
+                name={'RequestActivityScreen'}
+                component={RequestActivityScreen}
                 options={{
                     headerShown: false,
                 }}

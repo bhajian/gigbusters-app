@@ -14,7 +14,7 @@ const tipoffs= [
             image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',
         },
         sentAt: '2h',
-        content: 'Lorem Ipsum In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content. Lorem ipsum may be used as a placeholder before the final copy is',
+        content: 'I am looking for someone to roll my toilet papers',
         image: 'https://static.thehoneycombers.com/wp-content/uploads/sites/4/2020/03/Best-funny-Coronavirus-memes-2020-Honeycombers-Bali-7.jpg',
         numberOfReplies: 11,
         numberOfLikes: 20
@@ -53,7 +53,7 @@ const tipoffs= [
             image: 'https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F1018280982%2F0x0.jpg',
         },
         sentAt: '2m',
-        content: 'Blah blah blah.',
+        content: 'I am looking for a beauty specialist to do my lips like a Palang',
         image: 'https://imagez.tmz.com/image/5b/4by3/2021/09/10/5b10a66978ed4dcfb0dda357e50d574e_md.jpg',
         numberOfReplies: 11,
         numberOfLikes: 20

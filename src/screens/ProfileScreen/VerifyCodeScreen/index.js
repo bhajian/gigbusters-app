@@ -13,7 +13,7 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
 
     async function resendConfirmationCode() {
         try {
-            await Auth.resendSignUp(phone.toString());
+            // await Auth.resendSignUp(phone.toString());
         } catch (error) {
             Alert.alert(error.message)
         }

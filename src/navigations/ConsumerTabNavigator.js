@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ProfileScreen from '../screens/ProfileScreen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../constants/Colors';
 import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FontAwesome5, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
+import {FontAwesome, FontAwesome5, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
-import {HomeNavigation} from "./HomeNavigation";
-import MatchingScreen from "../screens/MatchingScreen";
+import {RequestHomeNavigation} from "./RequestHomeNavigation";
 import {ProfileNavigation} from "./ProfileNavigation";
-import ReferralActivityScreen from "../screens/ReferralActivityScreen";
 import {ConsumerActivityNavigation} from "./ConsumerActivityNavigation";
+import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -29,7 +27,7 @@ const ConsumerTabNavigator = props => {
                 }}
             >
                 {screenProps => (
-                    <HomeNavigation
+                    <RequestHomeNavigation
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />
@@ -44,6 +42,17 @@ const ConsumerTabNavigator = props => {
                     headerLargeTitle: true,
                     tabBarIcon: ({color}) => (
                         <Ionicons name="file-tray-full" size={25} color={color}/>
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name={'Feed'}
+                component={ReferralFeedNavigation}
+                options={{
+                    tabBarActiveTintColor: Colors.light.tint,
+                    headerLargeTitle: true,
+                    tabBarIcon: ({color}) => (
+                        <FontAwesome name="feed" size={25} color={color}/>
                     ),
                 }}
             />

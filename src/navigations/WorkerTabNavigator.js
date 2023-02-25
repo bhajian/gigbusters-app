@@ -6,10 +6,9 @@ import Colors from '../constants/Colors';
 import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesome5, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
-import {HomeNavigation} from "./HomeNavigation";
 import MatchingScreen from "../screens/MatchingScreen";
 import {ProfileNavigation} from "./ProfileNavigation";
-import ReferralActivityScreen from "../screens/ReferralActivityScreen";
+import RequestActivityScreen from "../screens/RequestActivityScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -36,8 +35,8 @@ const WorkerTabNavigator = props => {
                 )}
             </Tab.Screen>
             <Tab.Screen
-                name={'Activity Log'}
-                component={ReferralActivityScreen}
+                name={'Request Activity Log'}
+                component={RequestActivityScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerLargeTitle: true,
@@ -79,10 +78,3 @@ const WorkerTabNavigator = props => {
 };
 
 export default WorkerTabNavigator;
-
-const styles = StyleSheet.create({
-    closeButton: {
-        paddingEnd: 10,
-        paddingTop: 10,
-    },
-});

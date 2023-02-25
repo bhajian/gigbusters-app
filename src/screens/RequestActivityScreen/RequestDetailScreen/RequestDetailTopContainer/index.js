@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {
     StyleSheet,
-    TouchableOpacity,
     View,
     Text, TextInput, Image,
 } from 'react-native';
 import Colors from '../../../../constants/Colors';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation} from "@react-navigation/native";
 import users from '../../../../../assets/data/users';
 
-export default function ReferralItemTopContainer({item}) {
+export default function RequestDetailTopContainer({item}) {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('phone');
     const [searchQuery, setSearchQuery] = React.useState('');

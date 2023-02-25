@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
     View,
     Text,
@@ -30,9 +30,43 @@ const EditProfileScreen = (props) => {
 
     const navigation = useNavigation();
 
+    const onSavePress = useCallback(async () => {
+        try{
+            const profile = profileService.getProfile()
+            profile.name = name
+            profile.bio = bio
+            await profileService.updateProfile(profile)
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
+        }
+    },[name, bio])
+
+
+    const getCurrentUserData = useCallback(async () => {
+        const profile = profileService.getProfile()
+        if(profile && profile.accountCode){
+            setAccountNumber(profile.accountCode)
+        }
+        if(profile && profile.name){
+            setName(profile.name)
+        }
+        if(profile && profile.bio){
+            setBio(profile.bio)
+        }
+        if(profile && profile.email && profile.email.email){
+            setEmail(profile.email.email)
+        }
+        if(profile && profile.phone && profile.phone.phone){
+            setPhone(profile.phone.phone)
+        }
+    },[])
+
     useEffect(() => {
         getCurrentUserData().then(r => {})
+    }, [getCurrentUserData]);
 
+    useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
             headerLargeTitle: false,
@@ -55,44 +89,10 @@ const EditProfileScreen = (props) => {
                     <Text style={{color: '#0f66a9', fontSize: 18}}>Save</Text>
                 </Pressable>
             ),
-            // headerLeft: () => (
-            //
-            // )
         })
+        return
 
-
-    }, []);
-
-    async function getCurrentUserData() {
-        const profile = profileService.getProfile()
-        if(profile && profile.accountCode){
-            setAccountNumber(profile.accountCode)
-        }
-        if(profile && profile.name){
-            setName(profile.name)
-        }
-        if(profile && profile.bio){
-            setBio(profile.bio)
-        }
-        if(profile && profile.email && profile.email.email){
-            setEmail(profile.email.email)
-        }
-        if(profile && profile.phone && profile.phone.phone){
-            setPhone(profile.phone.phone)
-        }
-    }
-
-    const onSavePress = async () => {
-        try{
-            const profile = profileService.getProfile()
-            profile.name = name
-            profile.bio = bio
-            await profileService.updateProfile(profile)
-            navigation.goBack()
-        } catch (e) {
-            console.log(e)
-        }
-    };
+    }, [onSavePress]);
 
     const onPhotoPressed = () => {
         console.log('change photo')
@@ -112,7 +112,7 @@ const EditProfileScreen = (props) => {
             <View style={styles.topContainer} >
                 <Pressable
                     style={styles.photoChange}
-                    onPress={onSavePress}
+                    onPress={onPhotoPressed}
                 >
                     <UserAvatar
                         size={80}

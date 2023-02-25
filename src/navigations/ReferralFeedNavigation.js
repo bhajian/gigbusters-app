@@ -9,15 +9,16 @@ import WorkerRequestCompletionScreen from "../screens/WorkRequestScreen/WorkerRe
 import RequestCompletedScreen from "../screens/WorkRequestScreen/RequestCompletedScreen";
 import RequestActivityScreen from "../screens/RequestActivityScreen";
 import RequestDetailScreen from "../screens/RequestActivityScreen/RequestDetailScreen";
+import RequestFeedScreen from "../screens/RequestFeedScreen";
 
 const Stack = createNativeStackNavigator();
 
-export function ConsumerActivityNavigation(props) {
+export function ReferralFeedNavigation(props) {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name={'RequestActivityScreen'}
-                component={RequestActivityScreen}
+                name={'RequestFeedScreen'}
+                component={RequestFeedScreen}
                 options={{
                     headerShown: false,
                 }}

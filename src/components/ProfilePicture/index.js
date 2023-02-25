@@ -1,7 +1,7 @@
 import React from "react";
 import {Image} from "react-native";
 
-export default function ProfilePicture({image, size = 50}) {
+export default function ProfilePicture({image, size = 40}) {
     return (
         <Image
             source={{uri : image}}

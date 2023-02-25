@@ -20,7 +20,7 @@ const ProfileScreen = (props) => {
 
     useEffect(() => {
         getCurrentUserData().then(r => {})
-    }, []);
+    }, [getCurrentUserData]);
 
     async function getCurrentUserData() {
         const profile = profileService.getProfile()

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
     Text,
     Pressable,
-    SafeAreaView, StyleSheet
+    SafeAreaView, StyleSheet, FlatList
 } from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import FameorbitFeed from "../../components/FameorbitFeed";
@@ -13,12 +13,13 @@ import NewReviewButton from "../../components/NewReviewButton";
 import ReviewableSearch from "../../components/ReviewableSearch";
 import {ProfileService} from "../../backend/ProfileService";
 import UserAvatar from "react-native-user-avatar";
+import tipoffs from "../../../assets/data/tipoffs";
+import Reviewable from "../../components/Reviewable";
+import RequestItem from "../../components/RequestItem";
 
-
-export default function ReviewScreen(props) {
+export default function RequestFeedScreen(props) {
     const [name, setName] = useState('');
     const navigation = useNavigation();
-    const bottomSheetModalRef = useRef(null);
     const profileService = new ProfileService()
 
     async function getCurrentUserData() {
@@ -37,17 +38,12 @@ export default function ReviewScreen(props) {
         getCurrentUserData().then(r => {
             navigation.setOptions({
                 tabBarActiveTintColor: Colors.light.tint,
-                // headerLargeTitle: true,
                 tabBarIcon: ({color}) => (
                     <Fontisto name="react" size={25} color={color}/>
                 ),
                 headerTitle: () => (
-                    <Text>Fame Orbit</Text>
+                    <Text>Feed</Text>
                 ),
-                headerSearchBarOptions: {
-                    placeholder: "Search ..",
-                    // onFocus: ()=>{navigation.navigate('SearchCategory')}
-                },
                 headerRight: () => (
                     <Pressable
                         onPress={handlePresentPress}
@@ -76,11 +72,10 @@ export default function ReviewScreen(props) {
 
     return (
         <SafeAreaView style={styles.contentContainer}>
-            <FameorbitFeed/>
-            <NewReviewButton/>
-            <ReviewableSearch
-                bottomSheetModalRef={bottomSheetModalRef}
-                handleSheetChanges={handleSheetChanges}
+            <FlatList
+                data={tipoffs}
+                renderItem={({item}) => <RequestItem request={item} />}
+                keyExtractor={(item) => item.id}
             />
         </SafeAreaView>
     )
@@ -93,7 +88,11 @@ const styles = StyleSheet.create({
     searchBarContainer: {
         flexDirection: "row",
         width: '100%',
+        // justifyContent: 'space-between',
+        // height: 75,
+        // borderBottomWidth: 0.5,
         borderBottomColor: 'grey',
+        // paddingBottom: 2,
         backgroundColor: 'white',
     },
     searchInput: {

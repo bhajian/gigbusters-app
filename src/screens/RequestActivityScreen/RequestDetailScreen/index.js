@@ -1,5 +1,34 @@
-import {StyleSheet, Dimensions} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, FlatList, StyleSheet,} from 'react-native';
+import {useNavigation} from "@react-navigation/native";
+import people from "../../../../assets/data/tipoffs";
+import RequestDetailTopContainer from "./RequestDetailTopContainer";
+import ApplicantRequestItem from "../../../components/ApplicantRequestItem";
 import Colors from "../../../constants/Colors";
+export default function RequestDetailScreen({route, item}) {
+    const [isModalVisible, setModalVisible] = useState(false);
+    const [locationMax, setLocationMax] = useState(10);
+    const [priceMax, setPriceMax] = useState(10);
+    const navigation = useNavigation();
+
+    useEffect(() => {
+
+    }, []);
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.topContainer}>
+                <RequestDetailTopContainer item = {item} />
+            </View>
+            <FlatList
+                data={people}
+                renderItem={({item}) => <ApplicantRequestItem item={item.to} />}
+                keyExtractor={(item) => item.id}
+            />
+
+        </View>
+    );
+};
 
 const styles = StyleSheet.create({
     container: {
@@ -74,5 +103,3 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
 });
-
-export default styles;

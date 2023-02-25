@@ -6,6 +6,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ForgotPassword from '../screens/ForgotPassword';
 import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen";
 import ForgetPasswordScreen from "../screens/ForgotPassword";
+import PasswordResetScreen from "../screens/ForgotPassword/PasswordResetScreen";
 
 const AuthenticationStack = createStackNavigator();
 
@@ -38,6 +39,10 @@ const AuthenticationNavigator = props => {
             <AuthenticationStack.Screen
                 name="ForgotPassword"
                 component={ForgetPasswordScreen}
+            />
+            <AuthenticationStack.Screen
+                name="PasswordResetScreen"
+                component={PasswordResetScreen}
             />
             <AuthenticationStack.Screen
                 name="CreateProfileScreen"

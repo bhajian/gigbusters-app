@@ -10,16 +10,26 @@ import {SearchCategory} from "../../components/SearchCategory";
 import ChoiceSelector from "../../components/ChoiceSelector";
 import {LocationSelector} from "../../components/LocationSearch";
 import Slider from "@react-native-community/slider";
+import UserAvatar from "react-native-user-avatar";
+import {ProfileService} from "../../backend/ProfileService";
 
 
 const WorkRequestScreen = props => {
-    const [isModalVisible, setModalVisible] = useState(false);
+    const [name, setName] = useState('');
     const [locationMax, setLocationMax] = useState(50);
     const [priceMax, setPriceMax] = useState(20);
+    const profileService = new ProfileService()
     const navigation = useNavigation()
 
+    async function getCurrentUserData() {
+        const profile = profileService.getProfile()
+        if (profile && profile.name) {
+            setName(profile.name)
+        }
+    }
+
     function referralActivityClickHandler() {
-        navigation.navigate('ReferralActivityScreen');
+        navigation.navigate('RequestActivityScreen');
     }
 
     function onSubmitPress() {
@@ -27,46 +37,47 @@ const WorkRequestScreen = props => {
     }
 
     useEffect(() => {
-        navigation.setOptions({
-            tabBarActiveTintColor: Colors.light.tint,
-            headerLargeTitle: false,
-            headerLeftContainerStyle: {
-                left: 10,
-            },
-            tabBarIcon: ({color}) => (
-                <Fontisto name="home" size={25} color={color}/>
-            ),
-            headerTitle: () => (
-                <Text> Request a worker</Text>
-            ),
-            headerRight: () => (
-                <Pressable
-                    onPress={onSubmitPress}
-                    style={[({pressed}) => ({
-                        opacity: pressed ? 0.5 : 1,
-                        marginRight: 10,
-                    }), styles.submitButton]}>
-                    <Text style={styles.submitButtonText}>Request</Text>
-                </Pressable>
-            ),
-            headerLeft: () => (
-                <ProfilePicture
-                    size={30}
-                    image={
-                        'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250'
-                    }
-                />
-            ),
-        })
-    }, [navigation]);
+        getCurrentUserData().then(r => {})
+            navigation.setOptions({
+                tabBarActiveTintColor: Colors.light.tint,
+                headerLargeTitle: false,
+                headerLeftContainerStyle: {
+                    left: 10,
+                },
+                tabBarIcon: ({color}) => (
+                    <Fontisto name="home" size={25} color={color}/>
+                ),
+                headerTitle: () => (
+                    <Text> Request a worker</Text>
+                ),
+                headerRight: () => (
+                    <Pressable
+                        onPress={onSubmitPress}
+                        style={[({pressed}) => ({
+                            opacity: pressed ? 0.5 : 1,
+                            marginRight: 10,
+                        }), styles.submitButton]}>
+                        <Text style={styles.submitButtonText}>Request</Text>
+                    </Pressable>
+                ),
+                headerLeft: () => (
+                    <UserAvatar
+                        size={35}
+                        name={name}
+                        // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                    />
+                ),
+            })
+
+    }, [navigation, name]);
 
     return (
         <ScrollView style={styles.container}>
             <View style={styles.criteriaContainer}>
-                <SearchCategory navigation={navigation} style={{marginHorizontal: 10 }}/>
+                <SearchCategory navigation={navigation} style={{marginHorizontal: 10}}/>
                 <ChoiceSelector/>
                 <View style={styles.locationContainer}>
-                    <Text>Within: {locationMax} km of  </Text>
+                    <Text>Within: {locationMax} km of </Text>
                     <Slider
                         value={locationMax}
                         onValueChange={setLocationMax}
@@ -74,12 +85,12 @@ const WorkRequestScreen = props => {
                         minimumTrackTintColor={Colors.light.tint}
                         maximumValue={150}
                         minimumValue={1}
-                        thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
+                        thumbStyle={{height: 30, width: 30, backgroundColor: Colors.light.tint}}
                     />
-                    <LocationSelector style={{marginTop: 10}} />
+                    <LocationSelector style={{marginTop: 10}}/>
                 </View>
                 <View style={styles.sliderContainer}>
-                    <Text>Max Price/hr: {priceMax} $$  </Text>
+                    <Text>Max Price/hr: {priceMax} $$ </Text>
                     <Slider
                         value={priceMax}
                         onValueChange={setPriceMax}
@@ -87,8 +98,8 @@ const WorkRequestScreen = props => {
                         minimumTrackTintColor={Colors.light.tint}
                         maximumValue={200}
                         minimumValue={1}
-                        thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
-                        trackStyle={{ height: 5, backgroundColor: '#5e5e5e' }}
+                        thumbStyle={{height: 30, width: 30, backgroundColor: Colors.light.tint}}
+                        trackStyle={{height: 5, backgroundColor: '#5e5e5e'}}
                     />
                 </View>
             </View>

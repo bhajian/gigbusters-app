@@ -17,7 +17,7 @@ const CreateProfileScreen = (props) => {
     const subscription = ''
     const [phone, setPhone] = useState('');
     const [name, setName] = useState('');
-    const [accountType, setAccountType] = useState('');
+    const [accountType, setAccountType] = useState('USER');
     const profileService = new ProfileService()
 
     async function onNextPressed() {
@@ -84,19 +84,19 @@ const CreateProfileScreen = (props) => {
                                 style={styles.icon}
                                 name={"emoji-transportation"}
                             />
-                            <RadioButton.Item label="I need a worker." value="USER" style={styles.radioButton} />
+                            <RadioButton.Item label="I need a Service Provider." value="USER" style={styles.radioButton} />
                         </View>
                         <View style={styles.radioRow}>
                             <MaterialIcons
                                 style={styles.icon}
                                 name={"sports-handball"}
                             />
-                            <RadioButton.Item label="I want to work." value="WORKER" style={styles.radioButton} />
+                            <RadioButton.Item label="I am Provide a Service." value="WORKER" style={styles.radioButton} />
                         </View>
                     </RadioButton.Group>
                 </View>
                 <CustomButton
-                    text="Next"
+                    text="Finish"
                     style={styles.component}
                     onPress={onNextPressed}
                 />
