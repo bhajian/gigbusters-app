@@ -21,7 +21,8 @@ function SignInScreen(props) {
     async function onSignInPressed() {
         try {
             props.updateAuthState('initializing');
-            const user = await Auth.signIn(username, password)
+            var lowerEmail = username.toLowerCase();
+            const user = await Auth.signIn(lowerEmail, password)
             const profile = await profileService.fetchProfile()
             if(profile){
                 props.updateAuthState('loggedIn');

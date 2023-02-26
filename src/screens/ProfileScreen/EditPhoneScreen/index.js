@@ -8,7 +8,6 @@ import {useNavigation} from "@react-navigation/native";
 
 const EditPhoneScreen = ({route}) => {
     const profileService = new ProfileService()
-    const profile = profileService.getProfile()
     const {phoneParam} = (route.params ? route.params : '');
     const [phone, setPhone] = useState(phoneParam);
     const navigation = useNavigation();
@@ -18,12 +17,16 @@ const EditPhoneScreen = ({route}) => {
     }, []);
 
     async function getCurrentUserData() {
+        const profile = profileService.getProfile()
         if(profile && profile.phone && profile.phone.phone){
             setPhone(profile.phone.phone)
         }
     }
     async function onNextPress() {
-
+        profileService.changeAndRequestPhoneValidation({
+            phoneNumber: phone,
+            verifyObject: 'phone'
+        })
         navigation.navigate('VerifyCodeScreen', {
             phoneParam: phone
         })

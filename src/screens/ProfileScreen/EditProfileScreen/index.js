@@ -17,6 +17,8 @@ import UserAvatar from 'react-native-user-avatar';
 import {ProfileService} from "../../../backend/ProfileService";
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import * as ImagePicker from "expo-image-picker";
+import { Storage } from 'aws-amplify';
 
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
@@ -94,8 +96,27 @@ const EditProfileScreen = (props) => {
 
     }, [onSavePress]);
 
-    const onPhotoPressed = () => {
-        console.log('change photo')
+    const onPhotoPressed = async() => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        })
+        const imageUri = result.assets[0].uri
+        if (!result.canceled) {
+            setImage(imageUri)
+        }
+        const response = await fetch(imageUri)
+        const blob = await response.blob()
+        const key = `${profileService.getProfile().accountId}/${blob.data.name}`
+        await Storage.put(key, blob, {
+            level: 'protected',
+            contentType: blob.type,
+            progressCallback: progress => {
+                console.log(progress)
+            }
+        })
     }
 
     const onEditPhonePressed = () => {
@@ -118,7 +139,7 @@ const EditProfileScreen = (props) => {
                         size={80}
                         name={name}
                         style={styles.avatar}
-                        // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                        src={image}
                     />
                     <Text style={styles.editPhoto}>Edit</Text>
                 </Pressable>

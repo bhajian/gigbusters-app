@@ -29,7 +29,15 @@ export default function App() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
             const profile = await profileService.fetchProfile()
-            setUserStatus('loggedIn')
+            if(currentUser) {
+                if (profile) {
+                    setUserStatus('loggedIn')
+                } else {
+                    setUserStatus('profileCreation')
+                }
+            } else{
+                setUserStatus('loggedOut')
+            }
         } catch (err) {
             setUserStatus('loggedOut')
         }

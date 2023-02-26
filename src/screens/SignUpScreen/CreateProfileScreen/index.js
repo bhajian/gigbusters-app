@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert, TextInput} from 'react-native';
 import CustomInput from '../../../components/CustomInput';
 import CustomButton from '../../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
@@ -10,6 +10,8 @@ import {FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-
 import Colors from "../../../constants/Colors";
 import {Auth} from "aws-amplify";
 import {ProfileService} from "../../../backend/ProfileService";
+import PhoneInput from "react-phone-number-input/react-native-input";
+import Fontisto from "react-native-vector-icons/Fontisto";
 
 const CreateProfileScreen = (props) => {
 
@@ -32,17 +34,17 @@ const CreateProfileScreen = (props) => {
             const currentUser = await Auth.currentAuthenticatedUser()
             email = currentUser.attributes.email
 
-            const profile = await profileService.createProfile({
+            await profileService.createProfile({
                 name: name,
                 subscription: subscription,
                 accountType: accountType,
                 email: {
                     email: email,
-                    verified: true
+                    verified: true // FIX me should be written in the server by default
                 },
                 phone: {
                     phone: phone,
-                    verified: false
+                    verified: false // FIX me should be written in the server by default
                 }
             })
             props.updateAuthState('loggedIn');
@@ -68,13 +70,17 @@ const CreateProfileScreen = (props) => {
                         iconCategory="AntDesign"
                         iconName="profile"
                     />
-                    <CustomInput
-                        placeholder="Phone [Optional]"
-                        value={phone}
-                        setValue={setPhone}
-                        iconCategory="Fontisto"
-                        iconName="phone"
-                    />
+                    <View style={styles.phoneContainer}>
+                        <Fontisto style={styles.phoneIcon} name='phone' />
+                        <PhoneInput
+                            style={styles.phoneInput}
+                            countrySelectProps={{ unicodeFlags: true }}
+                            defaultCountry={"CA"}
+                            value={phone}
+                            onChange={setPhone}
+                            placeholder="Phone [Optional]"
+                        />
+                    </View>
                     <RadioButton.Group
                         onValueChange={setAccountType}
                         value={accountType}
@@ -100,7 +106,6 @@ const CreateProfileScreen = (props) => {
                     style={styles.component}
                     onPress={onNextPressed}
                 />
-
             </View>
         </ScrollView>
     );
@@ -114,8 +119,8 @@ const styles = StyleSheet.create({
         // alignItems: "center",
         paddingBottom: 10,
         paddingTop: 20,
-        paddingLeft: 50,
-        paddingRight: 50,
+        paddingLeft: 25,
+        paddingRight: 25,
         height: 800,
     },
     form: {
@@ -126,6 +131,29 @@ const styles = StyleSheet.create({
         maxWidth: 300,
         maxHeight: 200,
         marginBottom: 30
+    },
+    phoneContainer: {
+        backgroundColor: 'white',
+        width: '100%',
+        borderColor: '#e8e8e8',
+        borderWidth: 1,
+        borderTopWidth: 0,
+        borderLeftWidth: 0,
+        borderRightWidth: 0,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        marginVertical: 5,
+        flexDirection: 'row',
+    },
+    phoneIcon: {
+        padding: 0,
+        color: '#b8b8b8',
+        fontSize: 20,
+    },
+    phoneInput: {
+        flex: 1,
+        paddingLeft: 5,
     },
     component: {
         marginTop: 20

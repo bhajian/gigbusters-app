@@ -5,11 +5,13 @@ import CustomInput from '../../../components/CustomInput';
 import CustomButton from '../../../components/CustomButton';
 import Lottie from "lottie-react-native";
 import jobAnim from "../../../../assets/animations/107800-login-leady.json";
+import {ProfileService} from "../../../backend/ProfileService";
 
 export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
     const {phoneParam} = (route.params ? route.params : '');
     const [authCode, setAuthCode] = useState('');
     const [phone, setPhone] = useState(phoneParam);
+    const profileService = new ProfileService()
 
     async function resendConfirmationCode() {
         try {
@@ -23,8 +25,11 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
     // };
     async function VerifyAccount() {
         try {
-
-            await Auth.confirmSignUp(phone, authCode);
+            await profileService.validatePhone({
+                code: authCode,
+                verifyObject: 'phone'
+            })
+            navigation.navigate('MainProfileScreen')
 
         } catch (error) {
             Alert.alert(error.message)

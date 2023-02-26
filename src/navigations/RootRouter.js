@@ -9,15 +9,15 @@ const Stack = createNativeStackNavigator();
 
 const RootRouter = props => {
     const profileService = new ProfileService()
-    const profile = profileService.getProfile()
-    const [accountType, setAccountType] = useState(profile.accountType)
+    const [accountType, setAccountType] = useState('USER')
 
     useEffect(() => {
         getCurrentUserData().then(r => {})
     }, []);
 
     async function getCurrentUserData() {
-
+        const profile = profileService.getProfile()
+        setAccountType(profile.accountType)
     }
     function updateAccountType(type) {
         setAccountType(type)

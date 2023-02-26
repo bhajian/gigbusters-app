@@ -74,6 +74,13 @@ const awsmobile = {
                 }
             }
         ]
+    },
+    Storage: {
+        AWSS3: {
+            bucket: 'profile-photos-dev2-0a3806339303',
+            region: 'us-east-1',
+            identityPoolId: 'us-east-1:354dcde7-e500-44c3-b7ba-e30b1801934f'
+        }
     }
 };
 

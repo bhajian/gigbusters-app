@@ -15,6 +15,7 @@ const ProfileScreen = (props) => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [accountType, setAccountType] = useState('USER')
+    const [image, setImage] = useState(null);
 
     const profileService = new ProfileService()
 
