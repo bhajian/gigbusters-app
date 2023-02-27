@@ -7,6 +7,7 @@ import Colors from "../../constants/Colors";
 import UserAvatar from 'react-native-user-avatar';
 import {LocationSelector} from "../../components/LocationSearch";
 import {ProfileService} from "../../backend/ProfileService";
+import { Storage } from 'aws-amplify';
 
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
@@ -39,6 +40,18 @@ const ProfileScreen = (props) => {
         }
         if(profile && profile.phone && profile.phone.phone){
             setPhone(profile.phone.phone)
+        }
+        if(profile && profile.photos && profile.photos[0] && profile.photos[0].key){
+            try{
+                const mainPhoto = profile.photos
+                    .filter((item) => item.main === true)
+
+                const key = mainPhoto[0].key
+                const signedURL = await Storage.get(key, { level: 'protected' })
+                setImage(signedURL)
+            } catch (e) {
+                console.log(e)
+            }
         }
     }
 
@@ -84,7 +97,7 @@ const ProfileScreen = (props) => {
                 <UserAvatar
                     size={80}
                     name={name}
-                    // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                    src={image}
                 />
                 <Text style={styles.name} >
                     {name}

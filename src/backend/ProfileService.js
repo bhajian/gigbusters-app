@@ -4,6 +4,7 @@ const profileApiName = 'ProfileApi'
 const profilePath = '/profile'
 const requestValidationPath = '/requestValidation'
 const validatePath = '/validate'
+const addProfilePhotoPath = '/photo'
 let profile = null
 export class ProfileService {
 
@@ -47,7 +48,6 @@ export class ProfileService {
             body: props,
         }
         const path = profilePath+'/'+profile.accountId+requestValidationPath
-        console.log(path)
         const res = await API.post(profileApiName, path , data)
         profile = (res ? res : null)
         return res
@@ -58,6 +58,16 @@ export class ProfileService {
             body: props,
         }
         const path = profilePath+'/'+profile.accountId+validatePath
+        const res = await API.post(profileApiName, path , data)
+        profile = (res ? res : null)
+        return res
+    }
+
+    async addProfilePhoto(props) {
+        const data = {
+            body: props,
+        }
+        const path = profilePath + '/' + profile.accountId + addProfilePhotoPath
         console.log(path)
         const res = await API.post(profileApiName, path , data)
         profile = (res ? res : null)

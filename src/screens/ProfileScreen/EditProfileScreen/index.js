@@ -97,26 +97,40 @@ const EditProfileScreen = (props) => {
     }, [onSavePress]);
 
     const onPhotoPressed = async() => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        })
-        const imageUri = result.assets[0].uri
-        if (!result.canceled) {
-            setImage(imageUri)
-        }
-        const response = await fetch(imageUri)
-        const blob = await response.blob()
-        const key = `${profileService.getProfile().accountId}/${blob.data.name}`
-        await Storage.put(key, blob, {
-            level: 'protected',
-            contentType: blob.type,
-            progressCallback: progress => {
-                console.log(progress)
+        try {
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: true,
+                aspect: [3, 3],
+                quality: 0.1,
+            })
+            const imageUri = result.assets[0].uri
+            if (!result.canceled) {
+                setImage(imageUri)
+            } else{
+                return
             }
-        })
+            const profilePhotoObj = await profileService.addProfilePhoto({
+                main: true
+            })
+            if(!profilePhotoObj) {
+                throw new Error('Profile Photo cannot be added!')
+            }
+
+            const response = await fetch(imageUri)
+            const blob = await response.blob()
+            const key = profilePhotoObj.key
+            console.log(key)
+            await Storage.put(key, blob, {
+                level: 'protected',
+                contentType: blob.type,
+                progressCallback: progress => {
+                    console.log(progress)
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     const onEditPhonePressed = () => {
@@ -129,7 +143,6 @@ const EditProfileScreen = (props) => {
 
     return (
         <ScrollView style={styles.container} >
-
             <View style={styles.topContainer} >
                 <Pressable
                     style={styles.photoChange}
