@@ -16,6 +16,7 @@ const ProfileScreen = (props) => {
     const [accountNumber, setAccountNumber] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
+    const [locationName, setLocationName] = useState('');
     const [accountType, setAccountType] = useState('USER')
     const [image, setImage] = useState(null);
 
@@ -42,6 +43,9 @@ const ProfileScreen = (props) => {
         if(profile && profile.phone && profile.phone.phone){
             setPhone(profile.phone.phone)
         }
+        if(profile && profile.location && profile.location.locationName){
+            setLocationName(profile.location.locationName)
+        }
         if(profile && profile.photos && profile.photos[0] && profile.photos[0].key){
             try{
                 const mainPhoto = profile.photos
@@ -54,6 +58,15 @@ const ProfileScreen = (props) => {
             }
         }
     }
+
+    const onLocationChangePressed = async(props) => {
+        await profileService.changeUserLocation({
+            locationName: props.name,
+            latitude: props.coordinates.lat,
+            longitude: props.coordinates.lng,
+        })
+        setLocationName(props.name)
+    };
 
     async function signOut() {
         try {
@@ -115,7 +128,10 @@ const ProfileScreen = (props) => {
 
             <View style={styles.bottomContainer}>
                 <View style={styles.locationContainer}>
-                    <LocationSelector />
+                    <LocationSelector
+                        onLocationChangePressed={onLocationChangePressed}
+                        locationNameParam={locationName}
+                    />
                 </View>
                 <View style={styles.doubleButton}>
                     <CustomButton

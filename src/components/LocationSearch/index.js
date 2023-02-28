@@ -1,4 +1,4 @@
-import React, {Component, useState} from "react";
+import React, {Component, useEffect, useState} from "react";
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {useNavigation} from "@react-navigation/native";
@@ -6,20 +6,31 @@ import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
 
-export function LocationSelector({style}) {
-    const [locationName, setLocationName] = useState('Select a Location ..');
-    const [coordinates, setCoordinates] = useState({latitude: 0, logitude: 0});
-    const navigation = useNavigation();
+export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
+    const [locationName, setLocationName] = useState(locationNameParam
+        ? locationNameParam : 'Select a Location ..')
+    const [coordinates, setCoordinates] = useState({
+        latitude: 0, logitude: 0})
+    const navigation = useNavigation()
 
     function setLocationHook(location){
         setLocationName(location.name)
         setCoordinates(location.coordinates)
+        onLocationChangePressed(location)
     }
     function onPress() {
         navigation.navigate('LocationSelectorScreen', {
             onGoBack: setLocationHook
         });
-    };
+    }
+
+    useEffect(() => {
+        getCurrentUserData().then(r => {})
+    }, [getCurrentUserData]);
+
+    async function getCurrentUserData() {
+        setLocationName(locationNameParam)
+    }
 
     return (
         <View style={[style, styles.container]}>

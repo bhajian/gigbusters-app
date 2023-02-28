@@ -31,6 +31,7 @@ const EditProfileScreen = (props) => {
     const [bio, setBio] = useState('');
     const [image, setImage] = useState(null);
     const [saved, setSaved] = useState(false);
+    const [photoChange, setPhotoChange] = useState(false);
 
     const navigation = useNavigation();
 
@@ -40,6 +41,7 @@ const EditProfileScreen = (props) => {
             const profile = profileService.getProfile()
             profile.name = name
             profile.bio = bio
+            console.log(profile)
             await profileService.updateProfile(profile)
             navigation.goBack()
         } catch (e) {
@@ -120,6 +122,7 @@ const EditProfileScreen = (props) => {
 
     const onPhotoPressed = async() => {
         try {
+            setPhotoChange(true)
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 allowsEditing: true,
@@ -132,8 +135,8 @@ const EditProfileScreen = (props) => {
             } else{
                 return
             }
-            const profilePhotoObj = await profileService.addProfilePhoto({
-                main: true
+            const profilePhotoObj = await profileService.changeProfilePhoto({
+
             })
             if(!profilePhotoObj) {
                 throw new Error('Profile Photo cannot be added!')
@@ -141,17 +144,17 @@ const EditProfileScreen = (props) => {
             const response = await fetch(imageUri)
             const blob = await response.blob()
             const key = profilePhotoObj.key
-            console.log(key)
             await Storage.put(key, blob, {
                 level: 'protected',
                 contentType: blob.type,
                 progressCallback: progress => {
-                    console.log(progress)
+
                 }
             })
         } catch (e) {
             console.log(e)
         }
+        setPhotoChange(false)
     }
 
     const onEditPhonePressed = () => {
@@ -165,18 +168,24 @@ const EditProfileScreen = (props) => {
     return (
         <ScrollView style={styles.container} >
             <View style={styles.topContainer} >
-                <Pressable
-                    style={styles.photoChange}
-                    onPress={onPhotoPressed}
-                >
-                    <UserAvatar
-                        size={80}
-                        name={name}
-                        style={styles.avatar}
-                        src={image}
-                    />
-                    <Text style={styles.editPhoto}>Edit</Text>
-                </Pressable>
+                <UserAvatar
+                    size={80}
+                    name={name}
+                    style={styles.avatar}
+                    src={image}
+                />
+                {
+                    photoChange ?
+                        <Image source={loading} style={{width: 40, height: 30}} />
+                        :
+                        <Pressable
+                            style={styles.photoChange}
+                            onPress={onPhotoPressed}
+                        >
+                            <Text style={styles.photoChange}>Change Photo</Text>
+                        </Pressable>
+                }
+
             </View>
 
             <View style={styles.settingsContainer}>
@@ -298,7 +307,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
     },
     photoChange: {
-        // flexDirection: 'column'
+        color: '#0f66a9',
+        fontSize: 14,
+        marginTop: 5
     },
     avatar: {
 
