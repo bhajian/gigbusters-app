@@ -8,6 +8,7 @@ import UserAvatar from 'react-native-user-avatar';
 import {LocationSelector} from "../../components/LocationSearch";
 import {ProfileService} from "../../backend/ProfileService";
 import { Storage } from 'aws-amplify';
+import EditSettingsScreen from "./EditSettingsScreen";
 
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
@@ -45,7 +46,6 @@ const ProfileScreen = (props) => {
             try{
                 const mainPhoto = profile.photos
                     .filter((item) => item.main === true)
-
                 const key = mainPhoto[0].key
                 const signedURL = await Storage.get(key, { level: 'protected' })
                 setImage(signedURL)

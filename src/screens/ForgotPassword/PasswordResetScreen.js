@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
+import jobAnim from "../../../assets/animations/107800-login-leady.json";
+import Lottie from "lottie-react-native";
 
 export default function PasswordResetScreen({navigation, route}) {
     const {emailParam} = (route.params ? route.params : '');
@@ -30,16 +32,19 @@ export default function PasswordResetScreen({navigation, route}) {
             await Auth.forgotPasswordSubmit(lowerEmail, authCode, password);
             navigation.navigate('SignIn');
         } catch (error) {
-            console.log(
-                '❌ Verification code does not match. Please enter a valid verification code.',
-                error.code,
-            );
+            Alert.alert(error.message)
         }
     }
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
+                <Lottie
+                    style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
+                    source={jobAnim}
+                    autoPlay
+                    loop
+                />
                 <Text style={styles.title}>Forget Password</Text>
                 <CustomInput
                     placeholder="Email"

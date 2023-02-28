@@ -1,21 +1,25 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable, TextInput} from 'react-native';
+import {View, Text, StyleSheet, Pressable, TextInput, Switch} from 'react-native';
 import Fontisto from "react-native-vector-icons/Fontisto";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import CustomSwitch from "../CustomSwitch";
+import Colors from "../../constants/Colors";
+import {MaterialIcons} from "@expo/vector-icons";
 
-const CustomSettingRow = ({ onPress,
-                              name,
-                              value,
-                              placeholder,
-                              setValue,
-                              bgColor,
-                              fgColor,
-                              iconCategory,
-                              iconName,
-                              editable = true,
-                              style,
-                              multiline = false}) => {
+const CustomSettingRowSwitch = ({ name,
+                                  value,
+                                  placeholder,
+                                  setValue,
+                                  bgColor,
+                                  fgColor,
+                                  iconCategory,
+                                  iconName,
+                                  isEnabled,
+                                  toggleSwitch,
+                                  editable = true,
+                                  style,
+                                  multiline = false}) => {
     const renderIcon = (iconCategory, iconName) => {
         if (iconCategory === "Fontisto") {
             return <Fontisto size={18} style={styles.icon} name={iconName} style={styles.settingIcon} />
@@ -25,6 +29,12 @@ const CustomSettingRow = ({ onPress,
         }
         if (iconCategory === "FontAwesome") {
             return <FontAwesome size={18} style={styles.icon} name={iconName} style={styles.settingIcon} />
+        }
+        if (iconCategory === "MaterialIcons") {
+            return <MaterialIcons size={18} style={styles.icon} name={iconName} style={styles.settingIcon} />
+        }
+        if (iconCategory === "MaterialIcons") {
+            return <MaterialIcons size={18} style={styles.icon} name={iconName} style={styles.settingIcon} />
         }
     }
 
@@ -38,14 +48,12 @@ const CustomSettingRow = ({ onPress,
                     </Text>
                 </View>
                 <View style={styles.settingValueContainer}>
-                    <TextInput
-                        multiline={multiline}
-                        style={styles[editable ? 'settingValue' : 'settingValueDisabled']}
-                        editable={editable}
-                        selectTextOnFocus={editable}
-                        onChangeText={setValue}
-                        placeholder={placeholder}
-                        value={value}
+                    <Switch
+                        trackColor={{false: '#a9a0b0', true: Colors.light.tint}}
+                        ios_backgroundColor="#a9a0b0"
+                        onValueChange={toggleSwitch}
+                        value={isEnabled}
+                        style={styles.privateSwitch}
                     />
                 </View>
             </View>
@@ -59,7 +67,7 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     settingItem:{
-        // flexDirection: "column",
+        flexDirection: 'row',
         borderBottomWidth: 1,
         borderBottomColor: 'lightgrey',
         justifyContent: "space-between",
@@ -72,7 +80,6 @@ const styles = StyleSheet.create({
     },
     settingValueContainer:{
         marginHorizontal: 5,
-        width: '100%',
     },
     settingName: {
         color: "grey",
@@ -84,6 +91,12 @@ const styles = StyleSheet.create({
     settingValue: {
         paddingHorizontal: 5,
     },
+    privateSwitch: {
+        transform: [
+            {scaleX: 0.7},
+            {scaleY: 0.7}
+        ],
+    },
     settingValueDisabled: {
         color: "grey",
         paddingHorizontal: 5,
@@ -93,4 +106,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default CustomSettingRow;
+export default CustomSettingRowSwitch;

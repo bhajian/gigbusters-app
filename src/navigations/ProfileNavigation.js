@@ -9,6 +9,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import EditPhoneScreen from "../screens/ProfileScreen/EditPhoneScreen";
 import VerifyPasswordScreen from "../screens/ProfileScreen/VerifyPasswordScreen";
 import VerifyCodeScreen from "../screens/ProfileScreen/VerifyCodeScreen";
+import EditSettingsScreen from "../screens/ProfileScreen/EditSettingsScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -67,6 +68,13 @@ export function ProfileNavigation(props) {
             <Stack.Screen
                 name={'UpgradePremium'}
                 component={UpgradePremiumScreen}
+                options={{
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen
+                name={'EditSettingsScreen'}
+                component={EditSettingsScreen}
                 options={{
                     headerShown: true,
                 }}

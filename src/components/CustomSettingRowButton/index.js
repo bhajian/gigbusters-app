@@ -3,17 +3,28 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Fontisto from "react-native-vector-icons/Fontisto";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 
-const CustomSettingRowButton = ({onPress, name, value, bgColor, fgColor, iconCategory, iconName, style}) => {
+const CustomSettingRowButton = ({onPress, name, value, bgColor,
+                                    fgColor, iconCategory, iconName,
+                                    valueStyle, nameStyle, hasArrow = true}) => {
     const renderIcon = (iconCategory, iconName) => {
         if (iconCategory === "Fontisto") {
-            return <Fontisto style={styles.icon} name={iconName} style={styles.settingIcon} />
+            return <Fontisto size={18} style={styles.icon} name={iconName} style={styles.settingIcon} />
         }
         if (iconCategory === "FontAwesome5") {
-            return <FontAwesome5 style={styles.icon} name={iconName} style={styles.settingIcon} />
+            return <FontAwesome5 size={18} style={styles.icon} name={iconName} style={styles.settingIcon} />
         }
         if (iconCategory === "FontAwesome") {
-            return <FontAwesome style={styles.icon} name={iconName} style={styles.settingIcon} />
+            return <FontAwesome size={18} style={styles.icon} name={iconName} style={styles.settingIcon} />
+        }
+        if (iconCategory === "MaterialCommunityIcons") {
+            return <MaterialCommunityIcons
+                size={20}
+                style={styles.icon}
+                name={iconName}
+                style={styles.settingIcon}
+            />
         }
     }
 
@@ -22,13 +33,13 @@ const CustomSettingRowButton = ({onPress, name, value, bgColor, fgColor, iconCat
             <Pressable style={styles.settingItem} onPress={onPress}>
                 <View style={styles.settingNameContainer}>
                     {renderIcon(iconCategory, iconName)}
-                    <Text style={styles.settingName}>{name}</Text>
+                    <Text style={[styles.settingName, nameStyle]}>{name}</Text>
                 </View>
                 <View style={styles.settingValueContainer}>
-                    <Text style={styles.settingValue} >
+                    <Text style={[valueStyle, styles.settingValue]} >
                         {value}
                     </Text>
-                    <FontAwesome name="chevron-right" style={styles.settingIcon}/>
+                    {hasArrow? <FontAwesome name="chevron-right" style={styles.settingIcon}/>:<></> }
                 </View>
             </Pressable>
         </View>
@@ -70,6 +81,9 @@ const styles = StyleSheet.create({
     },
     pressableSetting: {
         flexDirection: "row",
+    },
+    icon: {
+
     },
 });
 

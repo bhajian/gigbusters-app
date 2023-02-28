@@ -29,18 +29,21 @@ const EditProfileScreen = (props) => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [bio, setBio] = useState('');
-    const [image, setImage] = useState('');
+    const [image, setImage] = useState(null);
+    const [saved, setSaved] = useState(false);
 
     const navigation = useNavigation();
 
     const onSavePress = useCallback(async () => {
         try{
+            setSaved(true)
             const profile = profileService.getProfile()
             profile.name = name
             profile.bio = bio
             await profileService.updateProfile(profile)
             navigation.goBack()
         } catch (e) {
+            setSaved(false)
             console.log(e)
         }
     },[name, bio])
@@ -63,7 +66,22 @@ const EditProfileScreen = (props) => {
         if(profile && profile.phone && profile.phone.phone){
             setPhone(profile.phone.phone)
         }
+        if(profile && profile.photos && profile.photos[0] && profile.photos[0].key){
+            try{
+                const mainPhoto = profile.photos
+                    .filter((item) => item.main === true)
+                const key = mainPhoto[0].key
+                const signedURL = await Storage.get(key, { level: 'protected' })
+                setImage(signedURL)
+            } catch (e) {
+                console.log(e)
+            }
+        }
     },[])
+
+    const onSettingPressed = () => {
+        navigation.navigate('EditSettingsScreen');
+    };
 
     useEffect(() => {
         getCurrentUserData().then(r => {})
@@ -83,20 +101,22 @@ const EditProfileScreen = (props) => {
                 <Text> Edit Profile</Text>
             ),
             headerRight: () => (
-                // <Image source={loading} style={{width: 30, height: 30}} />
-                <Pressable
-                    onPress={onSavePress}
-                    style={({pressed}) => ({
-                        opacity: pressed ? 0.5 : 1,
-                        marginRight: 10,
-                    })}>
-                    <Text style={{color: '#0f66a9', fontSize: 18}}>Save</Text>
-                </Pressable>
+                saved ?
+        <Image source={loading} style={{width: 40, height: 30}} />
+                :
+        <Pressable
+            onPress={onSavePress}
+            style={({pressed}) => ({
+                opacity: pressed ? 0.5 : 1,
+                marginRight: 10,
+            })}>
+            <Text style={{color: '#0f66a9', fontSize: 18}}>Save</Text>
+        </Pressable>
             ),
         })
         return
 
-    }, [onSavePress]);
+    }, [onSavePress, saved]);
 
     const onPhotoPressed = async() => {
         try {
@@ -118,7 +138,6 @@ const EditProfileScreen = (props) => {
             if(!profilePhotoObj) {
                 throw new Error('Profile Photo cannot be added!')
             }
-
             const response = await fetch(imageUri)
             const blob = await response.blob()
             const key = profilePhotoObj.key
@@ -203,7 +222,7 @@ const EditProfileScreen = (props) => {
                     iconName="envelope"
                 />
                 <CustomSettingRowButton
-                    // onPress={onEditSettingPressed}
+                    onPress={onSettingPressed}
                     name="Setting"
                     value=""
                     iconCategory="FontAwesome5"
@@ -214,12 +233,6 @@ const EditProfileScreen = (props) => {
                     value=""
                     iconCategory="FontAwesome5"
                     iconName="question-circle"
-                />
-                <CustomSettingRowButton
-                    name="Language"
-                    value="English"
-                    iconCategory="FontAwesome5"
-                    iconName="globe"
                 />
             </View>
 
