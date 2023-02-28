@@ -3,38 +3,35 @@ import {View, TextInput, Text, FlatList, Pressable, TouchableOpacity} from "reac
 import styles from './styles';
 import SuggestionRow from "./SuggestionRow";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import {Input} from "react-native-elements";
-import {useNavigation} from "@react-navigation/native";
+import * as Location from 'expo-location'
 
-const LocationSelectorScreen = (props) => {
-    const navigation = useNavigation();
+Location.installWebGeolocationPolyfill()
+
+
+const LocationSelectorScreen = ({route, navigation}) => {
+    const {onGoBack} = (route.params ? route.params : null);
+
 
     return (
         <View style={styles.container}>
             <GooglePlacesAutocomplete
                 placeholder='Location..'
-                onPress={(data, details = null) => {
-                    // 'details' is provided when fetchDetails = true
-                    // console.log(data, details);
-                    // navigation.navigate('Guests', { viewport: details.geometry.viewport });
-                }}
-                styles={{
-                    textInputContainer: styles.textInputContainer,
-                    textInput: styles.textInputContainer,
-                }}
                 query={{
                     key: 'AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s',
                     language: 'en',
-                    types: '(cities)',
+                    // types: '(cities)',
                 }}
-                suppressDefaultStyles
-                renderRow={(item) => <SuggestionRow item={item} />}
-                // currentLocation={true}
-                // currentLocationLabel='Current location'
-                onPress={(data, details = null) => {
+                GooglePlacesDetailsQuery={{ fields: 'geometry', }}
+                fetchDetails={true}
+                currentLocation={true}
+                currentLocationLabel='Current location'
+                onPress={(data, details ) => {
+                    onGoBack({
+                        name: (data.description ? data.description : data.vicinity),
+                        coordinates: details.geometry.location
+                    })
                     navigation.goBack()
                 }}
-
             />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}

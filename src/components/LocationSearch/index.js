@@ -7,13 +7,17 @@ import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
 
 export function LocationSelector({style}) {
-    const [location, setLocation] = useState('');
+    const [locationName, setLocationName] = useState('Select a Location ..');
+    const [coordinates, setCoordinates] = useState({latitude: 0, logitude: 0});
     const navigation = useNavigation();
+
+    function setLocationHook(location){
+        setLocationName(location.name)
+        setCoordinates(location.coordinates)
+    }
     function onPress() {
-        navigation.navigate('LocationSelectorScreen',{
-            screen: 'NewReviewScreen',
-            params: {  },
-            navigation: navigation
+        navigation.navigate('LocationSelectorScreen', {
+            onGoBack: setLocationHook
         });
     };
 
@@ -22,7 +26,7 @@ export function LocationSelector({style}) {
             <TouchableOpacity style={styles.searchInput} onPress={onPress}>
                 <View style={styles.searchTextIcon}>
                     <MaterialIcons name="place" size={17} color="grey" />
-                    <Text> Select a Location </Text>
+                    <Text> {locationName} </Text>
                 </View>
                 <CountryFlag isoCode="ca" size={15} />
             </TouchableOpacity>
@@ -42,9 +46,11 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
     },
     searchTextIcon: {
+        width: '90%',
         flexDirection: "row",
     },
     searchInput: {
+        width: '100%',
         backgroundColor: Colors.light.grey,
         borderColor: '#c9c6c6',
         borderWidth: 0.5,

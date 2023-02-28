@@ -18,12 +18,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingStart: 5,
         backgroundColor: '#eaebf6',
-
     },
     closeButton: {
         width: '20%',
         marginLeft: 5,
-        marginTop: 7,
+        marginTop: 10,
         paddingEnd: 10,
         alignItems: 'center',
     },
