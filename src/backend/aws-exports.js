@@ -67,7 +67,7 @@ const awsmobile = {
     API: {
         endpoints: [
             {
-                name: "ProfileApi",
+                name: "GigbusterApi",
                 endpoint: "https://api.dev2.fameorbit.com",
                 custom_header: async () => {
                     return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }

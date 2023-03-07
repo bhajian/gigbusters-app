@@ -1,6 +1,6 @@
 import {API} from "aws-amplify";
 
-const profileApiName = 'ProfileApi'
+const profileApiName = 'GigbusterApi'
 const profilePath = '/profile'
 const requestValidationPath = '/requestValidation'
 const validatePath = '/validate'

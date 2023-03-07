@@ -17,6 +17,10 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
     const [value, setValue] = React.useState('phone')
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
 
+    const radioChange = useCallback((value) => {
+        setValue(value)
+        handleSheetChanges(value)
+    }, []);
 
     const handleTogglePressBehavior = useCallback(() => {
         setBackdropPressBehavior(state => {
@@ -55,7 +59,7 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
                 ref={bottomSheetModalRef}
                 index={1}
                 snapPoints={snapPoints}
-                onChange={handleSheetChanges}
+                // onChange={handleSheetChanges}
                 style={styles.sheetContainer}
                 backdropComponent={renderBackdrop}
             >
@@ -71,7 +75,7 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
                     </View>
                     <View style={styles.mainContainer}>
                         <RadioButton.Group
-                            onValueChange={setValue}
+                            onValueChange={radioChange}
                             value={value}
                         >
                             <View style={styles.radioRow}>

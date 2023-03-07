@@ -42,7 +42,7 @@ export default function ReviewScreen(props) {
                     <Fontisto name="react" size={25} color={color}/>
                 ),
                 headerTitle: () => (
-                    <Text>Fame Orbit</Text>
+                    <Text>Gig Buster Reviews</Text>
                 ),
                 headerSearchBarOptions: {
                     placeholder: "Search ..",

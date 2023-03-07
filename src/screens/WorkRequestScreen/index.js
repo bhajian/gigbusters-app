@@ -2,9 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, ImageBackground, Pressable, FlatList, ScrollView, StyleSheet, Dimensions,} from 'react-native';
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import {FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
-import PhonebookModal from "../../components/PhonebookModal";
-import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../components/SearchCategory";
 import ChoiceSelector from "../../components/ChoiceSelector";
@@ -12,7 +9,6 @@ import {LocationSelector} from "../../components/LocationSearch";
 import Slider from "@react-native-community/slider";
 import UserAvatar from "react-native-user-avatar";
 import {ProfileService} from "../../backend/ProfileService";
-
 
 const WorkRequestScreen = props => {
     const [name, setName] = useState('');

@@ -8,6 +8,8 @@ import Feather from "react-native-vector-icons/Feather";
 import PhoneInput from "react-phone-number-input/react-native-input";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import SocialNetworkSelector from "../SocialNetworkSelector";
+import Entypo from "react-native-vector-icons/Entypo";
+import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 
 const DATA = [
     {
@@ -75,10 +77,58 @@ const Item = ({ title }) => {
 
 const renderItem = ({ item }) => <Item title={item.title} />;
 
+const SocialIcon = ({ name }) => {
+    if(name === 'phone'){
+        return <Entypo
+                    style={styles.icon}
+                    name={"phone"}
+                />
+    }
+    if(name === 'web'){
+        return <MaterialCommunityIcons
+                    style={styles.icon}
+                    name={"web"}
+                />
+    }
+    if(name === 'instagram'){
+        return <Entypo
+                    style={styles.icon}
+                    name={"instagram"}
+                />
+    }
+    if(name === 'tiktok'){
+        return <FontAwesome5
+                    style={styles.icon}
+                    name={"tiktok"}
+                />
+    }
+    if(name === 'twitter'){
+        return <FontAwesome5
+                    style={styles.icon}
+                    name={"twitter"}
+                />
+    }
+    if(name === 'linkedin'){
+        return <FontAwesome5
+                    style={styles.icon}
+                    name={"linkedin"}
+                />
+    }
+    if(name === 'facebook'){
+        return <FontAwesome5
+                    style={styles.icon}
+                    name={"facebook"}
+                />
+    }
+    return <></>
+}
+
 export default function AccountSearchReviewScreen({navigation, route}) {
+    const [accountType, setAccountType] = useState('phone');
     const [phone, setPhone] = useState('+1');
     const bottomSheetModalRef = useRef(null);
-    const handleSheetChanges = useCallback((index) => {
+    const handleSheetChanges = useCallback((value) => {
+        setAccountType(value)
     }, []);
 
     useEffect(() => {
@@ -95,7 +145,6 @@ export default function AccountSearchReviewScreen({navigation, route}) {
     function handlePresentPress() {
         bottomSheetModalRef.current.present()
     }
-
 
     const searchFunction = (text) => {
         // const updatedData = arrayholder.filter((item) => {
@@ -114,17 +163,18 @@ export default function AccountSearchReviewScreen({navigation, route}) {
         navigation.goBack()
     }
 
-
-
-
     return (
         <View>
             <View style={styles.topContainer}>
                 <View style={styles.searchContainer}>
                     <View style={styles.revieweeContainer}>
                         <TouchableOpacity style={styles.socialButton} onPress={handlePresentPress}>
-                            <Text style={styles.socialButtonText}>Social Media</Text>
+                            <SocialIcon name={accountType} />
+                            {/*<Text style={styles.socialButtonText}>{accountType}</Text>*/}
                             <Feather name="chevron-down" size={20} />
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.selectButton} onPress={handlePresentPress}>
+                            <Entypo name="download" size={20} />
                         </TouchableOpacity>
                         <PhoneInput
                             countrySelectProps={{ unicodeFlags: true }}
@@ -145,11 +195,11 @@ export default function AccountSearchReviewScreen({navigation, route}) {
             </View>
 
             <View style={styles.container}>
-                <FlatList
-                    data={state.data}
-                    renderItem={renderItem}
-                    keyExtractor={(item) => item.id}
-                />
+                {/*<FlatList*/}
+                {/*    data={state.data}*/}
+                {/*    renderItem={renderItem}*/}
+                {/*    keyExtractor={(item) => item.id}*/}
+                {/*/>*/}
             </View>
             <SocialNetworkSelector
                 handleSheetChanges={handleSheetChanges}
@@ -220,8 +270,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: Colors.light.grey,
         borderRadius: 5,
-        width: 130,
-        height: 37,
+        width: '15%',
+        paddingVertical: 7,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectButton: {
+        flexDirection: 'row',
+        backgroundColor: Colors.light.grey,
+        borderRadius: 5,
+        width: '15%',
+        paddingVertical: 7,
+        marginLeft: 7,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -239,11 +299,13 @@ const styles = StyleSheet.create({
     },
     accountInput: {
         backgroundColor: Colors.light.grey,
-        marginHorizontal: 10,
-        width: '55%',
+        marginLeft: 8,
+        paddingHorizontal: 5,
+        borderRadius: 5,
+        width: '60%',
     },
     searchTextContainer: {
-        backgroundColor: '#eaebf6',
+        backgroundColor: Colors.light.grey,
         marginHorizontal: 10,
         borderColor: '#e8e8e8',
         borderBottomWidth: 1,
@@ -266,4 +328,9 @@ const styles = StyleSheet.create({
         fontSize: 17,
         color: Colors.light.tint,
     },
+    icon: {
+        fontSize: 20,
+        color: Colors.light.tint,
+        marginHorizontal: 3,
+    }
 });

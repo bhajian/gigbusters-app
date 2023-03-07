@@ -83,7 +83,7 @@ const tipoffs= [
         to: {
             id: 'u4',
             username: 'JenniS',
-            name: 'Jennifer',
+            name: 'Janice J',
             image: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/wh-aniston-markle-1577208133.jpg?crop=0.482xw:0.965xh;0.0208xw,0&resize=640:*',
         },
         from: {
@@ -102,8 +102,8 @@ const tipoffs= [
         id: '5',
         to: {
             id: 'u5',
-            username: 'Mamadjeffery',
-            name: 'Mammad Jeffery',
+            username: 'Tomjeffery',
+            name: 'Thomas Jeffery',
             image: 'https://static.more.com/wp-content/uploads/2014/07/25214432/SEI_74430577.jpg',
         },
         from: {
