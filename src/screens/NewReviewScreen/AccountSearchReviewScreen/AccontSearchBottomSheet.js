@@ -3,7 +3,7 @@ import {
     StyleSheet,
     View,
     Text,
-    Pressable,
+    Pressable, KeyboardAvoidingView, SafeAreaView, Platform, ScrollView,
 } from 'react-native';
 
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
@@ -11,10 +11,13 @@ import Colors from "../../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
 import AccountSearchReviewScreen from "./index";
 
-export default function AccontSearchBottomSheet({bottomSheetModalRef, handleSheetChanges}) {
-    const [value, setValue] = React.useState('phone')
+export default function AccontSearchBottomSheet({bottomSheetModalRef, handleSheetChanges, getValueFromBottomSheet}) {
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
 
+    const handleSheetClose = (value) => {
+        getValueFromBottomSheet(value)
+        bottomSheetModalRef.current?.close()
+    }
 
     const handleTogglePressBehavior = useCallback(() => {
         setBackdropPressBehavior(state => {
@@ -30,14 +33,13 @@ export default function AccontSearchBottomSheet({bottomSheetModalRef, handleShee
     }, []);
 
     const handleClosePress = useCallback(() => {
-        bottomSheetModalRef.current?.close();
+        bottomSheetModalRef.current?.close()
     }, []);
 
     const renderBackdrop = useCallback(
         (props) => (
             <BottomSheetBackdrop {...props} pressBehavior={backdropPressBehavior} />
-        ),
-        [backdropPressBehavior]
+        ), [backdropPressBehavior]
     );
 
     useEffect(() => {
@@ -60,16 +62,21 @@ export default function AccontSearchBottomSheet({bottomSheetModalRef, handleShee
                 <BottomSheetView
                     enableFooterMarginAdjustment={true}
                     style={styles.bottomSheetContentContainer}>
-                    <View style={styles.titleContainer}>
-                        <Pressable onPress={handleClosePress}>
-                            <Feather name="x" size={25} style={styles.closeButton}/>
-                        </Pressable>
-                        <Text style={styles.title}>Reviewable Type</Text>
-                        <View></View>
-                    </View>
-                    <View style={styles.mainContainer}>
-                        <AccountSearchReviewScreen />
-                    </View>
+                    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} >
+
+                            <View style={styles.titleContainer}>
+                                <Pressable onPress={handleClosePress}>
+                                    <Feather name="x" size={25} style={styles.closeButton}/>
+                                </Pressable>
+                                <Text style={styles.title}>Reviewable Type</Text>
+                                <View></View>
+                            </View>
+
+                            <View style={styles.mainContainer}>
+                                <AccountSearchReviewScreen handleChanges={handleSheetClose} />
+                            </View>
+
+                    </KeyboardAvoidingView>
                 </BottomSheetView>
             </BottomSheetModal>
         </BottomSheetModalProvider>
@@ -119,7 +126,8 @@ const styles = StyleSheet.create({
 
     },
     mainContainer: {
-        width: '100%'
+        width: '100%',
+        // height: 500
     },
     radioRow: {
         flexDirection: 'row',

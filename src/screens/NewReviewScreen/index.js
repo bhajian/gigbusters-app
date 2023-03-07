@@ -8,26 +8,33 @@ import {
     Image,
     View,
     Text,
-    Switch, ScrollView, Button, Dimensions, KeyboardAvoidingView,
+    ScrollView, Dimensions, KeyboardAvoidingView,
 } from 'react-native';
-import {API, graphqlOperation, Auth, Storage} from 'aws-amplify';
-// import * as Permissions from 'expo-permissions';
-// import * as ImagePicker from 'expo-image-picker';
-import {v4 as uuidv4} from 'uuid';
+import {Storage} from 'aws-amplify';
 import Colors from '../../constants/Colors';
-import CustomSwitch from '../../components/CustomSwitch';
-import {EvilIcons, Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
-import NewReviewTopContainer from "./NewReviewTopContainer";
+import {MaterialCommunityIcons} from "@expo/vector-icons";
 import {RatingBar} from "@aashu-dubey/react-native-rating-bar";
 import {Icon} from "react-native-elements";
-import SocialNetworkSelector from "./SocialNetworkSelector";
-import {useNavigation} from "@react-navigation/native";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
 import AccontSearchBottomSheet from "./AccountSearchReviewScreen/AccontSearchBottomSheet";
+import {ProfileService} from "../../backend/ProfileService";
+import Entypo from "react-native-vector-icons/Entypo";
+import * as ImagePicker from "expo-image-picker";
 
 let {width, height} = Dimensions.get('window')
+
+const ImageList = ({ item, remove }) => {
+    return <View>
+                <TouchableOpacity
+                    onPress={(e) => remove(item)}
+                    style={styles.imageItem}>
+                    <Feather name="x-circle" style={styles.backIcon}/>
+                    <Image source={{uri: item}} style={ {width: 100, height: 100 }} />
+                </TouchableOpacity>
+            </View>
+}
 export default function NewReviewScreen({navigation, route}) {
     let contact = route.params ? route.params.contact : {
         name: 'behnam',
@@ -35,87 +42,86 @@ export default function NewReviewScreen({navigation, route}) {
         id: 1
     };
 
-    const [review, setReview] = useState('');
-    const [rating, setRating] = useState(2.5);
-    const [imageUrl, setImageUrl] = useState('');
-    const [accountType, setAccountType] = useState('');
-    const snapPoints = useMemo(() => ['25%', '50%'], []);
-    const bottomSheetModalRef = useRef(null);
-    const handleSheetChanges = useCallback((index) => {
-    }, []);
+    const [review, setReview] = useState('')
+    const [rating, setRating] = useState(3)
+    const [revieweeAccountType, setRevieweeAccountType] = useState('phone')
+    const [revieweeUri, setRevieweeUri] = useState(null)
+    const [images, setImages] = useState([])
+    const [name, setName] = useState('')
+    const [location, setLocation] = useState('')
+    const [profileImage, setProfileImage] = useState(null)
+    const snapPoints = useMemo(() => ['25%', '50%'], [])
+    const bottomSheetModalRef = useRef(null)
+    const profileService = new ProfileService()
 
+    const handleSheetChanges = useCallback((value) => {
+    }, [])
 
-    async function getCurrentUserId() {
-        // const currentUser = await Auth.currentAuthenticatedUser();
-        // if (currentUser) {
-        //   setSenderId(currentUser.attributes.sub);
-        // }
+    const remove = (value) => {
+        console.log(value)
+        setImages(images.filter(item => item !== value))
+    }
+    const getValueFromBottomSheet = (value) => {
+        setRevieweeAccountType(value.type)
+        setRevieweeUri(value.uri)
     }
 
-    const getPermissionAsync = async () => {
-        if (Platform.OS !== 'web') {
-            // const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-            // if (status !== 'granted') {
-            //   alert('Sorry, we need camera roll permissions to make this work!');
-            // }
-        }
-    };
+    useEffect(() => {
+        getCurrentUserData().then(r => {})
+    }, [getCurrentUserData])
 
     useEffect(() => {
         bottomSheetModalRef.current.present()
-        getPermissionAsync().then(e => {
-            getCurrentUserId().then(r => {
-            });
-        });
-    }, []);
+    }, [bottomSheetModalRef])
 
-    const pickImage = async () => {
-        try {
-            // let result = await ImagePicker.launchImageLibraryAsync({
-            //   mediaTypes: ImagePicker.MediaTypeOptions.All,
-            //   allowsEditing: true,
-            //   aspect: [4, 3],
-            //   quality: 1,
-            // });
-            // if (!result.cancelled) {
-            //   setImageUrl(result.uri);
-            // }
-            //
-            // console.log(result);
-        } catch (E) {
-            console.log(E);
+    async function getCurrentUserData() {
+        const profile = profileService.getProfile()
+        if(profile && profile.name){
+            setName(profile.name)
         }
-    };
-
-    const uploadImage = async () => {
-        try {
-            const response = await fetch(imageUrl);
-            const blob = await response.blob();
-            const urlParts = imageUrl.split('.');
-            const extension = urlParts[urlParts.length - 1];
-            const key = `${uuidv4()}.${extension}`;
-            await Storage.put(key, blob);
-            return key;
-        } catch (e) {
-            console.log(e);
+        if(profile && profile.location && profile.location){
+            setLocation(profile.location)
         }
-        return '';
-    };
-
-    function onSubmitPress() {
-        navigation.navigate('MoreInfoSubmissionScreen');
+        if(profile && profile.photos && profile.photos[0] && profile.photos[0].key){
+            try{
+                const mainPhoto = profile.photos
+                    .filter((item) => item.main === true)
+                const key = mainPhoto[0].key
+                const signedURL = await Storage.get(key, { level: 'protected' })
+                setProfileImage(signedURL)
+            } catch (e) {
+                console.log(e)
+            }
+        }
     }
 
-    function onReviewerPress() {
+    function onSubmitPress() {
+        navigation.navigate('MoreInfoSubmissionScreen', {
+            review: review,
+            rating: rating,
+            type: revieweeAccountType,
+            uri: revieweeUri,
+            location: location,
+            images: images
+        });
+    }
 
+    async function onImagePickerPress() {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [3, 3],
+            quality: 0.1,
+        })
+        const imageUri = result.assets[0].uri
+        if (!result.canceled) {
+            setImages([...images, imageUri])
+        } else{
+            return
+        }
     }
 
     function onRevieweePress() {
-        bottomSheetModalRef.current.present()
-    }
-
-    function handlePresentPress()
-    {
         bottomSheetModalRef.current.present()
     }
 
@@ -145,21 +151,35 @@ export default function NewReviewScreen({navigation, route}) {
                             <UserAvatar
                                 size={35}
                                 active
-                                src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                                name={name}
+                                src={profileImage}
                             />
-                            <TouchableOpacity style={styles.reviewerName} onPress={onReviewerPress}>
-                                <Text style={styles.reviewerText}>Behnam</Text>
+                            <TouchableOpacity
+                                style={styles.reviewerName}
+                                // onPress={onImagePickerPress}
+                            >
+                                <Text style={styles.reviewerText}>{name}</Text>
                                 <Feather name="chevron-down" size={20}/>
                             </TouchableOpacity>
                         </View>
                         <View style={styles.avatarRevieweeContainer}>
-                            <UserAvatar
-                                size={35}
-                                active
-                                src="https://m.media-amazon.com/images/M/MV5BMjE4MDI3NDI2Nl5BMl5BanBnXkFtZTcwNjE5OTQwOA@@._V1_.jpg"
-                            />
+                            {
+                                (revieweeAccountType === 'phone') ?
+                                    <Entypo
+                                        style={styles.icon}
+                                        name={"phone"}
+                                    />
+                                    :
+                                    <UserAvatar
+                                        size={35}
+                                        active
+                                        name={revieweeUri}
+                                        src=""
+                                    />
+                            }
                             <TouchableOpacity style={styles.revieweeName} onPress={onRevieweePress}>
-                                <Text style={styles.revieweeText}> Katy Perry </Text>
+                                <Text style={styles.revieweeText}> {revieweeUri} </Text>
+                                <Feather name="chevron-down" size={20}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -176,7 +196,7 @@ export default function NewReviewScreen({navigation, route}) {
                                 itemPadding={1}
                                 itemSize={25}
                                 itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25}/>}
-                                onRatingUpdate={setRating}
+                                onRatingUpdate={value => setRating(value)}
                             />
                         </View>
                         <View style={styles.inputsContainer}>
@@ -187,29 +207,32 @@ export default function NewReviewScreen({navigation, route}) {
                                 style={styles.reviewInput}
                                 placeholder={"Review..."}
                             />
+                            {/*<Image source={{uri: "file:///Users/behnamhajian/Library/Developer/CoreSimulator/Devices/17CED454-5C51-4994-9A17-DDE884843C08/data/Containers/Data/Application/920CD1FF-6BBF-4F61-AF0F-C5E6CE540667/Library/Caches/ExponentExperienceData/%2540behnamorbitstellar%252Ffameorbit-app/ImagePicker/A44B697B-8A52-4931-A018-7836761EB9DC.jpg"}} style={ {width: 50, height: 50 }} />*/}
                         </View>
+                    </View>
+                    <View style={styles.imageContainer}>
+
+                        {
+                            images.map((e)=> <ImageList item={e} remove={remove} />)
+                        }
+
                     </View>
                 </View>
             </ScrollView>
+
             <View style={styles.imageSelectorContainer}>
-                <TouchableOpacity onPress={onReviewerPress} style={styles.pickImage}>
-                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 50, color: 'white'}}/>
+                <TouchableOpacity onPress={onImagePickerPress} style={styles.pickImage}>
+                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 45, color: Colors.light.tint}}/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={pickImage} style={styles.pickImage}>
-                    <Image
-                        source={{uri: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250'}}
-                        style={{
-                            width: 40,
-                            height: 40,
-                            borderRadius: 5,
-                            marginVertical: 5
-                        }}
-                    />
+                <TouchableOpacity style={styles.locationBar}>
+                    <Entypo name="location" style={{fontSize: 30, color: Colors.light.tint}}/>
+                    <Text style={styles.locationText}>{location.locationName}</Text>
                 </TouchableOpacity>
             </View>
             <AccontSearchBottomSheet
                 handleSheetChanges={handleSheetChanges}
                 bottomSheetModalRef={bottomSheetModalRef}
+                getValueFromBottomSheet={getValueFromBottomSheet}
             />
         </KeyboardAvoidingView>
     );
@@ -238,7 +261,9 @@ const styles = StyleSheet.create({
 
     },
     imageSelectorContainer: {
-        backgroundColor: Colors.light.grey,
+        backgroundColor: 'white',
+        borderTopWidth: 1,
+        borderColor: Colors.dark.grey,
         flexDirection: 'row',
     },
     closeButton: {
@@ -259,8 +284,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     revieweeName: {
-        padding: 10,
-        color: Colors.light.tint
+        marginHorizontal: 10,
+        padding: 5,
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: Colors.light.grey,
+        borderRadius: 5,
+    },
+    locationText: {
+        marginHorizontal: 5,
+        padding: 5,
+        alignSelf: 'center',
+        flexDirection: 'row',
+        backgroundColor: Colors.light.grey,
+        borderRadius: 5,
     },
     button: {
         backgroundColor: Colors.light.tint,
@@ -316,8 +353,15 @@ const styles = StyleSheet.create({
     },
     pickImage: {
         borderRadius: 5,
+        marginVertical: 1,
+        marginHorizontal: 2,
+    },
+    locationBar: {
+        marginLeft: 10,
+        borderRadius: 5,
         marginVertical: 5,
         marginHorizontal: 2,
+        flexDirection: 'row'
     },
     settingText: {
         fontSize: 15,
@@ -355,5 +399,13 @@ const styles = StyleSheet.create({
     backIcon: {
         fontSize: 17,
         color: Colors.light.tint,
+    },
+    icon: {
+        fontSize: 30,
+        color: Colors.light.tint,
+        marginHorizontal: 3,
+    },
+    imageContainer: {
+        flexDirection: 'row',
     }
 });

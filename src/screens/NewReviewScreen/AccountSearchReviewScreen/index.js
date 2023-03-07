@@ -1,81 +1,38 @@
 import React, {Component, useCallback, useEffect, useRef, useState} from "react";
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, ScrollView} from "react-native";
 import Colors from "../../../constants/Colors";
-import Fontisto from "react-native-vector-icons/Fontisto";
-import {useNavigation} from "@react-navigation/native";
 import Feather from "react-native-vector-icons/Feather";
 import PhoneInput from "react-phone-number-input/react-native-input";
-import UserAvatar from "@muhzi/react-native-user-avatar";
 import SocialNetworkSelector from "../SocialNetworkSelector";
 import Entypo from "react-native-vector-icons/Entypo";
 import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
+import CustomButton from "../../../components/CustomButton";
 
-const DATA = [
-    {
-        id: "1",
-        title: "Johnathan Mcain",
-    },
-    {
-        id: "2",
-        title: "STL",
-    },
-    {
-        id: "3",
-        title: "C++",
-    },
-    {
-        id: "4",
-        title: "Java",
-    },
-    {
-        id: "5",
-        title: "Python",
-    },
-    {
-        id: "6",
-        title: "CP",
-    },
-    {
-        id: "7",
-        title: "ReactJs",
-    },
-    {
-        id: "8",
-        title: "NodeJs",
-    },
-    {
-        id: "9",
-        title: "MongoDb",
-    },
-    {
-        id: "10",
-        title: "ExpressJs",
-    },
-    {
-        id: "11",
-        title: "PHP",
-    },
-    {
-        id: "12",
-        title: "MySql",
-    },
-];
-
-const Item = ({ title }) => {
-    return (
-        <View style={styles.item}>
-            <UserAvatar
-                size={35}
-                active
-                src="https://m.media-amazon.com/images/M/MV5BMjE4MDI3NDI2Nl5BMl5BanBnXkFtZTcwNjE5OTQwOA@@._V1_.jpg"
-            />
-            <Text style={styles.nameText}>{title}</Text>
-        </View>
-    );
-};
-
-const renderItem = ({ item }) => <Item title={item.title} />;
+// const DATA = [
+//     {
+//         id: "1",
+//         title: "Johnathan Mcain",
+//     },
+//     {
+//         id: "2",
+//         title: "STL",
+//     },
+// ];
+//
+// const Item = ({ title }) => {
+//     return (
+//         <View style={styles.item}>
+//             <UserAvatar
+//                 size={35}
+//                 active
+//                 src="https://m.media-amazon.com/images/M/MV5BMjE4MDI3NDI2Nl5BMl5BanBnXkFtZTcwNjE5OTQwOA@@._V1_.jpg"
+//             />
+//             <Text style={styles.nameText}>{title}</Text>
+//         </View>
+//     );
+// };
+//
+// const renderItem = ({ item }) => <Item title={item.title} />;
 
 const SocialIcon = ({ name }) => {
     if(name === 'phone'){
@@ -123,84 +80,83 @@ const SocialIcon = ({ name }) => {
     return <></>
 }
 
-export default function AccountSearchReviewScreen({navigation, route}) {
+export default function AccountSearchReviewScreen({navigation, route, handleChanges}) {
     const [accountType, setAccountType] = useState('phone');
     const [phone, setPhone] = useState('+1');
+    const [uri, setUri] = useState('');
     const bottomSheetModalRef = useRef(null);
+
     const handleSheetChanges = useCallback((value) => {
         setAccountType(value)
+    }, []);
+
+    const selectPressed = useCallback((value) => {
+        handleChanges({
+            type: accountType,
+            uri: (accountType === 'phone' ? phone : uri)
+        })
+    }, [phone, uri]);
+
+    const cancelPressed = useCallback((value) => {
+
     }, []);
 
     useEffect(() => {
 
     }, []);
 
-    const state = {
-        loading: false,
-        data: DATA,
-        error: null,
-        searchValue: "",
-    };
-
     function handlePresentPress() {
         bottomSheetModalRef.current.present()
     }
 
-    const searchFunction = (text) => {
-        // const updatedData = arrayholder.filter((item) => {
-        //     const item_data = `${item.title.toUpperCase()})`;
-        //     const text_data = text.toUpperCase();
-        //     return item_data.indexOf(text_data) > -1;
-        // });
-        // this.setState({ data: updatedData, searchValue: text });
-    };
-
-    const onSubmitPress = () => {
-        navigation.navigate('NewReviewScreen');
-    }
-
-    const onBackPress = (text) => {
-        navigation.goBack()
-    }
-
     return (
-        <View>
-            <View style={styles.topContainer}>
-                <View style={styles.searchContainer}>
-                    <View style={styles.revieweeContainer}>
-                        <TouchableOpacity style={styles.socialButton} onPress={handlePresentPress}>
-                            <SocialIcon name={accountType} />
-                            {/*<Text style={styles.socialButtonText}>{accountType}</Text>*/}
-                            <Feather name="chevron-down" size={20} />
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.selectButton} onPress={handlePresentPress}>
-                            <Entypo name="download" size={20} />
-                        </TouchableOpacity>
+        <View style={styles.container}>
+            <View style={styles.bottomContainer}>
+                <View style={styles.doubleButton}>
+                    <CustomButton
+                        text="Cancel"
+                        onPress={cancelPressed}
+                        style={styles.linkAccountButton}
+                        bgColor={Colors.light.grey}
+                        fgColor="black"
+                    />
+                    <CustomButton
+                        text="Select"
+                        onPress={selectPressed}
+                        style={styles.linkAccountButton}
+                        bgColor={Colors.light.tint}
+                        fgColor="white"
+                    />
+                </View>
+            </View>
+
+            <View style={styles.searchTextContainer}>
+                <TouchableOpacity style={styles.socialButton} onPress={handlePresentPress}>
+                    <SocialIcon name={accountType} />
+                    <Feather name="chevron-down" size={20} />
+                </TouchableOpacity>
+                {
+                    (accountType === 'phone') ?
                         <PhoneInput
+                            defaultCountry="CA"
                             countrySelectProps={{ unicodeFlags: true }}
                             value={phone}
                             onChange={setPhone}
                             style={styles.accountInput}
                         />
-                    </View>
-                    <View style={styles.searchTextContainer}>
-                        <Fontisto name="search" size={17} color="grey" />
+                        :
                         <TextInput
-                            onChangeText={value => searchFunction(value)}
+                            onChangeText={value => setUri(value)}
                             style={styles.searchInput}
                             placeholder={"Search..."}
                         />
-                    </View>
-                </View>
+                }
+                <TouchableOpacity style={styles.selectButton} onPress={handlePresentPress}>
+                    <Entypo name="download" size={20} style={styles.icon} />
+                </TouchableOpacity>
             </View>
+            <ScrollView></ScrollView>
 
-            <View style={styles.container}>
-                {/*<FlatList*/}
-                {/*    data={state.data}*/}
-                {/*    renderItem={renderItem}*/}
-                {/*    keyExtractor={(item) => item.id}*/}
-                {/*/>*/}
-            </View>
             <SocialNetworkSelector
                 handleSheetChanges={handleSheetChanges}
                 bottomSheetModalRef={bottomSheetModalRef}
@@ -223,11 +179,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         borderBottomColor: '#e7e5e5',
         borderBottomWidth: 1
-    },
-    topContainer: {
-        backgroundColor: '#ffffff',
-        marginTop: 15,
-        width: '100%',
     },
     headerContainer: {
         zIndex: -1,
@@ -269,50 +220,61 @@ const styles = StyleSheet.create({
     socialButton: {
         flexDirection: 'row',
         backgroundColor: Colors.light.grey,
-        borderRadius: 5,
-        width: '15%',
-        paddingVertical: 7,
+        width: '10%',
         alignItems: 'center',
         justifyContent: 'center',
     },
     selectButton: {
         flexDirection: 'row',
         backgroundColor: Colors.light.grey,
-        borderRadius: 5,
-        width: '15%',
-        paddingVertical: 7,
-        marginLeft: 7,
-        alignItems: 'center',
-        justifyContent: 'center',
+        // borderRadius: 5,
+        // width: '15%',
+        // paddingVertical: 7,
+        // marginLeft: 7,
+        // alignSelf: 'flex-end',
+        // justifyContent: 'flex-end',
     },
     searchInput:{
         marginLeft: 10,
-        width: '100%',
+        width: '80%',
     },
     searchContainer: {
 
     },
     revieweeContainer: {
         flexDirection: 'row',
-        marginHorizontal: 10,
+        marginHorizontal: 5,
         width: '100%'
     },
     accountInput: {
         backgroundColor: Colors.light.grey,
-        marginLeft: 8,
+        marginLeft: 10,
         paddingHorizontal: 5,
         borderRadius: 5,
-        width: '60%',
+        width: '80%',
     },
     searchTextContainer: {
         backgroundColor: Colors.light.grey,
-        marginHorizontal: 10,
+        // marginHorizontal: 5,
         borderColor: '#e8e8e8',
         borderBottomWidth: 1,
         borderRadius: 5,
         marginVertical: 5,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         padding: 10,
+    },
+    topContainer: {
+        flexDirection: 'row',
+        width: '100%',
+    },
+    doubleButton: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    linkAccountButton:{
+        width: '48%',
+        height: 45
     },
     closeButton: {
         marginLeft: 5,

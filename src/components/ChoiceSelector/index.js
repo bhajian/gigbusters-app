@@ -59,6 +59,8 @@ const DATA = [
 class ChoiceSelector extends Component {
     constructor(props) {
         super(props);
+        this.props = props
+
         DATA.map((item, i) => {
             item.key = i
             item.backgroundColor = Colors.light.grey
@@ -90,7 +92,8 @@ class ChoiceSelector extends Component {
                 selectedValue: selectedValue
             })
         }
-        console.log(selectedValue)
+        this.props?.passSelectedValue(selectedValue)
+        // console.log(selectedValue)
     }
 
     render() {

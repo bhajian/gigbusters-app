@@ -1,5 +1,4 @@
 import {API} from "aws-amplify";
-import {join} from "path";
 
 const reviewApiName = 'GigbusterApi'
 const reviewPath = '/review'
@@ -7,8 +6,7 @@ const complexReviewPath = '/complexReview'
 const reviewablePath = '/reviewable'
 const queryPath = '/query?'
 
-let profile = null
-export class ProfileService {
+export class ReviewService {
 
     constructor() {
 

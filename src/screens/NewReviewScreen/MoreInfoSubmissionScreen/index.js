@@ -8,7 +8,7 @@ import {
     ScrollView,
     StyleSheet,
     Dimensions,
-    TouchableOpacity,
+    TouchableOpacity, Image,
 } from 'react-native';
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -21,59 +21,47 @@ import ChoiceSelector from "../../../components/ChoiceSelector";
 import {LocationSelector} from "../../../components/LocationSearch";
 import Slider from "@react-native-community/slider";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {ProfileService} from "../../../backend/ProfileService";
+import {ReviewService} from "../../../backend/ReviewService";
+import loading from "../../../../assets/images/loading.gif";
 
 
 const MoreInfoSubmissionScreen = props => {
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [locationMax, setLocationMax] = useState(50);
-    const [priceMax, setPriceMax] = useState(20);
+    const reviewObj = props?.route?.params
+    const [isModalVisible, setModalVisible] = useState(false)
+    const [location, setLocation] = useState(reviewObj?.location)
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
+    const reviewService = new ReviewService()
+
     const navigation = useNavigation()
 
-    function onSubmitPress() {
-        navigation.navigate('RequestCompletedScreen')
+
+    function getCategorySelectedValue(value){
+        reviewObj.category = value
+    }
+    async function onSubmitPress() {
+        setDataBeingSaved(true)
+        try{
+            await reviewService.createReview({
+                reviewable: {
+                    type: reviewObj.type,
+                    uri: reviewObj.uri,
+                    categories: [reviewObj.category]
+                },
+                rating: reviewObj.rating,
+                review: reviewObj.review,
+                category: reviewObj.category,
+                location: reviewObj.location
+            })
+            navigation.navigate('RequestCompletedScreen')
+        } catch (e) {
+            console.log(e)
+        }
+        setDataBeingSaved(false)
     }
 
     useEffect(() => {
-        navigation.setOptions({
-            tabBarActiveTintColor: Colors.light.tint,
-            headerLargeTitle: false,
-            headerLeftContainerStyle: {
-                left: 10,
-            },
-            tabBarIcon: ({color}) => (
-                <Fontisto name="home" size={25} color={color}/>
-            ),
-            headerTitle: () => (
-                <Text> Request a worker</Text>
-            ),
-            headerRight: () => (
-                <Pressable
-                    onPress={onSubmitPress}
-                    style={({pressed}) => ({
-                        opacity: pressed ? 0.5 : 1,
-                        marginRight: 10,
-                    })}>
-                    <MaterialCommunityIcons
-                        name="email-send"
-                        size={25}
-                        color={Colors.light.tint}
-                        style={{marginRight: 15}}
-                    />
-                    <PhonebookModal
-                        visibility={isModalVisible}
-                        // onClose={toggleModal}
-                    />
-                </Pressable>
-            ),
-            headerLeft: () => (
-                <ProfilePicture
-                    size={30}
-                    image={
-                        'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250'
-                    }
-                />
-            ),
-        })
+
     }, [navigation]);
 
     return (
@@ -89,16 +77,21 @@ const MoreInfoSubmissionScreen = props => {
                         </TouchableOpacity>
 
                     </View>
-                    <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
-                        <Text style={styles.buttonText}>Submit</Text>
-                        {/*<Ionicons name="enter" size={25} color="white"/>*/}
-                    </TouchableOpacity>
+                    {
+                        dataBeingSaved ?
+                            <Image source={loading} style={{width: 40, height: 30}} />
+                            :
+                            <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                                <Text style={styles.buttonText}>Submit</Text>
+                            </TouchableOpacity>
+                    }
+
                 </View>
                 <View style={styles.locationContainer}>
-                    <LocationSelector style={{marginTop: 10}} />
+                    <LocationSelector locationNameParam={location.locationName} style={{marginTop: 10}} />
                 </View>
                 <SearchCategory navigation={navigation} style={{marginHorizontal: 10 }}/>
-                <ChoiceSelector/>
+                <ChoiceSelector passSelectedValue={getCategorySelectedValue}/>
 
             </View>
 
@@ -186,7 +179,6 @@ const styles = StyleSheet.create({
         marginHorizontal: 10,
         borderWidth: 0,
         borderRadius: 15,
-        padding: 5,
     },
     image: {
         width: '100%',
@@ -201,20 +193,6 @@ const styles = StyleSheet.create({
         width: '70%',
         marginLeft: 25,
     },
-    // button: {
-    //     backgroundColor: 'white',
-    //     width: 200,
-    //     height: 40,
-    //     borderRadius: 10,
-    //     marginTop: 15,
-    //     marginLeft: 25,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    // },
-    // buttonText: {
-    //     fontSize: 16,
-    //     fontWeight: 'bold',
-    // },
     searchButton: {
         backgroundColor: '#e5e0e0',
         width: Dimensions.get('screen').width - 20,

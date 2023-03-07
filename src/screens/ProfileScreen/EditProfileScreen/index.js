@@ -24,14 +24,14 @@ import loading from '../../../../assets/images/loading.gif'
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
 
-    const [name, setName] = useState('');
-    const [accountNumber, setAccountNumber] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
-    const [bio, setBio] = useState('');
-    const [image, setImage] = useState(null);
-    const [saved, setSaved] = useState(false);
-    const [photoChange, setPhotoChange] = useState(false);
+    const [name, setName] = useState('')
+    const [accountNumber, setAccountNumber] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [bio, setBio] = useState('')
+    const [image, setImage] = useState(null)
+    const [saved, setSaved] = useState(false)
+    const [photoChange, setPhotoChange] = useState(false)
 
     const navigation = useNavigation();
 
