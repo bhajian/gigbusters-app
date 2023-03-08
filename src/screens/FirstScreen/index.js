@@ -9,7 +9,7 @@ import Logo from '../../../assets/images/gossip.jpeg';
 import styles from './styles';
 import CustomButton from "../../components/CustomButton";
 
-export default function App() {
+export default function FirstScreen() {
 
     const navigation = useNavigation();
 

@@ -92,8 +92,9 @@ class ChoiceSelector extends Component {
                 selectedValue: selectedValue
             })
         }
-        this.props?.passSelectedValue(selectedValue)
-        // console.log(selectedValue)
+        if(this.props?.passSelectedValue){
+            this.props?.passSelectedValue(selectedValue)
+        }
     }
 
     render() {

@@ -16,7 +16,9 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
     function setLocationHook(location){
         setLocationName(location.name)
         setCoordinates(location.coordinates)
-        onLocationChangePressed(location)
+        if(onLocationChangePressed){
+            onLocationChangePressed(location)
+        }
     }
     function onPress() {
         navigation.navigate('LocationSelectorScreen', {

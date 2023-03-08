@@ -19,7 +19,7 @@ import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../../components/SearchCategory";
 import ChoiceSelector from "../../../components/ChoiceSelector";
 import {LocationSelector} from "../../../components/LocationSearch";
-import Slider from "@react-native-community/slider";
+
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {ProfileService} from "../../../backend/ProfileService";
 import {ReviewService} from "../../../backend/ReviewService";

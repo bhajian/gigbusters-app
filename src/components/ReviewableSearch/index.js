@@ -1,14 +1,13 @@
 import React, {useCallback, useMemo, useState} from "react";
 import {Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
-import Fontisto from "react-native-vector-icons/Fontisto";
 import Feather from "react-native-vector-icons/Feather";
 import ChoiceSelector from "../ChoiceSelector";
-import Slider from "@react-native-community/slider";
+import {Slider} from '@miblanchard/react-native-slider'
 import Colors from "../../constants/Colors";
 import {LocationSelector} from "../LocationSearch";
-import {RatingBar} from "@aashu-dubey/react-native-rating-bar";
-import {Icon} from "react-native-elements";
+import { Rating, AirbnbRating } from 'react-native-ratings'
+import STAR_IMAGE from '../../../assets/images/star.png'
 
 export default function ReviewableSearch({bottomSheetModalRef, handleSheetChanges}) {
 
@@ -48,7 +47,11 @@ export default function ReviewableSearch({bottomSheetModalRef, handleSheetChange
             <BottomSheetBackdrop {...props} pressBehavior={backdropPressBehavior} />
         ),
         [backdropPressBehavior]
-    );
+    )
+
+    function getCategorySelectedValue(value){
+
+    }
 
     return (
         <BottomSheetModalProvider>
@@ -72,33 +75,32 @@ export default function ReviewableSearch({bottomSheetModalRef, handleSheetChange
                         <View></View>
                     </View>
                     <View style={styles.mainContainer}>
-                        <ChoiceSelector/>
+                        <ChoiceSelector passSelectedValue={getCategorySelectedValue}/>
                         <View style={styles.locationContainer}>
                             <Text>Within: {locationMax} km of  </Text>
                             <Slider
                                 value={locationMax}
-                                onValueChange={setLocationMax}
+                                onValueChange={value => setLocationMax(value)}
                                 step={1}
-                                minimumTrackTintColor={Colors.light.tint}
                                 maximumValue={150}
                                 minimumValue={1}
-                                thumbStyle={{ height: 30, width: 30, backgroundColor: Colors.light.tint }}
-                                // trackStyle={{ height: 5, backgroundColor: 'transparent' }}
+                                minimumTrackTintColor={Colors.light.tint}
+                                thumbTintColor={Colors.light.turquoise}
                             />
                             <LocationSelector />
                         </View>
                         <View style={styles.ratingContainer}>
                             <Text style={styles.ratingText}>Rating: </Text>
-                            <RatingBar
-                                initialRating={3}
-                                minRating={1}
-                                direction="horizontal"
-                                unratedColor={Colors.light.grey}
-                                itemCount={5}
-                                itemPadding={1}
-                                itemSize={30}
-                                itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={30} />}
-                                onRatingUpdate={setRating}
+                            <AirbnbRating
+                                type='custom'
+                                starImage={STAR_IMAGE}
+                                showRating={false}
+                                selectedColor={Colors.light.tint}
+                                ratingBackgroundColor={Colors.light.grey}
+                                ratingCount={5}
+                                size={20}
+                                onFinishRating={setRating}
+                                style={{ paddingVertical: 10 }}
                             />
                         </View>
                     </View>

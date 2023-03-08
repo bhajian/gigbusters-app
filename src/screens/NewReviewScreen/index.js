@@ -13,8 +13,6 @@ import {
 import {Storage} from 'aws-amplify';
 import Colors from '../../constants/Colors';
 import {MaterialCommunityIcons} from "@expo/vector-icons";
-import {RatingBar} from "@aashu-dubey/react-native-rating-bar";
-import {Icon} from "react-native-elements";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
@@ -22,6 +20,8 @@ import AccontSearchBottomSheet from "./AccountSearchReviewScreen/AccontSearchBot
 import {ProfileService} from "../../backend/ProfileService";
 import Entypo from "react-native-vector-icons/Entypo";
 import * as ImagePicker from "expo-image-picker";
+import { Rating, AirbnbRating } from 'react-native-ratings'
+import STAR_IMAGE from '../../../assets/images/star.png'
 
 let {width, height} = Dimensions.get('window')
 
@@ -71,7 +71,7 @@ export default function NewReviewScreen({navigation, route}) {
     }, [getCurrentUserData])
 
     useEffect(() => {
-        bottomSheetModalRef.current.present()
+        // bottomSheetModalRef.current.present()
     }, [bottomSheetModalRef])
 
     async function getCurrentUserData() {
@@ -186,17 +186,16 @@ export default function NewReviewScreen({navigation, route}) {
                     <View style={styles.reviewInputContainer}>
                         <View style={styles.ratingContainer}>
                             <Text style={styles.ratingText}>Rating: </Text>
-                            <RatingBar
-                                initialRating={3}
-                                minRating={0}
-                                direction="horizontal"
-                                allowHalfRating
-                                unratedColor={Colors.light.grey}
-                                itemCount={5}
-                                itemPadding={1}
-                                itemSize={25}
-                                itemBuilder={() => <Icon name="star" color={Colors.light.tint} size={25}/>}
-                                onRatingUpdate={value => setRating(value)}
+                            <AirbnbRating
+                                type='custom'
+                                starImage={STAR_IMAGE}
+                                showRating={false}
+                                selectedColor={Colors.light.tint}
+                                ratingBackgroundColor={Colors.light.grey}
+                                ratingCount={5}
+                                size={20}
+                                onFinishRating={setRating}
+                                style={{ paddingVertical: 10 }}
                             />
                         </View>
                         <View style={styles.inputsContainer}>

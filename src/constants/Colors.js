@@ -2,6 +2,7 @@ const tintColorLight = '#ff6200';
 const tintColorDark = '#fff';
 const tintColorGrey = '#eeefff'
 const tintColorGreyDark = '#858585'
+const turquoise = '#30D5C8'
 
 export default {
   light: {
@@ -11,6 +12,7 @@ export default {
     tint: tintColorLight,
     tabIconDefault: '#ccc',
     tabIconSelected: tintColorLight,
+    turquoise: turquoise,
   },
   dark: {
     grey: tintColorGreyDark,

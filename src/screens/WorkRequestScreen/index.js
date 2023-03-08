@@ -6,9 +6,9 @@ import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../components/SearchCategory";
 import ChoiceSelector from "../../components/ChoiceSelector";
 import {LocationSelector} from "../../components/LocationSearch";
-import Slider from "@react-native-community/slider";
 import UserAvatar from "react-native-user-avatar";
 import {ProfileService} from "../../backend/ProfileService";
+import {Slider} from '@miblanchard/react-native-slider'
 
 const WorkRequestScreen = props => {
     const [name, setName] = useState('');
@@ -32,6 +32,10 @@ const WorkRequestScreen = props => {
         navigation.navigate('RequestReferralScreen')
     }
 
+    function getCategorySelectedValue(value){
+
+    }
+
     useEffect(() => {
         getCurrentUserData().then(r => {})
             navigation.setOptions({
@@ -44,7 +48,7 @@ const WorkRequestScreen = props => {
                     <Fontisto name="home" size={25} color={color}/>
                 ),
                 headerTitle: () => (
-                    <Text> Request a worker</Text>
+                    <Text> Request a gig</Text>
                 ),
                 headerRight: () => (
                     <Pressable
@@ -71,31 +75,30 @@ const WorkRequestScreen = props => {
         <ScrollView style={styles.container}>
             <View style={styles.criteriaContainer}>
                 <SearchCategory navigation={navigation} style={{marginHorizontal: 10}}/>
-                <ChoiceSelector/>
+                <ChoiceSelector passSelectedValue={getCategorySelectedValue}/>
                 <View style={styles.locationContainer}>
                     <Text>Within: {locationMax} km of </Text>
                     <Slider
                         value={locationMax}
-                        onValueChange={setLocationMax}
+                        onValueChange={value => setLocationMax(value)}
                         step={1}
-                        minimumTrackTintColor={Colors.light.tint}
                         maximumValue={150}
                         minimumValue={1}
-                        thumbStyle={{height: 30, width: 30, backgroundColor: Colors.light.tint}}
+                        minimumTrackTintColor={Colors.light.tint}
+                        thumbTintColor={Colors.light.turquoise}
                     />
                     <LocationSelector style={{marginTop: 10}}/>
                 </View>
                 <View style={styles.sliderContainer}>
-                    <Text>Max Price/hr: {priceMax} $$ </Text>
+                    <Text>Price/hr: {priceMax} $$ </Text>
                     <Slider
                         value={priceMax}
-                        onValueChange={setPriceMax}
+                        onValueChange={value => setPriceMax(value)}
                         step={1}
-                        minimumTrackTintColor={Colors.light.tint}
-                        maximumValue={200}
+                        maximumValue={150}
                         minimumValue={1}
-                        thumbStyle={{height: 30, width: 30, backgroundColor: Colors.light.tint}}
-                        trackStyle={{height: 5, backgroundColor: '#5e5e5e'}}
+                        minimumTrackTintColor={Colors.light.tint}
+                        thumbTintColor={Colors.light.turquoise}
                     />
                 </View>
             </View>

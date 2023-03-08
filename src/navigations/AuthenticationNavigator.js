@@ -7,6 +7,7 @@ import ForgotPassword from '../screens/ForgotPassword';
 import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen";
 import ForgetPasswordScreen from "../screens/ForgotPassword";
 import PasswordResetScreen from "../screens/ForgotPassword/PasswordResetScreen";
+import FirstScreen from "../screens/FirstScreen";
 
 const AuthenticationStack = createStackNavigator();
 
@@ -14,6 +15,14 @@ const AuthenticationNavigator = props => {
 
     return (
         <AuthenticationStack.Navigator headerShown="false">
+                <AuthenticationStack.Screen name="FirstScreen">
+                        {screenProps => (
+                            <FirstScreen
+                                {...screenProps}
+                                updateAuthState={props.updateAuthState}
+                            />
+                        )}
+                </AuthenticationStack.Screen>
             <AuthenticationStack.Screen name="SignIn">
                 {screenProps => (
                     <SignIn
