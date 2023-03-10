@@ -68,16 +68,9 @@ const EditProfileScreen = (props) => {
         if(profile && profile.phone && profile.phone.phone){
             setPhone(profile.phone.phone)
         }
-        if(profile && profile.photos && profile.photos[0] && profile.photos[0].key){
-            try{
-                const mainPhoto = profile.photos
-                    .filter((item) => item.main === true)
-                const key = mainPhoto[0].key
-                const signedURL = await Storage.get(key, { level: 'protected' })
-                setImage(signedURL)
-            } catch (e) {
-                console.log(e)
-            }
+        if(profile && profile.photos){
+            const url = await profileService.getProfileMainPhoto()
+            setImage(url)
         }
     },[])
 
@@ -135,9 +128,7 @@ const EditProfileScreen = (props) => {
             } else{
                 return
             }
-            const profilePhotoObj = await profileService.changeProfilePhoto({
-
-            })
+            const profilePhotoObj = await profileService.changeProfilePhoto({})
             if(!profilePhotoObj) {
                 throw new Error('Profile Photo cannot be added!')
             }
@@ -145,6 +136,7 @@ const EditProfileScreen = (props) => {
             const blob = await response.blob()
             const key = profilePhotoObj.key
             await Storage.put(key, blob, {
+                bucket: profilePhotoObj.bucket,
                 level: 'protected',
                 contentType: blob.type,
                 progressCallback: progress => {

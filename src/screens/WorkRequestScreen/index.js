@@ -6,34 +6,45 @@ import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../components/SearchCategory";
 import ChoiceSelector from "../../components/ChoiceSelector";
 import {LocationSelector} from "../../components/LocationSearch";
-import UserAvatar from "react-native-user-avatar";
 import {ProfileService} from "../../backend/ProfileService";
 import {Slider} from '@miblanchard/react-native-slider'
+import {Ionicons} from "@expo/vector-icons";
 
 const WorkRequestScreen = props => {
-    const [name, setName] = useState('');
-    const [locationMax, setLocationMax] = useState(50);
-    const [priceMax, setPriceMax] = useState(20);
+    const [profileName, setProfileName] = useState('')
+    const [category, setCategory] = useState('')
+    const [location, setLocation] = useState('')
+    const [distance, setDistance] = useState(50)
+    const [price, setPrice] = useState(20)
     const profileService = new ProfileService()
     const navigation = useNavigation()
 
     async function getCurrentUserData() {
         const profile = profileService.getProfile()
         if (profile && profile.name) {
-            setName(profile.name)
+            setProfileName(profile.name)
+        }
+        if(profile && profile.location && profile.location.locationName){
+            setLocation(profile.location)
         }
     }
 
-    function referralActivityClickHandler() {
-        navigation.navigate('RequestActivityScreen');
-    }
-
     function onSubmitPress() {
-        navigation.navigate('RequestReferralScreen')
+        console.log(location)
+        navigation.navigate('RequestReferralScreen', {
+            location: location,
+            category: category,
+            distance: distance,
+            price: price,
+        })
     }
 
     function getCategorySelectedValue(value){
+        setCategory(value)
+    }
 
+    const onLocationChangePressed = async(props) => {
+        setLocation(props)
     }
 
     useEffect(() => {
@@ -60,40 +71,42 @@ const WorkRequestScreen = props => {
                         <Text style={styles.submitButtonText}>Request</Text>
                     </Pressable>
                 ),
-                headerLeft: () => (
-                    <UserAvatar
-                        size={35}
-                        name={name}
-                        // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
-                    />
+                headerLeft: (color) => (
+                    <Ionicons name="notifications-sharp" size={25} color={Colors.light.darkerGrey}/>
                 ),
             })
 
-    }, [navigation, name]);
+    }, [navigation, getCurrentUserData]);
 
     return (
         <ScrollView style={styles.container}>
             <View style={styles.criteriaContainer}>
                 <SearchCategory navigation={navigation} style={{marginHorizontal: 10}}/>
-                <ChoiceSelector passSelectedValue={getCategorySelectedValue}/>
+                <ChoiceSelector
+                    passSelectedValue={getCategorySelectedValue}
+                />
                 <View style={styles.locationContainer}>
-                    <Text>Within: {locationMax} km of </Text>
+                    <Text>Within: {distance} km of </Text>
                     <Slider
-                        value={locationMax}
-                        onValueChange={value => setLocationMax(value)}
+                        value={distance}
+                        onValueChange={value => setDistance(value)}
                         step={1}
                         maximumValue={150}
                         minimumValue={1}
                         minimumTrackTintColor={Colors.light.tint}
                         thumbTintColor={Colors.light.turquoise}
                     />
-                    <LocationSelector style={{marginTop: 10}}/>
+                    <LocationSelector
+                        locationNameParam={location.locationName}
+                        onLocationChangePressed={onLocationChangePressed}
+                        style={{marginTop: 10}}
+                    />
                 </View>
                 <View style={styles.sliderContainer}>
-                    <Text>Price/hr: {priceMax} $$ </Text>
+                    <Text>Price/hr: {price} $$ </Text>
                     <Slider
-                        value={priceMax}
-                        onValueChange={value => setPriceMax(value)}
+                        value={price}
+                        onValueChange={value => setPrice(value)}
                         step={1}
                         maximumValue={150}
                         minimumValue={1}

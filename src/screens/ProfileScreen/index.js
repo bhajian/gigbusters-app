@@ -7,9 +7,8 @@ import Colors from "../../constants/Colors";
 import UserAvatar from 'react-native-user-avatar';
 import {LocationSelector} from "../../components/LocationSearch";
 import {ProfileService} from "../../backend/ProfileService";
-import { Storage } from 'aws-amplify';
-import EditSettingsScreen from "./EditSettingsScreen";
 
+const profileService = new ProfileService()
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
     const [name, setName] = useState('');
@@ -20,11 +19,11 @@ const ProfileScreen = (props) => {
     const [accountType, setAccountType] = useState('USER')
     const [image, setImage] = useState(null);
 
-    const profileService = new ProfileService()
+
 
     useEffect(() => {
         getCurrentUserData().then(r => {})
-    }, [getCurrentUserData]);
+    }, []);
 
     async function getCurrentUserData() {
         const profile = profileService.getProfile()
@@ -46,27 +45,20 @@ const ProfileScreen = (props) => {
         if(profile && profile.location && profile.location.locationName){
             setLocationName(profile.location.locationName)
         }
-        if(profile && profile.photos && profile.photos[0] && profile.photos[0].key){
-            try{
-                const mainPhoto = profile.photos
-                    .filter((item) => item.main === true)
-                const key = mainPhoto[0].key
-                const signedURL = await Storage.get(key, { level: 'protected' })
-                setImage(signedURL)
-            } catch (e) {
-                console.log(e)
-            }
+        if(profile && profile.photos){
+            const url = await profileService.getProfileMainPhoto()
+            setImage(url)
         }
     }
 
     const onLocationChangePressed = async(props) => {
         await profileService.changeUserLocation({
-            locationName: props.name,
+            locationName: props.locationName,
             latitude: props.coordinates.lat,
             longitude: props.coordinates.lng,
         })
         setLocationName(props.name)
-    };
+    }
 
     async function signOut() {
         try {

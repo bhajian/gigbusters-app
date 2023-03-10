@@ -7,14 +7,15 @@ import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
 
 export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
-    const [locationName, setLocationName] = useState(locationNameParam
-        ? locationNameParam : 'Select a Location ..')
+    const [locationName, setLocationName] = useState((locationNameParam
+        ? locationNameParam : 'Select a Location ..'))
     const [coordinates, setCoordinates] = useState({
         latitude: 0, logitude: 0})
     const navigation = useNavigation()
 
     function setLocationHook(location){
-        setLocationName(location.name)
+        console.log(location)
+        setLocationName(location.locationName)
         setCoordinates(location.coordinates)
         if(onLocationChangePressed){
             onLocationChangePressed(location)

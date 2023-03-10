@@ -19,7 +19,7 @@ const LocationSelectorScreen = ({route, navigation}) => {
                 query={{
                     key: 'AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s',
                     language: 'en',
-                    // types: '(cities)',
+                    types: '(cities)',
                 }}
                 GooglePlacesDetailsQuery={{ fields: 'geometry', }}
                 fetchDetails={true}
@@ -27,7 +27,7 @@ const LocationSelectorScreen = ({route, navigation}) => {
                 currentLocationLabel='Current location'
                 onPress={(data, details ) => {
                     onGoBack({
-                        name: (data.description ? data.description : data.vicinity),
+                        locationName: (data.description ? data.description : data.vicinity),
                         coordinates: details.geometry.location
                     })
                     navigation.goBack()

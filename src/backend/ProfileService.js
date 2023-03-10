@@ -1,4 +1,4 @@
-import {API} from "aws-amplify";
+import {API, Storage} from "aws-amplify";
 
 const profileApiName = 'GigbusterApi'
 const profilePath = '/profile'
@@ -42,6 +42,23 @@ export class ProfileService {
     }
     getProfile() {
         return profile
+    }
+
+    async getProfileMainPhoto() {
+        try{
+            const mainPhoto = profile.photos
+                .filter((item) => item.main === true)
+            const key = mainPhoto[0].key
+            const bucket = mainPhoto[0].bucket
+            const signedURL = await Storage.get(key, {
+                bucket: bucket,
+                level: 'protected'
+            })
+            return signedURL
+        } catch (e) {
+            console.log(e)
+        }
+        return undefined
     }
 
     async changeAndRequestPhoneValidation(props) {

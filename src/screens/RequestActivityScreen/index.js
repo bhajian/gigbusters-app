@@ -7,22 +7,32 @@ import {useNavigation} from "@react-navigation/native";
 import users from '../../../assets/data/users'
 import ReferralRequestItem from "../../components/ReferralRequestItem";
 import Colors from "../../constants/Colors";
+import {TaskService} from "../../backend/TaskService";
 
 export default function RequestActivityScreen({route}) {
-    const navigation = useNavigation();
+    const [requestList, setRequestList] = useState([])
+    const navigation = useNavigation()
+    const taskService = new TaskService()
+
 
     useEffect(() => {
+        loadData().then().catch(e => console.log(e))
+    }, []);
 
-    }, [navigation]);
+    async function loadData() {
+        const requestObj = await taskService.listTasks()
+        setRequestList(requestObj)
+        console.log(requestObj)
+    }
 
     function referralActivityClickHandler() {
-        navigation.navigate('RequestDetailScreen');
+        navigation.navigate('RequestDetailScreen')
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
-                data={users}
+                data={requestList}
                 renderItem={({item}) => <ReferralRequestItem item={item} handler={referralActivityClickHandler} />}
                 keyExtractor={(item) => item.id}
             />

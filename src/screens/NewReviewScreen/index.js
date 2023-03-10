@@ -2,7 +2,6 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {
     StyleSheet,
     TouchableOpacity,
-    SafeAreaView,
     TextInput,
     Platform,
     Image,
@@ -22,25 +21,11 @@ import Entypo from "react-native-vector-icons/Entypo";
 import * as ImagePicker from "expo-image-picker";
 import { Rating, AirbnbRating } from 'react-native-ratings'
 import STAR_IMAGE from '../../../assets/images/star.png'
+import ImageList from "../../components/ImageList";
 
 let {width, height} = Dimensions.get('window')
 
-const ImageList = ({ item, remove }) => {
-    return <View>
-                <TouchableOpacity
-                    onPress={(e) => remove(item)}
-                    style={styles.imageItem}>
-                    <Feather name="x-circle" style={styles.backIcon}/>
-                    <Image source={{uri: item}} style={ {width: 100, height: 100 }} />
-                </TouchableOpacity>
-            </View>
-}
 export default function NewReviewScreen({navigation, route}) {
-    let contact = route.params ? route.params.contact : {
-        name: 'behnam',
-        image: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250',
-        id: 1
-    };
 
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(3)
@@ -57,8 +42,7 @@ export default function NewReviewScreen({navigation, route}) {
     const handleSheetChanges = useCallback((value) => {
     }, [])
 
-    const remove = (value) => {
-        console.log(value)
+    const removeImage = (value) => {
         setImages(images.filter(item => item !== value))
     }
     const getValueFromBottomSheet = (value) => {
@@ -82,16 +66,9 @@ export default function NewReviewScreen({navigation, route}) {
         if(profile && profile.location && profile.location){
             setLocation(profile.location)
         }
-        if(profile && profile.photos && profile.photos[0] && profile.photos[0].key){
-            try{
-                const mainPhoto = profile.photos
-                    .filter((item) => item.main === true)
-                const key = mainPhoto[0].key
-                const signedURL = await Storage.get(key, { level: 'protected' })
-                setProfileImage(signedURL)
-            } catch (e) {
-                console.log(e)
-            }
+        if(profile && profile.photos){
+            const url = await profileService.getProfileMainPhoto()
+            setProfileImage(url)
         }
     }
 
@@ -206,13 +183,12 @@ export default function NewReviewScreen({navigation, route}) {
                                 style={styles.reviewInput}
                                 placeholder={"Review..."}
                             />
-                            {/*<Image source={{uri: "file:///Users/behnamhajian/Library/Developer/CoreSimulator/Devices/17CED454-5C51-4994-9A17-DDE884843C08/data/Containers/Data/Application/920CD1FF-6BBF-4F61-AF0F-C5E6CE540667/Library/Caches/ExponentExperienceData/%2540behnamorbitstellar%252Ffameorbit-app/ImagePicker/A44B697B-8A52-4931-A018-7836761EB9DC.jpg"}} style={ {width: 50, height: 50 }} />*/}
                         </View>
                     </View>
                     <View style={styles.imageContainer}>
 
                         {
-                            images.map((e)=> <ImageList item={e} remove={remove} />)
+                            images.map((e)=> <ImageList item={e} remove={removeImage} />)
                         }
 
                     </View>
@@ -262,7 +238,7 @@ const styles = StyleSheet.create({
     imageSelectorContainer: {
         backgroundColor: 'white',
         borderTopWidth: 1,
-        borderColor: Colors.dark.grey,
+        borderColor: Colors.light.darkerGrey,
         flexDirection: 'row',
     },
     closeButton: {

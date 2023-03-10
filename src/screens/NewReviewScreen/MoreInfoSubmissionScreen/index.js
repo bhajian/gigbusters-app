@@ -11,17 +11,11 @@ import {
     TouchableOpacity, Image,
 } from 'react-native';
 import Colors from "../../../constants/Colors";
-import Fontisto from "react-native-vector-icons/Fontisto";
-import {FontAwesome5, Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
-import PhonebookModal from "../../../components/PhonebookModal";
-import ProfilePicture from "../../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
 import {SearchCategory} from "../../../components/SearchCategory";
 import ChoiceSelector from "../../../components/ChoiceSelector";
 import {LocationSelector} from "../../../components/LocationSearch";
-
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import {ProfileService} from "../../../backend/ProfileService";
 import {ReviewService} from "../../../backend/ReviewService";
 import loading from "../../../../assets/images/loading.gif";
 
@@ -38,6 +32,10 @@ const MoreInfoSubmissionScreen = props => {
 
     function getCategorySelectedValue(value){
         reviewObj.category = value
+    }
+
+    const onLocationChangePressed = async(props) => {
+        setLocation(props)
     }
     async function onSubmitPress() {
         setDataBeingSaved(true)
@@ -88,10 +86,16 @@ const MoreInfoSubmissionScreen = props => {
 
                 </View>
                 <View style={styles.locationContainer}>
-                    <LocationSelector locationNameParam={location.locationName} style={{marginTop: 10}} />
+                    <LocationSelector
+                        locationNameParam={location.locationName}
+                        onLocationChangePressed={onLocationChangePressed}
+                        style={{marginTop: 10}}
+                    />
                 </View>
                 <SearchCategory navigation={navigation} style={{marginHorizontal: 10 }}/>
-                <ChoiceSelector passSelectedValue={getCategorySelectedValue}/>
+                <ChoiceSelector
+                    passSelectedValue={getCategorySelectedValue}
+                />
 
             </View>
 
