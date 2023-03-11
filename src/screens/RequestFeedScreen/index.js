@@ -5,28 +5,26 @@ import {
     SafeAreaView, StyleSheet, FlatList
 } from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import FameorbitFeed from "../../components/FameorbitFeed";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
-import NewReviewButton from "../../components/NewReviewButton";
-import ReviewableSearch from "../../components/ReviewableSearch";
-import {ProfileService} from "../../backend/ProfileService";
-import UserAvatar from "react-native-user-avatar";
-import tipoffs from "../../../assets/data/tipoffs";
-import Reviewable from "../../components/Reviewable";
 import RequestItem from "../../components/RequestItem";
+import {TaskService} from "../../backend/TaskService";
 
 export default function RequestFeedScreen(props) {
-    const [name, setName] = useState('');
-    const navigation = useNavigation();
-    const profileService = new ProfileService()
 
-    async function getCurrentUserData() {
-        const profile = profileService.getProfile()
-        if (profile && profile.name) {
-            setName(profile.name)
-        }
+    const [requestList, setRequestList] = useState([])
+    const navigation = useNavigation();
+    const taskService = new TaskService()
+
+    useEffect(() => {
+        loadData().then().catch(e => console.log(e))
+    }, []);
+
+    async function loadData() {
+        const requestObj = await taskService.listNeighborsTasks()
+        setRequestList(requestObj)
+        console.log(requestObj)
     }
 
     const handlePresentPress = () => bottomSheetModalRef.current.present()
@@ -35,45 +33,41 @@ export default function RequestFeedScreen(props) {
     }, []);
 
     useEffect(() => {
-        getCurrentUserData().then(r => {
-            navigation.setOptions({
-                tabBarActiveTintColor: Colors.light.tint,
-                tabBarIcon: ({color}) => (
-                    <Fontisto name="react" size={25} color={color}/>
-                ),
-                headerTitle: () => (
-                    <Text>Feed</Text>
-                ),
-                headerRight: () => (
-                    <Pressable
-                        onPress={handlePresentPress}
-                        style={({pressed}) => ({
-                            opacity: pressed ? 0.5 : 1,
-                            marginRight: 10,
-                        })}>
-                        <MaterialCommunityIcons
-                            name="account-search"
-                            size={25}
-                            color={Colors.light.tint}
-                            style={{marginRight: 15}}
-                        />
-                    </Pressable>
-                ),
-                headerLeft: () => (
-                    <UserAvatar
-                        size={35}
-                        name={name}
-                        // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            tabBarIcon: ({color}) => (
+                <Fontisto name="react" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text>Feed</Text>
+            ),
+            headerRight: () => (
+                <Pressable
+                    onPress={handlePresentPress}
+                    style={({pressed}) => ({
+                        opacity: pressed ? 0.5 : 1,
+                        marginRight: 10,
+                    })}>
+                    <MaterialCommunityIcons
+                        name="account-search"
+                        size={25}
+                        color={Colors.light.tint}
+                        style={{marginRight: 15}}
                     />
-                ),
-            })
+                </Pressable>
+            ),
+            // headerLeft: () => (
+            //
+            // ),
         })
-    }, [navigation, name]);
+
+    }, [navigation]);
 
     return (
         <SafeAreaView style={styles.contentContainer}>
             <FlatList
-                data={tipoffs}
+                data={requestList}
                 renderItem={({item}) => <RequestItem request={item} />}
                 keyExtractor={(item) => item.id}
             />

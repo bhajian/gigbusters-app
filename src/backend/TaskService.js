@@ -32,8 +32,11 @@ export class TaskService {
         const data = {
             queryStringParameters: params
         }
-        const reviews = await API.get(taskApiName, path, data)
-        return reviews
+        const requests = await API.get(taskApiName, path, data)
+        for(let i=0; i<requests.length; i++){
+            requests[i].mainPhotoURL = await this.getMainPhoto(requests[i])
+        }
+        return requests
     }
 
     async createTask(params) {

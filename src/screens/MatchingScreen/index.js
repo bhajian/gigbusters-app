@@ -1,16 +1,29 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Pressable} from 'react-native';
 import MatchingCard from '../../components/MatchingCard';
 import users from '../../../assets/data/users';
-
 import AnimatedStack from '../../components/AnimatedStack';
 import Colors from "../../constants/Colors";
-import Fontisto from "react-native-vector-icons/Fontisto";
 import {FontAwesome, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
 import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
+import {TaskService} from "../../backend/TaskService";
 
 const MatchingScreen = () => {
+
+    const [requestList, setRequestList] = useState([])
+    const taskService = new TaskService()
+
+    useEffect(() => {
+        loadData().then().catch(e => console.log(e))
+    }, []);
+
+    async function loadData() {
+        const requestObj = await taskService.listTasks()
+        setRequestList(requestObj)
+        console.log(requestObj)
+    }
+
     const onSwipeLeft = user => {
         console.warn('swipe left', user.name);
     };
@@ -62,7 +75,7 @@ const MatchingScreen = () => {
     return (
         <View style={styles.pageContainer}>
             <AnimatedStack
-                data={users}
+                data={requestList}
                 renderItem={({item}) => <MatchingCard user={item}/>}
                 onSwipeLeft={onSwipeLeft}
                 onSwipeRight={onSwipeRight}

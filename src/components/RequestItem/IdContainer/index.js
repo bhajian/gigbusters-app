@@ -10,14 +10,10 @@ export default function IdContainer({review}) {
         <View style={styles.mainContainer}>
             <View style={styles.nameIdContainer}>
                 <View>
-                    <Text style={styles.toName} >{review.to.name}</Text>
+                    <Text style={styles.toName} >{"Behnam"}</Text>
                 </View>
                 <View style={styles.userIdContainer}>
-                    <FontAwesome5
-                        style={styles.contentContainer}
-                        name={"tiktok"}
-                    />
-                    <Text style={styles.fromName}>ID: {review.from.id}</Text>
+                    <Text style={styles.fromName}>ID: {"ID"}</Text>
                 </View>
             </View>
 

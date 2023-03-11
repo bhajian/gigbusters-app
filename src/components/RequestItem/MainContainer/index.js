@@ -14,18 +14,18 @@ export default function MainContainer({request}) {
         <View style={styles.container}>
             <View style={styles.infoContainer}>
                 <View style={styles.info}>
-                    <Text style={styles.text} >Toronto</Text>
+                    <Text style={styles.text} >{request.country}</Text>
                 </View>
                 <View style={styles.info}>
-                    <Text style={styles.text} >10$/hr</Text>
+                    <Text style={styles.text} >{request.price}$/hr</Text>
                 </View>
                 <View style={styles.info}>
-                    <Text style={styles.text} >Personal Trainer</Text>
+                    <Text style={styles.text} >{request.category}</Text>
                 </View>
             </View>
             <View style={styles.mainContainer}>
-                <Text style={styles.text} >{request.content}</Text>
-                {!!request.image && <Image source={{uri: request.image}} style={styles.image} />}
+                <Text style={styles.text} >{request.description}</Text>
+                <Image source={{uri: request.mainPhotoURL}} style={styles.image} />
 
             </View>
         </View>
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
     image: {
         marginVertical: 10,
         width: "100%",
-        height: 200,
+        height: 50,
+        // width: 50,
         resizeMode: 'cover',
         borderRadius: 15,
         overflow: 'hidden',

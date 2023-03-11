@@ -7,7 +7,7 @@ import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 
 const MatchingCard = props => {
-    const {name, image, bio} = props.user;
+    const {mainPhotoURL, description, category, price, city} = props.user;
     return (
         <View style={styles.card}>
             <View style={styles.topContainer}>
@@ -21,12 +21,12 @@ const MatchingCard = props => {
             <View style={styles.contentContainer}>
                 <ImageBackground
                     source={{
-                        uri: image,
+                        uri: mainPhotoURL,
                     }}
                     style={styles.image}>
                     <View style={styles.cardInner}>
-                        <Text style={styles.name}>{name}</Text>
-                        <Text style={styles.bio}>{bio}</Text>
+                        <Text style={styles.name}>{category}</Text>
+                        <Text style={styles.bio}>{description}</Text>
                     </View>
                     <View style={styles.connectButtonsContainer}>
                         <TouchableOpacity style={styles.connectButton}>
@@ -41,13 +41,13 @@ const MatchingCard = props => {
                 <View style={styles.infoContainer}>
                     <View style={styles.tagsContainer}>
                         <View style={styles.tag}>
-                            <Text style={styles.text} >Toronto</Text>
+                            <Text style={styles.text} >{city}</Text>
                         </View>
                         <View style={styles.tag}>
-                            <Text style={styles.text} >10$/hr</Text>
+                            <Text style={styles.text} >{price}$/hr</Text>
                         </View>
                         <View style={styles.tag}>
-                            <Text style={styles.text} >Personal Trainer</Text>
+                            <Text style={styles.text} >{category}</Text>
                         </View>
                     </View>
                     <Text style={styles.description}>
