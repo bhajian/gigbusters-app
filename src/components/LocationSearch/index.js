@@ -1,24 +1,28 @@
 import React, {Component, useEffect, useState} from "react";
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image} from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {useNavigation} from "@react-navigation/native";
 import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
+import loading from "../../../assets/images/loading2.png";
 
 export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
     const [locationName, setLocationName] = useState((locationNameParam
         ? locationNameParam : 'Select a Location ..'))
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [coordinates, setCoordinates] = useState({
         latitude: 0, logitude: 0})
     const navigation = useNavigation()
 
     function setLocationHook(location){
-        console.log(location)
+        setDataBeingSaved(true)
         setLocationName(location.locationName)
         setCoordinates(location.coordinates)
         if(onLocationChangePressed){
-            onLocationChangePressed(location)
+            onLocationChangePressed(location).then(e=>{
+                setDataBeingSaved(false)
+            })
         }
     }
     function onPress() {
@@ -39,7 +43,13 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
         <View style={[style, styles.container]}>
             <TouchableOpacity style={styles.searchInput} onPress={onPress}>
                 <View style={styles.searchTextIcon}>
-                    <MaterialIcons name="place" size={17} color="grey" />
+                    {
+                        dataBeingSaved ?
+                            <Image source={loading} style={{width: 40, height: 30}} />
+                            :
+                            <MaterialIcons name="place" size={17} color="grey" />
+                    }
+
                     <Text> {locationName} </Text>
                 </View>
                 <CountryFlag isoCode="ca" size={15} />

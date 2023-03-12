@@ -57,7 +57,7 @@ const ProfileScreen = (props) => {
             latitude: props.coordinates.lat,
             longitude: props.coordinates.lng,
         })
-        setLocationName(props.name)
+        setLocationName(props.locationName)
     }
 
     async function signOut() {

@@ -25,8 +25,7 @@ export default function MainContainer({request}) {
             </View>
             <View style={styles.mainContainer}>
                 <Text style={styles.text} >{request.description}</Text>
-                <Image source={{uri: request.mainPhotoURL}} style={styles.image} />
-
+                {!!request.photos && <Image source={{uri: request.mainPhotoURL}} style={styles.image} />}
             </View>
         </View>
     );
@@ -64,8 +63,7 @@ const styles = StyleSheet.create({
     image: {
         marginVertical: 10,
         width: "100%",
-        height: 50,
-        // width: 50,
+        height: 200,
         resizeMode: 'cover',
         borderRadius: 15,
         overflow: 'hidden',

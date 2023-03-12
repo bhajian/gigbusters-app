@@ -106,7 +106,30 @@ export class TaskService {
             body: params,
         }
         const res = await API.post(taskApiName, path, data)
+        await this.uploadPhoto({
+            ...res,
+            photo: params.photo
+        })
         return res
+    }
+
+    async uploadPhoto(params) {
+        try{
+            const photoObj = await fetch(params.photo)
+            const blob = await photoObj.blob()
+            const key = params.key
+            await Storage.put(key, blob, {
+                bucket: params.bucket,
+                level: 'protected',
+                contentType: blob.type,
+                progressCallback: progress => {
+
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
+
     }
 
     async getMainPhoto(params) {
@@ -115,9 +138,11 @@ export class TaskService {
                 .filter((item) => item.type === 'main')
             const key = mainPhoto[0].key
             const bucket = mainPhoto[0].bucket
+            const identityId = mainPhoto[0].identityId
             const signedURL = await Storage.get(key, {
                 bucket: bucket,
-                level: 'protected'
+                level: 'protected',
+                identityId: identityId
             })
             return signedURL
         } catch (e) {

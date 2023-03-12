@@ -41,13 +41,12 @@ const EditProfileScreen = (props) => {
             const profile = profileService.getProfile()
             profile.name = name
             profile.bio = bio
-            console.log(profile)
             await profileService.updateProfile(profile)
             navigation.goBack()
         } catch (e) {
-            setSaved(false)
             console.log(e)
         }
+        setSaved(false)
     },[name, bio])
 
 

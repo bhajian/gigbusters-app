@@ -12,7 +12,7 @@ import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
-import {Storage} from "aws-amplify";
+import {Auth, Storage} from "aws-amplify";
 import {ProfileService} from "../../../backend/ProfileService";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "../../../constants/Colors";
@@ -20,6 +20,7 @@ import ImageList from "../../../components/ImageList";
 import Entypo from "react-native-vector-icons/Entypo";
 import {TaskService} from "../../../backend/TaskService";
 import loading from "../../../../assets/images/loading.gif";
+import { v4 as uuidv4 } from 'uuid'
 
 export default function WorkerRequestCompletionScreen(props) {
     const requestObj = props?.route?.params
@@ -77,7 +78,6 @@ export default function WorkerRequestCompletionScreen(props) {
 
     async function submitRequest() {
         requestObj.description = description
-        console.log(requestObj)
         setDataBeingSaved(true)
         try{
             const response = await taskService.createTask({
@@ -95,25 +95,13 @@ export default function WorkerRequestCompletionScreen(props) {
                 city: location.locationName,
                 validTillDateTime: '2023-03-31'
             })
-
+            const user = await Auth.currentCredentials()
             images.map(async(e)=> {
-                const photoRes = await taskService.addPhoto({
+                await taskService.addPhoto({
                     type: 'main',
-                    taskId: response.id
-                })
-                if(!photoRes) {
-                    throw new Error('Profile Photo cannot be added!')
-                }
-                const photoObj = await fetch(e)
-                const blob = await photoObj.blob()
-                const key = photoRes.key
-                await Storage.put(key, blob, {
-                    bucket: photoRes.bucket,
-                    level: 'protected',
-                    contentType: blob.type,
-                    progressCallback: progress => {
-
-                    }
+                    taskId: response.id,
+                    identityId: user.identityId,
+                    photo: e
                 })
             })
 
@@ -178,7 +166,7 @@ export default function WorkerRequestCompletionScreen(props) {
                 </View>
                 <View style={styles.imageContainer}>
                     {
-                        images.map((e)=> <ImageList id={e} item={e} remove={removeImage} />)
+                        images.map((e)=> <ImageList key={e.toString()} item={e} remove={removeImage} />)
                     }
                 </View>
             </ScrollView>

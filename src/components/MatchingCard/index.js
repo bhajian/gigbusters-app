@@ -51,9 +51,7 @@ const MatchingCard = props => {
                         </View>
                     </View>
                     <Text style={styles.description}>
-                        I have a cute golden doodle who treats really well.
-                        He is very webb behaved and needs someone to take care of him
-                        while I am at work 9-5pm on the week days.
+                        {description}
                     </Text>
                 </View>
             </View>

@@ -22,7 +22,6 @@ export default function RequestActivityScreen({route}) {
     async function loadData() {
         const requestObj = await taskService.listTasks()
         setRequestList(requestObj)
-        console.log(requestObj)
     }
 
     function referralActivityClickHandler() {

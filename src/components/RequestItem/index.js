@@ -7,10 +7,6 @@ import Footer from "./Footer";
 import {useNavigation} from "@react-navigation/native";
 
 export default function RequestItem({request}) {
-    const navigation = useNavigation();
-    async function onItemPressed() {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: request});
-    }
 
     return (
         <View style={styles.container}>

@@ -24,7 +24,7 @@ export default function RequestFeedScreen(props) {
     async function loadData() {
         const requestObj = await taskService.listNeighborsTasks()
         setRequestList(requestObj)
-        console.log(requestObj)
+        // console.log(requestObj)
     }
 
     const handlePresentPress = () => bottomSheetModalRef.current.present()
@@ -82,11 +82,7 @@ const styles = StyleSheet.create({
     searchBarContainer: {
         flexDirection: "row",
         width: '100%',
-        // justifyContent: 'space-between',
-        // height: 75,
-        // borderBottomWidth: 0.5,
         borderBottomColor: 'grey',
-        // paddingBottom: 2,
         backgroundColor: 'white',
     },
     searchInput: {
@@ -105,8 +101,6 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         backgroundColor: '#ffffff',
-        // height: '100%',
-        // marginTop: 180,
     },
     iconContainer: {
         borderWidth: 1,

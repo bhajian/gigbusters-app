@@ -13,11 +13,10 @@ export default function ReferralRequestItem({item, handler}) {
         >
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>
-                    <Image source={{uri: item.mainPhotoURL}} style={styles.image} />
+                    <Image source={{uri: item.mainPhotoURL}} style={styles.image}/>
                     <Text style={styles.titleText}>
                         {item.category}
                     </Text>
-
                 </View>
                 <View style={styles.rightContainer}>
                     <View style={styles.infoContainer}>
