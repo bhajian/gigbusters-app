@@ -1,13 +1,5 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import WorkRequestScreen from "../screens/WorkRequestScreen";
-import SearchCategory from "../components/SearchCategory/SearchPage";
-import Colors from "../constants/Colors";
-import Fontisto from "react-native-vector-icons/Fontisto";
-import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
-import WorkerRequestCompletionScreen from "../screens/WorkRequestScreen/WorkerRequestCompletionScreen";
-import RequestCompletedScreen from "../screens/WorkRequestScreen/RequestCompletedScreen";
-import RequestActivityScreen from "../screens/RequestActivityScreen";
 import RequestDetailScreen from "../screens/RequestActivityScreen/RequestDetailScreen";
 import RequestFeedScreen from "../screens/RequestFeedScreen";
 

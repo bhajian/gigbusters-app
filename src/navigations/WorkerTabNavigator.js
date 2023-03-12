@@ -40,6 +40,7 @@ const WorkerTabNavigator = props => {
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerLargeTitle: true,
+                    headerShown: true,
                     tabBarIcon: ({color}) => (
                         <Ionicons name="file-tray-full" size={25} color={color}/>
                     ),

@@ -18,7 +18,7 @@ import UserAvatar from "react-native-user-avatar";
 export default function ReviewScreen(props) {
     const [name, setName] = useState('');
     const navigation = useNavigation();
-    const bottomSheetModalRef = useRef(null);
+    const bottomSheetModalRef = useRef(null)
     const profileService = new ProfileService()
 
     async function getCurrentUserData() {
@@ -30,8 +30,7 @@ export default function ReviewScreen(props) {
 
     const handlePresentPress = () => bottomSheetModalRef.current.present()
     const handleSheetChanges = useCallback((index) => {
-
-    }, []);
+    }, [])
 
     useEffect(() => {
         getCurrentUserData().then(r => {

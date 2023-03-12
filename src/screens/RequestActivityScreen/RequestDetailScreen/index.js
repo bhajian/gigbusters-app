@@ -1,32 +1,70 @@
-import React, {useEffect, useState} from 'react';
-import {View, FlatList, StyleSheet,} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {View, FlatList, StyleSheet, ScrollView, Text, Image, Pressable,} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import people from "../../../../assets/data/tipoffs";
 import RequestDetailTopContainer from "./RequestDetailTopContainer";
 import ApplicantRequestItem from "../../../components/ApplicantRequestItem";
 import Colors from "../../../constants/Colors";
-export default function RequestDetailScreen({route, item}) {
+import Fontisto from "react-native-vector-icons/Fontisto";
+import loading from "../../../../assets/images/loading.gif";
+import ReviewableSearch from "../../../components/ReviewableSearch";
+import EditBottomSheet from "./EditBottomSheet";
+export default function RequestDetailScreen({route}) {
+    const task = route.params
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [isModalVisible, setModalVisible] = useState(false);
     const [locationMax, setLocationMax] = useState(10);
     const [priceMax, setPriceMax] = useState(10);
-    const navigation = useNavigation();
+    const navigation = useNavigation()
+    const bottomSheetModalRef = useRef(null)
+    const handlePresentPress = () => bottomSheetModalRef.current.present()
+    const handleSheetChanges = useCallback((index) => {
+    }, [])
 
     useEffect(() => {
-
-    }, []);
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            tabBarIcon: ({color}) => (
+                <Fontisto name="home" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text> </Text>
+            ),
+            headerRight: () => (
+                dataBeingSaved ?
+                    <Image source={loading} style={{width: 40, height: 30}} />
+                    :
+                    <Pressable
+                        onPress={handlePresentPress}
+                        style={({pressed}) => ({
+                            opacity: pressed ? 0.5 : 1,
+                            marginRight: 10,
+                        })}>
+                        <Text style={{color: '#0f66a9', fontSize: 18}}>Edit</Text>
+                    </Pressable>
+            ),
+        })
+    }, [navigation])
 
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
             <View style={styles.topContainer}>
-                <RequestDetailTopContainer item = {item} />
+                <RequestDetailTopContainer task={task} />
             </View>
             <FlatList
                 data={people}
                 renderItem={({item}) => <ApplicantRequestItem item={item.to} />}
                 keyExtractor={(item) => item.id}
             />
-
-        </View>
+            <EditBottomSheet
+                bottomSheetModalRef={bottomSheetModalRef}
+                handleSheetChanges={handleSheetChanges}
+            />
+        </ScrollView>
     );
 };
 
@@ -34,7 +72,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
         height: '100%',
-        paddingTop: 40,
+        paddingTop: 10,
     },
     headerExtensionContainer: {
         width: '100%',
@@ -43,7 +81,6 @@ const styles = StyleSheet.create({
         borderBottomColor: 'lightgrey',
     },
     headerContainer: {
-        // zIndex: -1,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',

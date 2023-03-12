@@ -9,7 +9,7 @@ export default function ReferralRequestItem({item, handler}) {
         <Pressable style={({pressed}) => ([styles.container, {
             opacity: pressed ? 0.5 : 1,
         }])}
-           onPress={handler}
+           onPress={ e => handler(item)}
         >
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>

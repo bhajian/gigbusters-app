@@ -1,19 +1,38 @@
 import React, {useEffect, useState} from 'react';
 import {
-    FlatList,
-    SafeAreaView, StyleSheet, TextInput, View,
+    FlatList, Image, Pressable,
+    SafeAreaView, StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
-import users from '../../../assets/data/users'
 import ReferralRequestItem from "../../components/ReferralRequestItem";
 import Colors from "../../constants/Colors";
 import {TaskService} from "../../backend/TaskService";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import loading from "../../../assets/images/loading.gif";
 
 export default function RequestActivityScreen({route}) {
     const [requestList, setRequestList] = useState([])
     const navigation = useNavigation()
     const taskService = new TaskService()
 
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: true,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            tabBarIcon: ({color}) => (
+                <Fontisto name="home" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text> </Text>
+            ),
+            headerRight: () => (
+                <Text></Text>
+            ),
+        })
+    }, [navigation])
 
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
@@ -24,8 +43,8 @@ export default function RequestActivityScreen({route}) {
         setRequestList(requestObj)
     }
 
-    function referralActivityClickHandler() {
-        navigation.navigate('RequestDetailScreen')
+    function referralActivityClickHandler(props) {
+        navigation.navigate('RequestDetailScreen', props)
     }
 
     return (

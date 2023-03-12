@@ -39,7 +39,8 @@ const ConsumerTabNavigator = props => {
                 component={ConsumerActivityNavigation}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
-                    headerLargeTitle: true,
+                    headerLargeTitle: false,
+                    headerShown: false,
                     tabBarIcon: ({color}) => (
                         <Ionicons name="file-tray-full" size={25} color={color}/>
                     ),

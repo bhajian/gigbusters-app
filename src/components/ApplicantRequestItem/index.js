@@ -3,34 +3,46 @@ import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} f
 import Colors from "../../constants/Colors";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import Feather from "react-native-vector-icons/Feather";
+import STAR_IMAGE from "../../../assets/images/star.png";
+import {AirbnbRating} from "react-native-ratings";
 
 export default function ApplicantRequestItem({item, handler}) {
 
     return (
-        <Pressable style={({pressed}) => ([styles.container, {
-            opacity: pressed ? 0.5 : 1,
-        }])}
-           onPress={handler}
-        >
+        <View style={styles.container}>
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>
-                    <TouchableOpacity style={styles.button}>
-                        <FontAwesome name="ban" size={30} color="white"/>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.centralContainer}>
                     <Image source={{uri: item.image}} style={styles.image} />
-                    <Text style={styles.titleText}>
-                        {item.name}
-                    </Text>
+                    <View style={styles.nameContainer}>
+                        <Text style={styles.titleText}>
+                            {item.name}
+                        </Text>
+                        <AirbnbRating
+                            type='custom'
+                            starImage={STAR_IMAGE}
+                            showRating={false}
+                            selectedColor={Colors.light.tint}
+                            ratingBackgroundColor={Colors.light.grey}
+                            ratingCount={5}
+                            size={15}
+                            isDisabled={true}
+                            // onFinishRating={setRating}
+                            style={{ paddingVertical: 15 }}
+                        />
+                    </View>
                 </View>
+
                 <View style={styles.rightContainer}>
-                    <TouchableOpacity style={styles.button}>
+                    <TouchableOpacity style={styles.rejectButton}>
+                        <Feather name="x-circle" size={30} color="black"/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.acceptButton}>
                         <AntDesign name="checkcircle" size={27} color="white"/>
                     </TouchableOpacity>
                 </View>
             </View>
-        </Pressable>
+        </View>
     );
 }
 
@@ -49,7 +61,8 @@ const styles = StyleSheet.create({
     },
     leftContainer: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'row',
     },
     centralContainer: {
         alignItems: 'center',
@@ -67,6 +80,8 @@ const styles = StyleSheet.create({
     titleText: {
         fontWeight: '500',
         marginHorizontal: 10,
+        alignSelf: 'flex-start',
+        marginTop: 5,
     },
     infoContainer: {
         // flexDirection: 'columns',
@@ -87,11 +102,21 @@ const styles = StyleSheet.create({
         marginBottom: 2,
         color: '#000',
     },
-    button: {
+    acceptButton: {
         backgroundColor: Colors.light.tint,
         borderRadius: 10,
-        width: 50,
-        height: 50,
+        width: 60,
+        height: 60,
+        marginHorizontal: 5,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    rejectButton: {
+        backgroundColor: Colors.light.darkerGrey,
+        borderRadius: 10,
+        width: 60,
+        height: 60,
+        marginHorizontal: 5,
         alignItems: 'center',
         justifyContent: 'center',
     },

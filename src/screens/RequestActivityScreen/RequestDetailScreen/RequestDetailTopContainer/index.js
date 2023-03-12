@@ -8,7 +8,8 @@ import Colors from '../../../../constants/Colors';
 import {useNavigation} from "@react-navigation/native";
 import users from '../../../../../assets/data/users';
 
-export default function RequestDetailTopContainer({item}) {
+export default function RequestDetailTopContainer({task}) {
+    console.log(task)
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState('phone');
     const [searchQuery, setSearchQuery] = React.useState('');
@@ -22,26 +23,26 @@ export default function RequestDetailTopContainer({item}) {
         <View style={styles.topContainer}>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.leftContainer}>
-                    <Image source={{uri: users[0].image}} style={styles.image} />
+                    <Image source={{uri: task.mainPhotoURL}} style={styles.image} />
                     <Text style={styles.titleText}>
-                        {users[0].name}
+                        {task.title}
                     </Text>
                 </View>
                 <View style={styles.searchContainer}>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >Toronto</Text>
+                            <Text style={styles.textTag} >{task.category}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >9AM-10PM</Text>
+                            <Text style={styles.textTag} >{task.price}$/hr</Text>
                         </View>
                     </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >Personal Trainer</Text>
+                            <Text style={styles.textTag} >{task.country}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >15$/hr</Text>
+                            <Text style={styles.textTag} >9AM-10PM</Text>
                         </View>
                     </View>
                 </View>
@@ -64,16 +65,16 @@ const styles = StyleSheet.create({
         paddingEnd: 10,
     },
     image: {
-        width: 40,
-        height: 40,
+        width: 60,
+        height: 60,
         borderRadius: 2,
+        marginHorizontal: 5,
     },
     headerExtensionContainer: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        padding: 5,
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },
@@ -185,11 +186,9 @@ const styles = StyleSheet.create({
         bottom: 0,
         flexDirection: 'row',
         margin: 5,
-
     },
     topContainer: {
         backgroundColor: '#ffffff',
-        // flexDirection: 'row',
         width: '100%',
     },
     privateSwitch: {
