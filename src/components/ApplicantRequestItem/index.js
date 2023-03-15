@@ -35,10 +35,10 @@ export default function ApplicantRequestItem({item, handler}) {
 
                 <View style={styles.rightContainer}>
                     <TouchableOpacity style={styles.rejectButton}>
-                        <Feather name="x-circle" size={30} color="black"/>
+                        <Feather name="x-circle" size={30} color={Colors.light.tint}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.acceptButton}>
-                        <AntDesign name="checkcircle" size={27} color="white"/>
+                        <AntDesign name="checkcircle" size={27} color={Colors.light.turquoise}/>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -103,19 +103,19 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     acceptButton: {
-        backgroundColor: Colors.light.tint,
+        backgroundColor: 'white',
         borderRadius: 10,
-        width: 60,
-        height: 60,
+        width: 40,
+        height: 50,
         marginHorizontal: 5,
         alignItems: 'center',
         justifyContent: 'center',
     },
     rejectButton: {
-        backgroundColor: Colors.light.darkerGrey,
+        backgroundColor: 'white',
         borderRadius: 10,
-        width: 60,
-        height: 60,
+        width: 40,
+        height: 50,
         marginHorizontal: 5,
         alignItems: 'center',
         justifyContent: 'center',

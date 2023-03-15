@@ -8,7 +8,8 @@ import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import loading from "../../../../assets/images/loading.gif";
 import ReviewableSearch from "../../../components/ReviewableSearch";
-import EditBottomSheet from "./EditBottomSheet";
+import EditDeleteBottomSheet from "./EditDeleteBottomSheet";
+import EditPageBottomSheet from "./EditPageBottomSheet";
 export default function RequestDetailScreen({route}) {
     const task = route.params
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
@@ -16,9 +17,14 @@ export default function RequestDetailScreen({route}) {
     const [locationMax, setLocationMax] = useState(10);
     const [priceMax, setPriceMax] = useState(10);
     const navigation = useNavigation()
-    const bottomSheetModalRef = useRef(null)
-    const handlePresentPress = () => bottomSheetModalRef.current.present()
-    const handleSheetChanges = useCallback((index) => {
+    const editDeleteBottomSheetModalRef = useRef(null)
+    const editDeleteHandlePresentPress = () => editDeleteBottomSheetModalRef.current.present()
+    const editDeleteHandleSheetChanges = useCallback((index) => {
+    }, [])
+
+    const editPageBottomSheetModalRef = useRef(null)
+    const editPageHandlePresentPress = () => editDeleteBottomSheetModalRef.current.present()
+    const editPageHandleSheetChanges = useCallback((index) => {
     }, [])
 
     useEffect(() => {
@@ -39,7 +45,7 @@ export default function RequestDetailScreen({route}) {
                     <Image source={loading} style={{width: 40, height: 30}} />
                     :
                     <Pressable
-                        onPress={handlePresentPress}
+                        onPress={editDeleteHandlePresentPress}
                         style={({pressed}) => ({
                             opacity: pressed ? 0.5 : 1,
                             marginRight: 10,
@@ -60,9 +66,13 @@ export default function RequestDetailScreen({route}) {
                 renderItem={({item}) => <ApplicantRequestItem item={item.to} />}
                 keyExtractor={(item) => item.id}
             />
-            <EditBottomSheet
-                bottomSheetModalRef={bottomSheetModalRef}
-                handleSheetChanges={handleSheetChanges}
+            <EditDeleteBottomSheet
+                bottomSheetModalRef={editDeleteBottomSheetModalRef}
+                handleSheetChanges={editDeleteHandleSheetChanges}
+            />
+            <EditPageBottomSheet
+                bottomSheetModalRef={editPageBottomSheetModalRef}
+                handleSheetChanges={editPageHandleSheetChanges}
             />
         </ScrollView>
     );

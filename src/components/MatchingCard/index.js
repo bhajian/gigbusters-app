@@ -7,7 +7,7 @@ import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 
 const MatchingCard = props => {
-    const {mainPhotoURL, description, category, price, city} = props.user;
+    const {mainPhotoURL, description, category, price, city, country} = props.card;
     return (
         <View style={styles.card}>
             <View style={styles.topContainer}>
@@ -26,7 +26,6 @@ const MatchingCard = props => {
                     style={styles.image}>
                     <View style={styles.cardInner}>
                         <Text style={styles.name}>{category}</Text>
-                        <Text style={styles.bio}>{description}</Text>
                     </View>
                     <View style={styles.connectButtonsContainer}>
                         <TouchableOpacity style={styles.connectButton}>
@@ -41,7 +40,7 @@ const MatchingCard = props => {
                 <View style={styles.infoContainer}>
                     <View style={styles.tagsContainer}>
                         <View style={styles.tag}>
-                            <Text style={styles.text} >{city}</Text>
+                            <Text style={styles.text} >{country}</Text>
                         </View>
                         <View style={styles.tag}>
                             <Text style={styles.text} >{price}$/hr</Text>
@@ -86,6 +85,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         padding: 10,
+        top: 70
     },
     topContainer: {
         padding: 10,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        // height: '60%',
+        height: 300,
         // borderRadius: 15,
         // borderWidth: 0.5,
         // overflow: 'hidden',
@@ -119,6 +119,12 @@ const styles = StyleSheet.create({
         fontSize: 40,
         color: 'white',
         fontWeight: 'bold',
+        textShadowColor: 'black',
+        textShadowRadius: 10,
+        textShadowOffset: {
+            width: 2,
+            height: 2
+        }
     },
     bio: {
         fontSize: 18,

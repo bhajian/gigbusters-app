@@ -1,14 +1,12 @@
 import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import ProfileScreen from '../screens/ProfileScreen';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../constants/Colors';
-import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {FontAwesome5, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
+import {Ionicons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
-import MatchingScreen from "../screens/MatchingScreen";
 import {ProfileNavigation} from "./ProfileNavigation";
 import RequestActivityScreen from "../screens/RequestActivityScreen";
+import MatchingCards from "../screens/MatchingScreen/matchingCards";
 
 const Tab = createBottomTabNavigator();
 
@@ -27,7 +25,7 @@ const WorkerTabNavigator = props => {
                 }}
             >
                 {screenProps => (
-                    <MatchingScreen
+                    <MatchingCards
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />

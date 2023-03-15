@@ -18,9 +18,13 @@ export default function RequestActivityScreen({route}) {
     useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
-            headerLargeTitle: true,
+            headerLargeTitle: false,
             headerLeftContainerStyle: {
                 left: 10,
+            },
+            headerSearchBarOptions: {
+                placeholder: "Search ..",
+                // onFocus: ()=>{navigation.navigate('SearchCategory')}
             },
             tabBarIcon: ({color}) => (
                 <Fontisto name="home" size={25} color={color}/>

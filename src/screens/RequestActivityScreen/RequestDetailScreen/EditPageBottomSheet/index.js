@@ -6,7 +6,7 @@ import CustomSettingRowButton from "../../../../components/CustomSettingRowButto
 import CustomButton from "../../../../components/CustomButton";
 
 
-export default function EditBottomSheet({bottomSheetModalRef, handleSheetChanges}) {
+export default function EditPageBottomSheet({bottomSheetModalRef, handleSheetChanges}) {
 
     const snapPoints = useMemo(() => ['25%', '70%'], []);
     const [enablePanDownToClose, setEnablePanDownToClose] = useState(true);
@@ -16,7 +16,6 @@ export default function EditBottomSheet({bottomSheetModalRef, handleSheetChanges
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close');
 
     const handleTogglePressBehavior = useCallback(() => {
-        console.log('I am toggled')
         setBackdropPressBehavior(state => {
             switch (state) {
                 case 'none':
@@ -73,20 +72,7 @@ export default function EditBottomSheet({bottomSheetModalRef, handleSheetChanges
                     </View>
                     <View style={styles.mainContainer}>
                         <View style={styles.buttonContainer}>
-                            <CustomButton
-                                text="Edit"
-                                // onPress={onSwitchProfilePressed}
-                                style={styles.regularButton}
-                                bgColor="#E3E8F1"
-                                fgColor="#000000"
-                            />
-                            <CustomButton
-                                text="Delete"
-                                // onPress={signOut}
-                                style={styles.regularButton}
-                                bgColor="#E3E8F1"
-                                fgColor="#FB1F1F"
-                            />
+
                         </View>
                     </View>
                 </BottomSheetView>

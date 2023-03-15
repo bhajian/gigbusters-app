@@ -14,8 +14,8 @@ import {PanGestureHandler} from 'react-native-gesture-handler';
 import Like from '../../../assets/images/LIKE.png';
 import Nope from '../../../assets/images/nope.png';
 
-const ROTATION = 60;
-const SWIPE_VELOCITY = 800;
+const ROTATION = 50;
+const SWIPE_VELOCITY = 10;
 
 const AnimatedStack = props => {
   const {data, renderItem, onSwipeRight, onSwipeLeft} = props;
@@ -23,8 +23,8 @@ const AnimatedStack = props => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(currentIndex + 1);
 
-  const currentProfile = data[currentIndex];
-  const nextProfile = data[nextIndex];
+  // const currentProfile = data[currentIndex];
+  // const nextProfile = data[nextIndex];
 
   const {width: screenWidth} = useWindowDimensions();
 
@@ -54,7 +54,7 @@ const AnimatedStack = props => {
         scale: interpolate(
           translateX.value,
           [-hiddenTranslateX, 0, hiddenTranslateX],
-          [1, 0.8, 1],
+          [1, 0.5, 1],
         ),
       },
     ],
@@ -93,26 +93,26 @@ const AnimatedStack = props => {
       );
 
       const onSwipe = event.velocityX > 0 ? onSwipeRight : onSwipeLeft;
-      onSwipe && runOnJS(onSwipe)(currentProfile);
+      onSwipe && runOnJS(onSwipe)(data[currentIndex]);
     },
   });
 
   useEffect(() => {
     translateX.value = 0;
-    setNextIndex(currentIndex + 1);
+    setNextIndex(nextIndex + 1);
   }, [currentIndex, translateX]);
 
   return (
     <View style={styles.root}>
-      {nextProfile && (
+      {data[nextIndex] && (
         <View style={styles.nextCardContainer}>
           <Animated.View style={[styles.animatedCard, nextCardStyle]}>
-            {renderItem({item: nextProfile})}
+            {renderItem({item: data[nextIndex]})}
           </Animated.View>
         </View>
       )}
 
-      {currentProfile && (
+      {data[currentIndex] && (
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[styles.animatedCard, cardStyle]}>
             <Animated.Image
@@ -125,7 +125,7 @@ const AnimatedStack = props => {
               style={[styles.like, {right: 10,}, nopeStyle]}
               resizeMode="contain"
             />
-            {renderItem({item: currentProfile})}
+            {renderItem({item: data[currentIndex]})}
           </Animated.View>
         </PanGestureHandler>
       )}

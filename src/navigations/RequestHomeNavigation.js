@@ -4,7 +4,7 @@ import WorkRequestScreen from "../screens/WorkRequestScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
 import Colors from "../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import WorkerRequestCompletionScreen from "../screens/WorkRequestScreen/WorkerRequestCompletionScreen";
+import WorkerRequestCompletionScreen from "../screens/WorkRequestScreen/WorkerRequestDetailScreen";
 import RequestCompletedScreen from "../screens/WorkRequestScreen/RequestCompletedScreen";
 import RequestActivityScreen from "../screens/RequestActivityScreen";
 

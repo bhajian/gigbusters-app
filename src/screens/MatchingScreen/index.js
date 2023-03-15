@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, Text, Pressable} from 'react-native';
 import MatchingCard from '../../components/MatchingCard';
-import users from '../../../assets/data/users';
 import AnimatedStack from '../../components/AnimatedStack';
 import Colors from "../../constants/Colors";
 import {FontAwesome, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
-import ProfilePicture from "../../components/ProfilePicture";
 import {useNavigation} from "@react-navigation/native";
 import {TaskService} from "../../backend/TaskService";
 
