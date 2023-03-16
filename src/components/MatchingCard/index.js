@@ -7,7 +7,9 @@ import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 
 const MatchingCard = props => {
-    const {mainPhotoURL, description, category, price, city, country} = props.card;
+    const {mainPhotoURL, description, category, price, city, country} = props.card
+    const onRightPressed = props.onRightPressed
+    const onLeftPressed = props.onLeftPressed
     return (
         <View style={styles.card}>
             <View style={styles.topContainer}>
@@ -28,10 +30,10 @@ const MatchingCard = props => {
                         <Text style={styles.name}>{category}</Text>
                     </View>
                     <View style={styles.connectButtonsContainer}>
-                        <TouchableOpacity style={styles.connectButton}>
+                        <TouchableOpacity style={styles.connectButton} onPress={onLeftPressed}>
                             <FontAwesome name="ban" size={35} color="white"/>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.connectButton}>
+                        <TouchableOpacity style={styles.connectButton} onPress={onRightPressed}>
                             <Ionicons name="ios-logo-whatsapp" size={35} color="white"/>
                         </TouchableOpacity>
                     </View>

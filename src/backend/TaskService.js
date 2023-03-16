@@ -66,35 +66,39 @@ export class TaskService {
     }
 
     async applyTask(params) {
-        const path = taskPath
+        const path = `${taskPath}/${params.taskId}${applyPath}`
         const data = {
-            body: params,
+            body: {},
         }
         const res = await API.put(taskApiName, path, data)
         return res
     }
 
     async withdrawApplication(params) {
-        const path = taskPath
+        const path = `${taskPath}/${params.taskId}${withdrawPath}`
         const data = {
-            body: params,
+            body: {},
         }
         const res = await API.put(taskApiName, path, data)
         return res
     }
 
     async acceptApplication(params) {
-        const path = taskPath
+        const path = `${taskPath}/${params.taskId}${acceptPath}`
         const data = {
-            body: params,
+            body: {
+                applicantId: params.params
+            },
         }
         const res = await API.put(taskApiName, path, data)
         return res
     }
     async rejectApplication(params) {
-        const path = taskPath
+        const path = `${taskPath}/${params.taskId}${rejectPath}`
         const data = {
-            body: params,
+            body: {
+                applicantId: params.params
+            },
         }
         const res = await API.put(taskApiName, path, data)
         return res
@@ -133,18 +137,23 @@ export class TaskService {
     }
 
     async getMainPhoto(params) {
-        try{
-            const mainPhoto = params.photos
-                .filter((item) => item.type === 'main')
-            const key = mainPhoto[0].key
-            const bucket = mainPhoto[0].bucket
-            const identityId = mainPhoto[0].identityId
-            const signedURL = await Storage.get(key, {
-                bucket: bucket,
-                level: 'protected',
-                identityId: identityId
-            })
-            return signedURL
+        try {
+            if (params && params.photos) {
+
+                const mainPhoto = params.photos
+                    .filter((item) => item.type === 'main')
+                const key = mainPhoto[0].key
+                const bucket = mainPhoto[0].bucket
+                const identityId = mainPhoto[0].identityId
+                const signedURL = await Storage.get(key, {
+                    bucket: bucket,
+                    level: 'protected',
+                    identityId: identityId
+                })
+                return signedURL
+            } else{
+                return undefined
+            }
         } catch (e) {
             console.log(e)
         }

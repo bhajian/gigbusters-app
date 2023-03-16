@@ -1,18 +1,26 @@
 import {Button, Dimensions, Pressable, SafeAreaView, StyleSheet, Text, View} from "react-native";
-import React, {useEffect, useMemo, useRef, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {TaskService} from "../../backend/TaskService";
 import MatchingCard from "../../components/MatchingCard";
 import Swiper from "react-native-deck-swiper";
 import {useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
 import {FontAwesome, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
+import ReviewableSearch from "../../components/ReviewableSearch";
+import MatchingSearch from "./MatchingSearch";
 
 
 const MatchingCards = () => {
     const [cardList, setCardList] = useState([])
     const swiperRef = useRef(null)
+    const bottomSheetModalRef = useRef(null)
 
-    const navigation = useNavigation();
+    const taskService = new TaskService()
+    const navigation = useNavigation()
+
+    const handlePresentPress = () => bottomSheetModalRef.current.present()
+    const handleSheetChanges = useCallback((index) => {
+    }, [])
 
     useEffect(() => {
         navigation.setOptions({
@@ -26,13 +34,13 @@ const MatchingCards = () => {
             ),
             headerRight: () => (
                 <Pressable
-                    // onPress={handlePresentPress}
+                    onPress={handlePresentPress}
                     style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
                     })}>
-                    <FontAwesome
-                        name="envelope-o"
+                    <MaterialCommunityIcons
+                        name="tune-vertical"
                         size={25}
                         color={Colors.light.tint}
                         style={{marginHorizontal: 15}}
@@ -52,16 +60,37 @@ const MatchingCards = () => {
         })
     }, [navigation]);
 
-    const taskService = new TaskService()
+
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
     }, []);
 
     async function loadData() {
-        const tasksObj = await taskService.listTasks()
+        const tasksObj = await taskService.listNeighborsTasks()
         setCardList(tasksObj)
     }
 
+    async function onRightSwiped(cardIndex) {
+        try{
+            const card = cardList[cardIndex]
+            const res = await taskService.applyTask({
+                taskId: card.id
+            })
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async function onLeftSwiped(cardIndex) {
+
+    }
+    async function onRightPressed() {
+        swiperRef.current.swipeRight()
+    }
+
+    async function onLeftPressed() {
+        swiperRef.current.swipeLeft()
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -71,21 +100,28 @@ const MatchingCards = () => {
                 cardIndex={0}
                 renderCard={(card) => {
                     return (
-                        card&&<MatchingCard card={card}/>
+                        card&&<MatchingCard
+                            card={card}
+                            onRightPressed={onRightPressed}
+                            onLeftPressed={onLeftPressed} />
                     )
                 }}
-                onSwipedRight={e => {console.log('right')}}
-                onSwipedLeft={e => {console.log('left')}}
-                onSwiped={(cardIndex) => {console.log(cardIndex)}}
+                onSwipedRight={(e) => {onRightSwiped(e)}}
+                onSwipedLeft={(e) => {onLeftSwiped(e)}}
+                onSwiped={(cardIndex) => {}}
                 onSwipedAll={() => {console.log('onSwipedAll')}}
                 cardIndex={0}
                 backgroundColor={Colors.light.grey}
                 infinite={true}
                 containerStyle={{top: 0, width: '100%'}}
-                cardStyle={{top: 5}}
+                cardStyle={{top: 5, left: '2%', width: '96%', justifyContent: 'center',}}
                 stackSize= {2}>
 
             </Swiper>
+            <MatchingSearch
+                bottomSheetModalRef={bottomSheetModalRef}
+                handleSheetChanges={handleSheetChanges}
+            />
         </SafeAreaView>
     )
 }
