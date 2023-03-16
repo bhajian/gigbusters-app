@@ -5,7 +5,7 @@ import WorkerTabNavigator from "./WorkerTabNavigator";
 import {ProfileService} from "../backend/ProfileService";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 const RootRouter = props => {
     const profileService = new ProfileService()

@@ -24,4 +24,4 @@ export function ReferralFeedNavigation(props) {
             />
         </Stack.Navigator>
     );
-};
+}

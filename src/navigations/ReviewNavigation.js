@@ -10,7 +10,7 @@ import MoreInfoSubmissionScreen from "../screens/NewReviewScreen/MoreInfoSubmiss
 import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchReviewScreen";
 import RequestCompletedScreen from "../screens/NewReviewScreen/RequestCompletedScreen";
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator()
 
 export function ReviewNavigation(props) {
     return (

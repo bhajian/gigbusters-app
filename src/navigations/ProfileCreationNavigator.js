@@ -1,9 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen";
-import SignIn from "../screens/SignInScreen";
+import React, {useState, useEffect} from 'react'
+import {createStackNavigator} from '@react-navigation/stack'
+import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen"
 
-const ProfileCreationStack = createStackNavigator();
+const ProfileCreationStack = createStackNavigator()
 
 const ProfileCreationNavigator = props => {
 
@@ -23,4 +22,4 @@ const ProfileCreationNavigator = props => {
     );
 };
 
-export default ProfileCreationNavigator;
+export default ProfileCreationNavigator
