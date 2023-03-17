@@ -48,13 +48,15 @@ export class ProfileService {
     async getProfileMainPhoto() {
         try{
             const mainPhoto = profile.photos
-                .filter((item) => item.main === true)
+                .filter((item) => item.type === 'main')
             const key = mainPhoto[0].key
             const bucket = mainPhoto[0].bucket
+            const identityId = mainPhoto[0].identityId
             const signedURL = await Storage.get(key, {
                 bucket: bucket,
                 level: 'protected',
-                expires: 60 * 60 * 12
+                identityId: identityId,
+                expires: 60 * 60 * 12,
             })
             return signedURL
         } catch (e) {
@@ -83,7 +85,7 @@ export class ProfileService {
         return res
     }
 
-    async changeProfilePhoto(props) {
+    async setProfilePhoto(props) {
         const data = {
             body: props,
         }

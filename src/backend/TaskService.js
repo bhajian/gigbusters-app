@@ -3,6 +3,7 @@ import async from "async";
 
 const taskApiName = 'GigbusterApi'
 const taskPath = '/task'
+const applicantPath = '/applicant'
 const applyPath = '/apply'
 const withdrawPath = '/withdraw'
 const acceptPath = '/accept'
@@ -22,7 +23,11 @@ export class TaskService {
         }
         const tasks = await API.get(taskApiName, path, data)
         for(let i=0; i<tasks.length; i++){
-            tasks[i].mainPhotoURL = await this.getMainPhoto(tasks[i])
+            if(tasks[i].photos){
+                const mainPhoto = tasks[i].photos
+                    .filter((item) => item.type === 'main')
+                tasks[i].mainPhotoURL = await this.getMainPhoto(mainPhoto[0])
+            }
         }
         return tasks
     }
@@ -34,9 +39,30 @@ export class TaskService {
         }
         const requests = await API.get(taskApiName, path, data)
         for(let i=0; i<requests.length; i++){
-            requests[i].mainPhotoURL = await this.getMainPhoto(requests[i])
+            if(requests[i].photos) {
+                const mainPhoto = requests[i].photos
+                    .filter((item) => item.type === 'main')
+                requests[i].mainPhotoURL = await this.getMainPhoto(mainPhoto[0])
+            }
+            if(requests[i].profilePhoto){
+                requests[i].profilePhotoURL = await this.getMainPhoto(requests[i].profilePhoto)
+            }
+
         }
         return requests
+    }
+
+    async listApplicants(params) {
+        const path = `${taskPath}/${params.taskId}${applicantPath}`
+        const data = {
+        }
+        const applicants = await API.get(taskApiName, path, data)
+        for(let i=0; i<applicants.length; i++){
+            if(applicants[i].profilePhoto){
+                applicants[i].profilePhotoURL = await this.getMainPhoto(applicants[i].profilePhoto)
+            }
+        }
+        return applicants
     }
 
     async createTask(params) {
@@ -85,9 +111,11 @@ export class TaskService {
 
     async acceptApplication(params) {
         const path = `${taskPath}/${params.taskId}${acceptPath}`
+        console.log(params)
+        console.log(path)
         const data = {
             body: {
-                applicantId: params.params
+                applicantId: params.userId
             },
         }
         const res = await API.put(taskApiName, path, data)
@@ -96,9 +124,7 @@ export class TaskService {
     async rejectApplication(params) {
         const path = `${taskPath}/${params.taskId}${rejectPath}`
         const data = {
-            body: {
-                applicantId: params.params
-            },
+            body: params,
         }
         const res = await API.put(taskApiName, path, data)
         return res
@@ -138,12 +164,10 @@ export class TaskService {
 
     async getMainPhoto(params) {
         try {
-            if (params && params.photos) {
-                const mainPhoto = params.photos
-                    .filter((item) => item.type === 'main')
-                const key = mainPhoto[0].key
-                const bucket = mainPhoto[0].bucket
-                const identityId = mainPhoto[0].identityId
+            if (params) {
+                const key = params.key
+                const bucket = params.bucket
+                const identityId = params.identityId
                 const signedURL = await Storage.get(key, {
                     bucket: bucket,
                     level: 'protected',

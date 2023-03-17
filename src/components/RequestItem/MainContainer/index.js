@@ -17,7 +17,7 @@ export default function MainContainer({request}) {
                     <Text style={styles.text} >{request.country}</Text>
                 </View>
                 <View style={styles.info}>
-                    <Text style={styles.text} >{request.price}$/hr</Text>
+                    <Text style={styles.text} >{request.price}$/{request.priceUnit}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.text} >{request.category}</Text>
@@ -34,10 +34,8 @@ export default function MainContainer({request}) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        // flexDirection: 'columns'
     },
     mainContainer: {
-        // flexDirection: 'row',
         justifyContent: 'space-between'
     },
     ratingStackContainer: {

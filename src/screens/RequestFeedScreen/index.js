@@ -24,16 +24,14 @@ export default function RequestFeedScreen(props) {
     async function loadData() {
         const requestObj = await taskService.listNeighborsTasks()
         setRequestList(requestObj)
-        // console.log(requestObj)
     }
 
     const handlePresentPress = () => bottomSheetModalRef.current.present()
     const handleSheetChanges = useCallback((index) => {
 
-    }, []);
+    }, [])
 
     useEffect(() => {
-
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
             tabBarIcon: ({color}) => (

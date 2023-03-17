@@ -10,9 +10,11 @@ import loading from "../../../../assets/images/loading.gif";
 import EditDeleteBottomSheet from "./EditDeleteBottomSheet";
 import EditPageBottomSheet from "./EditPageBottomSheet";
 import {TaskService} from "../../../backend/TaskService";
+import ApplicantAcceptedItem from "../../../components/ApplicantAcceptedItem";
 export default function RequestActivityDetailScreen({route}) {
     const task = route.params
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
+    const [applicants, setApplicants] = useState([])
     const navigation = useNavigation()
     const editDeleteBottomSheetModalRef = useRef(null)
     const taskService = new TaskService()
@@ -25,12 +27,41 @@ export default function RequestActivityDetailScreen({route}) {
     const editPageHandleSheetChanges = useCallback((index) => {
     }, [])
 
+    async function onAcceptPressed(params) {
+        try{
+            await taskService.acceptApplication({
+                applicantId: params.userId,
+                taskId: task.id
+            })
+            const index = applicants.findIndex(x=> x.userId === params.userId)
+            let newApplicant = [...applicants]
+            newApplicant[index].applicant.applicationStatus = 'acceptedToStart'
+            setApplicants([...newApplicant])
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async function onRejectPressed(params) {
+        const index = applicants.findIndex(x=> x.userId === params.userId)
+        let newApplicant = [...applicants]
+        newApplicant[index].applicant.applicationStatus = 'rejected'
+        setApplicants([...newApplicant])
+    }
+
+    async function onProfilePressed(cardIndex) {
+
+    }
+
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
-    }, []);
+    }, [])
 
     async function loadData() {
-        const requestObj = await taskService.listTasks()
+        const applicantsObj = await taskService.listApplicants({
+            taskId: task.id
+        })
+        setApplicants(applicantsObj)
     }
 
     useEffect(() => {
@@ -70,12 +101,24 @@ export default function RequestActivityDetailScreen({route}) {
 
     return (
         <SafeAreaView style={styles.container}>
-
             <FlatList
                 ListHeaderComponent={header}
-                data={people}
-                renderItem={({item}) => <ApplicantRequestItem item={item.to} />}
-                keyExtractor={(item) => item.id}
+                data={applicants}
+                renderItem={({item}) => {
+                    if(item.applicant.applicationStatus === 'applied'){
+                        return <ApplicantRequestItem
+                            item={item}
+                            onAcceptPressed={onAcceptPressed}
+                            onRejectPressed={onRejectPressed}
+                            onProfilePressed={onProfilePressed}
+                        />
+                    }
+                    if(item.applicant.applicationStatus === 'acceptedToStart') {
+                        return <ApplicantAcceptedItem item={item}/>
+                    }
+                    // return <ApplicantAcceptedItem item={item}/>
+                }}
+                keyExtractor={(item) => item.userId}
             />
             <EditDeleteBottomSheet
                 bottomSheetModalRef={editDeleteBottomSheetModalRef}

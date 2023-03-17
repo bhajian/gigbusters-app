@@ -18,7 +18,7 @@ import {ProfileService} from "../../../backend/ProfileService";
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import * as ImagePicker from "expo-image-picker";
-import { Storage } from 'aws-amplify';
+import {Auth, Storage} from 'aws-amplify';
 import loading from '../../../../assets/images/loading.gif'
 
 const profileService = new ProfileService()
@@ -127,7 +127,11 @@ const EditProfileScreen = (props) => {
             } else{
                 return
             }
-            const profilePhotoObj = await profileService.changeProfilePhoto({})
+            const user = await Auth.currentCredentials()
+            const profilePhotoObj = await profileService.setProfilePhoto({
+                type: 'main',
+                identityId: user.identityId,
+            })
             if(!profilePhotoObj) {
                 throw new Error('Profile Photo cannot be added!')
             }

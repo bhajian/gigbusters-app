@@ -1,18 +1,15 @@
 import React from "react";
 import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Colors from "../../constants/Colors";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Feather from "react-native-vector-icons/Feather";
 import STAR_IMAGE from "../../../assets/images/star.png";
 import {AirbnbRating} from "react-native-ratings";
 
-export default function ApplicantRequestItem({item, onAcceptPressed, onRejectPressed, onProfilePressed}) {
+export default function ApplicantAcceptedItem({item, handler}) {
 
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
-                <TouchableOpacity style={styles.leftContainer} onPress={onProfilePressed}>
+                <View style={styles.leftContainer}>
                     <Image source={{uri: item.profilePhotoURL}} style={styles.image} />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
@@ -31,15 +28,6 @@ export default function ApplicantRequestItem({item, onAcceptPressed, onRejectPre
                             style={{ paddingVertical: 15 }}
                         />
                     </View>
-                </TouchableOpacity>
-
-                <View style={styles.rightContainer}>
-                    <TouchableOpacity style={styles.rejectButton} onPress={e => onRejectPressed(item)}>
-                        <Feather name="x-circle" size={30} color={Colors.light.tint}/>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={styles.acceptButton} onPress={e => onAcceptPressed(item)}>
-                        <AntDesign name="checkcircle" size={27} color={Colors.light.turquoise}/>
-                    </TouchableOpacity>
                 </View>
             </View>
         </View>

@@ -13,10 +13,10 @@ export default function RequestItem({request}) {
             <Pressable >
                 <View style={styles.topContainer}>
                     <PhotoContainer
-                        user={request.userId}
+                        profile={request}
                     />
                     <IdContainer
-                        review={request}
+                        request={request}
                     />
                 </View>
                 <View style={styles.mainContainer}>

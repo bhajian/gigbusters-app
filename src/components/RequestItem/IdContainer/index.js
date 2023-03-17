@@ -4,16 +4,16 @@ import Colors from "../../../constants/Colors";
 import {FontAwesome5} from "@expo/vector-icons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-export default function IdContainer({review}) {
+export default function IdContainer({request}) {
 
     return (
         <View style={styles.mainContainer}>
             <View style={styles.nameIdContainer}>
                 <View>
-                    <Text style={styles.toName} >{"Behnam"}</Text>
+                    <Text style={styles.toName} >{request.name}</Text>
                 </View>
                 <View style={styles.userIdContainer}>
-                    <Text style={styles.fromName}>ID: {"ID"}</Text>
+                    <Text style={styles.fromName}>ID: {request.name}</Text>
                 </View>
             </View>
 

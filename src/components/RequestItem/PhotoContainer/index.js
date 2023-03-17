@@ -3,10 +3,10 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import ProfilePicture from "../../ProfilePicture";
 import {Button} from "react-native-paper";
 
-export default function PhotoContainer({user}) {
+export default function PhotoContainer({profile}) {
     return (
         <View style={styles.container}>
-            <ProfilePicture image={user.image} />
+            <ProfilePicture image={profile.profilePhotoURL} />
         </View>
     );
 }
