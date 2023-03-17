@@ -139,7 +139,6 @@ export class TaskService {
     async getMainPhoto(params) {
         try {
             if (params && params.photos) {
-
                 const mainPhoto = params.photos
                     .filter((item) => item.type === 'main')
                 const key = mainPhoto[0].key
@@ -148,7 +147,8 @@ export class TaskService {
                 const signedURL = await Storage.get(key, {
                     bucket: bucket,
                     level: 'protected',
-                    identityId: identityId
+                    identityId: identityId,
+                    expires: 60 * 60 * 12
                 })
                 return signedURL
             } else{

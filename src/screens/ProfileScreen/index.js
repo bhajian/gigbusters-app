@@ -46,7 +46,7 @@ const ProfileScreen = (props) => {
             setLocationName(profile.location.locationName)
         }
         if(profile && profile.photos){
-            const url = await profileService.getProfileMainPhoto()
+            const url = profile.mainPhotoUrl
             setImage(url)
         }
     }

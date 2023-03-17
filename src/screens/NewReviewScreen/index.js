@@ -67,7 +67,7 @@ export default function NewReviewScreen({navigation, route}) {
             setLocation(profile.location)
         }
         if(profile && profile.photos){
-            const url = await profileService.getProfileMainPhoto()
+            const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
     }

@@ -16,6 +16,7 @@ export class ProfileService {
         const data = {}
         const profiles = await API.get(profileApiName, profilePath, data)
         profile = (profiles[0] ? profiles[0] : null)
+        profile.mainPhotoUrl = await this.getProfileMainPhoto()
         return profile
     }
 
@@ -52,7 +53,8 @@ export class ProfileService {
             const bucket = mainPhoto[0].bucket
             const signedURL = await Storage.get(key, {
                 bucket: bucket,
-                level: 'protected'
+                level: 'protected',
+                expires: 60 * 60 * 12
             })
             return signedURL
         } catch (e) {

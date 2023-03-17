@@ -48,14 +48,17 @@ export default function RequestActivityScreen({route}) {
     }
 
     function referralActivityClickHandler(props) {
-        navigation.navigate('RequestDetailScreen', props)
+        navigation.navigate('RequestActivityDetailScreen', props)
     }
 
     return (
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={requestList}
-                renderItem={({item}) => <ReferralRequestItem item={item} handler={referralActivityClickHandler} />}
+                renderItem={({item}) => <ReferralRequestItem
+                    item={item}
+                    handler={referralActivityClickHandler}
+                />}
                 keyExtractor={(item) => item.id}
             />
         </SafeAreaView>

@@ -68,7 +68,7 @@ const EditProfileScreen = (props) => {
             setPhone(profile.phone.phone)
         }
         if(profile && profile.photos){
-            const url = await profileService.getProfileMainPhoto()
+            const url = profile.mainPhotoUrl
             setImage(url)
         }
     },[])

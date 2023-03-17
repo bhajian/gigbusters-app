@@ -5,7 +5,7 @@ import Colors from '../constants/Colors';
 import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesome, FontAwesome5, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
-import {RequestHomeNavigation} from "./RequestHomeNavigation";
+import {GigRequestNavigation} from "./GigRequestNavigation";
 import {ProfileNavigation} from "./ProfileNavigation";
 import {ConsumerActivityNavigation} from "./ConsumerActivityNavigation";
 import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
@@ -17,7 +17,7 @@ const ConsumerTabNavigator = props => {
     return (
         <Tab.Navigator screenOptions={{}}>
             <Tab.Screen
-                name={'Home'}
+                name={'GigRequest'}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerShown: false,
@@ -27,7 +27,7 @@ const ConsumerTabNavigator = props => {
                 }}
             >
                 {screenProps => (
-                    <RequestHomeNavigation
+                    <GigRequestNavigation
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />

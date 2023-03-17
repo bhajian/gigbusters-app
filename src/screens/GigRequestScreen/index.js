@@ -14,8 +14,8 @@ const WorkRequestScreen = props => {
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState('')
     const [location, setLocation] = useState('')
-    const [distance, setDistance] = useState(50)
-    const [price, setPrice] = useState(20)
+    const [distance, setDistance] = useState([50])
+    const [price, setPrice] = useState([20])
     const profileService = new ProfileService()
     const navigation = useNavigation()
 
@@ -30,12 +30,11 @@ const WorkRequestScreen = props => {
     }
 
     function onSubmitPress() {
-        console.log(location)
-        navigation.navigate('RequestReferralScreen', {
+        navigation.navigate('GigRequestDetailScreen', {
             location: location,
             category: category,
-            distance: distance,
-            price: price,
+            distance: distance[0],
+            price: price[0],
         })
     }
 
@@ -106,7 +105,7 @@ const WorkRequestScreen = props => {
                     <Text>Price/hr: {price} $$ </Text>
                     <Slider
                         value={price}
-                        onValueChange={value => setPrice(value)}
+                        onValueChange={setPrice}
                         step={1}
                         maximumValue={150}
                         minimumValue={1}

@@ -20,17 +20,16 @@ import ImageList from "../../../components/ImageList";
 import Entypo from "react-native-vector-icons/Entypo";
 import {TaskService} from "../../../backend/TaskService";
 import loading from "../../../../assets/images/loading.gif";
-import { v4 as uuidv4 } from 'uuid'
 
-export default function WorkerRequestCompletionScreen(props) {
+export default function GigRequestDetailScreen(props) {
     const requestObj = props?.route?.params
 
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState('')
     const [location, setLocation] = useState('')
-    const [distance, setDistance] = useState(50)
-    const [description, setDescription] = useState(50)
-    const [price, setPrice] = useState(20)
+    const [distance, setDistance] = useState(requestObj.distance)
+    const [description, setDescription] = useState('')
+    const [price, setPrice] = useState(requestObj.price)
     const [profileImage, setProfileImage] = useState(null)
     const [images, setImages] = useState([])
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
@@ -48,14 +47,14 @@ export default function WorkerRequestCompletionScreen(props) {
             setLocation(profile.location)
         }
         if(profile && profile.photos){
-            const url = await profileService.getProfileMainPhoto()
+            const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
     }
 
     useEffect(() => {
-        getCurrentUserData().then(r => {})
-    }, [getCurrentUserData])
+        getCurrentUserData().catch((e) => console.log(e))
+    }, [])
 
     const removeImage = (value) => {
         setImages(images.filter(item => item !== value))

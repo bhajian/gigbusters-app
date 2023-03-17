@@ -4,6 +4,7 @@ import ConsumerTabNavigator from './ConsumerTabNavigator';
 import WorkerTabNavigator from "./WorkerTabNavigator";
 import {ProfileService} from "../backend/ProfileService";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
+import SearchCategory from "../components/SearchCategory/SearchPage";
 
 const Stack = createNativeStackNavigator()
 
@@ -58,6 +59,14 @@ const RootRouter = props => {
             <Stack.Screen
                 name={'LocationSelectorScreen'}
                 component={LocationSelectorScreen}
+                options={{
+                    headerShown: false,
+                    animation: "fade_from_bottom",
+                }}
+            />
+            <Stack.Screen
+                name={'SearchCategory'}
+                component={SearchCategory}
                 options={{
                     headerShown: false,
                     animation: "fade_from_bottom",

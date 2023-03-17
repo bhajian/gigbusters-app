@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {View, FlatList, StyleSheet, ScrollView, Text, Image, Pressable,} from 'react-native';
+import {View, FlatList, StyleSheet, ScrollView, Text, Image, Pressable, SafeAreaView,} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 import people from "../../../../assets/data/tipoffs";
 import RequestDetailTopContainer from "./RequestDetailTopContainer";
@@ -7,17 +7,15 @@ import ApplicantRequestItem from "../../../components/ApplicantRequestItem";
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import loading from "../../../../assets/images/loading.gif";
-import ReviewableSearch from "../../../components/ReviewableSearch";
 import EditDeleteBottomSheet from "./EditDeleteBottomSheet";
 import EditPageBottomSheet from "./EditPageBottomSheet";
-export default function RequestDetailScreen({route}) {
+import {TaskService} from "../../../backend/TaskService";
+export default function RequestActivityDetailScreen({route}) {
     const task = route.params
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
-    const [isModalVisible, setModalVisible] = useState(false);
-    const [locationMax, setLocationMax] = useState(10);
-    const [priceMax, setPriceMax] = useState(10);
     const navigation = useNavigation()
     const editDeleteBottomSheetModalRef = useRef(null)
+    const taskService = new TaskService()
     const editDeleteHandlePresentPress = () => editDeleteBottomSheetModalRef.current.present()
     const editDeleteHandleSheetChanges = useCallback((index) => {
     }, [])
@@ -26,6 +24,14 @@ export default function RequestDetailScreen({route}) {
     const editPageHandlePresentPress = () => editDeleteBottomSheetModalRef.current.present()
     const editPageHandleSheetChanges = useCallback((index) => {
     }, [])
+
+    useEffect(() => {
+        loadData().then().catch(e => console.log(e))
+    }, []);
+
+    async function loadData() {
+        const requestObj = await taskService.listTasks()
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -56,12 +62,17 @@ export default function RequestDetailScreen({route}) {
         })
     }, [navigation])
 
+    const header = () => {
+        return(<View style={styles.topContainer}>
+            <RequestDetailTopContainer task={task} />
+        </View>)
+    };
+
     return (
-        <ScrollView style={styles.container}>
-            <View style={styles.topContainer}>
-                <RequestDetailTopContainer task={task} />
-            </View>
+        <SafeAreaView style={styles.container}>
+
             <FlatList
+                ListHeaderComponent={header}
                 data={people}
                 renderItem={({item}) => <ApplicantRequestItem item={item.to} />}
                 keyExtractor={(item) => item.id}
@@ -74,7 +85,7 @@ export default function RequestDetailScreen({route}) {
                 bottomSheetModalRef={editPageBottomSheetModalRef}
                 handleSheetChanges={editPageHandleSheetChanges}
             />
-        </ScrollView>
+        </SafeAreaView>
     );
 };
 
@@ -83,6 +94,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         height: '100%',
         paddingTop: 10,
+    },
+    topContainer: {
+        marginTop: 10
     },
     headerExtensionContainer: {
         width: '100%',
