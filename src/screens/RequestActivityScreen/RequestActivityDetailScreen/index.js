@@ -10,7 +10,8 @@ import loading from "../../../../assets/images/loading.gif";
 import EditDeleteBottomSheet from "./EditDeleteBottomSheet";
 import EditPageBottomSheet from "./EditPageBottomSheet";
 import {TaskService} from "../../../backend/TaskService";
-import ApplicantAcceptedItem from "../../../components/ApplicantAcceptedItem";
+import ApplicantAcceptedItem from "../../../components/ApplicantAcceptedItem"
+import tipoffs from "../../../../assets/data/tipoffs"
 export default function RequestActivityDetailScreen({route}) {
     const task = route.params
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
@@ -43,14 +44,27 @@ export default function RequestActivityDetailScreen({route}) {
     }
 
     async function onRejectPressed(params) {
-        const index = applicants.findIndex(x=> x.userId === params.userId)
-        let newApplicant = [...applicants]
-        newApplicant[index].applicant.applicationStatus = 'rejected'
-        setApplicants([...newApplicant])
+        try{
+            await taskService.rejectApplication({
+                applicantId: params.userId,
+                taskId: task.id
+            })
+            const index = applicants.findIndex(x=> x.userId === params.userId)
+            let newApplicant = [...applicants]
+            newApplicant[index].applicant.applicationStatus = 'acceptedToStart'
+            setApplicants([...newApplicant])
+        } catch (e) {
+            console.log(e)
+        }
     }
 
-    async function onProfilePressed(cardIndex) {
+    async function onProfilePressed(params) {
+        console.log('test')
+        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
+    }
 
+    async function onChatPressed(cardIndex) {
+        navigation.navigate('ChatScreen')
     }
 
     useEffect(() => {
@@ -114,9 +128,12 @@ export default function RequestActivityDetailScreen({route}) {
                         />
                     }
                     if(item.applicant.applicationStatus === 'acceptedToStart') {
-                        return <ApplicantAcceptedItem item={item}/>
+                        return <ApplicantAcceptedItem
+                            item={item}
+                            onChatPressed={onChatPressed}
+                            onProfilePressed={onProfilePressed}
+                        />
                     }
-                    // return <ApplicantAcceptedItem item={item}/>
                 }}
                 keyExtractor={(item) => item.userId}
             />

@@ -7,7 +7,17 @@ import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 
 const MatchingCard = props => {
-    const {mainPhotoURL, description, category, price, city, country} = props.card
+    const {
+        mainPhotoURL,
+        description,
+        category,
+        price,
+        priceUnit,
+        city,
+        country,
+        name,
+        profilePhotoURL
+    } = props.card
     const onRightPressed = props.onRightPressed
     const onLeftPressed = props.onLeftPressed
     return (
@@ -16,9 +26,9 @@ const MatchingCard = props => {
                 <UserAvatar
                     size={45}
                     active
-                    src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                    src={profilePhotoURL}
                 />
-                <Text style={styles.contactName}>Matthew Rathier</Text>
+                <Text style={styles.contactName}>{name}</Text>
             </View>
             <View style={styles.contentContainer}>
                 <ImageBackground
@@ -29,23 +39,25 @@ const MatchingCard = props => {
                     <View style={styles.cardInner}>
                         <Text style={styles.name}>{category}</Text>
                     </View>
-                    <View style={styles.connectButtonsContainer}>
-                        <TouchableOpacity style={styles.connectButton} onPress={onLeftPressed}>
-                            <FontAwesome name="ban" size={35} color="white"/>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.connectButton} onPress={onRightPressed}>
-                            <Ionicons name="ios-logo-whatsapp" size={35} color="white"/>
-                        </TouchableOpacity>
+                    <View style={styles.parentButtonsContainer}>
+                        <View style={styles.buttonsContainer}>
+                            <TouchableOpacity style={styles.rejectButton} onPress={onLeftPressed}>
+                                <FontAwesome name="ban" size={35} color="white"/>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.connectButton} onPress={onRightPressed}>
+                                <Ionicons name="ios-logo-whatsapp" size={35} color="white"/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </ImageBackground>
 
                 <View style={styles.infoContainer}>
                     <View style={styles.tagsContainer}>
                         <View style={styles.tag}>
-                            <Text style={styles.text} >{country}</Text>
+                            <Text style={styles.text} >{city}</Text>
                         </View>
                         <View style={styles.tag}>
-                            <Text style={styles.text} >{price}$/hr</Text>
+                            <Text style={styles.text} >{price}$/{priceUnit}</Text>
                         </View>
                         <View style={styles.tag}>
                             <Text style={styles.text} >{category}</Text>
@@ -82,20 +94,34 @@ const styles = StyleSheet.create({
         height: 60,
         alignItems: 'center',
         justifyContent: 'center',
+        alignSelf: 'flex-end',
+        marginHorizontal: 5,
     },
-    connectButtonsContainer: {
+    rejectButton: {
+        backgroundColor: Colors.light.tint,
+        borderRadius: 5,
+        width: 60,
+        height: 60,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 5,
+    },
+    parentButtonsContainer: {
+        position: 'absolute',
+        top: 280
+    },
+    buttonsContainer: {
+        marginHorizontal: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 10,
-        top: 70
     },
     topContainer: {
         padding: 10,
         flexDirection: 'row',
     },
     contactName: {
-        margin: 10,
-        paddingTop: 10,
+        margin: 5,
+        paddingTop: 5,
         paddingLeft: 10,
         textAlignVertical: 'bottom',
         fontSize: 20,
@@ -108,7 +134,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 300,
+        height: 350,
         // borderRadius: 15,
         // borderWidth: 0.5,
         // overflow: 'hidden',

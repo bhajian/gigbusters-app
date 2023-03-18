@@ -5,7 +5,7 @@ import MatchingCard from "../../components/MatchingCard";
 import Swiper from "react-native-deck-swiper";
 import {useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
-import {FontAwesome, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
+import {FontAwesome, Ionicons, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
 import ReviewableSearch from "../../components/ReviewableSearch";
 import MatchingSearch from "./MatchingSearch";
 
@@ -49,12 +49,7 @@ const MatchingCards = () => {
             ),
             headerLeft: () => (
                 <View style={{marginHorizontal: 15}}>
-                    <MaterialCommunityIcons
-                        name="bell-ring-outline"
-                        size={25}
-                        color={Colors.light.tint}
-                        style={{marginRight: 15}}
-                    />
+                    <Ionicons name="notifications-sharp" size={25} color={Colors.light.darkerGrey}/>
                 </View>
             ),
         })

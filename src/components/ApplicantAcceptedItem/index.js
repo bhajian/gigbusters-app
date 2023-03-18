@@ -3,13 +3,16 @@ import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} f
 import Colors from "../../constants/Colors";
 import STAR_IMAGE from "../../../assets/images/star.png";
 import {AirbnbRating} from "react-native-ratings";
+import Feather from "react-native-vector-icons/Feather";
+import {AntDesign} from "@expo/vector-icons";
+import {useNavigation} from "@react-navigation/native";
 
-export default function ApplicantAcceptedItem({item, handler}) {
+export default function ApplicantAcceptedItem({item, onChatPressed, onProfilePressed}) {
 
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
-                <View style={styles.leftContainer}>
+                <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(item)}>
                     <Image source={{uri: item.profilePhotoURL}} style={styles.image} />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
@@ -24,10 +27,14 @@ export default function ApplicantAcceptedItem({item, handler}) {
                             ratingCount={5}
                             size={15}
                             isDisabled={true}
-                            // onFinishRating={setRating}
-                            style={{ paddingVertical: 15 }}
+                            ratingContainerStyle={styles.rating}
                         />
                     </View>
+                </TouchableOpacity>
+                <View style={styles.rightContainer}>
+                    <TouchableOpacity style={styles.rejectButton} onPress={e => onChatPressed(item)}>
+                        <AntDesign name="wechat" size={30} color={Colors.light.tint}/>
+                    </TouchableOpacity>
                 </View>
             </View>
         </View>
@@ -44,8 +51,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         padding: 10,
-        borderTopWidth: 1,
+        borderBottomWidth: .5,
         borderColor: '#e3e3e3',
+    },
+    rating: {
+        paddingVertical: 5,
+        marginLeft: 10
     },
     leftContainer: {
         alignItems: 'center',

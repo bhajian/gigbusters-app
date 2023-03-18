@@ -11,11 +11,11 @@ import STAR_IMAGE from '../../../../assets/images/star.png'
 
 export default function MatchingSearch({bottomSheetModalRef, handleSheetChanges}) {
 
-    const snapPoints = useMemo(() => ['25%', '70%'], [])
+    const snapPoints = useMemo(() => ['80%', '80%'], [])
     const [enablePanDownToClose, setEnablePanDownToClose] = useState(true)
     const [enableDismissOnClose, setEnableDismissOnClose] = useState(true)
     const [locationMax, setLocationMax] = useState(50)
-    const [rating, setRating] = useState(3)
+    const [priceMin, setPriceMin] = useState(20)
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
 
     const handleTogglePressBehavior = useCallback(() => {
@@ -76,6 +76,18 @@ export default function MatchingSearch({bottomSheetModalRef, handleSheetChanges}
                     </View>
                     <View style={styles.mainContainer}>
                         <ChoiceSelector passSelectedValue={getCategorySelectedValue}/>
+                        <View style={styles.priceContainer}>
+                            <Text>Min Price: {priceMin} </Text>
+                            <Slider
+                                value={locationMax}
+                                onValueChange={value => setPriceMin(value)}
+                                step={1}
+                                maximumValue={150}
+                                minimumValue={1}
+                                minimumTrackTintColor={Colors.light.tint}
+                                thumbTintColor={Colors.light.turquoise}
+                            />
+                        </View>
                         <View style={styles.locationContainer}>
                             <Text>Within: {locationMax} km of  </Text>
                             <Slider
@@ -88,20 +100,6 @@ export default function MatchingSearch({bottomSheetModalRef, handleSheetChanges}
                                 thumbTintColor={Colors.light.turquoise}
                             />
                             <LocationSelector />
-                        </View>
-                        <View style={styles.ratingContainer}>
-                            <Text style={styles.ratingText}>Rating: </Text>
-                            <AirbnbRating
-                                type='custom'
-                                starImage={STAR_IMAGE}
-                                showRating={false}
-                                selectedColor={Colors.light.tint}
-                                ratingBackgroundColor={Colors.light.grey}
-                                ratingCount={5}
-                                size={20}
-                                onFinishRating={setRating}
-                                style={{ paddingVertical: 10 }}
-                            />
                         </View>
                     </View>
                 </BottomSheetView>
@@ -129,18 +127,17 @@ const styles = StyleSheet.create({
     },
     mainContainer: {
         width: '100%',
-        // flexDirection: 'column',
-        // backgroundColor: 'red'
     },
     locationContainer: {
         backgroundColor: '#fff',
         borderColor: '#bdb8b8',
         marginVertical: 10,
         marginHorizontal: 10,
-        height: 120,
-        borderWidth: 0,
         borderRadius: 15,
-        padding: 5,
+    },
+    priceContainer: {
+        marginTop: 5,
+        marginHorizontal: 10,
     },
     ratingContainer: {
         flexDirection: 'row',

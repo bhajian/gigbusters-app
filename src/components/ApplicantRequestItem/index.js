@@ -12,7 +12,7 @@ export default function ApplicantRequestItem({item, onAcceptPressed, onRejectPre
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
-                <TouchableOpacity style={styles.leftContainer} onPress={onProfilePressed}>
+                <TouchableOpacity style={styles.leftContainer} onPress={e=> onProfilePressed(item)}>
                     <Image source={{uri: item.profilePhotoURL}} style={styles.image} />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
@@ -27,8 +27,7 @@ export default function ApplicantRequestItem({item, onAcceptPressed, onRejectPre
                             ratingCount={5}
                             size={15}
                             isDisabled={true}
-                            // onFinishRating={setRating}
-                            style={{ paddingVertical: 15 }}
+                            ratingContainerStyle={styles.rating}
                         />
                     </View>
                 </TouchableOpacity>
@@ -56,8 +55,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         padding: 10,
-        borderTopWidth: 1,
+        borderBottomWidth: .5,
         borderColor: '#e3e3e3',
+    },
+    rating: {
+        paddingVertical: 5,
+        marginLeft: 10
     },
     leftContainer: {
         alignItems: 'center',

@@ -29,7 +29,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                         style={styles.closeButton}>
                         <View style={styles.closeButton}>
                             <FontAwesome name="chevron-left" style={styles.closeIcon}/>
-                            <Text style={styles.closeIcon}> </Text>
+                            <Text style={styles.closeIcon}> Back </Text>
                         </View>
                     </TouchableOpacity>
                     <UserAvatar

@@ -119,8 +119,8 @@ const WorkRequestScreen = props => {
             {/*        <Ionicons name="file-tray-full-outline" size={25} color={Colors.dark.grey}/>*/}
             {/*        <Text style={{margin: 5, color: Colors.dark.grey}}>Referral Activities</Text>*/}
             {/*    </View>*/}
-            {/*    <ReferralRequestItem handler={referralActivityClickHandler} item={users[0]} />*/}
-            {/*    <ReferralRequestItem handler={referralActivityClickHandler} item={users[1]} />*/}
+            {/*    <GigRequestItem handler={referralActivityClickHandler} item={users[0]} />*/}
+            {/*    <GigRequestItem handler={referralActivityClickHandler} item={users[1]} />*/}
             {/*</View>*/}
         </ScrollView>
     );

@@ -4,7 +4,7 @@ import {
     SafeAreaView, StyleSheet, Text, TextInput, View,
 } from 'react-native';
 import {useNavigation} from "@react-navigation/native";
-import ReferralRequestItem from "../../components/ReferralRequestItem";
+import GigRequestItem from "../../components/GigRequestItem";
 import Colors from "../../constants/Colors";
 import {TaskService} from "../../backend/TaskService";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -55,7 +55,7 @@ export default function RequestActivityScreen({route}) {
         <SafeAreaView style={styles.container}>
             <FlatList
                 data={requestList}
-                renderItem={({item}) => <ReferralRequestItem
+                renderItem={({item}) => <GigRequestItem
                     item={item}
                     handler={referralActivityClickHandler}
                 />}

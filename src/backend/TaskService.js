@@ -115,7 +115,7 @@ export class TaskService {
         console.log(path)
         const data = {
             body: {
-                applicantId: params.userId
+                applicantId: params.applicantId
             },
         }
         const res = await API.put(taskApiName, path, data)
@@ -123,8 +123,12 @@ export class TaskService {
     }
     async rejectApplication(params) {
         const path = `${taskPath}/${params.taskId}${rejectPath}`
+        console.log(params)
+        console.log(path)
         const data = {
-            body: params,
+            body: {
+                applicantId: params.applicantId
+            },
         }
         const res = await API.put(taskApiName, path, data)
         return res

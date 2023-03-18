@@ -28,30 +28,37 @@ export default function RequestDetailTopContainer({task}) {
                         {task.title}
                     </Text>
                 </View>
-                <View style={styles.searchContainer}>
+                <View style={styles.rightContainer}>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
                             <Text style={styles.textTag} >{task.category}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >{task.price}$/hr</Text>
+                            <Text style={styles.textTag} >{task.price}$/{task.priceUnit}</Text>
                         </View>
                     </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >{task.country}</Text>
+                            <Text style={styles.textTag} >{task.city}</Text>
                         </View>
-                        <View style={styles.info}>
-                            <Text style={styles.textTag} >9AM-10PM</Text>
-                        </View>
+
                     </View>
                 </View>
+            </View>
+            <View style={styles.description}>
+                <Text style={styles.textTag} >{task.description}</Text>
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    topContainer: {
+        backgroundColor: '#ffffff',
+        width: '100%',
+        borderBottomWidth: .5,
+        borderColor: '#e3e3e3',
+    },
     headerContainer: {
         width: '100%',
         flexDirection: 'row',
@@ -75,10 +82,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 10,
-        borderBottomWidth: 0.5,
-        borderBottomColor: 'lightgrey',
     },
-    searchContainer: {
+    rightContainer: {
         flexDirection: 'row',
         zIndex: 10,
         width: '100%',
@@ -103,6 +108,10 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.light.grey,
         marginHorizontal: 2,
         margin: 3,
+    },
+    description: {
+        marginLeft: 5,
+        alignSelf: 'flex-start'
     },
     textTag: {
         textAlign: 'center',
@@ -186,10 +195,6 @@ const styles = StyleSheet.create({
         bottom: 0,
         flexDirection: 'row',
         margin: 5,
-    },
-    topContainer: {
-        backgroundColor: '#ffffff',
-        width: '100%',
     },
     privateSwitch: {
         transform: [{scaleX: 0.7}, {scaleY: 0.7}],

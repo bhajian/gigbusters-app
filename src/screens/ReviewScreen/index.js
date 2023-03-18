@@ -16,8 +16,8 @@ import UserAvatar from "react-native-user-avatar";
 
 
 export default function ReviewScreen(props) {
-    const [name, setName] = useState('');
-    const navigation = useNavigation();
+    const [name, setName] = useState('')
+    const navigation = useNavigation()
     const bottomSheetModalRef = useRef(null)
     const profileService = new ProfileService()
 

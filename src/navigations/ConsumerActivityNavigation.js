@@ -2,6 +2,7 @@ import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RequestActivityScreen from "../screens/RequestActivityScreen";
 import RequestActivityDetailScreen from "../screens/RequestActivityScreen/RequestActivityDetailScreen";
+import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -20,6 +21,13 @@ export function ConsumerActivityNavigation(props) {
                 component={RequestActivityDetailScreen}
                 options={{
                     headerShown: true,
+                }}
+            />
+            <Stack.Screen
+                name={'ReviewableProfileScreen'}
+                component={ReviewableProfileScreen}
+                options={{
+                    headerShown: false,
                 }}
             />
         </Stack.Navigator>

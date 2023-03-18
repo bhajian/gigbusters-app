@@ -3,24 +3,23 @@ import {
     View,
     Image,
     ScrollView, Text,
-} from 'react-native';
-import {useNavigation} from "@react-navigation/native";
-import Logo from '../../../assets/images/gossip.jpeg';
+} from 'react-native'
+import {useNavigation} from "@react-navigation/native"
 import styles from './styles';
-import CustomButton from "../../components/CustomButton";
-import jobAnim from "../../../assets/animations/104042-recolored-job-proposal-review-animation.json";
-import Lottie from "lottie-react-native";
+import CustomButton from "../../components/CustomButton"
+import jobAnim from "../../../assets/animations/104042-recolored-job-proposal-review-animation.json"
+import Lottie from "lottie-react-native"
 
 export default function FirstScreen() {
 
     const navigation = useNavigation();
 
     const onSignInPressed = () => {
-        navigation.navigate('SignIn');
+        navigation.navigate('SignIn')
     }
 
     const onSignUpPressed = () => {
-        navigation.navigate('SignUp');
+        navigation.navigate('SignUp')
     };
 
 

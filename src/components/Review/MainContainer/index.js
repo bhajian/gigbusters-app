@@ -1,13 +1,26 @@
 import React from "react";
 import {Image, Text, View, StyleSheet} from "react-native";
 import Footer from "./Footer";
+import STAR_IMAGE from "../../../../assets/images/star.png";
+import Colors from "../../../constants/Colors";
+import {AirbnbRating} from "react-native-ratings";
 
 export default function MainContainer({tipoff}) {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.tipoffHeaderContainer}>
                 <Text style={styles.toName} >To: {tipoff.to.name}</Text>
-                <Text style={styles.sentAt}>{tipoff.sentAt}</Text>
+                <AirbnbRating
+                    type='custom'
+                    starImage={STAR_IMAGE}
+                    showRating={false}
+                    selectedColor={Colors.light.tint}
+                    ratingBackgroundColor={Colors.light.grey}
+                    ratingCount={5}
+                    size={15}
+                    isDisabled={true}
+                    ratingContainerStyle={styles.rating}
+                />
             </View>
             <View style={styles.tipoffHeaderContainer}>
                 <Text style={styles.fromName}>From: {tipoff.from.name}</Text>

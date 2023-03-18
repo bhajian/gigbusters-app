@@ -5,6 +5,7 @@ import WorkerTabNavigator from "./WorkerTabNavigator";
 import {ProfileService} from "../backend/ProfileService";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
+import ChatScreen from "../screens/ChatScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -70,6 +71,13 @@ const RootRouter = props => {
                 options={{
                     headerShown: false,
                     animation: "fade_from_bottom",
+                }}
+            />
+            <Stack.Screen
+                name={'ChatScreen'}
+                component={ChatScreen}
+                options={{
+                    headerShown: true,
                 }}
             />
         </Stack.Navigator>
