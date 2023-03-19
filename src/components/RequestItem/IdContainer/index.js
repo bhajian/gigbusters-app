@@ -8,24 +8,19 @@ export default function IdContainer({request}) {
 
     return (
         <View style={styles.mainContainer}>
-            <View style={styles.nameIdContainer}>
-                <View>
-                    <Text style={styles.toName} >{request.name}</Text>
-                </View>
-                <View style={styles.userIdContainer}>
-                    <Text style={styles.fromName}>ID: {request.name}</Text>
-                </View>
+            <View>
+                <Text style={styles.toName} >{request.name}</Text>
             </View>
-
+            <View style={styles.userIdContainer}>
+                <Text style={styles.fromName}>ID: {request.name}</Text>
+            </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     mainContainer:{
-        width: '80%',
-        flexDirection: 'row',
-        justifyContent: 'space-between'
+        marginLeft: 10
     },
     nameIdContainer: {
 

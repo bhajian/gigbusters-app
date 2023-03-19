@@ -3,10 +3,15 @@ import {
     StyleSheet,
     View,
     Text,
-    Switch, ScrollView, SafeAreaView,
+    Switch, ScrollView, SafeAreaView, FlatList, Image, Pressable,
 } from 'react-native';
 import ReviewableProfileTopContainer from "./ReviewableProfileTopContainer";
 import ProfileReviews from "../../components/ProfileReviews";
+import tipoffs from "../../../assets/data/tipoffs";
+import Review from "../../components/Review";
+import Colors from "../../constants/Colors";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import loading from "../../../assets/images/loading.gif";
 
 export default function ReviewableProfileScreen({navigation, route}) {
     let contact = route.params ? route.params.reviewable : {
@@ -20,16 +25,35 @@ export default function ReviewableProfileScreen({navigation, route}) {
 
     useEffect(() => {
 
-    }, []);
+    }, [])
+
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerShown: true,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            tabBarIcon: ({color}) => (
+                <Fontisto name="home" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text> Profile </Text>
+            ),
+        })
+    }, [navigation])
 
     return (
         <SafeAreaView style={styles.container}>
-            <View>
-                <ReviewableProfileTopContainer reviewable={contact.to} navigation={navigation}/>
-            </View>
             <View >
                 <View style={styles.reviewsList}>
-                    <ProfileReviews/>
+                    <FlatList
+                        data={tipoffs}
+                        renderItem={({item}) => <Review tipoff={item} />}
+                        keyExtractor={(item) => item.id}
+                        ListHeaderComponent={<ReviewableProfileTopContainer reviewable={contact} />}
+                    />
                 </View>
             </View>
         </SafeAreaView>

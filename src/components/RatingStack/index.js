@@ -12,10 +12,7 @@ export default function RatingStack({ratings}) {
 
     return (
         <View style={styles.mainContainer}>
-            <View style={styles.numberContainer}>
-                <Text style={styles.text}>Rating:</Text>
-                <Text style={styles.average}>{ratings.id}/5 </Text>
-            </View>
+
             <View style={styles.starColContainer}>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
@@ -67,7 +64,7 @@ export default function RatingStack({ratings}) {
                         <ProgressBar  progress={0.75} color={Colors.light.tint} />
                     </View>
                 </View>
-                <Text style={styles.text}> {ratings.numberOfReplies} reviews</Text>
+
             </View>
         </View>
     );
@@ -82,10 +79,6 @@ const styles = StyleSheet.create({
     ratingStackContainer: {
         width: '60%'
     },
-    numberContainer: {
-        paddingTop: 5,
-        // flexDirection: 'column',
-    },
     starRowContainer: {
         flexDirection: 'row',
         justifyContent: 'flex-end',
@@ -97,13 +90,6 @@ const styles = StyleSheet.create({
         // flexDirection: 'column',
         width: '80%',
         padding: 8,
-    },
-    average: {
-        color: Colors.light.tint,
-        marginTop: 5,
-        fontSize: 20,
-        textAlign: 'center',
-        fontWeight: 'bold'
     },
     text: {
         // color: Colors.light.tint,

@@ -10,6 +10,8 @@ const acceptPath = '/accept'
 const rejectPath = '/reject'
 const photoPath = '/photo'
 const queryPath = '/query'
+let myTasks = []
+let neighboursTasks = []
 
 export class TaskService {
 
@@ -47,7 +49,6 @@ export class TaskService {
             if(requests[i].profilePhoto){
                 requests[i].profilePhotoURL = await this.getMainPhoto(requests[i].profilePhoto)
             }
-
         }
         return requests
     }
@@ -71,6 +72,7 @@ export class TaskService {
             body: params,
         }
         const res = await API.post(taskApiName, path, data)
+        myTasks.push(res)
         return res
     }
 
@@ -163,7 +165,6 @@ export class TaskService {
         } catch (e) {
             console.log(e)
         }
-
     }
 
     async getMainPhoto(params) {
@@ -186,6 +187,24 @@ export class TaskService {
             console.log(e)
         }
         return undefined
+    }
+
+    async fetchMyTasks() {
+        myTasks = await this.listTasks()
+        return myTasks
+    }
+
+    async fetchNeighboursTasks() {
+        neighboursTasks = await this.listNeighborsTasks()
+        return neighboursTasks
+    }
+
+    getMyTasks() {
+        return myTasks
+    }
+
+    getNeighboursTasks() {
+        return neighboursTasks
     }
 
 }

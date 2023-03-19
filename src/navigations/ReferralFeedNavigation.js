@@ -12,7 +12,7 @@ export function ReferralFeedNavigation(props) {
                 name={'RequestFeedScreen'}
                 component={RequestFeedScreen}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                 }}
             />
             <Stack.Screen

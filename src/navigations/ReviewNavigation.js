@@ -45,7 +45,7 @@ export function ReviewNavigation(props) {
                 name={'ReviewableProfileScreen'}
                 component={ReviewableProfileScreen}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                 }}
             />
             <Stack.Screen

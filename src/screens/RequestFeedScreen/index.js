@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import {
     Text,
     Pressable,
-    SafeAreaView, StyleSheet, FlatList
+    SafeAreaView, StyleSheet, FlatList, Image
 } from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
@@ -10,20 +10,31 @@ import Colors from "../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
 import RequestItem from "../../components/RequestItem";
 import {TaskService} from "../../backend/TaskService";
+import loading2 from "../../../assets/images/loading2.gif";
+import MatchingSearch from "../MatchingScreen/MatchingSearch";
+import FeedSearchSearch from "./FeedSearchSearch";
 
 export default function RequestFeedScreen(props) {
 
     const [requestList, setRequestList] = useState([])
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+    const bottomSheetModalRef = useRef(null)
     const navigation = useNavigation();
     const taskService = new TaskService()
 
     useEffect(() => {
-        loadData().then().catch(e => console.log(e))
-    }, []);
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
+
+    }, [navigation]);
 
     async function loadData() {
+        setDataBeingLoaded(true)
         const requestObj = await taskService.listNeighborsTasks()
         setRequestList(requestObj)
+        setDataBeingLoaded(false)
     }
 
     const handlePresentPress = () => bottomSheetModalRef.current.present()
@@ -55,19 +66,25 @@ export default function RequestFeedScreen(props) {
                     />
                 </Pressable>
             ),
-            // headerLeft: () => (
-            //
-            // ),
         })
 
-    }, [navigation]);
+    }, [navigation])
 
     return (
         <SafeAreaView style={styles.contentContainer}>
-            <FlatList
-                data={requestList}
-                renderItem={({item}) => <RequestItem request={item} />}
-                keyExtractor={(item) => item.id}
+            {
+                dataBeingLoaded ?
+                    <Image source={loading2} style={styles.loading2} />
+                    :
+                    <FlatList
+                        data={requestList}
+                        renderItem={({item}) => <RequestItem request={item} />}
+                        keyExtractor={(item) => item.id}
+                    />
+            }
+            <FeedSearchSearch
+                bottomSheetModalRef={bottomSheetModalRef}
+                handleSheetChanges={handleSheetChanges}
             />
         </SafeAreaView>
     )
@@ -109,5 +126,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderStyle: 'solid'
+    },
+    loading2: {
+        width: 100,
+        height: 100,
+        top: 150,
+        // justifyContent: 'center',
+        alignSelf: 'center'
     },
 });

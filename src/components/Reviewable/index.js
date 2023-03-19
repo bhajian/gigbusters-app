@@ -9,7 +9,7 @@ import {useNavigation} from "@react-navigation/native";
 export default function Reviewable({tipoff}) {
     const navigation = useNavigation();
     async function onItemPressed() {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoff})
+        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoff.to})
     }
 
     return (

@@ -13,7 +13,7 @@ export default function PhotoContainer({profile}) {
 
 const styles = StyleSheet.create({
     container: {
-        width: '20%',
+        // width: '20%',
     },
     info: {
         marginTop: 5,

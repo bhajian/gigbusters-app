@@ -24,16 +24,8 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
         <View style={styles.topContainer}>
             <View style={styles.headerContainer}>
                 <View style={styles.headerLeft}>
-                    <TouchableOpacity
-                        onPress={() => navigation.goBack()}
-                        style={styles.closeButton}>
-                        <View style={styles.closeButton}>
-                            <FontAwesome name="chevron-left" style={styles.closeIcon}/>
-                            <Text style={styles.closeIcon}> Back </Text>
-                        </View>
-                    </TouchableOpacity>
                     <UserAvatar
-                        size={35}
+                        size={70}
                         active
                         src={reviewable.image}
                     />
@@ -42,6 +34,11 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                 <TouchableOpacity style={styles.shareButton}>
                     <EvilIcons name={"share-google"} size={30} color={Colors.light.tint}/>
                 </TouchableOpacity>
+            </View>
+            <View style={styles.numberContainer}>
+                <Text style={styles.text}>Rating:</Text>
+                <Text style={styles.average}>{reviewable.id}/5 </Text>
+                <Text style={styles.text}> {reviewable.numberOfReplies} reviews</Text>
             </View>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
@@ -56,6 +53,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                             <Text style={styles.textTag} >Personal Trainer</Text>
                         </View>
                     </View>
+
                     <View style={styles.ratingStackContainer}>
                         <RatingStack ratings={reviewable}/>
                     </View>
@@ -72,6 +70,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         paddingHorizontal: 20,
         borderBottomColor: 'lightgrey',
+        marginTop: 20,
     },
     headerLeft: {
         flexDirection: 'row',
@@ -134,7 +133,9 @@ const styles = StyleSheet.create({
         color: Colors.light.tint,
     },
     contactName: {
-        padding: 10,
+        alignSelf: 'center',
+        marginLeft: 10,
+        fontWeight: 'bold'
     },
     shareButton: {
         borderColor: Colors.light.tint,
@@ -160,7 +161,7 @@ const styles = StyleSheet.create({
     text: {
         paddingVertical: 10,
         marginHorizontal: 4,
-        fontSize: 25,
+        fontSize: 14,
         textAlignVertical: 'bottom',
     },
     inputsContainer: {
@@ -209,5 +210,16 @@ const styles = StyleSheet.create({
     },
     searchCategory:{
         width: '75%'
-    }
+    },
+    numberContainer: {
+        paddingTop: 5,
+        flexDirection: 'row',
+    },
+    average: {
+        color: Colors.light.tint,
+        marginTop: 5,
+        fontSize: 20,
+        textAlign: 'center',
+        fontWeight: 'bold'
+    },
 });

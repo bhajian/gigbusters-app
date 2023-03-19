@@ -5,6 +5,7 @@ const reviewPath = '/review'
 const complexReviewPath = '/complexReview'
 const reviewablePath = '/reviewable'
 const queryPath = '/query?'
+let reviews = null
 
 export class ReviewService {
 

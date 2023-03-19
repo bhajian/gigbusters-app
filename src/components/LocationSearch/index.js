@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native";
 import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
-import loading from "../../../assets/images/loading2.png";
+import loading from "../../../assets/images/loading4.gif";
 
 export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
     const [locationName, setLocationName] = useState((locationNameParam

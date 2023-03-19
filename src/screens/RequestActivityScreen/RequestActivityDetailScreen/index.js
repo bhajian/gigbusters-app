@@ -6,7 +6,8 @@ import RequestDetailTopContainer from "./RequestDetailTopContainer";
 import ApplicantRequestItem from "../../../components/ApplicantRequestItem";
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import loading from "../../../../assets/images/loading.gif";
+import loading from "../../../../assets/images/loading.gif"
+import loading2 from "../../../../assets/images/loading2.gif"
 import EditDeleteBottomSheet from "./EditDeleteBottomSheet";
 import EditPageBottomSheet from "./EditPageBottomSheet";
 import {TaskService} from "../../../backend/TaskService";
@@ -16,6 +17,7 @@ export default function RequestActivityDetailScreen({route}) {
     const task = route.params
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [applicants, setApplicants] = useState([])
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
     const navigation = useNavigation()
     const editDeleteBottomSheetModalRef = useRef(null)
     const taskService = new TaskService()
@@ -72,10 +74,12 @@ export default function RequestActivityDetailScreen({route}) {
     }, [])
 
     async function loadData() {
+        setDataBeingLoaded(true)
         const applicantsObj = await taskService.listApplicants({
             taskId: task.id
         })
         setApplicants(applicantsObj)
+        setDataBeingLoaded(false)
     }
 
     useEffect(() => {
@@ -115,28 +119,33 @@ export default function RequestActivityDetailScreen({route}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlatList
-                ListHeaderComponent={header}
-                data={applicants}
-                renderItem={({item}) => {
-                    if(item.applicant.applicationStatus === 'applied'){
-                        return <ApplicantRequestItem
-                            item={item}
-                            onAcceptPressed={onAcceptPressed}
-                            onRejectPressed={onRejectPressed}
-                            onProfilePressed={onProfilePressed}
-                        />
-                    }
-                    if(item.applicant.applicationStatus === 'acceptedToStart') {
-                        return <ApplicantAcceptedItem
-                            item={item}
-                            onChatPressed={onChatPressed}
-                            onProfilePressed={onProfilePressed}
-                        />
-                    }
-                }}
-                keyExtractor={(item) => item.userId}
-            />
+            {
+                dataBeingLoaded ?
+                    <Image source={loading2} style={styles.loading2} />
+                    :
+                    <FlatList
+                        ListHeaderComponent={header}
+                        data={applicants}
+                        renderItem={({item}) => {
+                            if(item.applicant.applicationStatus === 'applied'){
+                                return <ApplicantRequestItem
+                                    item={item}
+                                    onAcceptPressed={onAcceptPressed}
+                                    onRejectPressed={onRejectPressed}
+                                    onProfilePressed={onProfilePressed}
+                                />
+                            }
+                            if(item.applicant.applicationStatus === 'acceptedToStart') {
+                                return <ApplicantAcceptedItem
+                                    item={item}
+                                    onChatPressed={onChatPressed}
+                                    onProfilePressed={onProfilePressed}
+                                />
+                            }
+                        }}
+                        keyExtractor={(item) => item.userId}
+                    />
+            }
             <EditDeleteBottomSheet
                 bottomSheetModalRef={editDeleteBottomSheetModalRef}
                 handleSheetChanges={editDeleteHandleSheetChanges}
@@ -222,5 +231,12 @@ const styles = StyleSheet.create({
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    loading2: {
+        width: 100,
+        height: 100,
+        top: 150,
+        justifyContent: 'center',
+        alignSelf: 'center'
     },
 });

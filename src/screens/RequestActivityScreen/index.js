@@ -39,11 +39,14 @@ export default function RequestActivityScreen({route}) {
     }, [navigation])
 
     useEffect(() => {
-        loadData().then().catch(e => console.log(e))
-    }, []);
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
+    }, [navigation])
 
     async function loadData() {
-        const requestObj = await taskService.listTasks()
+        const requestObj = taskService.getMyTasks()
         setRequestList(requestObj)
     }
 

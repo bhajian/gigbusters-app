@@ -9,12 +9,14 @@ import Lottie from 'lottie-react-native';
 import loadingAnim from './assets/animations/136078-feesbee-section-2.json'
 import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
 import {ProfileService} from "./src/backend/ProfileService";
+import {TaskService} from "./src/backend/TaskService";
 
 Amplify.configure(awsconfig);
 
 export default function App() {
     const [userStatus, setUserStatus] = useState('initializing')
     const profileService = new ProfileService()
+    const taskService = new TaskService()
 
     useEffect(() => {
         checkAuthState()
@@ -29,6 +31,7 @@ export default function App() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
             const profile = await profileService.fetchProfile()
+            await taskService.fetchMyTasks()
             if(currentUser) {
                 if (profile) {
                     setUserStatus('loggedIn')

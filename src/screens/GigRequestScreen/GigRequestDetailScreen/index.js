@@ -92,7 +92,7 @@ export default function GigRequestDetailScreen(props) {
                 country: 'Canada',
                 stateProvince: 'ON',
                 city: location.locationName,
-                validTillDateTime: '2023-03-31'
+                validTillDateTime: '2023-03-31' // FIX ME
             })
             const user = await Auth.currentCredentials()
             images.map(async(e)=> {
@@ -103,7 +103,7 @@ export default function GigRequestDetailScreen(props) {
                     photo: e
                 })
             })
-
+            // Generate the signedurl and set that in the task object
             navigation.navigate('RequestCompletedScreen')
         } catch (e) {
             console.log(e)
