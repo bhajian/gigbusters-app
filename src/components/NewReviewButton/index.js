@@ -7,10 +7,7 @@ import PhonebookModal from '../PhonebookModal';
 import {AntDesign} from "@expo/vector-icons";
 
 export default function NewReviewButton() {
-    const [isModalVisible, setModalVisible] = useState(false);
-    // const toggleModal = () => {
-    //   setModalVisible(!isModalVisible);
-    // };
+
     const navigation = useNavigation();
     const onPress = () => {
         navigation.navigate('NewReviewScreen', {navigation: navigation});
@@ -22,26 +19,12 @@ export default function NewReviewButton() {
             activeOpacity={0.8}
             onPress={onPress}>
             <AntDesign name="plus" size={27} color="white"/>
-            {/*<PhonebookModal visibility={isModalVisible} onClose={onPress} />*/}
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
-    modal: {
-        width: '100%',
-        marginLeft: 0,
-        paddingTop: 40,
-    },
-    cancelButton: {
-        margin: 15,
-        fontSize: 17,
-        color: Colors.light.tint,
-    },
-    modalTop: {
-        height: 50,
-        backgroundColor: 'white',
-    },
+
     button: {
         backgroundColor: Colors.light.tint,
         position: 'absolute',

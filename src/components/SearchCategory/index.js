@@ -14,7 +14,7 @@ export function SearchCategory({navigation, style}) {
         <View style={[style, styles.container]}>
             <TouchableOpacity style={styles.searchInput} onPress={onPress}>
                 <Fontisto name="search" size={17} color="grey" />
-                <Text> Search </Text>
+                <Text> Search Or Add a Category </Text>
             </TouchableOpacity>
         </View>
     )

@@ -1,14 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
     View,
     Text,
     TouchableOpacity,
     TextInput,
     ScrollView,
-    KeyboardAvoidingView, Platform, StyleSheet, Image,
+    KeyboardAvoidingView, Platform, StyleSheet, Image, Pressable,
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native";
-import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
@@ -20,23 +20,28 @@ import ImageList from "../../../components/ImageList";
 import Entypo from "react-native-vector-icons/Entypo";
 import {TaskService} from "../../../backend/TaskService";
 import loading from "../../../../assets/images/loading.gif";
+import AccontSearchBottomSheet from "../../NewReviewScreen/AccountSearchReviewScreen/AccontSearchBottomSheet";
+import GigRequestBottomSheet from "../GigRequestBottomSheet";
+import Fontisto from "react-native-vector-icons/Fontisto";
 
 export default function GigRequestDetailScreen(props) {
-    const requestObj = props?.route?.params
 
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState('')
     const [location, setLocation] = useState('')
-    const [distance, setDistance] = useState(requestObj.distance)
+    const [distance, setDistance] = useState([50])
     const [description, setDescription] = useState('')
-    const [price, setPrice] = useState(requestObj.price)
+    const [price, setPrice] = useState([20])
     const [profileImage, setProfileImage] = useState(null)
     const [images, setImages] = useState([])
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
     const navigation = useNavigation()
-    const profileService = new ProfileService()
     const taskService = new TaskService()
+    const profileService = new ProfileService()
+    const bottomSheetModalRef = useRef(null)
+    const handleSheetChanges = useCallback((value) => {
+    }, [])
 
     async function getCurrentUserData() {
         const profile = profileService.getProfile()
@@ -53,8 +58,30 @@ export default function GigRequestDetailScreen(props) {
     }
 
     useEffect(() => {
+        bottomSheetModalRef.current.present()
         getCurrentUserData().catch((e) => console.log(e))
     }, [])
+
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            tabBarIcon: ({color}) => (
+                <Fontisto name="home" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text> Request a gig</Text>
+            ),
+            headerRight: () => (
+                dataBeingSaved ?
+                    <Image source={loading} style={{width: 40, height: 30}} />
+                    :
+                    <TouchableOpacity style={styles.submitButton} onPress={submitRequest}>
+                        <Text style={styles.submitButtonText}>Submit</Text>
+                    </TouchableOpacity>
+            ),
+        })
+    }, [navigation])
 
     const removeImage = (value) => {
         setImages(images.filter(item => item !== value))
@@ -75,12 +102,22 @@ export default function GigRequestDetailScreen(props) {
         }
     }
 
+    async function onDetailPress() {
+        bottomSheetModalRef.current.present()
+    }
+
+    const getValueFromBottomSheet = (props) => {
+        setCategory(props.category)
+        setPrice(props.price)
+        setDistance(props.distance)
+        setLocation(props.location)
+    }
+
     async function submitRequest() {
-        requestObj.description = description
         setDataBeingSaved(true)
         try{
             const response = await taskService.createTask({
-                category: requestObj.category,
+                category: category,
                 description: description,
                 distance: distance,
                 price: price,
@@ -116,28 +153,6 @@ export default function GigRequestDetailScreen(props) {
             style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-            <View style={styles.topContainer}>
-                <View style={styles.headerContainer}>
-                    <View style={styles.headerLeft}>
-                        <TouchableOpacity
-                            onPress={() => navigation.goBack()}
-                            style={styles.backButton}>
-                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
-                            <Text style={styles.backIcon}> Back </Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    {
-                        dataBeingSaved ?
-                            <Image source={loading} style={{width: 40, height: 30}} />
-                            :
-                            <TouchableOpacity style={styles.submitButton} onPress={submitRequest}>
-                                <Text style={styles.submitButtonText}>Submit</Text>
-                            </TouchableOpacity>
-                    }
-
-                </View>
-            </View>
             <ScrollView>
                 <View style={styles.imageContainer}>
                     <View style={styles.avatarReviewerContainer}>
@@ -154,6 +169,17 @@ export default function GigRequestDetailScreen(props) {
                     </View>
 
                 </View>
+                <View style={styles.tagsContainer}>
+                    <View style={styles.tag}>
+                        <Text style={styles.text} >{location.locationName}</Text>
+                    </View>
+                    <View style={styles.tag}>
+                        <Text style={styles.text} >{price}$/hr</Text>
+                    </View>
+                    <View style={styles.tag}>
+                        <Text style={styles.text} >{category}</Text>
+                    </View>
+                </View>
                 <View style={styles.inputsContainer}>
                     <TextInput
                         value={description}
@@ -163,21 +189,31 @@ export default function GigRequestDetailScreen(props) {
                         placeholder={"Details..."}
                     />
                 </View>
+
                 <View style={styles.imageContainer}>
                     {
                         images.map((e)=> <ImageList key={e.toString()} item={e} remove={removeImage} />)
                     }
                 </View>
             </ScrollView>
-            <View style={styles.imageSelectorContainer}>
-                <TouchableOpacity onPress={onImagePickerPress} style={styles.pickImage}>
-                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 45, color: Colors.light.tint}}/>
+            <View style={styles.detailContainer}>
+                <TouchableOpacity onPress={onImagePickerPress} style={styles.detailButton}>
+                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onDetailPress} style={styles.detailButton}>
+                    <MaterialIcons name="category" style={{fontSize: 30, color: Colors.light.tint}}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.locationBar}>
-                    <Entypo name="location" style={{fontSize: 30, color: Colors.light.tint}}/>
-                    <Text style={styles.locationText}>{location.locationName}</Text>
+                    <View style={styles.detailButton}>
+                        <Entypo name="location" style={{fontSize: 30, color: Colors.light.tint}}/>
+                    </View>
                 </TouchableOpacity>
             </View>
+            <GigRequestBottomSheet
+                handleSheetChanges={handleSheetChanges}
+                bottomSheetModalRef={bottomSheetModalRef}
+                getValueFromBottomSheet={getValueFromBottomSheet}
+            />
         </KeyboardAvoidingView>
     )
 }
@@ -186,7 +222,7 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
         height: '100%',
-        paddingTop: 35,
+        // paddingTop: 35,
     },
     headerExtensionContainer: {
         width: '100%',
@@ -226,13 +262,13 @@ const styles = StyleSheet.create({
     },
     inputsContainer: {
         // backgroundColor: Colors.light.grey,
-        margin: 10,
+        margin: 5,
     },
     reviewInput: {
         textAlignVertical: 'top',
         height: 200,
         maxHeight: 300,
-        fontSize: 20,
+        fontSize: 16,
         margin: 5,
         padding: 5,
     },
@@ -242,11 +278,12 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         margin: 10
     },
-    imageSelectorContainer: {
+    detailContainer: {
         backgroundColor: 'white',
         borderTopWidth: 1,
         borderColor: Colors.light.darkerGrey,
         flexDirection: 'row',
+        paddingVertical: 5
     },
     imageContainer: {
         width: '100%',
@@ -267,21 +304,54 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         backgroundColor: Colors.light.tint,
-        borderRadius: 10,
+        borderRadius: 5,
         width: 70,
         height: 35,
         alignItems: 'center',
         justifyContent: 'center',
     },
     locationBar: {
-        marginLeft: 10,
         borderRadius: 5,
-        marginVertical: 5,
         marginHorizontal: 2,
         flexDirection: 'row',
         alignItems: 'center'
     },
     submitButtonText: {
         color: '#fff'
+    },
+    detailButton: {
+        borderRadius : 5,
+        borderWidth: 1,
+        borderColor: Colors.light.tint,
+        height: 40,
+        width: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 5
+    },
+    infoContainer: {
+        padding: 5,
+        justifyContent: 'flex-start',
+        alignContent: 'flex-start'
+    },
+    tagsContainer: {
+        paddingVertical: 10,
+        marginHorizontal: 5,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+    },
+    tag: {
+        borderRadius: 10,
+        backgroundColor: Colors.light.tint,
+        marginHorizontal: 2
+    },
+    text: {
+        paddingHorizontal: 4,
+        paddingVertical: 4,
+        marginHorizontal: 4,
+        marginTop: 1,
+        marginBottom: 2,
+        color: '#fff',
     },
 })

@@ -11,7 +11,6 @@ import {useNavigation} from "@react-navigation/native";
 import RequestItem from "../../components/RequestItem";
 import {TaskService} from "../../backend/TaskService";
 import loading2 from "../../../assets/images/loading2.gif";
-import MatchingSearch from "../MatchingScreen/MatchingSearch";
 import FeedSearchSearch from "./FeedSearchSearch";
 
 export default function RequestFeedScreen(props) {

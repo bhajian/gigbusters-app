@@ -71,7 +71,7 @@ export default function ReviewScreen(props) {
                 ),
             })
         })
-    }, [navigation, name]);
+    }, [navigation, name])
 
     return (
         <SafeAreaView style={styles.contentContainer}>

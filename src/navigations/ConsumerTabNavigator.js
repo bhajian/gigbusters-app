@@ -16,33 +16,33 @@ const ConsumerTabNavigator = props => {
 
     return (
         <Tab.Navigator screenOptions={{}}>
+            {/*<Tab.Screen*/}
+            {/*    name={'GigRequest'}*/}
+            {/*    options={{*/}
+            {/*        tabBarActiveTintColor: Colors.light.tint,*/}
+            {/*        headerShown: false,*/}
+            {/*        tabBarIcon: ({color}) => (*/}
+            {/*            <Fontisto name="home" size={25} color={color}/>*/}
+            {/*        ),*/}
+            {/*    }}*/}
+            {/*>*/}
+            {/*    {screenProps => (*/}
+            {/*        <GigRequestNavigation*/}
+            {/*            {...screenProps}*/}
+            {/*            updateAuthState={props.updateAuthState}*/}
+            {/*        />*/}
+
+            {/*    )}*/}
+            {/*</Tab.Screen>*/}
             <Tab.Screen
                 name={'GigRequest'}
-                options={{
-                    tabBarActiveTintColor: Colors.light.tint,
-                    headerShown: false,
-                    tabBarIcon: ({color}) => (
-                        <Fontisto name="home" size={25} color={color}/>
-                    ),
-                }}
-            >
-                {screenProps => (
-                    <GigRequestNavigation
-                        {...screenProps}
-                        updateAuthState={props.updateAuthState}
-                    />
-
-                )}
-            </Tab.Screen>
-            <Tab.Screen
-                name={'Activity'}
                 component={ConsumerActivityNavigation}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerLargeTitle: false,
                     headerShown: false,
                     tabBarIcon: ({color}) => (
-                        <Ionicons name="file-tray-full" size={25} color={color}/>
+                        <Fontisto name="home" size={25} color={color}/>
                     ),
                 }}
             />

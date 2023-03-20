@@ -12,6 +12,7 @@ const photoPath = '/photo'
 const queryPath = '/query'
 let myTasks = []
 let neighboursTasks = []
+let lastTimeMyTasksFetched = null
 
 export class TaskService {
 
@@ -191,6 +192,7 @@ export class TaskService {
 
     async fetchMyTasks() {
         myTasks = await this.listTasks()
+        lastTimeMyTasksFetched = new Date()
         return myTasks
     }
 
@@ -199,7 +201,7 @@ export class TaskService {
         return neighboursTasks
     }
 
-    getMyTasks() {
+    async getMyTasks() {
         return myTasks
     }
 

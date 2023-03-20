@@ -75,7 +75,7 @@ const WorkRequestScreen = props => {
                 ),
             })
 
-    }, [navigation, getCurrentUserData]);
+    }, [navigation, getCurrentUserData])
 
     return (
         <ScrollView style={styles.container}>

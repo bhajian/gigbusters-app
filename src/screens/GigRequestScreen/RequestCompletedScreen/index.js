@@ -15,7 +15,7 @@ export default function RequestCompletedScreen({route}) {
     }, [navigation]);
 
     function closeWindow() {
-        navigation.navigate('GigRequestScreen')
+        navigation.navigate('RequestActivityScreen')
     }
 
     return (

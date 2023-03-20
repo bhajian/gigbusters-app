@@ -27,8 +27,10 @@ export default function GigRequestItem({item, handler}) {
                             <Text style={styles.textTag} >{item.category}</Text>
                         </View>
                     </View>
-                    <View style={styles.iconContainer}>
-                        <AntDesign name="right" size={20} color="black" />
+                    <View style={styles.notificationNumberContainer}>
+                        <View style={styles.notificationInfo}>
+                            <Text style={styles.notificationTag} >3</Text>
+                        </View>
                     </View>
                 </View>
             </View>
@@ -41,6 +43,9 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
         borderRadius: 6,
+    },
+    notificationNumberContainer: {
+        justifyContent: 'center'
     },
     container: {
         flexDirection: 'row',
@@ -66,15 +71,24 @@ const styles = StyleSheet.create({
         fontWeight: '500',
         marginHorizontal: 10,
     },
-    infoContainer: {
-        // flexDirection: 'columns',
-        // marginHorizontal: 15,
-        // justifyContent: 'flex-end'
-    },
     info: {
         borderRadius: 50,
         backgroundColor: Colors.light.grey,
         margin: 3,
+    },
+    notificationInfo: {
+        borderRadius: 50,
+        backgroundColor: Colors.light.tint,
+        margin: 3,
+    },
+    notificationTag: {
+        textAlign: 'center',
+        paddingHorizontal: 4,
+        paddingVertical: 2,
+        marginHorizontal: 4,
+        marginTop: 1,
+        marginBottom: 2,
+        color: '#fff',
     },
     textTag: {
         textAlign: 'center',

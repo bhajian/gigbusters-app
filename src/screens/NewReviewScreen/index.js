@@ -55,7 +55,7 @@ export default function NewReviewScreen({navigation, route}) {
     }, [getCurrentUserData])
 
     useEffect(() => {
-        // bottomSheetModalRef.current.present()
+        bottomSheetModalRef.current.present()
     }, [bottomSheetModalRef])
 
     async function getCurrentUserData() {
