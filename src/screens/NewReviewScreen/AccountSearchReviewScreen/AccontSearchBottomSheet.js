@@ -34,7 +34,7 @@ export default function AccontSearchBottomSheet({bottomSheetModalRef, handleShee
 
     const handleClosePress = useCallback(() => {
         bottomSheetModalRef.current?.close()
-    }, []);
+    }, [])
 
     const renderBackdrop = useCallback(
         (props) => (
@@ -140,8 +140,7 @@ const styles = StyleSheet.create({
 
     },
     icon: {
-
         fontSize: 20,
         color: Colors.light.tint
-    }
+    },
 });

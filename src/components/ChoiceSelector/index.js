@@ -1,131 +1,109 @@
-import React, {Component, useState} from "react";
-import {StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
-import { ListItem, SearchBar } from "react-native-elements";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import React, {Component, useCallback, useEffect, useState} from "react";
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image} from "react-native";
 import Colors from "../../constants/Colors";
-// import filter from "lodash.filter";
+import {CategoryService} from "../../backend/CategoryService";
+import EvilIcons from "react-native-vector-icons/EvilIcons";
+import {useNavigation} from "@react-navigation/native";
+import loading2 from "../../../assets/images/loading2.gif";
 
-const DATA = [
-    {
-        id: "1",
-        title: "Dog walker",
-    },
-    {
-        id: "2",
-        title: "Baby Sitter",
-    },
-    {
-        id: "3",
-        title: "Lawn mower",
-    },
-    {
-        id: "4",
-        title: "Software Engineer",
-    },
-    {
-        id: "5",
-        title: "Snow Plow",
-    },
-    {
-        id: "6",
-        title: "Moving",
-    },
-    {
-        id: "7",
-        title: "Sales Rep",
-    },
-    {
-        id: "8",
-        title: "Cashier",
-    },
-    {
-        id: "9",
-        title: "Cooking",
-    },
-    {
-        id: "10",
-        title: "Cleaning",
-    },
-    {
-        id: "11",
-        title: "Personal Trainer",
-    },
-    {
-        id: "12",
-        title: "Tennis Coach",
-    },
-];
+export default function ApplicantRequestItem(props) {
+    const [categories, setCategories] = useState([])
+    const [selectedValue, setSelectedValue] = useState('')
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
 
-class ChoiceSelector extends Component {
-    constructor(props) {
-        super(props);
-        this.props = props
+    const navigation = useNavigation()
+    const categoryService = new CategoryService()
 
-        DATA.map((item, i) => {
-            item.key = i
-            item.backgroundColor = Colors.light.grey
-            item.textColor = '#000'
+    async function getCurrentUserData() {
+        setDataBeingLoaded(true)
+        const categoriesObj = await categoryService.queryCategories({
+            limit: 15
         })
-
-        this.state = {
-            loading: false,
-            data: DATA,
-            error: null,
-            selectedValue: "",
+        if(categoriesObj.categories){
+            categoriesObj.categories.map((item, i) => {
+                item.key = i
+                if(i !== 0){
+                    item.backgroundColor = Colors.light.grey
+                    item.textColor = '#000'
+                } else {
+                    item.backgroundColor = Colors.light.tint
+                    item.textColor = '#fff'
+                    setSelectedValue(item.category)
+                    if(props?.passSelectedValue){
+                        props?.passSelectedValue(item.category)
+                    }
+                }
+            })
+            setCategories(categoriesObj.categories)
         }
+
+        setDataBeingLoaded(false)
     }
 
-    changeColor = key => {
-        let data = JSON.parse(JSON.stringify(this.state.data))
+    useEffect(() => {
+        getCurrentUserData().then(e => {
+        }).catch(e => console.log(e))
+    }, [])
+
+    const changeColor = useCallback((key) => {
+        let data = [...categories]
         let selectedValue = ''
-        for (let x = 0; x < this.state.data.length; x++) {
-            if (this.state.data[x].key == key) {
+        for (let x = 0; x < categories.length; x++) {
+            if (categories[x].key == key) {
                 data[x].backgroundColor = Colors.light.tint
                 data[x].textColor = '#fff'
-                selectedValue = data[x].title
-            }else {
+                selectedValue = data[x].category
+            } else {
                 data[x].backgroundColor = Colors.light.grey
                 data[x].textColor = '#000'
             }
-            this.setState({
-                data: data,
-                selectedValue: selectedValue
-            })
+            setSelectedValue(selectedValue)
+            setCategories(data)
         }
-        if(this.props?.passSelectedValue){
-            this.props?.passSelectedValue(selectedValue)
+        if(props?.passSelectedValue){
+            props?.passSelectedValue(selectedValue)
         }
+    }, [categories])
+
+    async function addCategoryHook(value) {
+        setCategories([value, ...categories])
     }
 
-    render() {
-        return (
+    return (
+        dataBeingLoaded ?
+            <Image source={loading2} style={styles.loadingImage}/>
+            :
             <View style={styles.container}>
-                {this.state.data.map((item, i) => {
-                    return(
+                {categories.map((item, i) => {
+                    return (
                         <TouchableOpacity
                             key={i}
                             onPress={() => {
-                                this.setState({
-                                    selectedValue: item.title
-                                })
-                                this.changeColor(i)
+                                setSelectedValue(item.category)
+                                changeColor(i)
                             }}
                             style={[styles.buttonSelector, {backgroundColor: item.backgroundColor}]}>
-                            <Text style={{color: item.textColor}}>{item.title}</Text>
+                            <Text style={{color: item.textColor}}>{item.category}</Text>
                         </TouchableOpacity>
                     )
                 })}
+                <TouchableOpacity
+                    onPress={() => {
+                        navigation.navigate('SearchCategory', {
+                            onGoBack: addCategoryHook
+                        })
+                    }}
+                    style={[styles.buttonSelector, {backgroundColor: Colors.light.grey, flexDirection: 'row'}]}>
+                    <EvilIcons name="search" size={20}/>
+                    <Text style={{color: '#000'}}>Search Or Add More</Text>
+                </TouchableOpacity>
             </View>
-        );
-    }
+    )
 }
-
-export default ChoiceSelector;
 
 const styles = StyleSheet.create({
     container: {
         marginTop: 10,
-        marginHorizontal: 5,
         padding: 2,
         flexDirection: 'row',
         flexWrap: 'wrap',
@@ -133,9 +111,15 @@ const styles = StyleSheet.create({
         width: '90%'
     },
     buttonSelector:{
-        marginHorizontal: 3,
+        marginRight: 5,
         marginVertical: 3,
         padding: 5,
         borderRadius: 5,
     },
-});
+    loadingImage: {
+        width: 80,
+        height: 80,
+        alignSelf: 'center',
+        marginTop: 20,
+    }
+})

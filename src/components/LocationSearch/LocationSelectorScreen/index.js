@@ -10,12 +10,12 @@ Location.installWebGeolocationPolyfill()
 
 
 const LocationSelectorScreen = ({route, navigation}) => {
-    const {onGoBack} = (route.params ? route.params : null);
+    const {onGoBack} = (route.params ? route.params : null)
 
     return (
         <View style={styles.container}>
             <GooglePlacesAutocomplete
-                placeholder='Location..'
+                placeholder='Search Locations ..'
                 query={{
                     key: 'AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s',
                     language: 'en',
@@ -72,9 +72,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     textInput: {
-        // fontSize: 20,
-        // marginBottom: 20,
-        backgroundColor: Colors.light.grey
+        backgroundColor: Colors.light.grey,
+        borderRadius: 10,
+        height: 40
     },
     row: {
         flexDirection: 'row',

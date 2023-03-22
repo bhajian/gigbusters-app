@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import {StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
-import Fontisto from "react-native-vector-icons/Fontisto";
-import {useNavigation} from "@react-navigation/native";
-import Colors from "../../constants/Colors";
+import Fontisto from "react-native-vector-icons/Fontisto"
+import Colors from "../../constants/Colors"
 
 export function SearchCategory({navigation, style}) {
 
     function onPress() {
-        navigation.navigate('SearchCategory');
+        navigation.navigate('SearchCategory')
     };
 
     return (

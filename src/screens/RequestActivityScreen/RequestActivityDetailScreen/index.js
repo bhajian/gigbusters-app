@@ -53,7 +53,7 @@ export default function RequestActivityDetailScreen({route}) {
             })
             const index = applicants.findIndex(x=> x.userId === params.userId)
             let newApplicant = [...applicants]
-            newApplicant[index].applicant.applicationStatus = 'acceptedToStart'
+            newApplicant[index].applicant.applicationStatus = 'rejected'
             setApplicants([...newApplicant])
         } catch (e) {
             console.log(e)
@@ -61,7 +61,6 @@ export default function RequestActivityDetailScreen({route}) {
     }
 
     async function onProfilePressed(params) {
-        console.log('test')
         navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
     }
 
@@ -108,6 +107,7 @@ export default function RequestActivityDetailScreen({route}) {
                         <Text style={{color: '#0f66a9', fontSize: 18}}>Edit</Text>
                     </Pressable>
             ),
+            headerTintColor: Colors.light.tint
         })
     }, [navigation])
 

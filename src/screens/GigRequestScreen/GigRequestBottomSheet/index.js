@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from "react";
+import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {Button, Image, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather"
@@ -14,20 +14,25 @@ import CustomButton from "../../../components/CustomButton";
 export default function GigRequestBottomSheet({
                                                   bottomSheetModalRef,
                                                   handleSheetChanges,
-                                                  getValueFromBottomSheet}) {
+                                                  getValueFromBottomSheet,
+                                                  defaultData
+                                              }) {
 
     const snapPoints = useMemo(() => ['80%', '80%'], [])
     const [category, setCategory] = useState('')
-    const [location, setLocation] = useState('')
+    const [location, setLocation] = useState(defaultData.location?
+        defaultData.location : {})
     const [distance, setDistance] = useState([50])
     const [price, setPrice] = useState([20])
-    const profileService = new ProfileService()
-    const navigation = useNavigation()
-
-
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close');
 
     const handleTogglePressBehavior = useCallback(() => {
+        getValueFromBottomSheet({
+            location: location,
+            category: category,
+            distance: distance[0],
+            price: price[0],
+        })
         setBackdropPressBehavior(state => {
             switch (state) {
                 case 'none':
@@ -45,6 +50,12 @@ export default function GigRequestBottomSheet({
     }, [])
 
     const handleCollapsePress = useCallback(() => {
+        getValueFromBottomSheet({
+            location: location,
+            category: category,
+            distance: distance[0],
+            price: price[0],
+        })
         bottomSheetModalRef.current?.collapse()
     }, [])
 
@@ -84,7 +95,9 @@ export default function GigRequestBottomSheet({
         setLocation(props)
     }
 
-
+    useEffect(() => {
+        setLocation(defaultData.location)
+    }, [defaultData])
 
     return (
         <BottomSheetModalProvider>
@@ -101,7 +114,7 @@ export default function GigRequestBottomSheet({
                     enableFooterMarginAdjustment={true}
                     style={styles.bottomSheetContentContainer}>
                     <View style={styles.titleContainer}>
-                        <Pressable onPress={handleClosePress}>
+                        <Pressable onPress={selectPressed}>
                             <Feather name="x" size={25} style={styles.closeButton}/>
                         </Pressable>
                         <Text style={styles.title}>Search Filter</Text>
@@ -112,7 +125,7 @@ export default function GigRequestBottomSheet({
                                 <View style={styles.doubleButton}>
                                     <CustomButton
                                         text="Cancel"
-                                        onPress={cancelPressed}
+                                        onPress={selectPressed}
                                         style={styles.selectButton}
                                         bgColor={Colors.light.grey}
                                         fgColor="black"
@@ -125,7 +138,6 @@ export default function GigRequestBottomSheet({
                                         fgColor="white"
                                     />
                                 </View>
-                                <SearchCategory navigation={navigation} />
                                 <ChoiceSelector
                                     passSelectedValue={getCategorySelectedValue}
                                 />

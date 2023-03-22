@@ -1,7 +1,7 @@
 const tintColorLight = '#ff6200';
 const tintColorDark = '#fff';
 const tintColorGrey = '#eeefff'
-const tintColorDarkerGrey = '#dbdce7'
+const tintColorDarkerGrey = '#b4b7c9'
 const tintColorGreyDark = '#858585'
 const turquoise = '#30D5C8'
 

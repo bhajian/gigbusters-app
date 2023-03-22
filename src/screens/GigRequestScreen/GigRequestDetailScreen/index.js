@@ -9,7 +9,6 @@ import {
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native";
 import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
 import {Auth, Storage} from "aws-amplify";
@@ -19,8 +18,7 @@ import Colors from "../../../constants/Colors";
 import ImageList from "../../../components/ImageList";
 import Entypo from "react-native-vector-icons/Entypo";
 import {TaskService} from "../../../backend/TaskService";
-import loading from "../../../../assets/images/loading.gif";
-import AccontSearchBottomSheet from "../../NewReviewScreen/AccountSearchReviewScreen/AccontSearchBottomSheet";
+import loading from "../../../../assets/images/loading2.gif";
 import GigRequestBottomSheet from "../GigRequestBottomSheet";
 import Fontisto from "react-native-vector-icons/Fontisto";
 
@@ -74,14 +72,15 @@ export default function GigRequestDetailScreen(props) {
             ),
             headerRight: () => (
                 dataBeingSaved ?
-                    <Image source={loading} style={{width: 40, height: 30}} />
+                    <Image source={loading} style={{width: 30, height: 30}} />
                     :
                     <TouchableOpacity style={styles.submitButton} onPress={submitRequest}>
                         <Text style={styles.submitButtonText}>Submit</Text>
                     </TouchableOpacity>
             ),
+            headerTintColor: Colors.light.tint
         })
-    }, [navigation])
+    }, [navigation, submitRequest, dataBeingSaved])
 
     const removeImage = (value) => {
         setImages(images.filter(item => item !== value))
@@ -213,6 +212,7 @@ export default function GigRequestDetailScreen(props) {
                 handleSheetChanges={handleSheetChanges}
                 bottomSheetModalRef={bottomSheetModalRef}
                 getValueFromBottomSheet={getValueFromBottomSheet}
+                defaultData={{location: location, category: category}}
             />
         </KeyboardAvoidingView>
     )
@@ -304,7 +304,7 @@ const styles = StyleSheet.create({
     },
     submitButton: {
         backgroundColor: Colors.light.tint,
-        borderRadius: 5,
+        borderRadius: 10,
         width: 70,
         height: 35,
         alignItems: 'center',

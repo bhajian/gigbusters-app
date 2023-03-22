@@ -41,6 +41,7 @@ export default function ReviewableProfileScreen({navigation, route}) {
             headerTitle: () => (
                 <Text> Profile </Text>
             ),
+            headerTintColor: Colors.light.tint
         })
     }, [navigation])
 

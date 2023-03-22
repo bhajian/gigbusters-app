@@ -5,7 +5,7 @@ import {useNavigation} from "@react-navigation/native";
 import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
-import loading from "../../../assets/images/loading4.gif";
+import loading from "../../../assets/images/loading2.gif";
 
 export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
     const [locationName, setLocationName] = useState((locationNameParam
@@ -45,7 +45,7 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
                 <View style={styles.searchTextIcon}>
                     {
                         dataBeingSaved ?
-                            <Image source={loading} style={{width: 40, height: 30}} />
+                            <Image source={loading} style={{width: 30, height: 30}} />
                             :
                             <MaterialIcons name="place" size={17} color="grey" />
                     }
@@ -76,12 +76,7 @@ const styles = StyleSheet.create({
     searchInput: {
         width: '100%',
         backgroundColor: Colors.light.grey,
-        borderColor: '#c9c6c6',
-        borderWidth: 0.5,
-        borderTopWidth: 0,
-        borderLeftWidth: 0,
-        borderRightWidth: 0,
-        borderRadius: 5,
+        borderRadius: 10,
         marginVertical: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',

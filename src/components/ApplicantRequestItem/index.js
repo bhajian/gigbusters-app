@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     image: {
         width: 50,
         height: 50,
-        borderRadius: 6,
+        borderRadius: 30,
     },
     container: {
         flexDirection: 'row',

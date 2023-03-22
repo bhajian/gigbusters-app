@@ -14,9 +14,14 @@ export default function GigRequestItem({item, handler}) {
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>
                     <Image source={{uri: item.mainPhotoURL}} style={styles.image}/>
-                    <Text style={styles.titleText}>
-                        {item.category}
-                    </Text>
+                    <View style={styles.middleContainer}>
+                        <Text style={styles.titleText}>
+                            {item.category}
+                        </Text>
+                        <Text style={styles.description}>
+                            {item.description.substring(0,40)}..
+                        </Text>
+                    </View>
                 </View>
                 <View style={styles.rightContainer}>
                     <View style={styles.infoContainer}>
@@ -24,12 +29,12 @@ export default function GigRequestItem({item, handler}) {
                             <Text style={styles.textTag} >{item.country}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >{item.category}</Text>
+                            <Text style={styles.textTag} >{item.price}/{item.priceUnit}</Text>
                         </View>
                     </View>
                     <View style={styles.notificationNumberContainer}>
                         <View style={styles.notificationInfo}>
-                            <Text style={styles.notificationTag} >3</Text>
+                            <Text style={styles.notificationTag}>3</Text>
                         </View>
                     </View>
                 </View>
@@ -40,9 +45,9 @@ export default function GigRequestItem({item, handler}) {
 
 const styles = StyleSheet.create({
     image: {
-        width: 50,
-        height: 50,
-        borderRadius: 6,
+        width: 60,
+        height: 60,
+        borderRadius: 10,
     },
     notificationNumberContainer: {
         justifyContent: 'center'
@@ -68,8 +73,16 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
     },
     titleText: {
-        fontWeight: '500',
+        fontWeight: '600',
         marginHorizontal: 10,
+        width: 100,
+    },
+    description: {
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        marginHorizontal: 10,
+        width: 120,
+        color: Colors.light.darkerGrey
     },
     info: {
         borderRadius: 50,
@@ -78,7 +91,7 @@ const styles = StyleSheet.create({
     },
     notificationInfo: {
         borderRadius: 50,
-        backgroundColor: Colors.light.tint,
+        backgroundColor: Colors.light.grey,
         margin: 3,
     },
     notificationTag: {
@@ -88,7 +101,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
         marginTop: 1,
         marginBottom: 2,
-        color: '#fff',
+        color: '#000',
     },
     textTag: {
         textAlign: 'center',

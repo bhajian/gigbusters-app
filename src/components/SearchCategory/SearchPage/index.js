@@ -1,130 +1,106 @@
-import React, { Component } from "react";
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import Colors from "../../../constants/Colors";
-import Fontisto from "react-native-vector-icons/Fontisto";
+import React, {Component, useCallback, useEffect, useState} from "react";
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput} from "react-native"
+import Colors from "../../../constants/Colors"
+import Fontisto from "react-native-vector-icons/Fontisto"
+import {useNavigation} from "@react-navigation/native";
+import {CategoryService} from "../../../backend/CategoryService";
+import Entypo from "react-native-vector-icons/Entypo";
 
-const DATA = [
-    {
-        id: "1",
-        title: "Data Structures",
-    },
-    {
-        id: "2",
-        title: "STL",
-    },
-    {
-        id: "3",
-        title: "C++",
-    },
-    {
-        id: "4",
-        title: "Java",
-    },
-    {
-        id: "5",
-        title: "Python",
-    },
-    {
-        id: "6",
-        title: "CP",
-    },
-    {
-        id: "7",
-        title: "ReactJs",
-    },
-    {
-        id: "8",
-        title: "NodeJs",
-    },
-    {
-        id: "9",
-        title: "MongoDb",
-    },
-    {
-        id: "10",
-        title: "ExpressJs",
-    },
-    {
-        id: "11",
-        title: "PHP",
-    },
-    {
-        id: "12",
-        title: "MySql",
-    },
-];
 
-const Item = ({ title }) => {
-    return (
-        <View style={styles.item}>
-            <Text>{title}</Text>
-        </View>
-    );
-};
 
-const renderItem = ({ item }) => <Item title={item.title} />;
+export default function SearchCategory({route}) {
+    const {onGoBack} = (route.params ? route.params : null)
 
-class SearchCategory extends Component {
-    constructor(props) {
-        super(props);
-        this.props = props
-        this.state = {
-            loading: false,
-            data: DATA,
-            error: null,
-            searchValue: "",
-        };
-        this.arrayholder = DATA;
+    const [categories, setCategories] = useState([])
+    const [selectedValue, setSelectedValue] = useState('')
+    const [searchValue, setSearchValue] = useState('')
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+
+    const navigation = useNavigation()
+    const categoryService = new CategoryService()
+
+    async function getCurrentUserData(prams) {
+        setDataBeingLoaded(true)
+        const categoriesObj = await categoryService.queryCategories({
+            limit: 500,
+            prefix: prams.prefix
+        })
+        if(categoriesObj.categories){
+            setCategories(categoriesObj.categories)
+        }
+        setDataBeingLoaded(false)
     }
 
-    searchFunction = (text) => {
-        const updatedData = this.arrayholder.filter((item) => {
-            const item_data = `${item.title.toUpperCase()})`;
-            const text_data = text.toUpperCase();
-            return item_data.indexOf(text_data) > -1;
-        });
-        this.setState({ data: updatedData, searchValue: text });
-    };
+    useEffect(() => {
+        getCurrentUserData({}).then(r => {}).catch(e => console.log(e))
+    }, [])
 
-    render() {
+    async function addCategoryPress() {
+        await categoryService.createCategory({category: searchValue})
+        setCategories([{category: searchValue, ranking: 0}, ...categories])
+    }
+
+    async function searchValueChange(value) {
+        setSearchValue(value)
+        await getCurrentUserData({
+            prefix: value
+        })
+    }
+
+    const Item = ({ item, handlePressed }) => {
         return (
-            <View>
-                <View style={styles.topContainer}>
-                    <View style={styles.headerContainer}>
-                        <View style={styles.searchTextContainer}>
-                            <Fontisto name="search" size={17} color="grey" />
-                            <TextInput
-                                onChangeText={value => this.searchFunction(value)}
-                                style={styles.searchInput}
-                                placeholder={"Search..."}
-                            />
-                        </View>
-                        <TouchableOpacity
-                            onPress={() => this.props.navigation.goBack()}
-                            style={styles.closeButton}>
-                            <Text style={styles.closeText}> Cancel </Text>
+            <TouchableOpacity
+                style={styles.item}
+                onPress={e=>{
+                    handlePressed(item)
+                    navigation.goBack()
+                }}
+            >
+                <Text>{item.category}</Text>
+            </TouchableOpacity>
+        )
+    }
+
+    return (
+        <View style={styles.container}>
+            <View style={styles.topContainer}>
+                <View style={styles.headerContainer}>
+                    <View style={styles.searchTextContainer}>
+                        <Fontisto name="search" size={17} color="grey" />
+                        <TextInput
+                            onChangeText={searchValueChange}
+                            style={styles.searchInput}
+                            placeholder={"Search..."}
+                        />
+                        <TouchableOpacity style={styles.addButton} onPress={addCategoryPress}>
+                            <Entypo name="add-to-list" size={20} style={styles.addIcon} />
                         </TouchableOpacity>
                     </View>
-                </View>
-                <View style={styles.container}>
-                    <FlatList
-                        data={this.state.data}
-                        renderItem={renderItem}
-                        keyExtractor={(item) => item.id}
-                    />
+                    <TouchableOpacity
+                        onPress={() => navigation.goBack()}
+                        style={styles.closeButton}>
+                        <Text style={styles.closeText}> Cancel </Text>
+                    </TouchableOpacity>
                 </View>
             </View>
-        );
-    }
-}
+            <View style={styles.listContainer}>
+                <FlatList
+                    data={categories}
+                    renderItem={(item) => Item({
+                        item: item.item, handlePressed: onGoBack
+                    })}
+                    keyExtractor={(item) => item.category}
+                />
+            </View>
+        </View>
+    )
 
-export default SearchCategory;
+}
 
 const styles = StyleSheet.create({
     container: {
         height: '100%',
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
     },
     item: {
         backgroundColor: "#fdfdfd",
@@ -136,18 +112,18 @@ const styles = StyleSheet.create({
     },
     topContainer: {
         backgroundColor: '#ffffff',
-        // height: 125,
-        width: '100%',
+    },
+    listContainer: {
+        marginHorizontal: 10
     },
     headerContainer: {
         zIndex: -1,
-        width: '100%',
+        width: '95%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        padding: 20,
-        borderBottomWidth: 0.5,
+        marginHorizontal: 20,
         borderBottomColor: 'lightgrey',
-        marginTop: 40,
+        marginTop: 50,
     },
     headerLeft: {
         flexDirection: 'row',
@@ -156,30 +132,42 @@ const styles = StyleSheet.create({
     },
     searchInput:{
         marginLeft: 10,
-        width: '100%',
+        width: '80%',
     },
     searchTextContainer: {
-        backgroundColor: '#eaebf6',
         width: '80%',
+        backgroundColor: Colors.light.grey,
         borderColor: '#e8e8e8',
-        borderWidth: 1,
+        borderBottomWidth: 0.5,
         borderTopWidth: 0,
         borderLeftWidth: 0,
         borderRightWidth: 0,
         borderRadius: 10,
         marginVertical: 5,
         flexDirection: 'row',
+        justifyContent: 'space-between',
         padding: 10,
     },
     closeButton: {
+        width: '20%',
         marginLeft: 5,
         flexDirection: 'row',
         alignSelf: 'center',
-        // marginTop: 7,
         paddingEnd: 10,
     },
     closeText: {
         fontSize: 17,
         color: Colors.light.tint,
     },
-});
+    addIcon: {
+        fontSize: 20,
+        color: Colors.light.tint,
+        marginHorizontal: 3,
+    },
+    addButton: {
+        borderColor: Colors.light.tint,
+        borderWidth: 1,
+        borderRadius: 5,
+
+    }
+})

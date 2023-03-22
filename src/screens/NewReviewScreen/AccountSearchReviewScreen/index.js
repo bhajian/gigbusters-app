@@ -109,6 +109,10 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
         bottomSheetModalRef.current.present()
     }
 
+    function handlePhonebookPress() {
+
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.bottomContainer}>
@@ -151,7 +155,7 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
                             placeholder={"Search..."}
                         />
                 }
-                <TouchableOpacity style={styles.selectButton} onPress={handlePresentPress}>
+                <TouchableOpacity style={styles.selectButton} onPress={handlePhonebookPress}>
                     <Entypo name="download" size={20} style={styles.icon} />
                 </TouchableOpacity>
             </View>
@@ -227,12 +231,6 @@ const styles = StyleSheet.create({
     selectButton: {
         flexDirection: 'row',
         backgroundColor: Colors.light.grey,
-        // borderRadius: 5,
-        // width: '15%',
-        // paddingVertical: 7,
-        // marginLeft: 7,
-        // alignSelf: 'flex-end',
-        // justifyContent: 'flex-end',
     },
     searchInput:{
         marginLeft: 10,
@@ -255,7 +253,6 @@ const styles = StyleSheet.create({
     },
     searchTextContainer: {
         backgroundColor: Colors.light.grey,
-        // marginHorizontal: 5,
         borderColor: '#e8e8e8',
         borderBottomWidth: 1,
         borderRadius: 5,

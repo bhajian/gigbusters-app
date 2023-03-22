@@ -9,11 +9,6 @@ import {useNavigation} from "@react-navigation/native";
 import users from '../../../../../assets/data/users';
 
 export default function RequestDetailTopContainer({task}) {
-    console.log(task)
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('phone');
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const navigation = useNavigation();
 
     useEffect(() => {
 
@@ -72,16 +67,16 @@ const styles = StyleSheet.create({
         paddingEnd: 10,
     },
     image: {
-        width: 70,
-        height: 70,
-        borderRadius: 2,
+        width: 80,
+        height: 80,
+        borderRadius: 10,
         marginHorizontal: 5,
     },
     headerExtensionContainer: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 10,
+        paddingHorizontal: 5,
     },
     rightContainer: {
         flexDirection: 'row',

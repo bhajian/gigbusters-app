@@ -2,13 +2,10 @@ import React, {useCallback, useEffect, useState} from "react";
 import {
     View,
     Text,
-    ImageBackground,
     Pressable,
-    TextInput,
     StyleSheet,
-    SafeAreaView,
     ScrollView,
-    Dimensions, Image
+    Image,
 } from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import CustomSettingRowButton from "../../../components/CustomSettingRowButton";
@@ -19,7 +16,7 @@ import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import * as ImagePicker from "expo-image-picker";
 import {Auth, Storage} from 'aws-amplify';
-import loading from '../../../../assets/images/loading.gif'
+import loading from '../../../../assets/images/loading2.gif'
 
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
@@ -96,7 +93,7 @@ const EditProfileScreen = (props) => {
             ),
             headerRight: () => (
                 saved ?
-        <Image source={loading} style={{width: 40, height: 30}} />
+        <Image source={loading} style={{width: 30, height: 30}} />
                 :
         <Pressable
             onPress={onSavePress}
@@ -171,7 +168,7 @@ const EditProfileScreen = (props) => {
                 />
                 {
                     photoChange ?
-                        <Image source={loading} style={{width: 40, height: 30}} />
+                        <Image source={loading} style={{width: 30, height: 30}} />
                         :
                         <Pressable
                             style={styles.photoChange}

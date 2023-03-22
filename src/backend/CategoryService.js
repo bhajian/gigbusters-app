@@ -1,20 +1,35 @@
 import {API} from "aws-amplify";
-import {join} from "path";
 
 const reviewApiName = 'GigbusterApi'
 const reviewPath = '/category'
-const queryPath = '/query?'
 
 let profile = null
-export class ProfileService {
+export class CategoryService {
 
     constructor() {
 
     }
-    async querycategories(params) {
-        const path = reviewPath + queryPath
+
+    async createCategory(params) {
+        const path = reviewPath
         const data = {
-            queryStringParameters: params
+            body: {
+                category: params.category,
+                ranking: 0
+            }
+        }
+        const category = await API.put(reviewApiName, path, data)
+        return category
+    }
+
+    async queryCategories(params) {
+        const path = `${reviewPath}`
+        const data = {
+            queryStringParameters: {
+                prefix: params.prefix,
+                limit: params.limit,
+                lastEvaluatedCategory: params.lastEvaluatedCategory
+            }
         }
         const reviews = await API.get(reviewApiName, path, data)
         return reviews
