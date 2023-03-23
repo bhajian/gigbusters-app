@@ -1,6 +1,4 @@
 import {API, Storage} from "aws-amplify"
-import async from "async";
-
 const taskApiName = 'GigbusterApi'
 const taskPath = '/task'
 const applicantPath = '/applicant'
@@ -203,6 +201,10 @@ export class TaskService {
 
     async getMyTasks() {
         return myTasks
+    }
+
+    async clearMyTasks() {
+        myTasks = []
     }
 
     getNeighboursTasks() {

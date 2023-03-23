@@ -5,10 +5,10 @@ import Colors from '../constants/Colors';
 import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {FontAwesome, FontAwesome5, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
-import {GigRequestNavigation} from "./GigRequestNavigation";
 import {ProfileNavigation} from "./ProfileNavigation";
 import {ConsumerActivityNavigation} from "./ConsumerActivityNavigation";
 import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
+import {MessageNavigation} from "./MessageNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,24 +16,6 @@ const ConsumerTabNavigator = props => {
 
     return (
         <Tab.Navigator screenOptions={{}}>
-            {/*<Tab.Screen*/}
-            {/*    name={'GigRequest'}*/}
-            {/*    options={{*/}
-            {/*        tabBarActiveTintColor: Colors.light.tint,*/}
-            {/*        headerShown: false,*/}
-            {/*        tabBarIcon: ({color}) => (*/}
-            {/*            <Fontisto name="home" size={25} color={color}/>*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    {screenProps => (*/}
-            {/*        <GigRequestNavigation*/}
-            {/*            {...screenProps}*/}
-            {/*            updateAuthState={props.updateAuthState}*/}
-            {/*        />*/}
-
-            {/*    )}*/}
-            {/*</Tab.Screen>*/}
             <Tab.Screen
                 name={'GigRequest'}
                 component={ConsumerActivityNavigation}
@@ -66,6 +48,17 @@ const ConsumerTabNavigator = props => {
                     headerShown: false,
                     tabBarIcon: ({color}) => (
                         <Fontisto name="react" size={25} color={color}/>
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name={'Messages'}
+                component={MessageNavigation}
+                options={{
+                    tabBarActiveTintColor: Colors.light.tint,
+                    headerShown: false,
+                    tabBarIcon: ({color}) => (
+                        <MaterialIcons name="message" size={25} color={color}/>
                     ),
                 }}
             />

@@ -9,11 +9,13 @@ const Message = ({message}) => {
     const [isMe, setIsMe] = useState(false);
     const { width } = useWindowDimensions()
 
+    console.log(message)
+
     useEffect(() => {
         const isMyMessage = async () => {
             const authUser = await Auth.currentAuthenticatedUser();
 
-            setIsMe(message.userID === authUser.attributes.sub);
+            setIsMe(message.from.id === 'u33');
         };
 
         isMyMessage().then(r => {});

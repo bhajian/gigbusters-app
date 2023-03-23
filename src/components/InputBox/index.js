@@ -6,6 +6,7 @@ import {
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "react-native-get-random-values";
+import Colors from "../../constants/Colors";
 
 const InputBox = ({ chatroom }) => {
     const [text, setText] = useState("");
@@ -60,7 +61,7 @@ const styles = StyleSheet.create({
         borderWidth: StyleSheet.hairlineWidth,
     },
     send: {
-        backgroundColor: "royalblue",
+        backgroundColor: Colors.light.tint,
         padding: 7,
         borderRadius: 15,
         overflow: "hidden",

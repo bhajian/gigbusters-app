@@ -15,38 +15,34 @@ Amplify.configure(awsconfig);
 
 export default function App() {
     const [userStatus, setUserStatus] = useState('initializing')
-    const [user, setUser] = useState('initializing')
-    const [customState, setCustomStatus] = useState('initializing')
     const profileService = new ProfileService()
     const taskService = new TaskService()
 
     useEffect(() => {
-        const unsubscribe = Hub.listen("auth", ({ payload: { event, data } }) => {
-            switch (event) {
-                case "signIn":
-                    checkAuthState()
-                        .then(() => {
-                        })
-                        .catch(e => {
-                            console.error(e);
-                        })
-                    break;
-                case "signOut":
-                    setUserStatus('loggedOut')
-                    break;
-                // case "customOAuthState":
-                //     setCustomStatus(data);
+        const unsubscribe = Hub.listen("auth",
+            ({ payload: { event, data } }) => {
+            if(event === 'parsingCallbackUrl'){
+                setUserStatus('initializing')
             }
+            checkAuthState()
+                .then(() => {
+                })
+                .catch(e => {
+                    console.error(e);
+                })
         })
-
+        checkAuthState()
+            .then(() => {
+            })
+            .catch(e => {
+                console.error(e);
+            })
         return unsubscribe
-
     }, [])
 
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
-            console.log(currentUser)
             const profile = await profileService.fetchProfile()
             await taskService.fetchMyTasks()
             if(currentUser) {
@@ -59,8 +55,6 @@ export default function App() {
                 setUserStatus('loggedOut')
             }
         } catch (err) {
-            console.log('ERRRRR')
-            console.log(err)
             setUserStatus('loggedOut')
         }
     }
