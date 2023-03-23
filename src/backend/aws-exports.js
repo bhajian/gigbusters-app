@@ -1,14 +1,14 @@
 import {Auth} from "aws-amplify";
 
 const awsmobile = {
-    "aws_project_region": "us-east-1",
-    "aws_content_delivery_bucket": "fameorbitportal-20230201142504-hostingbucket-dev",
-    "aws_content_delivery_bucket_region": "us-east-1",
-    "aws_content_delivery_url": "https://d1j1495gocjvnj.cloudfront.net",
+    // "aws_project_region": "us-east-1",
+    // "aws_content_delivery_bucket": "fameorbitportal-20230201142504-hostingbucket-dev",
+    // "aws_content_delivery_bucket_region": "us-east-1",
+    // "aws_content_delivery_url": "https://d1j1495gocjvnj.cloudfront.net",
     Auth: {
 
         // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-        identityPoolId: 'us-east-1:354dcde7-e500-44c3-b7ba-e30b1801934f',
+        identityPoolId: 'us-east-1:5be7a2cd-2d01-4af0-bc35-9ca58fab26da',
 
         // REQUIRED - Amazon Cognito Region
         region: 'us-east-1',
@@ -18,10 +18,10 @@ const awsmobile = {
         identityPoolRegion: 'us-east-1',
 
         // OPTIONAL - Amazon Cognito User Pool ID
-        userPoolId: 'us-east-1_OL1w4ne45',
+        userPoolId: 'us-east-1_CzI0ql6Mi',
 
         // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-        userPoolWebClientId: '59j60vfqh642vhqaql9kfen8hb',
+        userPoolWebClientId: '1ssolv5otr9st30m8qkuqgmdb5',
 
         // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
         mandatorySignIn: false,
@@ -30,45 +30,29 @@ const awsmobile = {
         // 'code' is used for Auth.confirmSignUp, 'link' is used for email link verification
         signUpVerificationMethod: 'code', // 'code' | 'link'
 
-        // OPTIONAL - Configuration for cookie storage
-        // Note: if the secure flag is set to true, then the cookie transmission requires a secure protocol
-        // cookieStorage: {
-        //     // REQUIRED - Cookie domain (only required if cookieStorage is provided)
-        //     domain: 'auth.dev2.fameorbit.com',
-        //     // OPTIONAL - Cookie path
-        //     path: '/',
-        //     // OPTIONAL - Cookie expiration in days
-        //     expires: 365,
-        //     // OPTIONAL - See: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie/SameSite
-        //     sameSite: "none",
-        //     // OPTIONAL - Cookie secure flag
-        //     // Either true or false, indicating if the cookie transmission requires a secure protocol (https).
-        //     secure: true
-        // },
-
         // OPTIONAL - customized storage object
         // storage: MyStorage,
 
         // OPTIONAL - Manually set the authentication flow type. Default is 'USER_SRP_AUTH'
-        // authenticationFlowType: 'USER_PASSWORD_AUTH',
+        authenticationFlowType: 'USER_PASSWORD_AUTH',
 
         // OPTIONAL - Manually set key value pairs that can be passed to Cognito Lambda Triggers
         // clientMetadata: { myCustomKey: 'myCustomValue' },
 
         // OPTIONAL - Hosted UI configuration
-        // oauth: {
-        //     domain: 'auth.dev2.fameorbit.com',
-        //     scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-        //     redirectSignIn: 'https://example.com/',
-        //     redirectSignOut: 'http://example:3000/logout/',
-        //     responseType: 'code' // or 'token', note that REFRESH token will only be generated when the responseType is code
-        // }
+        oauth: {
+            domain: 'auth.dev.gigbusters.app',
+            scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+            redirectSignIn: 'exp://127.0.0.1:19000/--/',
+            redirectSignOut: 'myapp://signout',
+            responseType: 'token' // or 'token', note that REFRESH token will only be generated when the responseType is code
+        }
     },
     API: {
         endpoints: [
             {
                 name: "GigbusterApi",
-                endpoint: "https://api.dev2.fameorbit.com",
+                endpoint: "https://api.dev.gigbusters.app",
                 custom_header: async () => {
                     return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }
                 }
@@ -79,7 +63,7 @@ const awsmobile = {
         AWSS3: {
             bucket: '',
             region: 'us-east-1',
-            identityPoolId: 'us-east-1:354dcde7-e500-44c3-b7ba-e30b1801934f'
+            identityPoolId: 'us-east-1:5be7a2cd-2d01-4af0-bc35-9ca58fab26da'
         }
     }
 };

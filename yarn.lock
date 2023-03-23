@@ -68,6 +68,15 @@
     amazon-cognito-identity-js "6.1.2"
     tslib "^1.8.0"
 
+"@aws-amplify/auth@^5.1.15":
+  version "5.1.15"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/auth/-/auth-5.1.15.tgz#efb9f77f6b22a286a59f2e40f1ce06a5d7caf4c5"
+  integrity sha512-KsVTlNEDCK5ceQYMpH3JjY2QTefVJ1bbe4Jmnp43XaJEpVgRCDRp19DBM4TvguE2epXu77RMSEwVtOHQf5sXZA==
+  dependencies:
+    "@aws-amplify/core" "5.1.4"
+    amazon-cognito-identity-js "6.1.2"
+    tslib "^1.8.0"
+
 "@aws-amplify/cache@5.0.11":
   version "5.0.11"
   resolved "https://registry.npmjs.org/@aws-amplify/cache/-/cache-5.0.11.tgz"
@@ -80,6 +89,21 @@
   version "5.0.11"
   resolved "https://registry.npmjs.org/@aws-amplify/core/-/core-5.0.11.tgz"
   integrity sha512-Gcr1yzzI/iBNa7psstyYhyc6QlOc9zknx1J7VaVQ2b7qTGfh6sykDRNvk2vq0qEDNnhDhPHtLx/bQsGeyuA0Lg==
+  dependencies:
+    "@aws-crypto/sha256-js" "1.2.2"
+    "@aws-sdk/client-cloudwatch-logs" "3.6.1"
+    "@aws-sdk/client-cognito-identity" "3.6.1"
+    "@aws-sdk/credential-provider-cognito-identity" "3.6.1"
+    "@aws-sdk/types" "3.6.1"
+    "@aws-sdk/util-hex-encoding" "3.6.1"
+    tslib "^1.8.0"
+    universal-cookie "^4.0.4"
+    zen-observable-ts "0.8.19"
+
+"@aws-amplify/core@5.1.4":
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/@aws-amplify/core/-/core-5.1.4.tgz#4c28f7476cb7df87584688b65d3aa6aee5fb286d"
+  integrity sha512-JZuj2FP+zGFqgyaJ3EQCQTJNzkzXhxVD4/8e7ZOna/o1pLuJWWZ0YcozPNS2gX1upDTsryha7o31UUdzyemzig==
   dependencies:
     "@aws-crypto/sha256-js" "1.2.2"
     "@aws-sdk/client-cloudwatch-logs" "3.6.1"
@@ -6232,14 +6256,9 @@ dag-map@~1.0.0:
   resolved "https://registry.npmjs.org/dag-map/-/dag-map-1.0.2.tgz"
   integrity sha512-+LSAiGFwQ9dRnRdOeaj7g47ZFJcOUPukAP8J3A3fuZ1g9Y44BG+P1sgApjLXTQPOzC4+7S9Wr8kXsfpINM4jpw==
 
-dayjs@^1.11.7:
+dayjs@^1.11.7, dayjs@^1.8.15:
   version "1.11.7"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.11.7.tgz#4b296922642f70999544d1144a2c25730fce63e2"
-  integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
-
-dayjs@^1.8.15:
-  version "1.11.7"
-  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.7.tgz"
   integrity sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.0:

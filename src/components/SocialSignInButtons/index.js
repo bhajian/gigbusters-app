@@ -1,19 +1,26 @@
 import React from 'react';
 import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {FontAwesome5} from "@expo/vector-icons";
+import {Auth} from "aws-amplify"
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
 
 const SocialSignInButtons = () => {
     const onSignInFacebook = () => {
         console.warn('onSignInFacebook');
-    };
+    }
 
-    const onSignInGoogle = () => {
-        console.warn('onSignInGoogle');
-    };
+    const onSignInGoogle = async () => {
+        try{
+            await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google,})
+        } catch (e) {
+            console.log(e)
+        }
+
+    }
 
     const onSignInApple = () => {
         console.warn('onSignInApple');
-    };
+    }
 
     return (
         <>
@@ -34,7 +41,7 @@ const SocialSignInButtons = () => {
                 </Pressable>
 
                 <Pressable
-                    onPress={onSignInFacebook}
+                    onPress={onSignInGoogle}
                     style={styles.GOOG_container}>
                     <FontAwesome5
                         style={styles.icon}

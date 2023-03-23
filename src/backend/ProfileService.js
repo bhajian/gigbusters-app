@@ -16,7 +16,14 @@ export class ProfileService {
         const data = {}
         const profiles = await API.get(profileApiName, profilePath, data)
         profile = (profiles[0] ? profiles[0] : null)
-        profile.mainPhotoUrl = await this.getProfileMainPhoto()
+        if(profile && profile.photos){
+            const mainPhotos = profile.photos
+                .filter((item) => item.type === 'main')
+            if(mainPhotos && mainPhotos.length > 0){
+                const mainPhoto = mainPhotos[0]
+                profile.mainPhotoUrl = await this.getProfileMainPhoto(mainPhoto)
+            }
+        }
         return profile
     }
 
@@ -45,13 +52,11 @@ export class ProfileService {
         return profile
     }
 
-    async getProfileMainPhoto() {
+    async getProfileMainPhoto(photo) {
         try{
-            const mainPhoto = profile.photos
-                .filter((item) => item.type === 'main')
-            const key = mainPhoto[0].key
-            const bucket = mainPhoto[0].bucket
-            const identityId = mainPhoto[0].identityId
+            const key = photo.key
+            const bucket = photo.bucket
+            const identityId = photo.identityId
             const signedURL = await Storage.get(key, {
                 bucket: bucket,
                 level: 'protected',

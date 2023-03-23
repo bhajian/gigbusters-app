@@ -97,7 +97,7 @@ const CreateProfileScreen = (props) => {
                                 style={styles.icon}
                                 name={"sports-handball"}
                             />
-                            <RadioButton.Item label="I am Provide a Service." value="WORKER" style={styles.radioButton} />
+                            <RadioButton.Item label="I Provide a Service." value="WORKER" style={styles.radioButton} />
                         </View>
                     </RadioButton.Group>
                 </View>
