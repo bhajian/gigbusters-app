@@ -31,7 +31,7 @@ export default function NewReviewScreen({navigation, route}) {
 
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(3)
-    const [revieweeAccountType, setRevieweeAccountType] = useState('phone')
+    const [revieweeAccountType, setRevieweeAccountType] = useState('gigbuster')
     const [revieweeUri, setRevieweeUri] = useState(null)
     const [images, setImages] = useState([])
     const [name, setName] = useState('')

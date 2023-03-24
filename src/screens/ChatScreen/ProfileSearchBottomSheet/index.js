@@ -37,7 +37,7 @@ export default function ProfileSearchBottomSheet({bottomSheetModalRef, handleShe
         bottomSheetModalRef.current?.collapse();
     }, []);
     const handleClosePress = useCallback(() => {
-        bottomSheetModalRef.current?.close();
+        bottomSheetModalRef.current?.close()
     }, []);
 
     const renderBackdrop = useCallback(
@@ -55,16 +55,12 @@ export default function ProfileSearchBottomSheet({bottomSheetModalRef, handleShe
         const profilesObj = await profileService.listProfiles({
             limit: 20,
         })
-        console.log(profilesObj)
         setProfiles(profilesObj)
     }
 
-    async function onChatPressed(cardIndex) {
-        navigation.navigate('ChatScreen')
-    }
-
     async function onProfilePressed(params) {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
+        navigation.navigate('ChatScreen')
+        bottomSheetModalRef.current?.close()
     }
 
     return (
@@ -99,7 +95,6 @@ export default function ProfileSearchBottomSheet({bottomSheetModalRef, handleShe
                                         return(
                                             <ProfileListItem
                                                 item={item}
-                                                onChatPressed={onChatPressed}
                                                 onProfilePressed={onProfilePressed}
                                             />
                                         )

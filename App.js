@@ -46,7 +46,7 @@ export default function App() {
             const profile = await profileService.fetchProfile({userId: currentUser.sub})
             await taskService.fetchMyTasks()
             if(currentUser) {
-                if (profile) {
+                if (profile && profile.userId) {
                     setUserStatus('loggedIn')
                 } else {
                     setUserStatus('profileCreation')

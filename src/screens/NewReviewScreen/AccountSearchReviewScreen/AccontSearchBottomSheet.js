@@ -5,11 +5,11 @@ import {
     Text,
     Pressable, KeyboardAvoidingView, SafeAreaView, Platform, ScrollView,
 } from 'react-native';
-
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Colors from "../../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
 import AccountSearchReviewScreen from "./index";
+import {ProfileService} from "../../../backend/ProfileService";
 
 export default function AccontSearchBottomSheet({bottomSheetModalRef, handleSheetChanges, getValueFromBottomSheet}) {
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
@@ -40,14 +40,10 @@ export default function AccontSearchBottomSheet({bottomSheetModalRef, handleShee
         (props) => (
             <BottomSheetBackdrop {...props} pressBehavior={backdropPressBehavior} />
         ), [backdropPressBehavior]
-    );
-
-    useEffect(() => {
-
-    }, []);
+    )
 
     // variables
-    const snapPoints = useMemo(() => ['25%', '80%'], []);
+    const snapPoints = useMemo(() => ['95%', '95%'], []);
 
     return (
         <BottomSheetModalProvider>

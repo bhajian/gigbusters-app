@@ -66,6 +66,11 @@ export default function ApplicantRequestItem(props) {
     }, [categories])
 
     async function addCategoryHook(value) {
+        value.key = categories.length
+        value.backgroundColor = Colors.light.tint
+        value.textColor = '#fff'
+
+        setSelectedValue(value)
         setCategories([value, ...categories])
     }
 

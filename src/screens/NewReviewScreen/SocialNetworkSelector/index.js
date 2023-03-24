@@ -14,7 +14,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 
 export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetChanges}) {
-    const [value, setValue] = React.useState('phone')
+    const [value, setValue] = React.useState('gigbuster')
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
 
     const radioChange = useCallback((value) => {
@@ -78,6 +78,13 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
                             onValueChange={radioChange}
                             value={value}
                         >
+                            <View style={styles.radioRow}>
+                                <MaterialCommunityIcons
+                                    style={styles.icon}
+                                    name={"orbit"}
+                                />
+                                <RadioButton.Item label="Gigbuster" value="gigbuster" style={styles.radioButton} />
+                            </View>
                             <View style={styles.radioRow}>
                                 <Entypo
                                     style={styles.icon}

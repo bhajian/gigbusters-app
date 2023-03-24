@@ -1,5 +1,5 @@
 import React, {Component, useCallback, useEffect, useRef, useState} from "react";
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, ScrollView} from "react-native";
+import {StyleSheet, Text, View, FlatList, TouchableOpacity, TextInput, ScrollView, Image} from "react-native";
 import Colors from "../../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
 import PhoneInput from "react-phone-number-input/react-native-input";
@@ -7,34 +7,18 @@ import SocialNetworkSelector from "../SocialNetworkSelector";
 import Entypo from "react-native-vector-icons/Entypo";
 import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import CustomButton from "../../../components/CustomButton";
-
-// const DATA = [
-//     {
-//         id: "1",
-//         title: "Johnathan Mcain",
-//     },
-//     {
-//         id: "2",
-//         title: "STL",
-//     },
-// ];
-//
-// const Item = ({ title }) => {
-//     return (
-//         <View style={styles.item}>
-//             <UserAvatar
-//                 size={35}
-//                 active
-//                 src="https://m.media-amazon.com/images/M/MV5BMjE4MDI3NDI2Nl5BMl5BanBnXkFtZTcwNjE5OTQwOA@@._V1_.jpg"
-//             />
-//             <Text style={styles.nameText}>{title}</Text>
-//         </View>
-//     );
-// };
-//
-// const renderItem = ({ item }) => <Item title={item.title} />;
+import loading2 from "../../../../assets/images/loading2.gif";
+import ProfileListItem from "../../../components/ProfileListItem";
+import {ProfileService} from "../../../backend/ProfileService";
+import tipoffs from "../../../../assets/data/tipoffs";
 
 const SocialIcon = ({ name }) => {
+    if(name === 'gigbuster'){
+        return <MaterialCommunityIcons
+            style={styles.icon}
+            name={"orbit"}
+        />
+    }
     if(name === 'phone'){
         return <Entypo
                     style={styles.icon}
@@ -81,10 +65,14 @@ const SocialIcon = ({ name }) => {
 }
 
 export default function AccountSearchReviewScreen({navigation, route, handleChanges}) {
-    const [accountType, setAccountType] = useState('phone');
+    const [accountType, setAccountType] = useState('gigbuster');
     const [phone, setPhone] = useState('+1');
     const [uri, setUri] = useState('');
-    const bottomSheetModalRef = useRef(null);
+    const bottomSheetModalRef = useRef(null)
+    const [profiles, setProfiles] = useState([])
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+
+    const profileService = new ProfileService()
 
     const handleSheetChanges = useCallback((value) => {
         setAccountType(value)
@@ -99,17 +87,28 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
 
     const cancelPressed = useCallback((value) => {
 
-    }, []);
-
-    useEffect(() => {
-
-    }, []);
+    }, [])
 
     function handlePresentPress() {
         bottomSheetModalRef.current.present()
     }
 
     function handlePhonebookPress() {
+
+    }
+
+    useEffect(() => {
+        loadData().then(r => {})
+    }, [])
+
+    async function loadData() {
+        const profilesObj = await profileService.listProfiles({
+            limit: 20,
+        })
+        setProfiles(profilesObj)
+    }
+
+    async function onProfilePressed(params) {
 
     }
 
@@ -156,10 +155,28 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
                         />
                 }
                 <TouchableOpacity style={styles.selectButton} onPress={handlePhonebookPress}>
-                    <Entypo name="download" size={20} style={styles.icon} />
+                    <FontAwesome5 name="chevron-circle-right" size={20} style={styles.icon} />
                 </TouchableOpacity>
             </View>
-            <ScrollView></ScrollView>
+            <ScrollView>
+                {
+                    dataBeingLoaded ?
+                        <Image source={loading2} style={styles.loading2} />
+                        :
+                        <FlatList
+                            data={profiles}
+                            renderItem={({item}) => {
+                                return(
+                                    <ProfileListItem
+                                        item={item}
+                                        onProfilePressed={onProfilePressed}
+                                    />
+                                )
+                            }}
+                            keyExtractor={(item) => item.userId}
+                        />
+                }
+            </ScrollView>
 
             <SocialNetworkSelector
                 handleSheetChanges={handleSheetChanges}

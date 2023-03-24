@@ -1,6 +1,5 @@
 import React, {useState} from "react"
 import {View, TextInput, Text, FlatList, Pressable, TouchableOpacity, StyleSheet} from "react-native"
-import SuggestionRow from "./SuggestionRow";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete"
 import * as Location from 'expo-location'
 import {ScreenWidth} from "react-native-elements/dist/helpers"
@@ -8,9 +7,8 @@ import Colors from "../../../constants/Colors"
 
 Location.installWebGeolocationPolyfill()
 
-
 const LocationSelectorScreen = ({route, navigation}) => {
-    const {onGoBack} = (route.params ? route.params : null)
+    const {onGoBack} = (route && route.params ? route.params : null)
 
     return (
         <View style={styles.container}>
@@ -26,11 +24,13 @@ const LocationSelectorScreen = ({route, navigation}) => {
                 currentLocation={true}
                 currentLocationLabel='Current location'
                 onPress={(data, details ) => {
-                    onGoBack({
-                        locationName: (data.description ? data.description : data.vicinity),
-                        coordinates: details.geometry.location
-                    })
-                    navigation.goBack()
+                    if(onGoBack){
+                        onGoBack({
+                            locationName: (data.description ? data.description : data.vicinity),
+                            coordinates: details.geometry.location
+                        })
+                        navigation.goBack()
+                    }
                 }}
                 styles={{
                     textInput: styles.textInput,

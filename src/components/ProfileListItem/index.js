@@ -3,10 +3,10 @@ import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} f
 import Colors from "../../constants/Colors";
 import {AntDesign} from "@expo/vector-icons";
 
-export default function ProfileListItem({item, onChatPressed}) {
+export default function ProfileListItem({item, onProfilePressed}) {
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.mainContainer} onPress={e => onChatPressed(item)}>
+            <TouchableOpacity style={styles.mainContainer} onPress={e => onProfilePressed(item)}>
                 <View style={styles.leftContainer}>
                     <Image source={{uri: item.mainPhotoUrl}} style={styles.image} />
                     <View style={styles.nameContainer}>
