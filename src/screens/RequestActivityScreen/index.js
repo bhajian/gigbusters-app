@@ -72,7 +72,7 @@ export default function RequestActivityScreen({route}) {
 
     const onNewRequestPress = () => {
         navigation.navigate('GigRequestDetailScreen')
-    };
+    }
 
     return (
         <SafeAreaView style={styles.container}>

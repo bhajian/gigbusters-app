@@ -30,7 +30,7 @@ export function ReviewNavigation(props) {
                 name={'NewReviewScreen'}
                 component={NewReviewScreen}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                 }}
             />
             <Stack.Screen
@@ -59,7 +59,7 @@ export function ReviewNavigation(props) {
                 name={'MoreInfoSubmissionScreen'}
                 component={MoreInfoSubmissionScreen}
                 options={{
-                    headerShown: false,
+                    headerShown: true,
                 }}
             />
             <Stack.Screen

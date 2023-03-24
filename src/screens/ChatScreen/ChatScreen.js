@@ -52,15 +52,15 @@ const ChatScreen = (props) => {
                     />
                 </Pressable>
             ),
-
+            headerTintColor: Colors.light.tint
         })
     }, [])
 
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 90}
-            style={styles.bg}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 10}
+            style={styles.container}
         >
             <ImageBackground source={bg} style={styles.bg}>
                 <FlatList
@@ -84,10 +84,10 @@ const styles = StyleSheet.create({
         height: '100%'
     },
     bg: {
-        flex: 1,
+        flex: 2,
     },
     list: {
-        padding: 10,
+        padding: 5,
     },
     avatar: {
         flexDirection: 'row'

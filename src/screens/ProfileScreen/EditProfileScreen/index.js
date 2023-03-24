@@ -101,13 +101,13 @@ const EditProfileScreen = (props) => {
                 opacity: pressed ? 0.5 : 1,
                 marginRight: 10,
             })}>
-            <Text style={{color: '#0f66a9', fontSize: 18}}>Save</Text>
+            <Text style={{color: Colors.light.tint, fontSize: 18}}>Save</Text>
         </Pressable>
             ),
+            headerTintColor: Colors.light.tint
         })
-        return
 
-    }, [onSavePress, saved]);
+    }, [onSavePress, saved])
 
     const onPhotoPressed = async() => {
         try {

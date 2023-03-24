@@ -7,11 +7,11 @@ import {
     Image,
     View,
     Text,
-    ScrollView, Dimensions, KeyboardAvoidingView,
+    ScrollView, Dimensions, KeyboardAvoidingView, Pressable,
 } from 'react-native';
 import {Storage} from 'aws-amplify';
 import Colors from '../../constants/Colors';
-import {MaterialCommunityIcons} from "@expo/vector-icons";
+import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
@@ -22,6 +22,8 @@ import * as ImagePicker from "expo-image-picker";
 import { Rating, AirbnbRating } from 'react-native-ratings'
 import STAR_IMAGE from '../../../assets/images/star.png'
 import ImageList from "../../components/ImageList";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import loading from "../../../assets/images/loading2.gif";
 
 let {width, height} = Dimensions.get('window')
 
@@ -57,6 +59,29 @@ export default function NewReviewScreen({navigation, route}) {
     useEffect(() => {
         bottomSheetModalRef.current.present()
     }, [bottomSheetModalRef])
+
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            tabBarIcon: ({color}) => (
+                <Fontisto name="home" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text> </Text>
+            ),
+            headerRight: () => (
+                <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                    <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+
+    }, [onSubmitPress])
 
     async function getCurrentUserData() {
         const profile = profileService.getProfile()
@@ -107,21 +132,9 @@ export default function NewReviewScreen({navigation, route}) {
         <KeyboardAvoidingView
             style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 10}
         >
             <ScrollView>
-                <View style={styles.headerContainer}>
-                    <View style={styles.headerLeft}>
-                        <TouchableOpacity
-                            onPress={() => navigation.goBack()}
-                            style={styles.backButton}>
-                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
-                            <Text style={styles.backIcon}> Back </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
-                        <Text style={styles.buttonText}>Next</Text>
-                    </TouchableOpacity>
-                </View>
                 <View style={styles.newReviewContainer}>
                     <View style={styles.reviewUsersContainer}>
                         <View style={styles.avatarReviewerContainer}>
@@ -215,7 +228,6 @@ export default function NewReviewScreen({navigation, route}) {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 50,
         backgroundColor: 'white',
         height: '100%',
     },

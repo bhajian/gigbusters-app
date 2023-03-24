@@ -5,7 +5,7 @@ import WorkerTabNavigator from "./WorkerTabNavigator";
 import {ProfileService} from "../backend/ProfileService";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
-import ChatScreen from "../screens/ChatScreen";
+import ChatScreen from "../screens/ChatScreen/ChatScreen";
 
 const Stack = createNativeStackNavigator()
 

@@ -17,6 +17,8 @@ import UserAvatar from "react-native-user-avatar";
 
 export default function ReviewScreen(props) {
     const [name, setName] = useState('')
+    const [profileImage, setProfileImage] = useState(null)
+
     const navigation = useNavigation()
     const bottomSheetModalRef = useRef(null)
     const profileService = new ProfileService()
@@ -25,6 +27,10 @@ export default function ReviewScreen(props) {
         const profile = profileService.getProfile()
         if (profile && profile.name) {
             setName(profile.name)
+        }
+        if(profile && profile.photos){
+            const url = profile.mainPhotoUrl
+            setProfileImage(url)
         }
     }
 
@@ -65,8 +71,9 @@ export default function ReviewScreen(props) {
                 headerLeft: () => (
                     <UserAvatar
                         size={35}
+                        active
                         name={name}
-                        // src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                        src={profileImage}
                     />
                 ),
             })

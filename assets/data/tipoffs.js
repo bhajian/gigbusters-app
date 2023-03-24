@@ -104,7 +104,7 @@ const tipoffs= [
             id: 'u5',
             username: 'Tomjeffery',
             name: 'Thomas Jeffery',
-            image: 'https://static.more.com/wp-content/uploads/2014/07/25214432/SEI_74430577.jpg',
+            image: 'https://www.jefferydeaver.com/wp-content/uploads/2021/03/Niko-Giovanni-Coniglio.png',
         },
         from: {
             id: 'u33',

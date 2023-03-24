@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginTop: 5,
+        marginVertical: 5,
     },
     iconContainer: {
         flexDirection: "row",

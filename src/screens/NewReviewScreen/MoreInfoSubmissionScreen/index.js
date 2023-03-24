@@ -2,9 +2,6 @@ import React, {useEffect, useState} from 'react';
 import {
     View,
     Text,
-    ImageBackground,
-    Pressable,
-    FlatList,
     ScrollView,
     StyleSheet,
     Dimensions,
@@ -18,17 +15,42 @@ import {LocationSelector} from "../../../components/LocationSearch";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {ReviewService} from "../../../backend/ReviewService";
 import loading from "../../../../assets/images/loading.gif";
+import Fontisto from "react-native-vector-icons/Fontisto";
 
 
 const MoreInfoSubmissionScreen = props => {
     const reviewObj = props?.route?.params
-    const [isModalVisible, setModalVisible] = useState(false)
     const [location, setLocation] = useState(reviewObj?.location)
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const reviewService = new ReviewService()
 
     const navigation = useNavigation()
 
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            tabBarIcon: ({color}) => (
+                <Fontisto name="home" size={25} color={color}/>
+            ),
+            headerTitle: () => (
+                <Text> </Text>
+            ),
+            headerRight: () => (
+                dataBeingSaved ?
+                    <Image source={loading} style={{width: 40, height: 30}} />
+                    :
+                    <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                        <Text style={styles.buttonText}>Next</Text>
+                    </TouchableOpacity>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+
+    }, [onSubmitPress, dataBeingSaved])
 
     function getCategorySelectedValue(value){
         reviewObj.category = value
@@ -65,26 +87,6 @@ const MoreInfoSubmissionScreen = props => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.criteriaContainer}>
-                <View style={styles.headerContainer}>
-                    <View style={styles.headerLeft}>
-                        <TouchableOpacity
-                            onPress={() => navigation.goBack()}
-                            style={styles.backButton}>
-                            <FontAwesome name="chevron-left" style={styles.backIcon}/>
-                            <Text style={styles.backIcon}>  Back </Text>
-                        </TouchableOpacity>
-
-                    </View>
-                    {
-                        dataBeingSaved ?
-                            <Image source={loading} style={{width: 40, height: 30}} />
-                            :
-                            <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
-                                <Text style={styles.buttonText}>Submit</Text>
-                            </TouchableOpacity>
-                    }
-
-                </View>
                 <View style={styles.locationContainer}>
                     <LocationSelector
                         locationNameParam={location.locationName}
@@ -92,11 +94,9 @@ const MoreInfoSubmissionScreen = props => {
                         style={{marginTop: 10}}
                     />
                 </View>
-                <SearchCategory navigation={navigation} style={{marginHorizontal: 10 }}/>
                 <ChoiceSelector
                     passSelectedValue={getCategorySelectedValue}
                 />
-
             </View>
 
         </ScrollView>
@@ -107,7 +107,6 @@ export default MoreInfoSubmissionScreen;
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop: 40,
         backgroundColor: '#ffffff',
         height: '100%'
     },

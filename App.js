@@ -43,7 +43,7 @@ export default function App() {
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
-            const profile = await profileService.fetchProfile()
+            const profile = await profileService.fetchProfile({userId: currentUser.sub})
             await taskService.fetchMyTasks()
             if(currentUser) {
                 if (profile) {

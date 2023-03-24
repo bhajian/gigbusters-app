@@ -39,7 +39,7 @@ export default function Reviewable({tipoff}) {
 const styles = StyleSheet.create({
     container: {
         width: '100%',
-        padding: 15,
+        padding: 5,
         borderBottomWidth: 0.5,
         borderColor: 'grey'
     },
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
     topContainer: {
         flexDirection: 'row',
         width: '100%',
-        padding: 15,
+        padding: 10,
         borderColor: 'grey'
     }
 });

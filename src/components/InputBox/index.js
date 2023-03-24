@@ -52,11 +52,10 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         backgroundColor: "white",
-        padding: 5,
+        padding: 10,
         paddingHorizontal: 10,
         marginHorizontal: 10,
-
-        borderRadius: 50,
+        borderRadius: 10,
         borderColor: "lightgray",
         borderWidth: StyleSheet.hairlineWidth,
     },
@@ -71,8 +70,8 @@ const styles = StyleSheet.create({
         alignItems: "flex-end",
     },
     selectedImage: {
-        height: 100,
-        width: 200,
+        // height: 100,
+        // width: 200,
         margin: 5,
     },
     removeSelectedImage: {

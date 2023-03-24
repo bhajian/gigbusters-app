@@ -12,10 +12,10 @@ export class ProfileService {
     constructor() {
 
     }
-    async fetchProfile() {
+    async fetchProfile(params) {
+        const path = `${profilePath}/${params.userId}`
         const data = {}
-        const profiles = await API.get(profileApiName, profilePath, data)
-        profile = (profiles[0] ? profiles[0] : null)
+        profile = await API.get(profileApiName, path, data)
         if(profile && profile.photos){
             const mainPhotos = profile.photos
                 .filter((item) => item.type === 'main')
@@ -25,6 +25,29 @@ export class ProfileService {
             }
         }
         return profile
+    }
+
+    async listProfiles(params) {
+        const data = {
+            queryStringParameters: {
+                prefix: params.prefix,
+                limit: params.limit,
+                lastEvaluatedCategory: params.lastEvaluatedCategory
+            }
+        }
+        const profiles = await API.get(profileApiName, profilePath, data)
+        for(let i=0; i< profiles.length; i++){
+            const profile = profiles[i]
+            if(profile && profile.photos){
+                const mainPhotos = profile.photos
+                    .filter((item) => item.type === 'main')
+                if(mainPhotos && mainPhotos.length > 0){
+                    const mainPhoto = mainPhotos[0]
+                    profile.mainPhotoUrl = await this.getProfileMainPhoto(mainPhoto)
+                }
+            }
+        }
+        return profiles
     }
 
     async createProfile(profileData) {
