@@ -5,7 +5,7 @@ import {ProgressBar} from "react-native-paper";
 import {FontAwesome} from "@expo/vector-icons";
 
 
-export default function RatingStack({ratings}) {
+export default function RatingStack({reviewable}) {
     async function onItemPressed() {
         console.log('Iam !')
     }
@@ -23,7 +23,7 @@ export default function RatingStack({ratings}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={0.25} color={Colors.light.tint} />
+                        <ProgressBar  progress={reviewable.fiveStar/reviewable.numberOfReviews} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -34,7 +34,7 @@ export default function RatingStack({ratings}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={0.55} color={Colors.light.tint} />
+                        <ProgressBar  progress={reviewable.fourStar/reviewable.numberOfReviews} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -44,7 +44,7 @@ export default function RatingStack({ratings}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={0.25} color={Colors.light.tint} />
+                        <ProgressBar  progress={reviewable.threeStar/reviewable.numberOfReviews} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -53,7 +53,7 @@ export default function RatingStack({ratings}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={0.25} color={Colors.light.tint} />
+                        <ProgressBar  progress={reviewable.twoStar/reviewable.numberOfReviews} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -61,7 +61,7 @@ export default function RatingStack({ratings}) {
                         <FontAwesome name={"star"}  color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={0.75} color={Colors.light.tint} />
+                        <ProgressBar  progress={reviewable.oneStar/reviewable.numberOfReviews} color={Colors.light.tint} />
                     </View>
                 </View>
 

@@ -32,7 +32,7 @@ export default function FirstScreen() {
                     autoPlay
                     loop
                 />
-                <Text style={styles.textLogo}> Gig Buster </Text>
+                <Text style={styles.textLogo}> Gig Busters </Text>
                 <View style={styles.buttonContainer}>
                     <Text style={styles.text}>
                         By registering, you confirm that you accept our{' '}Terms of Use

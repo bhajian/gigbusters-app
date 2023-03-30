@@ -6,7 +6,7 @@ import {Button} from "react-native-paper";
 export default function PhotoContainer({user}) {
     return (
         <View style={styles.container}>
-            <ProfilePicture image={user.image} />
+            <ProfilePicture image={user.profilePhotoURL} />
         </View>
     );
 }

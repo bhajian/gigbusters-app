@@ -5,7 +5,7 @@ import {
     SafeAreaView, StyleSheet
 } from "react-native";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import FameorbitFeed from "../../components/FameorbitFeed";
+import ReviewFeed from "../../components/ReviewFeed";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
@@ -82,7 +82,7 @@ export default function ReviewScreen(props) {
 
     return (
         <SafeAreaView style={styles.contentContainer}>
-            <FameorbitFeed/>
+            <ReviewFeed/>
             <NewReviewButton/>
             <ReviewableSearch
                 bottomSheetModalRef={bottomSheetModalRef}

@@ -24,7 +24,7 @@ function SignInScreen(props) {
             var lowerEmail = username.toLowerCase();
             const user = await Auth.signIn(lowerEmail, password)
             const profile = await profileService.fetchProfile({userId: user.sub})
-            if(profile){
+            if(profile && profile.userId){
                 props.updateAuthState('loggedIn');
             } else {
                 props.updateAuthState('profileCreation');

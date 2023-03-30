@@ -14,7 +14,7 @@ import Entypo from "react-native-vector-icons/Entypo";
 import Feather from "react-native-vector-icons/Feather";
 
 export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetChanges}) {
-    const [value, setValue] = React.useState('gigbuster')
+    const [value, setValue] = React.useState('gigbusters')
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
 
     const radioChange = useCallback((value) => {
@@ -51,7 +51,7 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
     }, []);
 
     // variables
-    const snapPoints = useMemo(() => ['90%', '90%'], []);
+    const snapPoints = useMemo(() => ['80%', '80%'], []);
 
     return (
         <BottomSheetModalProvider>
@@ -83,7 +83,7 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
                                     style={styles.icon}
                                     name={"orbit"}
                                 />
-                                <RadioButton.Item label="Gigbuster" value="gigbuster" style={styles.radioButton} />
+                                <RadioButton.Item label="Gigbusters" value="gigbusters" style={styles.radioButton} />
                             </View>
                             <View style={styles.radioRow}>
                                 <Entypo
@@ -92,41 +92,41 @@ export default function SocialNetworkSelector({bottomSheetModalRef, handleSheetC
                                 />
                                 <RadioButton.Item label="Phone" value="phone" style={styles.radioButton} />
                             </View>
-                            <View style={styles.radioRow}>
-                                <Entypo
-                                    style={styles.icon}
-                                    name={"instagram"}
-                                />
-                                <RadioButton.Item label="Instagram" value="instagram" style={styles.radioButton} />
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"tiktok"}
-                                />
-                                <RadioButton.Item label="Tiktok" value="tiktok" style={styles.radioButton}/>
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"twitter"}
-                                />
-                                <RadioButton.Item label="Twitter" value="twitter" style={styles.radioButton}/>
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"linkedin"}
-                                />
-                                <RadioButton.Item label="Linkedin" value="linkedin" style={styles.radioButton}/>
-                            </View>
-                            <View style={styles.radioRow}>
-                                <FontAwesome5
-                                    style={styles.icon}
-                                    name={"facebook"}
-                                />
-                                <RadioButton.Item label="Facebook" value="facebook" style={styles.radioButton}/>
-                            </View>
+                            {/*<View style={styles.radioRow}>*/}
+                            {/*    <Entypo*/}
+                            {/*        style={styles.icon}*/}
+                            {/*        name={"instagram"}*/}
+                            {/*    />*/}
+                            {/*    <RadioButton.Item label="Instagram" value="instagram" style={styles.radioButton} />*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.radioRow}>*/}
+                            {/*    <FontAwesome5*/}
+                            {/*        style={styles.icon}*/}
+                            {/*        name={"tiktok"}*/}
+                            {/*    />*/}
+                            {/*    <RadioButton.Item label="Tiktok" value="tiktok" style={styles.radioButton}/>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.radioRow}>*/}
+                            {/*    <FontAwesome5*/}
+                            {/*        style={styles.icon}*/}
+                            {/*        name={"twitter"}*/}
+                            {/*    />*/}
+                            {/*    <RadioButton.Item label="Twitter" value="twitter" style={styles.radioButton}/>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.radioRow}>*/}
+                            {/*    <FontAwesome5*/}
+                            {/*        style={styles.icon}*/}
+                            {/*        name={"linkedin"}*/}
+                            {/*    />*/}
+                            {/*    <RadioButton.Item label="Linkedin" value="linkedin" style={styles.radioButton}/>*/}
+                            {/*</View>*/}
+                            {/*<View style={styles.radioRow}>*/}
+                            {/*    <FontAwesome5*/}
+                            {/*        style={styles.icon}*/}
+                            {/*        name={"facebook"}*/}
+                            {/*    />*/}
+                            {/*    <RadioButton.Item label="Facebook" value="facebook" style={styles.radioButton}/>*/}
+                            {/*</View>*/}
                             <View style={styles.radioRow}>
                                 <MaterialCommunityIcons
                                     style={styles.icon}
@@ -193,14 +193,9 @@ const styles = StyleSheet.create({
     },
     radioButton: {
         fontWeight: '500',
-        width: 350,
-        // backgroundColor: 'green',
-        // flexDirection: 'row',
-        // justifyContent: 'space-between',
-        // flex: 4
+        width: '80%',
     },
     icon: {
-        // marginRight: 3,
         fontSize: 20,
         color: Colors.light.tint
     }

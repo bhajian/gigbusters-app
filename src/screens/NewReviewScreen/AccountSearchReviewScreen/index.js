@@ -13,7 +13,7 @@ import {ProfileService} from "../../../backend/ProfileService";
 import tipoffs from "../../../../assets/data/tipoffs";
 
 const SocialIcon = ({ name }) => {
-    if(name === 'gigbuster'){
+    if(name === 'gigbusters'){
         return <MaterialCommunityIcons
             style={styles.icon}
             name={"orbit"}
@@ -65,7 +65,7 @@ const SocialIcon = ({ name }) => {
 }
 
 export default function AccountSearchReviewScreen({navigation, route, handleChanges}) {
-    const [accountType, setAccountType] = useState('gigbuster');
+    const [accountType, setAccountType] = useState('gigbusters');
     const [phone, setPhone] = useState('+1');
     const [uri, setUri] = useState('');
     const bottomSheetModalRef = useRef(null)
@@ -93,12 +93,15 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
         bottomSheetModalRef.current.present()
     }
 
-    function handlePhonebookPress() {
-
+    function chosePhoneNumberPress() {
+        handleChanges({
+            type: accountType,
+            uri: phone
+        })
     }
 
     useEffect(() => {
-        loadData().then(r => {})
+        loadData().then(r => {}).catch(e => console.log(e))
     }, [])
 
     async function loadData() {
@@ -109,28 +112,14 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
     }
 
     async function onProfilePressed(params) {
-
+        params.type = accountType
+        handleChanges(params)
     }
 
     return (
         <View style={styles.container}>
             <View style={styles.bottomContainer}>
-                <View style={styles.doubleButton}>
-                    <CustomButton
-                        text="Cancel"
-                        onPress={cancelPressed}
-                        style={styles.linkAccountButton}
-                        bgColor={Colors.light.grey}
-                        fgColor="black"
-                    />
-                    <CustomButton
-                        text="Select"
-                        onPress={selectPressed}
-                        style={styles.linkAccountButton}
-                        bgColor={Colors.light.tint}
-                        fgColor="white"
-                    />
-                </View>
+
             </View>
 
             <View style={styles.searchTextContainer}>
@@ -140,13 +129,18 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
                 </TouchableOpacity>
                 {
                     (accountType === 'phone') ?
-                        <PhoneInput
-                            defaultCountry="CA"
-                            countrySelectProps={{ unicodeFlags: true }}
-                            value={phone}
-                            onChange={setPhone}
-                            style={styles.accountInput}
-                        />
+                        <View style={styles.phoneContainer}>
+                            <PhoneInput
+                                defaultCountry="CA"
+                                countrySelectProps={{ unicodeFlags: true }}
+                                value={phone}
+                                onChange={setPhone}
+                                style={styles.accountInput}
+                            />
+                            <TouchableOpacity style={styles.selectButton} onPress={chosePhoneNumberPress}>
+                                <FontAwesome5 name="chevron-circle-right" size={25} style={styles.icon} />
+                            </TouchableOpacity>
+                        </View>
                         :
                         <TextInput
                             onChangeText={value => setUri(value)}
@@ -154,29 +148,30 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
                             placeholder={"Search..."}
                         />
                 }
-                <TouchableOpacity style={styles.selectButton} onPress={handlePhonebookPress}>
-                    <FontAwesome5 name="chevron-circle-right" size={20} style={styles.icon} />
-                </TouchableOpacity>
+
             </View>
-            <ScrollView>
+            <View>
                 {
                     dataBeingLoaded ?
                         <Image source={loading2} style={styles.loading2} />
                         :
-                        <FlatList
-                            data={profiles}
-                            renderItem={({item}) => {
-                                return(
-                                    <ProfileListItem
-                                        item={item}
-                                        onProfilePressed={onProfilePressed}
-                                    />
-                                )
-                            }}
-                            keyExtractor={(item) => item.userId}
-                        />
+                        (accountType !== 'phone') ?
+                            <FlatList
+                                data={profiles}
+                                renderItem={({item}) => {
+                                    return(
+                                        <ProfileListItem
+                                            item={item}
+                                            onProfilePressed={onProfilePressed}
+                                        />
+                                    )
+                                }}
+                                keyExtractor={(item) => item.userId}
+                            />
+                            :
+                            <></>
                 }
-            </ScrollView>
+            </View>
 
             <SocialNetworkSelector
                 handleSheetChanges={handleSheetChanges}
@@ -222,6 +217,10 @@ const styles = StyleSheet.create({
         paddingEnd: 10,
         alignItems: 'center'
     },
+    phoneContainer: {
+        flexDirection: 'row',
+        width: '90%'
+    },
     backIcon: {
         fontSize: 17,
         color: Colors.light.tint,
@@ -266,7 +265,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         paddingHorizontal: 5,
         borderRadius: 5,
-        width: '80%',
+        width: '85%',
     },
     searchTextContainer: {
         backgroundColor: Colors.light.grey,
@@ -305,7 +304,7 @@ const styles = StyleSheet.create({
         color: Colors.light.tint,
     },
     icon: {
-        fontSize: 20,
+        fontSize: 25,
         color: Colors.light.tint,
         marginHorizontal: 3,
     }

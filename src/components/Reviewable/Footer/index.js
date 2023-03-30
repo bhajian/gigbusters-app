@@ -6,17 +6,13 @@ import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Colors from "../../../constants/Colors";
 
-export default function Footer({review}) {
-
-    const [user, setUser] = useState(null);
-    const [myLike, setMyLike] = useState(null);
-    const [likesCount, setLikesCount] = useState(null);
+export default function Footer({reviewable}) {
 
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.iconContainer}>
                 <Feather name={"message-circle"} size={25} color={Colors.light.tint}/>
-                <Text style={styles.number}>{review.numberOfReplies}</Text>
+                <Text style={styles.number}>{reviewable.numberOfReviews}</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.iconContainer}>
                 <AntDesign name="hearto" size={20} color={Colors.light.tint} />

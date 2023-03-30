@@ -18,7 +18,7 @@ export default function RequestFeedScreen(props) {
     const [requestList, setRequestList] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
     const bottomSheetModalRef = useRef(null)
-    const navigation = useNavigation();
+    const navigation = useNavigation()
     const taskService = new TaskService()
 
     useEffect(() => {
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
         width: 100,
         height: 100,
         top: 150,
-        // justifyContent: 'center',
         alignSelf: 'center'
     },
 });

@@ -7,24 +7,24 @@ import Footer from "../Footer";
 import Colors from "../../../constants/Colors";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
-export default function MainContainer({review}) {
+export default function MainContainer({reviewable}) {
 
     return (
         <View style={styles.container}>
             <View style={styles.infoContainer}>
                 <View style={styles.info}>
-                    <Text style={styles.text} >Toronto</Text>
+                    <Text style={styles.text} >{reviewable.location.locationName}</Text>
                 </View>
                 <View style={styles.info}>
                     <Text style={styles.text} >10$/hr</Text>
                 </View>
                 <View style={styles.info}>
-                    <Text style={styles.text} >Personal Trainer</Text>
+                    <Text style={styles.text} >{reviewable.categories[0]}</Text>
                 </View>
             </View>
             <View style={styles.mainContainer}>
                 <View style={styles.ratingStackContainer}>
-                    <RatingStack ratings={review}/>
+                    <RatingStack reviewable={reviewable}/>
                 </View>
                 <View style={styles.contentContainer}>
                     <AntDesign name="right" size={20} color={Colors.light.tint} />

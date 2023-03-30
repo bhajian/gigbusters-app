@@ -23,7 +23,6 @@ import { Rating, AirbnbRating } from 'react-native-ratings'
 import STAR_IMAGE from '../../../assets/images/star.png'
 import ImageList from "../../components/ImageList";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import loading from "../../../assets/images/loading2.gif";
 
 let {width, height} = Dimensions.get('window')
 
@@ -33,11 +32,12 @@ export default function NewReviewScreen({navigation, route}) {
     const [rating, setRating] = useState(3)
     const [revieweeAccountType, setRevieweeAccountType] = useState('gigbuster')
     const [revieweeUri, setRevieweeUri] = useState(null)
+    const [revieweeImage, setRevieweeImage] = useState(null)
+    const [revieweeName, setRevieweeName] = useState('')
     const [images, setImages] = useState([])
-    const [name, setName] = useState('')
+    const [reviewerName, setReviewerName] = useState('')
     const [location, setLocation] = useState('')
     const [profileImage, setProfileImage] = useState(null)
-    const snapPoints = useMemo(() => ['25%', '50%'], [])
     const bottomSheetModalRef = useRef(null)
     const profileService = new ProfileService()
 
@@ -48,8 +48,22 @@ export default function NewReviewScreen({navigation, route}) {
         setImages(images.filter(item => item !== value))
     }
     const getValueFromBottomSheet = (value) => {
+
+        console.log(value)
+
         setRevieweeAccountType(value.type)
-        setRevieweeUri(value.uri)
+        if(value.type === 'gigbusters'){
+            setRevieweeName(value.name)
+            setRevieweeUri(value.accountCode)
+            setRevieweeAccountType('gigbusters')
+            setRevieweeImage(value.mainPhotoUrl)
+        }
+        if(value.type === 'phone'){
+            setRevieweeUri(value.uri)
+            setRevieweeAccountType('phone')
+            setRevieweeName(value.uri)
+        }
+
     }
 
     useEffect(() => {
@@ -86,7 +100,7 @@ export default function NewReviewScreen({navigation, route}) {
     async function getCurrentUserData() {
         const profile = profileService.getProfile()
         if(profile && profile.name){
-            setName(profile.name)
+            setReviewerName(profile.name)
         }
         if(profile && profile.location && profile.location){
             setLocation(profile.location)
@@ -141,14 +155,14 @@ export default function NewReviewScreen({navigation, route}) {
                             <UserAvatar
                                 size={35}
                                 active
-                                name={name}
+                                name={reviewerName}
                                 src={profileImage}
                             />
                             <TouchableOpacity
                                 style={styles.reviewerName}
                                 // onPress={onImagePickerPress}
                             >
-                                <Text style={styles.reviewerText}>{name}</Text>
+                                <Text style={styles.reviewerText}>{reviewerName}</Text>
                                 <Feather name="chevron-down" size={20}/>
                             </TouchableOpacity>
                         </View>
@@ -163,12 +177,12 @@ export default function NewReviewScreen({navigation, route}) {
                                     <UserAvatar
                                         size={35}
                                         active
-                                        name={revieweeUri}
-                                        src=""
+                                        name={revieweeName}
+                                        src={revieweeImage}
                                     />
                             }
                             <TouchableOpacity style={styles.revieweeName} onPress={onRevieweePress}>
-                                <Text style={styles.revieweeText}> {revieweeUri} </Text>
+                                <Text style={styles.revieweeText}> {revieweeName} </Text>
                                 <Feather name="chevron-down" size={20}/>
                             </TouchableOpacity>
                         </View>

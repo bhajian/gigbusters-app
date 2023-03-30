@@ -6,10 +6,10 @@ import MainContainer from "./MainContainer";
 import Footer from "./Footer";
 import {useNavigation} from "@react-navigation/native";
 
-export default function Reviewable({tipoff}) {
+export default function Reviewable({reviewable}) {
     const navigation = useNavigation();
     async function onItemPressed() {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoff.to})
+        navigation.navigate('ReviewableProfileScreen', {reviewable: reviewable})
     }
 
     return (
@@ -17,20 +17,20 @@ export default function Reviewable({tipoff}) {
             <Pressable onPress={onItemPressed}>
                 <View style={styles.topContainer}>
                     <PhotoContainer
-                        user={tipoff.to}
+                        user={reviewable}
                     />
                     <IdContainer
-                        review={tipoff}
+                        reviewable={reviewable}
                     />
                 </View>
                 <View style={styles.mainContainer}>
                     <MainContainer
-                        review={tipoff}
+                        reviewable={reviewable}
                     />
                 </View>
             </Pressable>
             <Footer
-                review={tipoff}
+                reviewable={reviewable}
             />
         </View>
     );

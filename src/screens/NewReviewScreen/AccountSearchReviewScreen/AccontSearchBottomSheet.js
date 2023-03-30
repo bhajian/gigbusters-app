@@ -9,7 +9,6 @@ import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomS
 import Colors from "../../../constants/Colors";
 import Feather from "react-native-vector-icons/Feather";
 import AccountSearchReviewScreen from "./index";
-import {ProfileService} from "../../../backend/ProfileService";
 
 export default function AccontSearchBottomSheet({bottomSheetModalRef, handleSheetChanges, getValueFromBottomSheet}) {
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
@@ -59,7 +58,6 @@ export default function AccontSearchBottomSheet({bottomSheetModalRef, handleShee
                     enableFooterMarginAdjustment={true}
                     style={styles.bottomSheetContentContainer}>
                     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} >
-
                             <View style={styles.titleContainer}>
                                 <Pressable onPress={handleClosePress}>
                                     <Feather name="x" size={25} style={styles.closeButton}/>
