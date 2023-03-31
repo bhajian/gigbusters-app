@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         backgroundColor: '#ffffff',
-        // height: '100%',
+        height: '100%',
         // marginTop: 180,
     },
     iconContainer: {

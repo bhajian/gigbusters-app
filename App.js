@@ -16,7 +16,6 @@ Amplify.configure(awsconfig);
 export default function App() {
     const [userStatus, setUserStatus] = useState('initializing')
     const profileService = new ProfileService()
-    const taskService = new TaskService()
 
     useEffect(() => {
         const unsubscribe = Hub.listen("auth",
@@ -44,7 +43,6 @@ export default function App() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
             const profile = await profileService.fetchProfile({userId: currentUser.sub})
-            await taskService.fetchMyTasks()
             if(currentUser) {
                 if (profile && profile.userId) {
                     setUserStatus('loggedIn')

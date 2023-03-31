@@ -1,18 +1,31 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Image, Text, View, StyleSheet, Pressable} from "react-native";
 import Colors from "../../constants/Colors";
 import {ProgressBar} from "react-native-paper";
 import {FontAwesome} from "@expo/vector-icons";
+import {useNavigation} from "@react-navigation/native";
 
 
 export default function RatingStack({reviewable}) {
-    async function onItemPressed() {
-        console.log('Iam !')
-    }
+
+    const [oneStar, setOneStar] = useState(reviewable && reviewable.numberOfReviews > 0
+    && reviewable.oneStar > 0 ?
+        reviewable.oneStar/reviewable.numberOfReviews : 0)
+    const [twoStar, setTwoStar] = useState(reviewable && reviewable.numberOfReviews > 0
+    && reviewable.twoStar > 0 ?
+        reviewable.twoStar/reviewable.numberOfReviews : 0)
+    const [threeStar, setThreeStar] = useState(reviewable && reviewable.numberOfReviews > 0
+    && reviewable.threeStar > 0 ?
+        reviewable.threeStar/reviewable.numberOfReviews : 0)
+    const [fourStar, setFourStar] = useState(reviewable && reviewable.numberOfReviews > 0
+    && reviewable.fourStar > 0 ?
+        reviewable.fourStar/reviewable.numberOfReviews : 0)
+    const [fiveStar, setFiveStar] = useState(reviewable && reviewable.numberOfReviews > 0
+    && reviewable.fiveStar > 0 ?
+        reviewable.fiveStar/reviewable.numberOfReviews : 0)
 
     return (
         <View style={styles.mainContainer}>
-
             <View style={styles.starColContainer}>
                 <View style={styles.starRowContainer}>
                     <View style={styles.stackStarsBar}>
@@ -23,7 +36,7 @@ export default function RatingStack({reviewable}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={reviewable.fiveStar/reviewable.numberOfReviews} color={Colors.light.tint} />
+                        <ProgressBar  progress={fiveStar} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -34,7 +47,7 @@ export default function RatingStack({reviewable}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={reviewable.fourStar/reviewable.numberOfReviews} color={Colors.light.tint} />
+                        <ProgressBar  progress={fourStar} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -44,7 +57,7 @@ export default function RatingStack({reviewable}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={reviewable.threeStar/reviewable.numberOfReviews} color={Colors.light.tint} />
+                        <ProgressBar  progress={threeStar} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -53,7 +66,7 @@ export default function RatingStack({reviewable}) {
                         <FontAwesome name={"star"} color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={reviewable.twoStar/reviewable.numberOfReviews} color={Colors.light.tint} />
+                        <ProgressBar  progress={twoStar} color={Colors.light.tint} />
                     </View>
                 </View>
                 <View style={styles.starRowContainer}>
@@ -61,7 +74,7 @@ export default function RatingStack({reviewable}) {
                         <FontAwesome name={"star"}  color={Colors.dark.grey}/>
                     </View>
                     <View style={styles.progressBar}>
-                        <ProgressBar  progress={reviewable.oneStar/reviewable.numberOfReviews} color={Colors.light.tint} />
+                        <ProgressBar  progress={oneStar} color={Colors.light.tint} />
                     </View>
                 </View>
 

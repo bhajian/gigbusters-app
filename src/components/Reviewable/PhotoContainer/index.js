@@ -13,7 +13,7 @@ export default function PhotoContainer({user}) {
 
 const styles = StyleSheet.create({
     container: {
-        width: '20%',
+        // width: '20%',
         // padding: 15,
     },
     info: {

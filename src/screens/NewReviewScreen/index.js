@@ -9,10 +9,8 @@ import {
     Text,
     ScrollView, Dimensions, KeyboardAvoidingView, Pressable,
 } from 'react-native';
-import {Storage} from 'aws-amplify';
 import Colors from '../../constants/Colors';
 import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
 import AccontSearchBottomSheet from "./AccountSearchReviewScreen/AccontSearchBottomSheet";
@@ -48,9 +46,6 @@ export default function NewReviewScreen({navigation, route}) {
         setImages(images.filter(item => item !== value))
     }
     const getValueFromBottomSheet = (value) => {
-
-        console.log(value)
-
         setRevieweeAccountType(value.type)
         if(value.type === 'gigbusters'){
             setRevieweeName(value.name)
@@ -63,7 +58,6 @@ export default function NewReviewScreen({navigation, route}) {
             setRevieweeAccountType('phone')
             setRevieweeName(value.uri)
         }
-
     }
 
     useEffect(() => {
@@ -140,7 +134,6 @@ export default function NewReviewScreen({navigation, route}) {
     function onRevieweePress() {
         bottomSheetModalRef.current.present()
     }
-
 
     return (
         <KeyboardAvoidingView
@@ -223,11 +216,11 @@ export default function NewReviewScreen({navigation, route}) {
             </ScrollView>
 
             <View style={styles.imageSelectorContainer}>
-                <TouchableOpacity onPress={onImagePickerPress} style={styles.pickImage}>
-                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 45, color: Colors.light.tint}}/>
+                <TouchableOpacity onPress={onImagePickerPress}  style={styles.detailButton}>
+                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.locationBar}>
-                    <Entypo name="location" style={{fontSize: 30, color: Colors.light.tint}}/>
+                    <Entypo name="location" style={{fontSize: 35, color: Colors.light.tint}}/>
                     <Text style={styles.locationText}>{location.locationName}</Text>
                 </TouchableOpacity>
             </View>
@@ -266,6 +259,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderColor: Colors.light.darkerGrey,
         flexDirection: 'row',
+        paddingVertical: 5
     },
     closeButton: {
         flexDirection: 'row',
@@ -317,6 +311,16 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'flex-end'
+    },
+    detailButton: {
+        borderRadius : 5,
+        borderWidth: 1,
+        borderColor: Colors.light.tint,
+        height: 40,
+        width: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 5
     },
     ratingText: {
         paddingVertical: 5,

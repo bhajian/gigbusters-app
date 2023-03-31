@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {View, FlatList, StyleSheet, ScrollView, Text, Image, Pressable, SafeAreaView,} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
-import people from "../../../../assets/data/tipoffs";
 import RequestDetailTopContainer from "./RequestDetailTopContainer";
 import ApplicantRequestItem from "../../../components/ApplicantRequestItem";
 import Colors from "../../../constants/Colors";
@@ -18,8 +17,8 @@ export default function RequestActivityDetailScreen({route}) {
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [applicants, setApplicants] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
-    const navigation = useNavigation()
     const editDeleteBottomSheetModalRef = useRef(null)
+    const navigation = useNavigation()
     const taskService = new TaskService()
     const editDeleteHandlePresentPress = () => editDeleteBottomSheetModalRef.current.present()
     const editDeleteHandleSheetChanges = useCallback((index) => {
@@ -149,6 +148,7 @@ export default function RequestActivityDetailScreen({route}) {
             <EditDeleteBottomSheet
                 bottomSheetModalRef={editDeleteBottomSheetModalRef}
                 handleSheetChanges={editDeleteHandleSheetChanges}
+                task={task}
             />
             <EditPageBottomSheet
                 bottomSheetModalRef={editPageBottomSheetModalRef}

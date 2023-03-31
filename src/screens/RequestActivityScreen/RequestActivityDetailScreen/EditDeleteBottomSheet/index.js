@@ -2,18 +2,18 @@ import React, {useCallback, useMemo, useState} from "react";
 import {Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather";
-import CustomSettingRowButton from "../../../../components/CustomSettingRowButton";
 import CustomButton from "../../../../components/CustomButton";
+import {TaskService} from "../../../../backend/TaskService";
+import {useNavigation} from "@react-navigation/native";
 
 
-export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetChanges}) {
-
-    const snapPoints = useMemo(() => ['30%', '30%'], []);
-    const [enablePanDownToClose, setEnablePanDownToClose] = useState(true);
-    const [enableDismissOnClose, setEnableDismissOnClose] = useState(true);
-    const [locationMax, setLocationMax] = useState(50);
-    const [rating, setRating] = useState(3);
-    const [backdropPressBehavior, setBackdropPressBehavior] = useState('close');
+export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetChanges, task}) {
+    const snapPoints = useMemo(() => ['40%', '40%'], [])
+    // const [enablePanDownToClose, setEnablePanDownToClose] = useState(true)
+    // const [enableDismissOnClose, setEnableDismissOnClose] = useState(true)
+    const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
+    const taskService = new TaskService()
+    const navigation = useNavigation()
 
     const handleTogglePressBehavior = useCallback(() => {
         setBackdropPressBehavior(state => {
@@ -35,7 +35,7 @@ export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetC
         bottomSheetModalRef.current?.collapse();
     }, []);
     const handleClosePress = useCallback(() => {
-        bottomSheetModalRef.current?.close();
+        bottomSheetModalRef.current?.close()
     }, []);
 
     const renderBackdrop = useCallback(
@@ -45,8 +45,14 @@ export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetC
         [backdropPressBehavior]
     )
 
-    function getCategorySelectedValue(value){
-
+    async function onDeleteTaskPressed() {
+        try{
+            await taskService.deleteTask({taskId: task.id})
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
+        }
+        bottomSheetModalRef.current?.close()
     }
 
     return (
@@ -57,7 +63,7 @@ export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetC
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
                 style={styles.sheetContainer}
-                // backdropComponent={renderBackdrop}
+                backdropComponent={renderBackdrop}
             >
                 <BottomSheetView
                     style={styles.contentContainerStyle}
@@ -81,7 +87,7 @@ export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetC
                             />
                             <CustomButton
                                 text="Delete"
-                                // onPress={signOut}
+                                onPress={onDeleteTaskPressed}
                                 style={styles.regularButton}
                                 bgColor="#E3E8F1"
                                 fgColor="#FB1F1F"

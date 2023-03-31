@@ -5,8 +5,7 @@ import MatchingCard from "../../components/MatchingCard";
 import Swiper from "react-native-deck-swiper";
 import {useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
-import {FontAwesome, Ionicons, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
-import ReviewableSearch from "../../components/ReviewableSearch";
+import {Ionicons, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
 import MatchingSearch from "./MatchingSearch";
 
 
@@ -105,7 +104,6 @@ const MatchingCards = () => {
                 onSwipedLeft={(e) => {onLeftSwiped(e)}}
                 onSwiped={(cardIndex) => {}}
                 onSwipedAll={() => {console.log('onSwipedAll')}}
-                cardIndex={0}
                 backgroundColor={Colors.light.grey}
                 infinite={true}
                 containerStyle={{top: 0, width: '100%'}}

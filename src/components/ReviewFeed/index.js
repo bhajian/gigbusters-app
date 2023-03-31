@@ -4,7 +4,6 @@ import Reviewable from "../Reviewable";
 import {ReviewService} from "../../backend/ReviewService";
 import {useNavigation} from "@react-navigation/native";
 import loading2 from "../../../assets/images/loading2.gif";
-import RequestItem from "../RequestItem";
 
 export default function ReviewFeed() {
     const [reviews, setReviews] = useState([])
@@ -37,7 +36,7 @@ export default function ReviewFeed() {
             <FlatList
                 data={reviews}
                 renderItem={({item}) => <Reviewable reviewable={item} />}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => (item.type + ':' + item.uri)}
             />
     )
 }

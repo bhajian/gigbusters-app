@@ -11,8 +11,8 @@ import Lottie from "lottie-react-native";
 import {ProfileService} from "../../backend/ProfileService";
 
 function SignInScreen(props) {
-    const [username, setUsername] = useState('b.hajian@gmail.com');
-    const [password, setPassword] = useState('Be200513!');
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
     const profileService = new ProfileService()
 
     const {height} = useWindowDimensions();
@@ -20,8 +20,8 @@ function SignInScreen(props) {
 
     async function onSignInPressed() {
         try {
-            props.updateAuthState('initializing');
-            var lowerEmail = username.toLowerCase();
+            props.updateAuthState('initializing')
+            var lowerEmail = username.toLowerCase()
             const user = await Auth.signIn(lowerEmail, password)
             const profile = await profileService.fetchProfile({userId: user.sub})
             if(profile && profile.userId){
@@ -40,7 +40,7 @@ function SignInScreen(props) {
     }
 
     const onForgotPasswordPressed = () => {
-        navigation.navigate('ForgotPassword');
+        navigation.navigate('ForgotPassword')
     };
 
     const onSignUpPress = () => {

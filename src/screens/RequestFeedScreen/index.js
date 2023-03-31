@@ -115,6 +115,7 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         backgroundColor: '#ffffff',
+        height: '100%'
     },
     iconContainer: {
         borderWidth: 1,

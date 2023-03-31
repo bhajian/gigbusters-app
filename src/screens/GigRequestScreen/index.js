@@ -10,7 +10,7 @@ import {ProfileService} from "../../backend/ProfileService";
 import {Slider} from '@miblanchard/react-native-slider'
 import {Ionicons} from "@expo/vector-icons";
 
-const WorkRequestScreen = props => {
+const GigRequestScreen = props => {
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState('')
     const [location, setLocation] = useState('')
@@ -126,7 +126,7 @@ const WorkRequestScreen = props => {
     );
 };
 
-export default WorkRequestScreen;
+export default GigRequestScreen;
 
 const styles = StyleSheet.create({
     container: {

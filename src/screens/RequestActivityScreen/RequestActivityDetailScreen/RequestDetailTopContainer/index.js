@@ -41,7 +41,7 @@ export default function RequestDetailTopContainer({task}) {
                 </View>
             </View>
             <View style={styles.description}>
-                <Text style={styles.textTag} >{task.description}</Text>
+                <Text style={styles.description} >{task.description}</Text>
             </View>
         </View>
     );
@@ -67,21 +67,24 @@ const styles = StyleSheet.create({
         paddingEnd: 10,
     },
     image: {
-        width: 80,
-        height: 80,
-        borderRadius: 10,
+        marginTop: 10,
+        width: 160,
+        height: 130,
+        alignSelf: 'center',
+        borderRadius: 20,
         marginHorizontal: 5,
     },
     headerExtensionContainer: {
         width: '100%',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         paddingHorizontal: 5,
     },
     rightContainer: {
-        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 5,
         zIndex: 10,
-        width: '100%',
+        // width: '100%',
     },
     accountContainer: {
         flexDirection: 'row',
@@ -105,7 +108,7 @@ const styles = StyleSheet.create({
         margin: 3,
     },
     description: {
-        marginLeft: 5,
+        margin: 5,
         alignSelf: 'flex-start'
     },
     textTag: {

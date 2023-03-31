@@ -143,6 +143,8 @@ const EditProfileScreen = (props) => {
 
                 }
             })
+            const currentUser = await Auth.currentAuthenticatedUser()
+            const profile = await profileService.fetchProfile({userId: currentUser.sub})
         } catch (e) {
             console.log(e)
         }

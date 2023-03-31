@@ -12,9 +12,13 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import RatingStack from "../../../components/RatingStack";
 
 export default function ReviewableProfileTopContainer({reviewable, navigation}) {
-    const [open, setOpen] = useState(false);
-    const [value, setValue] = useState('phone');
-    const [searchQuery, setSearchQuery] = React.useState('');
+    console.log(reviewable)
+    const [open, setOpen] = useState(false)
+    const [value, setValue] = useState('phone')
+    const [rating, setRating] = useState(Math.round((reviewable && reviewable.cumulativeRating && reviewable.numberOfReviews ?
+        reviewable.cumulativeRating/reviewable.numberOfReviews : 0 ) * 100 + Number.EPSILON) / 100)
+
+    const [searchQuery, setSearchQuery] = React.useState('')
 
     useEffect(() => {
 
@@ -27,18 +31,24 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                     <UserAvatar
                         size={70}
                         active
-                        src={reviewable.image}
+                        src={reviewable.profilePhotoURL}
                     />
                     <Text style={styles.contactName}>{reviewable.name}</Text>
                 </View>
-                <TouchableOpacity style={styles.shareButton}>
-                    <EvilIcons name={"share-google"} size={30} color={Colors.light.tint}/>
-                </TouchableOpacity>
+                <View style={styles.headerRight}>
+                    <TouchableOpacity style={styles.shareButton}>
+                        <EvilIcons name={"share-google"} size={30} color={Colors.light.tint}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.shareButton}>
+                        <EvilIcons name={"envelope"} size={30} color={Colors.light.tint}/>
+                    </TouchableOpacity>
+                </View>
             </View>
             <View style={styles.numberContainer}>
-                <Text style={styles.text}>Rating:</Text>
-                <Text style={styles.average}>{reviewable.id}/5 </Text>
-                <Text style={styles.text}> {reviewable.numberOfReplies} reviews</Text>
+                <Text style={styles.text}> Rating:</Text>
+                <Text style={styles.average}>{rating}</Text>
+                <Text style={styles.text}> {reviewable.numberOfReplies} Based on {(reviewable && reviewable.numberOfReviews ?
+                    reviewable.numberOfReviews : 0)} reviews</Text>
             </View>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>
@@ -55,7 +65,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                     </View>
 
                     <View style={styles.ratingStackContainer}>
-                        <RatingStack ratings={reviewable}/>
+                        <RatingStack reviewable={reviewable}/>
                     </View>
                 </View>
             </View>
@@ -68,7 +78,7 @@ const styles = StyleSheet.create({
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        paddingHorizontal: 20,
+        paddingHorizontal: 10,
         borderBottomColor: 'lightgrey',
         marginTop: 20,
     },
@@ -120,8 +130,8 @@ const styles = StyleSheet.create({
         color: '#000',
     },
     ratingStackContainer: {
-        width: '70%',
-        paddingHorizontal: 15,
+        width: '80%',
+        paddingHorizontal: 10,
     },
     closeButton: {
         flexDirection: 'row',
@@ -138,12 +148,13 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     shareButton: {
+        marginTop: 5,
         borderColor: Colors.light.tint,
         borderRadius: 5,
         borderWidth: 1,
         marginEnd: 5,
-        width: 40,
-        height: 40,
+        width: 35,
+        height: 35,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -218,8 +229,9 @@ const styles = StyleSheet.create({
     average: {
         color: Colors.light.tint,
         marginTop: 5,
-        fontSize: 20,
+        fontSize: 18,
         textAlign: 'center',
+        justifyContent: 'center',
         fontWeight: 'bold'
     },
 });

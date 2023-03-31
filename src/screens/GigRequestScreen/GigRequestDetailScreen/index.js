@@ -125,8 +125,8 @@ export default function GigRequestDetailScreen(props) {
                     latitude: location.latitude,
                     longitude: location.longitude
                 },
-                country: 'Canada',
-                stateProvince: 'ON',
+                country: 'Canada', // FIX ME
+                stateProvince: 'ON', // FIX ME
                 city: location.locationName,
                 validTillDateTime: '2023-03-31' // FIX ME
             })

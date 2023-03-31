@@ -85,7 +85,7 @@ export class TaskService {
     }
 
     async deleteTask(params) {
-        const path = taskPath
+        const path = `${taskPath}/${params.taskId}`
         const data = {
         }
         const reviews = await API.del(taskApiName, path, data)
@@ -158,7 +158,6 @@ export class TaskService {
                 level: 'protected',
                 contentType: blob.type,
                 progressCallback: progress => {
-
                 }
             })
         } catch (e) {

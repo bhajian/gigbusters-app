@@ -8,11 +8,14 @@ import GigRequestItem from "../../components/GigRequestItem";
 import Colors from "../../constants/Colors";
 import {TaskService} from "../../backend/TaskService";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import loading from "../../../assets/images/loading.gif";
 import {AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
+import loading2 from "../../../assets/images/loading2.gif";
+import RequestItem from "../../components/RequestItem";
 
 export default function RequestActivityScreen({route}) {
     const [requestList, setRequestList] = useState([])
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+
     const navigation = useNavigation()
     const taskService = new TaskService()
 
@@ -62,11 +65,13 @@ export default function RequestActivityScreen({route}) {
     }, [navigation])
 
     async function loadData() {
-        const requestObj = await taskService.getMyTasks()
+        setDataBeingLoaded(true)
+        const requestObj = await taskService.fetchMyTasks()
         setRequestList(requestObj)
+        setDataBeingLoaded(false)
     }
 
-    function referralActivityClickHandler(props) {
+    function requestActivityClickHandler(props) {
         navigation.navigate('RequestActivityDetailScreen', props)
     }
 
@@ -76,14 +81,19 @@ export default function RequestActivityScreen({route}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <FlatList
-                data={requestList}
-                renderItem={({item}) => <GigRequestItem
-                    item={item}
-                    handler={referralActivityClickHandler}
-                />}
-                keyExtractor={(item) => item.id}
-            />
+            {
+                dataBeingLoaded ?
+                    <Image source={loading2} style={styles.loading2} />
+                    :
+                    <FlatList
+                        data={requestList}
+                        renderItem={({item}) => <GigRequestItem
+                            item={item}
+                            handler={requestActivityClickHandler}
+                        />}
+                        keyExtractor={(item) => item.id}
+                    />
+            }
             <TouchableOpacity
                 style={styles.button}
                 activeOpacity={0.8}
@@ -99,7 +109,6 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
         height: '100%',
-        // paddingTop: 40,
     },
     button: {
         backgroundColor: Colors.light.tint,
@@ -111,6 +120,12 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    loading2: {
+        width: 100,
+        height: 100,
+        top: 150,
+        alignSelf: 'center'
     },
     headerExtensionContainer: {
         width: '100%',

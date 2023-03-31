@@ -9,12 +9,10 @@ import {
 } from 'react-native';
 import Colors from "../../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
-import {SearchCategory} from "../../../components/SearchCategory";
 import ChoiceSelector from "../../../components/ChoiceSelector";
 import {LocationSelector} from "../../../components/LocationSearch";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {ReviewService} from "../../../backend/ReviewService";
-import loading from "../../../../assets/images/loading.gif";
+import loading from "../../../../assets/images/loading2.gif";
 import Fontisto from "react-native-vector-icons/Fontisto";
 
 
@@ -41,7 +39,7 @@ const MoreInfoSubmissionScreen = props => {
             ),
             headerRight: () => (
                 dataBeingSaved ?
-                    <Image source={loading} style={{width: 40, height: 30}} />
+                    <Image source={loading} style={{width: 30, height: 30}} />
                     :
                     <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
                         <Text style={styles.buttonText}>Next</Text>

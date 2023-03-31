@@ -6,12 +6,10 @@ import {
     Switch, ScrollView, SafeAreaView, FlatList, Image, Pressable,
 } from 'react-native';
 import ReviewableProfileTopContainer from "./ReviewableProfileTopContainer";
-import ProfileReviews from "../../components/ProfileReviews";
 import tipoffs from "../../../assets/data/tipoffs";
 import Review from "../../components/Review";
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import loading from "../../../assets/images/loading.gif";
 
 export default function ReviewableProfileScreen({navigation, route}) {
     let contact = route.params ? route.params.reviewable : {

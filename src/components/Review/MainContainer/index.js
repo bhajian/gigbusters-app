@@ -9,7 +9,7 @@ export default function MainContainer({tipoff}) {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.tipoffHeaderContainer}>
-                <Text style={styles.toName} >To: {tipoff.to.name}</Text>
+                <Text style={styles.reviewerName} >{tipoff.to.name}</Text>
                 <AirbnbRating
                     type='custom'
                     starImage={STAR_IMAGE}
@@ -21,9 +21,6 @@ export default function MainContainer({tipoff}) {
                     isDisabled={true}
                     ratingContainerStyle={styles.rating}
                 />
-            </View>
-            <View style={styles.tipoffHeaderContainer}>
-                <Text style={styles.fromName}>From: {tipoff.from.name}</Text>
             </View>
             <View style={styles.contentContainer}>
                 <Text>{tipoff.content}</Text>
@@ -42,8 +39,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: "space-between",
     },
-    toName: {
-        marginHorizontal: 5,
+    reviewerName: {
+        margin: 10,
         fontWeight: 'bold'
     },
     fromName: {

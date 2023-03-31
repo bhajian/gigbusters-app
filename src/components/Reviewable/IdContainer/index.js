@@ -1,7 +1,7 @@
 import React from "react";
 import {Image, Text, View, StyleSheet, Pressable, TouchableOpacity} from "react-native";
 import Colors from "../../../constants/Colors";
-import {FontAwesome5} from "@expo/vector-icons";
+import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 export default function IdContainer({reviewable}) {
@@ -13,9 +13,9 @@ export default function IdContainer({reviewable}) {
                     <Text style={styles.toName} >{reviewable.name}</Text>
                 </View>
                 <View style={styles.userIdContainer}>
-                    <FontAwesome5
-                        style={styles.contentContainer}
-                        name={"tiktok"}
+                    <MaterialCommunityIcons
+                        style={styles.icon}
+                        name={"orbit"}
                     />
                     <Text style={styles.fromName}>ID: {reviewable.uri}</Text>
                 </View>
@@ -29,10 +29,16 @@ const styles = StyleSheet.create({
     mainContainer:{
         width: '80%',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginHorizontal: 10,
     },
     nameIdContainer: {
 
+    },
+    icon: {
+        justifyContent: 'center',
+        alignSelf: 'center',
+        color: Colors.light.tint
     },
     userIdContainer: {
         flexDirection: 'row',
