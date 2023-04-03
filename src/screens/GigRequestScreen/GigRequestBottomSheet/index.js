@@ -2,13 +2,10 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {Button, Image, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather"
-import {SearchCategory} from "../../../components/SearchCategory";
 import ChoiceSelector from "../../../components/ChoiceSelector";
 import {Slider} from "@miblanchard/react-native-slider";
 import Colors from "../../../constants/Colors";
 import {LocationSelector} from "../../../components/LocationSearch";
-import {ProfileService} from "../../../backend/ProfileService";
-import {useNavigation} from "@react-navigation/native";
 import CustomButton from "../../../components/CustomButton";
 
 export default function GigRequestBottomSheet({

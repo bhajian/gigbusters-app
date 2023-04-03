@@ -12,7 +12,7 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import RatingStack from "../../../components/RatingStack";
 
 export default function ReviewableProfileTopContainer({reviewable, navigation}) {
-    console.log(reviewable)
+
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState('phone')
     const [rating, setRating] = useState(Math.round((reviewable && reviewable.cumulativeRating && reviewable.numberOfReviews ?
@@ -33,7 +33,10 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                         active
                         src={reviewable.profilePhotoURL}
                     />
-                    <Text style={styles.contactName}>{reviewable.name}</Text>
+                    <View>
+                        <Text style={styles.contactName}>{reviewable.name}</Text>
+                        <Text style={styles.contactName}>ID: {reviewable.uri}</Text>
+                    </View>
                 </View>
                 <View style={styles.headerRight}>
                     <TouchableOpacity style={styles.shareButton}>

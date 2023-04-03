@@ -10,20 +10,39 @@ import tipoffs from "../../../assets/data/reviews";
 import Review from "../../components/Review";
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import {useNavigation} from "@react-navigation/native";
+import {ReviewService} from "../../backend/ReviewService";
 
 export default function ReviewableProfileScreen({navigation, route}) {
-    let contact = route.params ? route.params.reviewable : {
+    let reviewable = route.params ? route.params.reviewable : {
         name: 'behnam',
         image: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250',
         id: 1
-    };
+    }
 
-    const [review, setReview] = useState('');
-    const [rating, setRating] = useState(2.5);
+    const [reviews, setReviews] = useState([])
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+
+    const reviewService = new ReviewService()
 
     useEffect(() => {
-
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
     }, [])
+
+    async function loadData() {
+        setDataBeingLoaded(true)
+        const reviewsObj = await reviewService.queryReviews({
+            uri: reviewable.uri,
+            limit: 20,
+            type: 'gigbusters'
+        })
+
+        setReviews(reviewsObj)
+        setDataBeingLoaded(false)
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -48,10 +67,10 @@ export default function ReviewableProfileScreen({navigation, route}) {
             <View >
                 <View style={styles.reviewsList}>
                     <FlatList
-                        data={tipoffs}
-                        renderItem={({item}) => <Review tipoff={item} />}
+                        data={reviews}
+                        renderItem={({item}) => <Review review={item} />}
                         keyExtractor={(item) => item.id}
-                        ListHeaderComponent={<ReviewableProfileTopContainer reviewable={contact} />}
+                        ListHeaderComponent={<ReviewableProfileTopContainer reviewable={reviewable} />}
                     />
                 </View>
             </View>

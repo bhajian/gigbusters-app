@@ -14,6 +14,7 @@ import {LocationSelector} from "../../../components/LocationSearch";
 import {ReviewService} from "../../../backend/ReviewService";
 import loading from "../../../../assets/images/loading2.gif";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import {Auth} from "aws-amplify";
 
 
 const MoreInfoSubmissionScreen = props => {
@@ -42,7 +43,7 @@ const MoreInfoSubmissionScreen = props => {
                     <Image source={loading} style={{width: 30, height: 30}} />
                     :
                     <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
-                        <Text style={styles.buttonText}>Next</Text>
+                        <Text style={styles.buttonText}>Submit</Text>
                     </TouchableOpacity>
             ),
             headerTintColor: Colors.light.tint
@@ -60,7 +61,7 @@ const MoreInfoSubmissionScreen = props => {
     async function onSubmitPress() {
         setDataBeingSaved(true)
         try{
-            await reviewService.createReview({
+            const response = await reviewService.createReview({
                 reviewable: {
                     type: reviewObj.type,
                     uri: reviewObj.uri,
@@ -70,6 +71,15 @@ const MoreInfoSubmissionScreen = props => {
                 review: reviewObj.review,
                 category: reviewObj.category,
                 location: reviewObj.location
+            })
+            const user = await Auth.currentCredentials()
+            reviewObj.images.map(async(e)=> {
+                await reviewService.addPhoto({
+                    type: 'main',
+                    reviewId: response.id,
+                    identityId: user.identityId,
+                    photo: e
+                })
             })
             navigation.navigate('RequestCompletedScreen')
         } catch (e) {

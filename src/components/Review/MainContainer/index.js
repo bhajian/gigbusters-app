@@ -5,12 +5,13 @@ import STAR_IMAGE from "../../../../assets/images/star.png";
 import Colors from "../../../constants/Colors";
 import {AirbnbRating} from "react-native-ratings";
 
-export default function MainContainer({tipoff}) {
+export default function MainContainer({review}) {
     return (
         <View style={styles.mainContainer}>
             <View style={styles.tipoffHeaderContainer}>
-                <Text style={styles.reviewerName} >{tipoff.to.name}</Text>
+                <Text style={styles.reviewerName} >   </Text>
                 <AirbnbRating
+                    defaultRating={review.rating}
                     type='custom'
                     starImage={STAR_IMAGE}
                     showRating={false}
@@ -23,10 +24,10 @@ export default function MainContainer({tipoff}) {
                 />
             </View>
             <View style={styles.contentContainer}>
-                <Text>{tipoff.content}</Text>
-                {!!tipoff.image && <Image source={{uri: tipoff.image}} style={styles.image} />}
+                <Text>{review.review}</Text>
+                {!!review.mainPhotoURL && <Image source={{uri: review.mainPhotoURL}} style={styles.image} />}
             </View>
-            <Footer tweet={tipoff} />
+            <Footer review={review} />
         </View>
     );
 }

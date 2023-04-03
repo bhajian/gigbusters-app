@@ -8,9 +8,9 @@ import {AntDesign} from "@expo/vector-icons";
 
 export default function NewReviewButton() {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation()
     const onPress = () => {
-        navigation.navigate('NewReviewScreen', {navigation: navigation});
+        navigation.navigate('NewReviewScreen')
     };
 
     return (

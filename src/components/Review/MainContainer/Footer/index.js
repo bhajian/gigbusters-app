@@ -6,9 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Colors from "../../../../constants/Colors";
 
-const Footer = ({ tweet }) => {
-
-    console.log(tweet);
+const Footer = ({ review }) => {
 
     const [user, setUser] = useState(null);
     const [myLike, setMyLike] = useState(null);
@@ -18,13 +16,13 @@ const Footer = ({ tweet }) => {
         <View style={styles.container}>
             <View style={styles.iconContainer}>
                 <Feather name={"message-circle"} size={20} color={Colors.dark.grey}/>
-                <Text style={styles.number}>{tweet.numberOfReplies}</Text>
+                <Text style={styles.number}>review</Text>
             </View>
             <View style={styles.iconContainer}>
                 <TouchableOpacity>
                     <AntDesign name="hearto" size={20} color="grey" />
                 </TouchableOpacity>
-                <Text style={styles.number}>{tweet.numberOfLikes}</Text>
+                <Text style={styles.number}> review </Text>
             </View>
             <View style={styles.iconContainer}>
                 <EvilIcons name={"share-google"} size={28} color={Colors.dark.grey}/>

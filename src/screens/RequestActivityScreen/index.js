@@ -8,9 +8,8 @@ import GigRequestItem from "../../components/GigRequestItem";
 import Colors from "../../constants/Colors";
 import {TaskService} from "../../backend/TaskService";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import {AntDesign, Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
+import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import loading2 from "../../../assets/images/loading2.gif";
-import RequestItem from "../../components/RequestItem";
 
 export default function RequestActivityScreen({route}) {
     const [requestList, setRequestList] = useState([])

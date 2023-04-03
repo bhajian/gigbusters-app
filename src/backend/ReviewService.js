@@ -19,6 +19,11 @@ export class ReviewService {
             queryStringParameters: params
         }
         const reviews = await API.get(reviewApiName, path, data)
+        for(let i=0; i<reviews.length; i++){
+            if(reviews[i].photos){
+                reviews[i].mainPhotoURL = await this.getMainPhoto(reviews[i].photos[0])
+            }
+        }
         return reviews
     }
 

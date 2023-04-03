@@ -206,11 +206,9 @@ export default function NewReviewScreen({navigation, route}) {
                         </View>
                     </View>
                     <View style={styles.imageContainer}>
-
                         {
-                            images.map((e)=> <ImageList item={e} remove={removeImage} />)
+                            images.map((e)=> <ImageList key={e.toString()} item={e} remove={removeImage} />)
                         }
-
                     </View>
                 </View>
             </ScrollView>

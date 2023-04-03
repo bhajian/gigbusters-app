@@ -26,7 +26,7 @@ export default function ApplicantRequestItem(props) {
             })
             changeColor({
                 key: 0,
-                categories: categoriesObj
+                categories: categoriesObj.categories
             })
         }
 
@@ -38,29 +38,24 @@ export default function ApplicantRequestItem(props) {
         }).catch(e => console.log(e))
     }, [])
 
-    // useEffect(() => {
-    //     changeColor()
-    // }, [selectedKey, categories])
-
     const changeColor = (params) => {
-        // console.log(params)
         let data = [...params.categories]
-        let selectedValue = ''
+        let sv = ''
         for (let x = 0; x < params.categories.length; x++) {
             if (params.categories[x].key == params.key) {
                 data[x].backgroundColor = Colors.light.tint
                 data[x].textColor = '#fff'
-                selectedValue = data[x].category
+                sv = data[x].category
             } else {
                 data[x].backgroundColor = Colors.light.grey
                 data[x].textColor = '#000'
             }
-            setSelectedValue(selectedValue)
+            setSelectedValue(sv)
             setCategories(data)
             setSelectedKey(params.key)
         }
         if(props?.passSelectedValue){
-            props?.passSelectedValue(selectedValue)
+            props?.passSelectedValue(sv)
         }
     }
 
@@ -68,34 +63,36 @@ export default function ApplicantRequestItem(props) {
         value.key = categories.length
         value.backgroundColor = Colors.light.tint
         value.textColor = '#fff'
+        // console.log(value)
 
-        setSelectedValue(value)
-        setCategories([value, ...categories])
-        // changeColor(0)
+        changeColor({
+            key: categories.length,
+            categories: [...categories, value]
+        })
     }
 
     return (
-        // dataBeingLoaded ?
-            // <Image source={loading2} style={styles.loadingImage}/>
-            // :
+        dataBeingLoaded ?
+            <Image source={loading2} style={styles.loadingImage}/>
+            :
             <View style={styles.container}>
-                {/*{categories.map((item, i) => {*/}
-                {/*    return (*/}
-                {/*        <TouchableOpacity*/}
-                {/*            key={i}*/}
-                {/*            onPress={() => {*/}
-                {/*                setSelectedValue(item.category)*/}
-                {/*                // setSelectedKey(i)*/}
-                {/*                changeColor({*/}
-                {/*                    key: 0,*/}
-                {/*                    categories: categories*/}
-                {/*                })*/}
-                {/*            }}*/}
-                {/*            style={[styles.buttonSelector, {backgroundColor: item.backgroundColor}]}>*/}
-                {/*            <Text style={{color: item.textColor}}>{item.category}</Text>*/}
-                {/*        </TouchableOpacity>*/}
-                {/*    )*/}
-                {/*})}*/}
+                {categories.map((item, i) => {
+                    return (
+                        <TouchableOpacity
+                            key={i}
+                            onPress={() => {
+                                setSelectedValue(item.category)
+                                // setSelectedKey(i)
+                                changeColor({
+                                    key: i,
+                                    categories: categories
+                                })
+                            }}
+                            style={[styles.buttonSelector, {backgroundColor: item.backgroundColor}]}>
+                            <Text style={{color: item.textColor}}>{item.category}</Text>
+                        </TouchableOpacity>
+                    )
+                })}
                 <TouchableOpacity
                     onPress={() => {
                         navigation.navigate('SearchCategory', {

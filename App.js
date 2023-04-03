@@ -1,4 +1,4 @@
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import awsconfig from './src/backend/aws-exports';
 import {Amplify, Auth, Hub} from "aws-amplify";
 import React, {useEffect, useState} from "react";
@@ -9,7 +9,6 @@ import Lottie from 'lottie-react-native';
 import loadingAnim from './assets/animations/136078-feesbee-section-2.json'
 import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
 import {ProfileService} from "./src/backend/ProfileService";
-import {TaskService} from "./src/backend/TaskService";
 
 Amplify.configure(awsconfig);
 
