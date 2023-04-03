@@ -1,6 +1,5 @@
 import React, {Component, useEffect, useState} from "react";
 import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image} from "react-native";
-import Fontisto from "react-native-vector-icons/Fontisto";
 import {useNavigation} from "@react-navigation/native";
 import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";

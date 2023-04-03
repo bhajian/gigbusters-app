@@ -5,6 +5,7 @@ const reviewPath = '/review'
 const complexReviewPath = '/complexReview'
 const reviewablePath = '/reviewable'
 const queryPath = '/query'
+const photoPath = '/photo'
 let reviews = null
 
 export class ReviewService {
@@ -64,6 +65,36 @@ export class ReviewService {
             console.log(e)
         }
         return undefined
+    }
+
+    async addPhoto(params) {
+        const path = `${reviewPath}/${params.reviewId}${photoPath}`
+        const data = {
+            body: params,
+        }
+        const res = await API.post(reviewApiName, path, data)
+        await this.uploadPhoto({
+            ...res,
+            photo: params.photo
+        })
+        return res
+    }
+
+    async uploadPhoto(params) {
+        try{
+            const photoObj = await fetch(params.photo)
+            const blob = await photoObj.blob()
+            const key = params.key
+            await Storage.put(key, blob, {
+                bucket: params.bucket,
+                level: 'protected',
+                contentType: blob.type,
+                progressCallback: progress => {
+                }
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
 
 

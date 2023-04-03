@@ -6,7 +6,7 @@ import {
     Switch, ScrollView, SafeAreaView, FlatList, Image, Pressable,
 } from 'react-native';
 import ReviewableProfileTopContainer from "./ReviewableProfileTopContainer";
-import tipoffs from "../../../assets/data/tipoffs";
+import tipoffs from "../../../assets/data/reviews";
 import Review from "../../components/Review";
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";

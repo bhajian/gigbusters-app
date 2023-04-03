@@ -1,5 +1,5 @@
-import React, {Component, useCallback, useEffect, useState} from "react";
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image} from "react-native";
+import React, {useEffect, useState} from "react";
+import {StyleSheet, Text, View, TouchableOpacity, Image} from "react-native";
 import Colors from "../../constants/Colors";
 import {CategoryService} from "../../backend/CategoryService";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
@@ -10,6 +10,7 @@ export default function ApplicantRequestItem(props) {
     const [categories, setCategories] = useState([])
     const [selectedValue, setSelectedValue] = useState('')
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+    const [selectedKey, setSelectedKey] = useState(0)
 
     const navigation = useNavigation()
     const categoryService = new CategoryService()
@@ -22,19 +23,11 @@ export default function ApplicantRequestItem(props) {
         if(categoriesObj.categories){
             categoriesObj.categories.map((item, i) => {
                 item.key = i
-                if(i !== 0){
-                    item.backgroundColor = Colors.light.grey
-                    item.textColor = '#000'
-                } else {
-                    item.backgroundColor = Colors.light.tint
-                    item.textColor = '#fff'
-                    setSelectedValue(item.category)
-                    if(props?.passSelectedValue){
-                        props?.passSelectedValue(item.category)
-                    }
-                }
             })
-            setCategories(categoriesObj.categories)
+            changeColor({
+                key: 0,
+                categories: categoriesObj
+            })
         }
 
         setDataBeingLoaded(false)
@@ -45,11 +38,16 @@ export default function ApplicantRequestItem(props) {
         }).catch(e => console.log(e))
     }, [])
 
-    const changeColor = useCallback((key) => {
-        let data = [...categories]
+    // useEffect(() => {
+    //     changeColor()
+    // }, [selectedKey, categories])
+
+    const changeColor = (params) => {
+        // console.log(params)
+        let data = [...params.categories]
         let selectedValue = ''
-        for (let x = 0; x < categories.length; x++) {
-            if (categories[x].key == key) {
+        for (let x = 0; x < params.categories.length; x++) {
+            if (params.categories[x].key == params.key) {
                 data[x].backgroundColor = Colors.light.tint
                 data[x].textColor = '#fff'
                 selectedValue = data[x].category
@@ -59,11 +57,12 @@ export default function ApplicantRequestItem(props) {
             }
             setSelectedValue(selectedValue)
             setCategories(data)
+            setSelectedKey(params.key)
         }
         if(props?.passSelectedValue){
             props?.passSelectedValue(selectedValue)
         }
-    }, [categories])
+    }
 
     async function addCategoryHook(value) {
         value.key = categories.length
@@ -72,26 +71,31 @@ export default function ApplicantRequestItem(props) {
 
         setSelectedValue(value)
         setCategories([value, ...categories])
+        // changeColor(0)
     }
 
     return (
-        dataBeingLoaded ?
-            <Image source={loading2} style={styles.loadingImage}/>
-            :
+        // dataBeingLoaded ?
+            // <Image source={loading2} style={styles.loadingImage}/>
+            // :
             <View style={styles.container}>
-                {categories.map((item, i) => {
-                    return (
-                        <TouchableOpacity
-                            key={i}
-                            onPress={() => {
-                                setSelectedValue(item.category)
-                                changeColor(i)
-                            }}
-                            style={[styles.buttonSelector, {backgroundColor: item.backgroundColor}]}>
-                            <Text style={{color: item.textColor}}>{item.category}</Text>
-                        </TouchableOpacity>
-                    )
-                })}
+                {/*{categories.map((item, i) => {*/}
+                {/*    return (*/}
+                {/*        <TouchableOpacity*/}
+                {/*            key={i}*/}
+                {/*            onPress={() => {*/}
+                {/*                setSelectedValue(item.category)*/}
+                {/*                // setSelectedKey(i)*/}
+                {/*                changeColor({*/}
+                {/*                    key: 0,*/}
+                {/*                    categories: categories*/}
+                {/*                })*/}
+                {/*            }}*/}
+                {/*            style={[styles.buttonSelector, {backgroundColor: item.backgroundColor}]}>*/}
+                {/*            <Text style={{color: item.textColor}}>{item.category}</Text>*/}
+                {/*        </TouchableOpacity>*/}
+                {/*    )*/}
+                {/*})}*/}
                 <TouchableOpacity
                     onPress={() => {
                         navigation.navigate('SearchCategory', {
