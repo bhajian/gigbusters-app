@@ -1,10 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RequestActivityScreen from "../screens/RequestActivityScreen";
-import RequestActivityDetailScreen from "../screens/RequestActivityScreen/RequestActivityDetailScreen";
-import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
-import GigRequestDetailScreen from "../screens/GigRequestScreen/GigRequestDetailScreen";
-import RequestCompletedScreen from "../screens/GigRequestScreen/RequestCompletedScreen";
+import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,32 +16,10 @@ export function ConsumerActivityNavigation(props) {
                 }}
             />
             <Stack.Screen
-                name={'RequestActivityDetailScreen'}
-                component={RequestActivityDetailScreen}
+                name={'TaskDetailScreen'}
+                component={TaskDetailScreen}
                 options={{
                     headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'ReviewableProfileScreen'}
-                component={ReviewableProfileScreen}
-                options={{
-                    headerShown: false,
-                }}
-            />
-            <Stack.Screen
-                name={'GigRequestDetailScreen'}
-                component={GigRequestDetailScreen}
-                options={{
-                    headerShown: true,
-                    animation: "fade_from_bottom",
-                }}
-            />
-            <Stack.Screen
-                name={'RequestCompletedScreen'}
-                component={RequestCompletedScreen}
-                options={{
-                    headerShown: false,
                 }}
             />
         </Stack.Navigator>

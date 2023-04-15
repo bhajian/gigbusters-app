@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../constants/Colors';
-import {Ionicons, Octicons} from "@expo/vector-icons";
+import {FontAwesome, Ionicons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
 import {ProfileNavigation} from "./ProfileNavigation";
 import RequestActivityScreen from "../screens/RequestActivityScreen";
 import MatchingCards from "../screens/MatchingScreen/matchingCards";
+import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
+import WorkerActivityLogScreen from "../screens/WorkerActivityLogScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,8 +35,20 @@ const WorkerTabNavigator = props => {
                 )}
             </Tab.Screen>
             <Tab.Screen
-                name={'Request Activity Log'}
-                component={RequestActivityScreen}
+                name={'Neighbor Requests'}
+                component={ReferralFeedNavigation}
+                options={{
+                    tabBarActiveTintColor: Colors.light.tint,
+                    headerLargeTitle: false,
+                    headerShown: false,
+                    tabBarIcon: ({color}) => (
+                        <FontAwesome name="feed" size={25} color={color}/>
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name={'Activity Log'}
+                component={WorkerActivityLogScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerLargeTitle: true,

@@ -2,6 +2,7 @@ import {API, Storage} from "aws-amplify"
 const taskApiName = 'GigbusterApi'
 const taskPath = '/task'
 const applicantPath = '/applicant'
+const transactionPath = '/transaction'
 const applyPath = '/apply'
 const withdrawPath = '/withdraw'
 const acceptPath = '/accept'
@@ -16,6 +17,24 @@ export class TaskService {
 
     constructor() {
 
+    }
+
+    async listMyTransaction(params) {
+        const path = taskPath + transactionPath
+        const data = {
+            queryStringParameters: {
+                limit: params.limit,
+                type: params.type
+            }
+        }
+        const transactions = await API.get(taskApiName, path, data)
+        for(let i=0; i<transactions.length; i++){
+            if(transactions[i].workerProfilePhoto){
+                transactions[i].workerProfilePhotoURL =
+                    await this.getMainPhoto(transactions[i].workerProfilePhoto)
+            }
+        }
+        return transactions
     }
 
     async listTasks() {
@@ -112,11 +131,10 @@ export class TaskService {
 
     async acceptApplication(params) {
         const path = `${taskPath}/${params.taskId}${acceptPath}`
-        console.log(params)
-        console.log(path)
         const data = {
             body: {
-                applicantId: params.applicantId
+                applicantId: params.applicantId,
+                transactionId: params.transactionId,
             },
         }
         const res = await API.put(taskApiName, path, data)
@@ -124,11 +142,10 @@ export class TaskService {
     }
     async rejectApplication(params) {
         const path = `${taskPath}/${params.taskId}${rejectPath}`
-        console.log(params)
-        console.log(path)
         const data = {
             body: {
-                applicantId: params.applicantId
+                applicantId: params.applicantId,
+                transactionId: params.transactionId,
             },
         }
         const res = await API.put(taskApiName, path, data)

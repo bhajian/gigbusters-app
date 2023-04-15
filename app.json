@@ -21,7 +21,7 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["gigb"]
+        "LSApplicationQueriesSchemes": ["gigbusters"]
       }
     },
     "android": {

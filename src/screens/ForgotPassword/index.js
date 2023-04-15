@@ -25,7 +25,7 @@ export default function ForgetPasswordScreen({navigation, route}) {
                 });
         } catch (error) {
             console.log(
-                '❌ Verification code does not match. Please enter a valid verification code.',
+                '❌ VerificationScreen code does not match. Please enter a valid verification code.',
                 error.code,
             );
         }

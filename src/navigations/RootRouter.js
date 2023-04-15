@@ -6,12 +6,15 @@ import {ProfileService} from "../backend/ProfileService";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
 import ChatScreen from "../screens/ChatScreen/ChatScreen";
+import RequestGigScreen from "../screens/RequestGigScreen/MainScreen";
+import RequestCompletedScreen from "../screens/RequestGigScreen/RequestCompletedScreen";
+import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
 
 const Stack = createNativeStackNavigator()
 
 const RootRouter = props => {
     const profileService = new ProfileService()
-    const [accountType, setAccountType] = useState('USER')
+    const [accountType, setAccountType] = useState('CONSUMER')
 
     useEffect(() => {
         getCurrentUserData().then(r => {})
@@ -27,7 +30,7 @@ const RootRouter = props => {
 
     return (
         <Stack.Navigator>
-            {accountType === 'USER' && (
+            {accountType === 'CONSUMER' && (
                 <Stack.Screen
                     name={'Consumer'}
                     options={{
@@ -57,30 +60,65 @@ const RootRouter = props => {
                     )}
                 </Stack.Screen>
             )}
-            <Stack.Screen
-                name={'LocationSelectorScreen'}
-                component={LocationSelectorScreen}
-                options={{
-                    headerShown: false,
-                    animation: "fade_from_bottom",
-                }}
-            />
-            <Stack.Screen
-                name={'SearchCategory'}
-                component={SearchCategory}
-                options={{
-                    headerShown: false,
-                    animation: "fade_from_bottom",
-                }}
-            />
-            <Stack.Screen
-                name={'ChatScreen'}
-                component={ChatScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
+            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+                <Stack.Screen
+                    name={'LocationSelectorScreen'}
+                    component={LocationSelectorScreen}
+                    options={{
+                        headerShown: false,
+                        animation: "fade_from_bottom",
+                    }}
+                />
+            )}
+            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+                <Stack.Screen
+                    name={'SearchCategory'}
+                    component={SearchCategory}
+                    options={{
+                        headerShown: false,
+                        animation: "fade_from_bottom",
+                    }}
+                />
+            )}
+            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+                <Stack.Screen
+                    name={'ChatScreen'}
+                    component={ChatScreen}
+                    options={{
+                        headerShown: true,
+                    }}
+                />
+            )}
+            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+                <Stack.Screen
+                    name={'RequestGigScreen'}
+                    component={RequestGigScreen}
+                    options={{
+                        headerShown: true,
+                        animation: "fade_from_bottom",
+                    }}
+                />
+            )}
+            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+                <Stack.Screen
+                    name={'RequestCompletedScreen'}
+                    component={RequestCompletedScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            )}
+            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+                <Stack.Screen
+                    name={'ReviewableProfileScreen'}
+                    component={ReviewableProfileScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            )}
         </Stack.Navigator>
+
     );
 };
 

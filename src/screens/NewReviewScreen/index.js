@@ -139,7 +139,7 @@ export default function NewReviewScreen({navigation, route}) {
         <KeyboardAvoidingView
             style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 10}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 120}
         >
             <ScrollView>
                 <View style={styles.newReviewContainer}>

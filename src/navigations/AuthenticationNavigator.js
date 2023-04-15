@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import SignIn from '../screens/SignInScreen';
 import SignUp from '../screens/SignUpScreen';
-import Verification from '../screens/Verification';
+import VerificationScreen from '../screens/VerificationScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import ForgotPassword from '../screens/ForgotPassword';
 import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen";
 import ForgetPasswordScreen from "../screens/ForgotPassword";
 import PasswordResetScreen from "../screens/ForgotPassword/PasswordResetScreen";
@@ -39,7 +38,7 @@ const AuthenticationNavigator = props => {
                 name="Verification"
             >
                 {screenProps => (
-                    <Verification
+                    <VerificationScreen
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
                     />

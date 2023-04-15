@@ -13,7 +13,7 @@ import {TaskService} from "../../backend/TaskService";
 import loading2 from "../../../assets/images/loading2.gif";
 import FeedSearchSearch from "./FeedSearchSearch";
 
-export default function RequestFeedScreen(props) {
+export default function NeighborhoodFeedScreen(props) {
 
     const [requestList, setRequestList] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)

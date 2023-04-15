@@ -17,7 +17,7 @@ const ConsumerTabNavigator = props => {
     return (
         <Tab.Navigator screenOptions={{}}>
             <Tab.Screen
-                name={'GigRequest'}
+                name={'Home'}
                 component={ConsumerActivityNavigation}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
@@ -29,7 +29,7 @@ const ConsumerTabNavigator = props => {
                 }}
             />
             <Tab.Screen
-                name={'Feed'}
+                name={'Neighborhood'}
                 component={ReferralFeedNavigation}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,

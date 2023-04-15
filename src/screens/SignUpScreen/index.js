@@ -29,7 +29,7 @@ const SignUpScreen = () => {
                 },
             });
 
-            navigation.navigate('Verification',
+            navigation.navigate('VerificationScreen',
                 {
                     usernameParam: lowerEmail,
                     passwordParam: password,
@@ -44,7 +44,7 @@ const SignUpScreen = () => {
     };
 
     const onConfirmCodePress = () => {
-        navigation.navigate('Verification');
+        navigation.navigate('VerificationScreen');
     };
 
     const onTermsOfUsePressed = () => {

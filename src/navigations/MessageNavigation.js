@@ -21,13 +21,13 @@ export function MessageNavigation(props) {
                     )
                 }}
             />
-            <Stack.Screen
-                name={'ChatScreen'}
-                component={ChatScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
+            {/*<Stack.Screen*/}
+            {/*    name={'ChatScreen'}*/}
+            {/*    component={ChatScreen}*/}
+            {/*    options={{*/}
+            {/*        headerShown: true,*/}
+            {/*    }}*/}
+            {/*/>*/}
         </Stack.Navigator>
     );
 };

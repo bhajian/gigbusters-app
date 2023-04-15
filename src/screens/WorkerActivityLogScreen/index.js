@@ -11,7 +11,7 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import loading2 from "../../../assets/images/loading2.gif";
 
-export default function RequestActivityScreen({route}) {
+export default function WorkerActivityLogScreen({route}) {
     const [requestList, setRequestList] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
 
@@ -71,11 +71,7 @@ export default function RequestActivityScreen({route}) {
     }
 
     function requestActivityClickHandler(props) {
-        navigation.navigate('TaskDetailScreen', props)
-    }
 
-    const onNewRequestPress = () => {
-        navigation.navigate('RequestGigScreen')
     }
 
     return (
@@ -93,12 +89,6 @@ export default function RequestActivityScreen({route}) {
                         keyExtractor={(item) => item.id}
                     />
             }
-            <TouchableOpacity
-                style={styles.button}
-                activeOpacity={0.8}
-                onPress={onNewRequestPress}>
-                <MaterialIcons name="add-task" size={27} color="white"/>
-            </TouchableOpacity>
         </SafeAreaView>
 
     );

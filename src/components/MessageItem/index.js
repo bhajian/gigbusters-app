@@ -8,10 +8,10 @@ export default function MessageItem({item, onChatPressed, onProfilePressed}) {
         <View style={styles.container}>
             <View style={styles.mainContainer}>
                 <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(item)}>
-                    <Image source={{uri: item.to.image}} style={styles.image} />
+                    <Image source={{uri: item.workerProfilePhotoURL}} style={styles.image} />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
-                            {item.to.name}
+                            {item.workerName}
                         </Text>
                     </View>
                 </TouchableOpacity>

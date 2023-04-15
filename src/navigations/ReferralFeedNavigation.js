@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import RequestActivityDetailScreen from "../screens/RequestActivityScreen/RequestActivityDetailScreen";
-import RequestFeedScreen from "../screens/RequestFeedScreen";
+import RequestActivityDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen";
+import NeighborhoodFeedScreen from "../screens/NeighborhoodFeedScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -10,14 +10,7 @@ export function ReferralFeedNavigation(props) {
         <Stack.Navigator>
             <Stack.Screen
                 name={'RequestFeedScreen'}
-                component={RequestFeedScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'RequestDetailScreen'}
-                component={RequestActivityDetailScreen}
+                component={NeighborhoodFeedScreen}
                 options={{
                     headerShown: true,
                 }}

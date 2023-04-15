@@ -16,7 +16,7 @@ const ProfileScreen = (props) => {
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [locationName, setLocationName] = useState('');
-    const [accountType, setAccountType] = useState('USER')
+    const [accountType, setAccountType] = useState('CONSUMER')
     const [image, setImage] = useState(null);
 
 
@@ -83,7 +83,7 @@ const ProfileScreen = (props) => {
             props.updateAuthState('initializing')
             const profile = profileService.getProfile()
             if(accountType === 'WORKER'){
-                profile.accountType = 'USER'
+                profile.accountType = 'CONSUMER'
             } else{
                 profile.accountType = 'WORKER'
             }
@@ -125,50 +125,50 @@ const ProfileScreen = (props) => {
                         locationNameParam={locationName}
                     />
                 </View>
-                <View style={styles.doubleButton}>
-                    <CustomButton
-                        text="Link to"
-                        iconCategory="Entypo"
-                        iconName="instagram"
-                        onPress={onUpgradePressed}
-                        iconStyle={styles.instagrambuttonIcon}
-                        style={styles.linkAccountButton}
-                        bgColor="#E3E8F1"
-                        fgColor="#5B67CA"
-                    />
-                    <CustomButton
-                        text="Link to"
-                        iconCategory="FontAwesome5"
-                        iconName="tiktok"
-                        onPress={onUpgradePressed}
-                        iconStyle={[styles.tiktokbuttonIcon]}
-                        style={styles.linkAccountButton}
-                        bgColor="#E3E8F1"
-                        fgColor="#5B67CA"
-                    />
-                </View>
-                <View style={styles.doubleButton}>
-                    <CustomButton
-                        text="Link to"
-                        iconCategory="FontAwesome5"
-                        iconName="twitter"
-                        onPress={onUpgradePressed}
-                        iconStyle={styles.twitterbuttonIcon}
-                        style={styles.linkAccountButton}
-                        bgColor="#E3E8F1"
-                        fgColor="#5B67CA"
-                    />
-                    <CustomButton
-                        text="Link to"
-                        iconCategory="FontAwesome5"
-                        iconName="linkedin"
-                        onPress={onUpgradePressed}
-                        iconStyle={styles.linkedinbuttonIcon}
-                        style={styles.linkAccountButton}
-                        bgColor="#E3E8F1"
-                        fgColor="#5B67CA"
-                    />
-                </View>
+                {/*<View style={styles.doubleButton}>*/}
+                {/*    <CustomButton*/}
+                {/*        text="Link to"*/}
+                {/*        iconCategory="Entypo"*/}
+                {/*        iconName="instagram"*/}
+                {/*        onPress={onUpgradePressed}*/}
+                {/*        iconStyle={styles.instagrambuttonIcon}*/}
+                {/*        style={styles.linkAccountButton}*/}
+                {/*        bgColor="#E3E8F1"*/}
+                {/*        fgColor="#5B67CA"*/}
+                {/*    />*/}
+                {/*    <CustomButton*/}
+                {/*        text="Link to"*/}
+                {/*        iconCategory="FontAwesome5"*/}
+                {/*        iconName="tiktok"*/}
+                {/*        onPress={onUpgradePressed}*/}
+                {/*        iconStyle={[styles.tiktokbuttonIcon]}*/}
+                {/*        style={styles.linkAccountButton}*/}
+                {/*        bgColor="#E3E8F1"*/}
+                {/*        fgColor="#5B67CA"*/}
+                {/*    />*/}
+                {/*</View>*/}
+                {/*<View style={styles.doubleButton}>*/}
+                {/*    <CustomButton*/}
+                {/*        text="Link to"*/}
+                {/*        iconCategory="FontAwesome5"*/}
+                {/*        iconName="twitter"*/}
+                {/*        onPress={onUpgradePressed}*/}
+                {/*        iconStyle={styles.twitterbuttonIcon}*/}
+                {/*        style={styles.linkAccountButton}*/}
+                {/*        bgColor="#E3E8F1"*/}
+                {/*        fgColor="#5B67CA"*/}
+                {/*    />*/}
+                {/*    <CustomButton*/}
+                {/*        text="Link to"*/}
+                {/*        iconCategory="FontAwesome5"*/}
+                {/*        iconName="linkedin"*/}
+                {/*        onPress={onUpgradePressed}*/}
+                {/*        iconStyle={styles.linkedinbuttonIcon}*/}
+                {/*        style={styles.linkAccountButton}*/}
+                {/*        bgColor="#E3E8F1"*/}
+                {/*        fgColor="#5B67CA"*/}
+                {/*    />*/}
+                {/*</View>*/}
                 <CustomButton
                     text="Edit Profile"
                     onPress={onEditPressed}
@@ -179,7 +179,7 @@ const ProfileScreen = (props) => {
 
                 <CustomButton
                     text={'Switch to ' +
-                        (accountType === 'USER'? 'Worker': 'Consumer')+ ' Account'}
+                        (accountType === 'CONSUMER'? 'Worker': 'Consumer')+ ' Account'}
                     onPress={onSwitchProfilePressed}
                     style={styles.regularButton}
                     bgColor="#E3E8F1"

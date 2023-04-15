@@ -12,7 +12,7 @@ import EditPageBottomSheet from "./EditPageBottomSheet";
 import {TaskService} from "../../../backend/TaskService";
 import ApplicantAcceptedItem from "../../../components/ApplicantAcceptedItem"
 import tipoffs from "../../../../assets/data/tipoffs"
-export default function RequestActivityDetailScreen({route}) {
+export default function TaskDetailScreen({route}) {
     const task = route.params
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [applicants, setApplicants] = useState([])
@@ -32,12 +32,13 @@ export default function RequestActivityDetailScreen({route}) {
     async function onAcceptPressed(params) {
         try{
             await taskService.acceptApplication({
-                applicantId: params.userId,
+                applicantId: params?.transaction?.workerId,
+                transactionId: params?.transaction?.id,
                 taskId: task.id
             })
             const index = applicants.findIndex(x=> x.userId === params.userId)
             let newApplicant = [...applicants]
-            newApplicant[index].applicant.applicationStatus = 'acceptedToStart'
+            newApplicant[index].transaction.status = 'applicationAccepted'
             setApplicants([...newApplicant])
         } catch (e) {
             console.log(e)
@@ -47,12 +48,13 @@ export default function RequestActivityDetailScreen({route}) {
     async function onRejectPressed(params) {
         try{
             await taskService.rejectApplication({
-                applicantId: params.userId,
+                applicantId: params?.transaction?.workerId,
+                transactionId: params?.transaction?.id,
                 taskId: task.id
             })
             const index = applicants.findIndex(x=> x.userId === params.userId)
             let newApplicant = [...applicants]
-            newApplicant[index].applicant.applicationStatus = 'rejected'
+            newApplicant[index].transaction.status = 'rejected'
             setApplicants([...newApplicant])
         } catch (e) {
             console.log(e)
@@ -126,7 +128,7 @@ export default function RequestActivityDetailScreen({route}) {
                         ListHeaderComponent={header}
                         data={applicants}
                         renderItem={({item}) => {
-                            if(item.applicant.applicationStatus === 'applied'){
+                            if(item?.transaction?.status === 'applied'){
                                 return <ApplicantRequestItem
                                     item={item}
                                     onAcceptPressed={onAcceptPressed}
@@ -134,7 +136,7 @@ export default function RequestActivityDetailScreen({route}) {
                                     onProfilePressed={onProfilePressed}
                                 />
                             }
-                            if(item.applicant.applicationStatus === 'acceptedToStart') {
+                            if(item?.transaction?.status === 'applicationAccepted') {
                                 return <ApplicantAcceptedItem
                                     item={item}
                                     onChatPressed={onChatPressed}

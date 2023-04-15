@@ -19,10 +19,10 @@ import ImageList from "../../../components/ImageList";
 import Entypo from "react-native-vector-icons/Entypo";
 import {TaskService} from "../../../backend/TaskService";
 import loading from "../../../../assets/images/loading2.gif";
-import GigRequestBottomSheet from "../GigRequestBottomSheet";
+import GigRequestBottomSheet from "../RequestGigBottomSheet";
 import Fontisto from "react-native-vector-icons/Fontisto";
 
-export default function GigRequestDetailScreen(props) {
+export default function RequestGigScreen(props) {
 
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState('')
@@ -149,8 +149,9 @@ export default function GigRequestDetailScreen(props) {
 
     return (
         <KeyboardAvoidingView
-            style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 105 : 85}
+            style={styles.container}
         >
             <ScrollView>
                 <View style={styles.imageContainer}>

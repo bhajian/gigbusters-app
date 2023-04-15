@@ -12,19 +12,21 @@ import {MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import Entypo from "react-native-vector-icons/Entypo";
 import {ProfileService} from "../../backend/ProfileService";
-import EditDeleteBottomSheet from "../RequestActivityScreen/RequestActivityDetailScreen/EditDeleteBottomSheet";
 import ProfileSearchBottomSheet from "./ProfileSearchBottomSheet";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import UserAvatar from "@muhzi/react-native-user-avatar";
+import {TaskService} from "../../backend/TaskService";
 
 export default function MessageListScreen() {
-    const [name, setName] = useState('');
+    const [profileName, setProfileName] = useState('')
     const [profileImage, setProfileImage] = useState(null)
+    const [transactions, setTransactions] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
     const navigation = useNavigation()
 
     const bottomSheetModalRef = useRef(null)
     const profileService = new ProfileService()
+    const taskService = new TaskService()
 
     useEffect(() => {
         getCurrentUserData().then(r => {})
@@ -49,23 +51,28 @@ export default function MessageListScreen() {
                 <UserAvatar
                     size={30}
                     active
-                    name={name}
+                    name={profileName}
                     src={profileImage}
                 />
             ),
         })
-
-    }, [navigation, name])
+    }, [navigation, profileName])
 
     async function getCurrentUserData() {
         const profile = profileService.getProfile()
         if(profile && profile.name){
-            setName(profile.name)
+            setProfileName(profile.name)
         }
         if(profile && profile.photos){
             const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
+
+        const transactionsObj = await taskService.listMyTransaction({
+            limit: 20,
+            type: 'CONSUMER'
+        })
+        setTransactions(transactionsObj)
     }
 
     const handleSheetChanges = useCallback((value) => {
@@ -90,7 +97,7 @@ export default function MessageListScreen() {
                     <Image source={loading2} style={styles.loading2} />
                     :
                     <FlatList
-                        data={tipoffs}
+                        data={transactions}
                         renderItem={({item}) => {
                             return(
                                 <MessageItem
@@ -100,7 +107,7 @@ export default function MessageListScreen() {
                                 />
                             )
                         }}
-                        keyExtractor={(item) => item.to.userId}
+                        keyExtractor={(item) => item.id}
                     />
             }
             <TouchableOpacity

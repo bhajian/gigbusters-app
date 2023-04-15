@@ -41,7 +41,9 @@ export default function App() {
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
-            const profile = await profileService.fetchProfile({userId: currentUser.sub})
+            const profile = await profileService.fetchProfile({
+                userId: currentUser.sub
+            })
             if(currentUser) {
                 if (profile && profile.userId) {
                     setUserStatus('loggedIn')
