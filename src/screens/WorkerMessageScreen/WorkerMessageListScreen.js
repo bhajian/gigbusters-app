@@ -8,7 +8,6 @@ import {useNavigation} from "@react-navigation/native"
 import loading2 from "../../../assets/images/loading2.gif";
 import MessageItem from "../../components/MessageItem";
 import tipoffs from "../../../assets/data/tipoffs";
-import {MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import Entypo from "react-native-vector-icons/Entypo";
 import {ProfileService} from "../../backend/ProfileService";
@@ -16,8 +15,9 @@ import ProfileSearchBottomSheet from "./ProfileSearchBottomSheet";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {TaskService} from "../../backend/TaskService";
+import {MaterialIcons} from "@expo/vector-icons";
 
-export default function MessageListScreen() {
+export default function WorkerMessageListScreen() {
     const [profileName, setProfileName] = useState('')
     const [profileImage, setProfileImage] = useState(null)
     const [transactions, setTransactions] = useState([])
@@ -29,7 +29,10 @@ export default function MessageListScreen() {
     const taskService = new TaskService()
 
     useEffect(() => {
-        getCurrentUserData().then(r => {})
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
     }, [])
 
     useEffect(() => {
@@ -37,16 +40,11 @@ export default function MessageListScreen() {
             tabBarActiveTintColor: Colors.light.tint,
             // headerLargeTitle: true,
             tabBarIcon: ({color}) => (
-                <Fontisto name="react" size={25} color={color}/>
+                <MaterialIcons name="message" size={25} color={color}/>
             ),
             headerTitle: () => (
                 <Text>Messages</Text>
             ),
-            headerSearchBarOptions: {
-                placeholder: "Search ..",
-                // onFocus: ()=>{navigation.navigate('SearchCategory')}
-            },
-
             headerLeft: () => (
                 <UserAvatar
                     size={30}
@@ -58,7 +56,8 @@ export default function MessageListScreen() {
         })
     }, [navigation, profileName])
 
-    async function getCurrentUserData() {
+    async function loadData() {
+        setDataBeingLoaded(true)
         const profile = profileService.getProfile()
         if(profile && profile.name){
             setProfileName(profile.name)
@@ -67,19 +66,19 @@ export default function MessageListScreen() {
             const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
-
         const transactionsObj = await taskService.listMyTransaction({
             limit: 20,
-            type: 'CONSUMER'
+            type: 'WORKER'
         })
         setTransactions(transactionsObj)
+        setDataBeingLoaded(false)
     }
 
     const handleSheetChanges = useCallback((value) => {
     }, [])
 
-    async function onChatPressed(cardIndex) {
-        navigation.navigate('ChatScreen')
+    async function onChatPressed(params) {
+        navigation.navigate('WorkerChatScreen', params)
     }
 
     async function onProfilePressed(params) {
@@ -101,21 +100,16 @@ export default function MessageListScreen() {
                         renderItem={({item}) => {
                             return(
                                 <MessageItem
-                                    item={item}
+                                    transaction={item}
+                                    accountType={"WORKER"}
                                     onChatPressed={onChatPressed}
                                     onProfilePressed={onProfilePressed}
                                 />
                             )
                         }}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item.transaction.id}
                     />
             }
-            <TouchableOpacity
-                style={styles.button}
-                activeOpacity={0.8}
-                onPress={onNewMessagePress}>
-                <Entypo name="new-message" size={27} color="white"/>
-            </TouchableOpacity>
             <ProfileSearchBottomSheet
                 bottomSheetModalRef={bottomSheetModalRef}
                 handleSheetChanges={handleSheetChanges}
@@ -156,5 +150,11 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    loading2: {
+        width: 100,
+        height: 100,
+        top: 150,
+        alignSelf: 'center'
     },
 })

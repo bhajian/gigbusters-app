@@ -3,20 +3,21 @@ import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} f
 import Colors from "../../constants/Colors";
 import {AntDesign} from "@expo/vector-icons";
 
-export default function MessageItem({item, onChatPressed, onProfilePressed}) {
+export default function MessageItem({transaction, accountType, onChatPressed, onProfilePressed}) {
+    const profile = (accountType === 'WORKER' ? transaction.customer : transaction.worker)
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
-                <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(item)}>
-                    <Image source={{uri: item.workerProfilePhotoURL}} style={styles.image} />
+                <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(profile)}>
+                    <Image source={{uri: profile.profilePhotoURL}} style={styles.image} />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
-                            {item.workerName}
+                            {profile.name}
                         </Text>
                     </View>
                 </TouchableOpacity>
                 <View style={styles.rightContainer}>
-                    <TouchableOpacity style={styles.rejectButton} onPress={e => onChatPressed(item)}>
+                    <TouchableOpacity style={styles.rejectButton} onPress={e => onChatPressed(transaction)}>
                         <AntDesign name="wechat" size={30} color={Colors.light.tint}/>
                     </TouchableOpacity>
                 </View>

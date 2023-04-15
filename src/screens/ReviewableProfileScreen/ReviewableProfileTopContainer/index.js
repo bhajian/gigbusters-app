@@ -6,7 +6,6 @@ import {
     Text, TextInput,
 } from 'react-native';
 import Colors from '../../../constants/Colors';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import RatingStack from "../../../components/RatingStack";
@@ -15,10 +14,10 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
 
     const [open, setOpen] = useState(false)
     const [value, setValue] = useState('phone')
-    const [rating, setRating] = useState(Math.round((reviewable && reviewable.cumulativeRating && reviewable.numberOfReviews ?
-        reviewable.cumulativeRating/reviewable.numberOfReviews : 0 ) * 100 + Number.EPSILON) / 100)
-
-    const [searchQuery, setSearchQuery] = React.useState('')
+    const [rating, setRating] = useState(Math.round(
+        (reviewable && reviewable.cumulativeRating && reviewable.numberOfReviews ?
+        reviewable.cumulativeRating/reviewable.numberOfReviews : 0 )
+        * 100 + Number.EPSILON) / 100)
 
     useEffect(() => {
 

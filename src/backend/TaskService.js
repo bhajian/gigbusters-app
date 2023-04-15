@@ -29,9 +29,13 @@ export class TaskService {
         }
         const transactions = await API.get(taskApiName, path, data)
         for(let i=0; i<transactions.length; i++){
-            if(transactions[i].workerProfilePhoto){
-                transactions[i].workerProfilePhotoURL =
-                    await this.getMainPhoto(transactions[i].workerProfilePhoto)
+            if(transactions[i].worker?.profilePhoto){
+                transactions[i].worker.profilePhotoURL =
+                    await this.getMainPhoto(transactions[i].worker?.profilePhoto)
+            }
+            if(transactions[i].customer?.profilePhoto){
+                transactions[i].customer.profilePhotoURL =
+                    await this.getMainPhoto(transactions[i].customer?.profilePhoto)
             }
         }
         return transactions

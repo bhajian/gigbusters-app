@@ -1,17 +1,42 @@
 import { useState } from "react";
 import {
     StyleSheet,
-    TextInput,
+    TextInput, TouchableOpacity,
 } from "react-native";
 import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "react-native-get-random-values";
 import Colors from "../../constants/Colors";
+import {
+    createMessage,
+} from "../../backend/graphql/mutations"
+import {API, graphqlOperation} from "aws-amplify";
 
-const InputBox = ({ chatroom }) => {
+const InputBox = ({ transactionId, fromUserId, toUserId }) => {
     const [text, setText] = useState("");
     const [files, setFiles] = useState([]);
     const [progresses, setProgresses] = useState({});
+
+    async function onSendPressed(params) {
+        try{
+            const newMessage = {
+                transactionId: transactionId,
+                message: text,
+                fromUserId: fromUserId,
+                toUserId: toUserId,
+                dateTime: (new Date()).toISOString()
+            }
+
+            console.log(newMessage)
+
+            const newMessageData = await API.graphql(
+                graphqlOperation(createMessage, { input: newMessage })
+            )
+        } catch (e) {
+            console.log(e)
+        }
+        setText('')
+    }
 
     return (
             <SafeAreaView edges={["bottom"]} style={styles.container}>
@@ -29,14 +54,17 @@ const InputBox = ({ chatroom }) => {
                     placeholder="Type your message..."
                 />
 
-                {/* Icon */}
-                <MaterialIcons
-                    // onPress={onSend}
-                    style={styles.send}
-                    name="send"
-                    size={16}
-                    color="white"
-                />
+                <TouchableOpacity
+                    style={styles.leftContainer}
+                    onPress={onSendPressed}
+                >
+                    <MaterialIcons
+                        style={styles.send}
+                        name="send"
+                        size={16}
+                        color="white"
+                    />
+                </TouchableOpacity>
             </SafeAreaView>
     );
 };

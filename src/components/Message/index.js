@@ -9,13 +9,10 @@ const Message = ({message}) => {
     const [isMe, setIsMe] = useState(false);
     const { width } = useWindowDimensions()
 
-    console.log(message)
-
     useEffect(() => {
         const isMyMessage = async () => {
-            const authUser = await Auth.currentAuthenticatedUser();
-
-            setIsMe(message.from.id === 'u33');
+            const currentUser = await Auth.currentAuthenticatedUser()
+            setIsMe(message.fromUserId === currentUser.attributes.sub);
         };
 
         isMyMessage().then(r => {});
@@ -32,8 +29,8 @@ const Message = ({message}) => {
             ]}
         >
 
-            <Text>{message.content}</Text>
-            <Text style={styles.time}>{dayjs(new Date()).fromNow(true)}</Text>
+            <Text>{message.message}</Text>
+            <Text style={styles.time}>{dayjs(message.dateTime).fromNow(true)}</Text>
         </View>
     );
 };

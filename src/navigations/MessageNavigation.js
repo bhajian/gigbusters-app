@@ -1,9 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Colors from "../constants/Colors";
-import ChatScreen from "../screens/ChatScreen/ChatScreen";
-import MessageListScreen from "../screens/ChatScreen/MessageList";
-import Feather from "react-native-vector-icons/Feather";
+import ConsumerMessageListScreen from "../screens/CuncumerMessageScreen/ConsumerMessageListScreen";
 import {MaterialIcons} from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
@@ -12,8 +10,8 @@ export function MessageNavigation(props) {
     return (
         <Stack.Navigator>
             <Stack.Screen
-                name={'MessageListScreen'}
-                component={MessageListScreen}
+                name={'ConsumerMessageListScreen'}
+                component={ConsumerMessageListScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     tabBarIcon: ({color}) => (
@@ -22,8 +20,8 @@ export function MessageNavigation(props) {
                 }}
             />
             {/*<Stack.Screen*/}
-            {/*    name={'ChatScreen'}*/}
-            {/*    component={ChatScreen}*/}
+            {/*    name={'CuncumerMessageScreen'}*/}
+            {/*    component={CuncumerMessageScreen}*/}
             {/*    options={{*/}
             {/*        headerShown: true,*/}
             {/*    }}*/}

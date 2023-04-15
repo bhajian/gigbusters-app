@@ -9,11 +9,54 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {useNavigation} from "@react-navigation/native";
+import {API, graphqlOperation} from "aws-amplify";
+import {listMessages} from "../../backend/graphql/queries";
+import {onCreateMessage} from "../../backend/graphql/subscriptions";
 
-const ChatScreen = (props) => {
-    const [name, setName] = useState('John Doe')
+const ConsumerChatScreen = (props) => {
+    const transaction = props?.route?.params
+
+    const [name, setName] = useState(transaction.worker.name)
+    const [profilePhoto, setProfilePhoto] = useState(transaction.worker.profilePhotoURL)
+    const [messages, setMessages] = useState([])
 
     const navigation = useNavigation()
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        const subscription = API.graphql(
+            graphqlOperation(onCreateMessage, {
+                filter: { transactionId: { eq: transaction.transaction.id } },
+            })
+        ).subscribe({
+            next: ({ value }) => {
+                setMessages((m) => [value.data.onCreateMessage, ...m]);
+            },
+            error: (err) => console.warn(err),
+        })
+
+        return () => {
+            subscription.unsubscribe()
+        }
+    }, [])
+
+    async function loadData() {
+        try{
+            const messagesObj = await API.graphql(graphqlOperation(listMessages, {
+                filter: {
+                    transactionId: {
+                        eq: transaction.transaction.id
+                    }
+                }
+            }))
+
+            setMessages(messagesObj?.data?.listMessages?.items)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
         navigation.setOptions({
@@ -31,7 +74,7 @@ const ChatScreen = (props) => {
                     <UserAvatar
                         size={30}
                         name={name}
-                        src="https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250"
+                        src={profilePhoto}
                     />
                     <Text style={styles.name}>{name}</Text>
                 </Pressable>
@@ -64,19 +107,23 @@ const ChatScreen = (props) => {
         >
             <ImageBackground source={bg} style={styles.bg}>
                 <FlatList
-                    data={tipoffs}
+                    data={messages}
                     renderItem={({ item }) => <Message message={item} />}
                     style={styles.list}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item) => item.transaction?.id}
                     inverted
                 />
-                <InputBox />
+                <InputBox
+                    transactionId={transaction.transaction.id}
+                    fromUserId={transaction.transaction.customerId}
+                    toUserId={transaction.transaction.workerId}
+                />
             </ImageBackground>
         </KeyboardAvoidingView>
     )
 };
 
-export default ChatScreen;
+export default ConsumerChatScreen;
 
 const styles = StyleSheet.create({
     container: {

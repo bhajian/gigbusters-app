@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../constants/Colors';
-import {FontAwesome, Ionicons, Octicons} from "@expo/vector-icons";
+import {FontAwesome, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
 import {ProfileNavigation} from "./ProfileNavigation";
 import RequestActivityScreen from "../screens/RequestActivityScreen";
 import MatchingCards from "../screens/MatchingScreen/matchingCards";
 import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
 import WorkerActivityLogScreen from "../screens/WorkerActivityLogScreen";
+import WorkerMessageListScreen from "../screens/WorkerMessageScreen/WorkerMessageListScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -35,7 +36,19 @@ const WorkerTabNavigator = props => {
                 )}
             </Tab.Screen>
             <Tab.Screen
-                name={'Neighbor Requests'}
+                name={'Messages'}
+                component={WorkerMessageListScreen}
+                options={{
+                    tabBarActiveTintColor: Colors.light.tint,
+                    headerLargeTitle: true,
+                    headerShown: true,
+                    tabBarIcon: ({color}) => (
+                        <MaterialIcons name="message" size={25} color={color}/>
+                    ),
+                }}
+            />
+            <Tab.Screen
+                name={'Neighborhood'}
                 component={ReferralFeedNavigation}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
@@ -43,18 +56,6 @@ const WorkerTabNavigator = props => {
                     headerShown: false,
                     tabBarIcon: ({color}) => (
                         <FontAwesome name="feed" size={25} color={color}/>
-                    ),
-                }}
-            />
-            <Tab.Screen
-                name={'Activity Log'}
-                component={WorkerActivityLogScreen}
-                options={{
-                    tabBarActiveTintColor: Colors.light.tint,
-                    headerLargeTitle: true,
-                    headerShown: true,
-                    tabBarIcon: ({color}) => (
-                        <Ionicons name="file-tray-full" size={25} color={color}/>
                     ),
                 }}
             />

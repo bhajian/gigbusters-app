@@ -5,10 +5,11 @@ import WorkerTabNavigator from "./WorkerTabNavigator";
 import {ProfileService} from "../backend/ProfileService";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
-import ChatScreen from "../screens/ChatScreen/ChatScreen";
+import ConsumerChatScreen from "../screens/CuncumerMessageScreen/ConsumerChatScreen";
 import RequestGigScreen from "../screens/RequestGigScreen/MainScreen";
 import RequestCompletedScreen from "../screens/RequestGigScreen/RequestCompletedScreen";
 import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
+import WorkerChatScreen from "../screens/WorkerMessageScreen/WorkerChatScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -80,10 +81,19 @@ const RootRouter = props => {
                     }}
                 />
             )}
-            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+            {accountType === 'CONSUMER' && (
                 <Stack.Screen
-                    name={'ChatScreen'}
-                    component={ChatScreen}
+                    name={'ConsumerChatScreen'}
+                    component={ConsumerChatScreen}
+                    options={{
+                        headerShown: true,
+                    }}
+                />
+            )}
+            {accountType === 'WORKER' && (
+                <Stack.Screen
+                    name={'WorkerChatScreen'}
+                    component={WorkerChatScreen}
                     options={{
                         headerShown: true,
                     }}

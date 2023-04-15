@@ -12,7 +12,7 @@ export default function IdContainer({request}) {
                 <Text style={styles.toName} >{request.name}</Text>
             </View>
             <View style={styles.userIdContainer}>
-                <Text style={styles.fromName}>ID: {request.name}</Text>
+                <Text style={styles.fromName}>ID: {request.accountCode}</Text>
             </View>
         </View>
     );

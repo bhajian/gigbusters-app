@@ -5,6 +5,11 @@ const awsmobile = {
     // "aws_content_delivery_bucket": "fameorbitportal-20230201142504-hostingbucket-dev",
     // "aws_content_delivery_bucket_region": "us-east-1",
     // "aws_content_delivery_url": "https://d1j1495gocjvnj.cloudfront.net",
+    "aws_project_region": "us-east-1",
+    "aws_appsync_graphqlEndpoint": "https://eo7ixgzfavgknfd4fuzzoszuai.appsync-api.us-east-1.amazonaws.com/graphql",
+    "aws_appsync_region": "us-east-1",
+    "aws_appsync_authenticationType": "API_KEY",
+    "aws_appsync_apiKey": "da2-i42ex6js3ra6jblqypgmbefxim",
     Auth: {
 
         // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
