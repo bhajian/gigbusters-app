@@ -9,17 +9,19 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {useNavigation} from "@react-navigation/native";
-import {API, graphqlOperation} from "aws-amplify";
+import {API, Auth, graphqlOperation} from "aws-amplify";
 import {listMessages} from "../../backend/graphql/queries";
 import {onCreateMessage} from "../../backend/graphql/subscriptions";
+import { useHeaderHeight } from "@react-navigation/elements"
 
 const WorkerChatScreen = (props) => {
-    const transaction = props?.route?.params
-    console.log(transaction)
+    const headerHeight = useHeaderHeight()
 
+    const transaction = props?.route?.params
     const [name, setName] = useState(transaction.customer.name)
     const [profilePhoto, setProfilePhoto] = useState(transaction.customer.profilePhotoURL)
     const [messages, setMessages] = useState([])
+    const [currentUserId, setCurrentUserId] = useState('')
 
     const navigation = useNavigation()
 
@@ -45,6 +47,8 @@ const WorkerChatScreen = (props) => {
 
     async function loadData() {
         try{
+            const currentUser = await Auth.currentAuthenticatedUser()
+            setCurrentUserId(currentUser.attributes.sub)
             const messagesObj = await API.graphql(graphqlOperation(listMessages, {
                 filter: {
                     transactionId: {
@@ -103,13 +107,16 @@ const WorkerChatScreen = (props) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : 85}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 85}
             style={styles.container}
         >
             <ImageBackground source={bg} style={styles.bg}>
                 <FlatList
                     data={messages}
-                    renderItem={({ item }) => <Message message={item} />}
+                    renderItem={({ item }) => <Message
+                        message={item}
+                        myUserId={currentUserId}
+                    />}
                     style={styles.list}
                     keyExtractor={(item) => item.transaction?.id}
                     inverted

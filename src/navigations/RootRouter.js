@@ -5,11 +5,15 @@ import WorkerTabNavigator from "./WorkerTabNavigator";
 import {ProfileService} from "../backend/ProfileService";
 import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 import SearchCategory from "../components/SearchCategory/SearchPage";
-import ConsumerChatScreen from "../screens/CuncumerMessageScreen/ConsumerChatScreen";
+import ConsumerChatScreen from "../screens/ConsumerMessageScreen/ConsumerChatScreen";
 import RequestGigScreen from "../screens/RequestGigScreen/MainScreen";
 import RequestCompletedScreen from "../screens/RequestGigScreen/RequestCompletedScreen";
 import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
 import WorkerChatScreen from "../screens/WorkerMessageScreen/WorkerChatScreen";
+import NewReviewScreen from "../screens/NewReviewScreen";
+import MoreInfoSubmissionScreen from "../screens/NewReviewScreen/MoreInfoSubmissionScreen";
+import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchReviewScreen";
+import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -127,6 +131,34 @@ const RootRouter = props => {
                     }}
                 />
             )}
+            <Stack.Screen
+                name={'TaskDetailScreen'}
+                component={TaskDetailScreen}
+                options={{
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen
+                name={'NewReviewScreen'}
+                component={NewReviewScreen}
+                options={{
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen
+                name={'MoreInfoSubmissionScreen'}
+                component={MoreInfoSubmissionScreen}
+                options={{
+                    headerShown: true,
+                }}
+            />
+            <Stack.Screen
+                name={'AccountSearchReviewScreen'}
+                component={AccountSearchReviewScreen}
+                options={{
+                    headerShown: false,
+                }}
+            />
         </Stack.Navigator>
 
     );

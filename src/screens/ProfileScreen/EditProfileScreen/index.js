@@ -27,14 +27,13 @@ const EditProfileScreen = (props) => {
     const [phone, setPhone] = useState('')
     const [bio, setBio] = useState('')
     const [image, setImage] = useState(null)
-    const [saved, setSaved] = useState(false)
-    const [photoChange, setPhotoChange] = useState(false)
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
     const navigation = useNavigation();
 
     const onSavePress = useCallback(async () => {
         try{
-            setSaved(true)
+            setDataBeingSaved(true)
             const profile = profileService.getProfile()
             profile.name = name
             profile.bio = bio
@@ -43,11 +42,11 @@ const EditProfileScreen = (props) => {
         } catch (e) {
             console.log(e)
         }
-        setSaved(false)
+        setDataBeingSaved(false)
     },[name, bio])
 
 
-    const getCurrentUserData = useCallback(async () => {
+    const loadData = useCallback(async () => {
         const profile = profileService.getProfile()
         if(profile && profile.accountCode){
             setAccountNumber(profile.accountCode)
@@ -75,8 +74,10 @@ const EditProfileScreen = (props) => {
     };
 
     useEffect(() => {
-        getCurrentUserData().then(r => {})
-    }, [getCurrentUserData]);
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+    }, [loadData])
 
     useEffect(() => {
         navigation.setOptions({
@@ -92,7 +93,7 @@ const EditProfileScreen = (props) => {
                 <Text> Edit Profile</Text>
             ),
             headerRight: () => (
-                saved ?
+                dataBeingSaved ?
         <Image source={loading} style={{width: 30, height: 30}} />
                 :
         <Pressable
@@ -107,11 +108,11 @@ const EditProfileScreen = (props) => {
             headerTintColor: Colors.light.tint
         })
 
-    }, [onSavePress, saved])
+    }, [onSavePress, dataBeingSaved])
 
     const onPhotoPressed = async() => {
         try {
-            setPhotoChange(true)
+            setDataBeingSaved(true)
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
                 allowsEditing: true,
@@ -144,11 +145,12 @@ const EditProfileScreen = (props) => {
                 }
             })
             const currentUser = await Auth.currentAuthenticatedUser()
-            const profile = await profileService.fetchProfile({userId: currentUser.sub})
+            await profileService.fetchProfile({userId: currentUser.sub})
+            loadData().then(r => {})
         } catch (e) {
             console.log(e)
         }
-        setPhotoChange(false)
+        setDataBeingSaved(false)
     }
 
     const onEditPhonePressed = () => {
@@ -156,7 +158,7 @@ const EditProfileScreen = (props) => {
             {
                 changeObject: 'phone',
                 phone: phone
-            });
+            })
     };
 
     return (
@@ -169,7 +171,7 @@ const EditProfileScreen = (props) => {
                     src={image}
                 />
                 {
-                    photoChange ?
+                    dataBeingSaved ?
                         <Image source={loading} style={{width: 30, height: 30}} />
                         :
                         <Pressable

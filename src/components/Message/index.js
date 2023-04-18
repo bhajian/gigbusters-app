@@ -3,16 +3,20 @@ import {View, Text, Pressable, StyleSheet, Dimensions, useWindowDimensions} from
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import {Auth} from "aws-amplify";
+import Colors from "../../constants/Colors";
 dayjs.extend(relativeTime)
 
-const Message = ({message}) => {
+const Message = ({message, myUserId}) => {
     const [isMe, setIsMe] = useState(false);
     const { width } = useWindowDimensions()
 
+    if(message.fromUserId === myUserId){
+        message.isMe = true
+    }
+
     useEffect(() => {
         const isMyMessage = async () => {
-            const currentUser = await Auth.currentAuthenticatedUser()
-            setIsMe(message.fromUserId === currentUser.attributes.sub);
+            setIsMe(message.fromUserId === myUserId);
         };
 
         isMyMessage().then(r => {});
@@ -23,8 +27,8 @@ const Message = ({message}) => {
             style={[
                 styles.container,
                 {
-                    backgroundColor: isMe ? "#DCF8C5" : "white",
-                    alignSelf: isMe ? "flex-end" : "flex-start",
+                    backgroundColor: message.isMe ? '#3cef8a' : "white",
+                    alignSelf: message.isMe ? "flex-end" : "flex-start",
                 },
             ]}
         >

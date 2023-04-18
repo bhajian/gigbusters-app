@@ -20,52 +20,6 @@ export function ReviewNavigation(props) {
                 component={ReviewScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
-                    // headerLargeTitle: true,
-                    tabBarIcon: ({color}) => (
-                        <Fontisto name="react" size={25} color={color}/>
-                    )
-                }}
-            />
-            <Stack.Screen
-                name={'NewReviewScreen'}
-                component={NewReviewScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'SearchCategory'}
-                component={SearchCategory}
-                options={{
-                    headerShown: false,
-                    animation: "fade_from_bottom",
-                }}
-            />
-            <Stack.Screen
-                name={'ReviewableProfileScreen'}
-                component={ReviewableProfileScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'RequestCompletedScreen'}
-                component={RequestCompletedScreen}
-                options={{
-                    headerShown: false,
-                }}
-            />
-            <Stack.Screen
-                name={'MoreInfoSubmissionScreen'}
-                component={MoreInfoSubmissionScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'AccountSearchReviewScreen'}
-                component={AccountSearchReviewScreen}
-                options={{
                     headerShown: false,
                 }}
             />

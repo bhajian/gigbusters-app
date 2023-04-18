@@ -5,6 +5,7 @@ const profilePath = '/profile'
 const requestValidationPath = '/requestValidation'
 const validatePath = '/validate'
 const addProfilePhotoPath = '/photo'
+const profileSettingsPath = '/setting'
 const setPhotoLocationPath = '/location'
 let profile = null
 export class ProfileService {
@@ -97,7 +98,7 @@ export class ProfileService {
         const data = {
             body: props,
         }
-        const path = profilePath+'/'+profile.accountId+requestValidationPath
+        const path = profilePath+'/'+profile.userId+requestValidationPath
         const res = await API.post(profileApiName, path , data)
         profile = (res ? res : null)
         return res
@@ -107,7 +108,7 @@ export class ProfileService {
         const data = {
             body: props,
         }
-        const path = profilePath+'/'+profile.accountId+validatePath
+        const path = profilePath+'/'+profile.userId+validatePath
         const res = await API.post(profileApiName, path , data)
         profile = (res ? res : null)
         return res
@@ -117,9 +118,29 @@ export class ProfileService {
         const data = {
             body: props,
         }
-        const path = profilePath + '/' + profile.accountId + addProfilePhotoPath
+        const path = profilePath + '/' + profile.userId + addProfilePhotoPath
         const res = await API.put(profileApiName, path , data)
         profile.photos = [res]
+        return res
+    }
+
+    async getProfileSettings(props) {
+        const data = {
+            body: props,
+        }
+        const path = profilePath + '/' + profile.userId + profileSettingsPath
+        const res = await API.get(profileApiName, path , data)
+        profile.settings = res
+        return res
+    }
+
+    async setProfileSettings(props) {
+        const data = {
+            body: props,
+        }
+        const path = profilePath + '/' + profile.userId + profileSettingsPath
+        const res = await API.put(profileApiName, path , data)
+        profile.settings = res
         return res
     }
 
@@ -127,7 +148,7 @@ export class ProfileService {
         const data = {
             body: props,
         }
-        const path = profilePath + '/' + profile.accountId + setPhotoLocationPath
+        const path = profilePath + '/' + profile.userId + setPhotoLocationPath
         const res = await API.put(profileApiName, path , data)
         profile.location = props
         return res

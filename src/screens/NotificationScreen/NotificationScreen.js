@@ -12,9 +12,9 @@ import Colors from "../../constants/Colors";
 import {ProfileService} from "../../backend/ProfileService";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {TaskService} from "../../backend/TaskService";
-import {MaterialIcons} from "@expo/vector-icons";
+import {Ionicons, MaterialIcons} from "@expo/vector-icons";
 
-export default function WorkerMessageListScreen() {
+export default function NotificationScreen() {
     const [profileName, setProfileName] = useState('')
     const [profileImage, setProfileImage] = useState(null)
     const [transactions, setTransactions] = useState([])
@@ -34,23 +34,14 @@ export default function WorkerMessageListScreen() {
     useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
-            // headerLargeTitle: true,
             tabBarIcon: ({color}) => (
-                <MaterialIcons name="message" size={25} color={color}/>
+                <Ionicons name="notifications-sharp" size={25} color={color}/>
             ),
             headerTitle: () => (
-                <Text>Messages</Text>
-            ),
-            headerLeft: () => (
-                <UserAvatar
-                    size={30}
-                    active
-                    name={profileName}
-                    src={profileImage}
-                />
+                <Text>Notifications</Text>
             ),
         })
-    }, [navigation, profileName])
+    }, [navigation])
 
     async function loadData() {
         setDataBeingLoaded(true)
@@ -71,16 +62,12 @@ export default function WorkerMessageListScreen() {
     }
 
     async function onChatPressed(params) {
-        navigation.navigate('WorkerChatScreen', params)
+        navigation.navigate('ConsumerChatScreen', params)
     }
 
     async function onProfilePressed(params) {
         navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
     }
-
-    const onButtomSheetPressed = () => {
-        bottomSheetModalRef.current.present()
-    };
 
     return (
         <SafeAreaView style={styles.container}>

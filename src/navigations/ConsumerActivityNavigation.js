@@ -12,14 +12,7 @@ export function ConsumerActivityNavigation(props) {
                 name={'RequestActivityScreen'}
                 component={RequestActivityScreen}
                 options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'TaskDetailScreen'}
-                component={TaskDetailScreen}
-                options={{
-                    headerShown: true,
+                    headerShown: false,
                 }}
             />
         </Stack.Navigator>

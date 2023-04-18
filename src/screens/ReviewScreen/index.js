@@ -23,12 +23,19 @@ export default function ReviewScreen(props) {
     const bottomSheetModalRef = useRef(null)
     const profileService = new ProfileService()
 
-    async function getCurrentUserData() {
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
+    }, [navigation])
+
+    async function loadData() {
         const profile = profileService.getProfile()
         if (profile && profile.name) {
             setName(profile.name)
         }
-        if(profile && profile.photos){
+        if (profile && profile.photos) {
             const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
@@ -39,44 +46,34 @@ export default function ReviewScreen(props) {
     }, [])
 
     useEffect(() => {
-        getCurrentUserData().then(r => {
-            navigation.setOptions({
-                tabBarActiveTintColor: Colors.light.tint,
-                // headerLargeTitle: true,
-                tabBarIcon: ({color}) => (
-                    <Fontisto name="react" size={25} color={color}/>
-                ),
-                headerTitle: () => (
-                    <Text>Gig Buster Reviews</Text>
-                ),
-                headerSearchBarOptions: {
-                    placeholder: "Search ..",
-                    // onFocus: ()=>{navigation.navigate('SearchCategory')}
-                },
-                headerRight: () => (
-                    <Pressable
-                        onPress={handlePresentPress}
-                        style={({pressed}) => ({
-                            opacity: pressed ? 0.5 : 1,
-                            marginRight: 10,
-                        })}>
-                        <MaterialCommunityIcons
-                            name="account-search"
-                            size={25}
-                            color={Colors.light.tint}
-                            style={{marginRight: 15}}
-                        />
-                    </Pressable>
-                ),
-                headerLeft: () => (
-                    <UserAvatar
-                        size={35}
-                        active
-                        name={name}
-                        src={profileImage}
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerTitle: () => (
+                <Text>Worker Pool</Text>
+            ),
+            headerRight: () => (
+                <Pressable
+                    onPress={handlePresentPress}
+                    style={({pressed}) => ({
+                        opacity: pressed ? 0.5 : 1,
+                        marginRight: 10,
+                    })}>
+                    <MaterialCommunityIcons
+                        name="account-search"
+                        size={25}
+                        color={Colors.light.tint}
+                        style={{marginRight: 15}}
                     />
-                ),
-            })
+                </Pressable>
+            ),
+            headerLeft: () => (
+                <UserAvatar
+                    size={35}
+                    active
+                    name={name}
+                    src={profileImage}
+                />
+            ),
         })
     }, [navigation, name])
 

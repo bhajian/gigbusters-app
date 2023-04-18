@@ -48,7 +48,7 @@ function SignInScreen(props) {
     };
 
     return (
-        <ScrollView showsVerticalScrollIndicator={true}>
+        <ScrollView showsVerticalScrollIndicator={true} keyboardShouldPersistTaps='handled'>
             <View style={styles.root}>
                 <Lottie
                     style={{height: 200, width: 250, alignSelf: 'center', marginTop: 5}}

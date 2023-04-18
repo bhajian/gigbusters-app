@@ -1,7 +1,7 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Colors from "../constants/Colors";
-import ConsumerMessageListScreen from "../screens/CuncumerMessageScreen/ConsumerMessageListScreen";
+import ConsumerMessageListScreen from "../screens/ConsumerMessageScreen/ConsumerMessageListScreen";
 import {MaterialIcons} from "@expo/vector-icons";
 
 const Stack = createNativeStackNavigator();
@@ -20,8 +20,8 @@ export function MessageNavigation(props) {
                 }}
             />
             {/*<Stack.Screen*/}
-            {/*    name={'CuncumerMessageScreen'}*/}
-            {/*    component={CuncumerMessageScreen}*/}
+            {/*    name={'ConsumerMessageScreen'}*/}
+            {/*    component={ConsumerMessageScreen}*/}
             {/*    options={{*/}
             {/*        headerShown: true,*/}
             {/*    }}*/}

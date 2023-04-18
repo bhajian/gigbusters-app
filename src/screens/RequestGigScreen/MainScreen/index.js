@@ -41,7 +41,7 @@ export default function RequestGigScreen(props) {
     const handleSheetChanges = useCallback((value) => {
     }, [])
 
-    async function getCurrentUserData() {
+    async function loadData() {
         const profile = profileService.getProfile()
         if(profile && profile.name){
             setProfileName(profile.name)
@@ -57,7 +57,7 @@ export default function RequestGigScreen(props) {
 
     useEffect(() => {
         bottomSheetModalRef.current.present()
-        getCurrentUserData().catch((e) => console.log(e))
+        loadData().catch((e) => console.log(e))
     }, [])
 
     useEffect(() => {
@@ -284,7 +284,9 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         borderColor: Colors.light.darkerGrey,
         flexDirection: 'row',
-        paddingVertical: 5
+        paddingVertical: 5,
+        borderBottomWidth: 20,
+        borderBottomColor: Colors.dark.tint
     },
     imageContainer: {
         width: '100%',

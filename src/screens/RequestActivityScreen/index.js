@@ -22,22 +22,6 @@ export default function RequestActivityScreen({route}) {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
             headerLargeTitle: false,
-            headerLeftContainerStyle: {
-                left: 10,
-            },
-            headerSearchBarOptions: {
-                placeholder: "Search ..",
-                // onFocus: ()=>{navigation.navigate('SearchCategory')}
-            },
-            tabBarIcon: ({color}) => (
-                <Fontisto name="home" size={25} color={color}/>
-            ),
-            headerTitle: () => (
-                <Text> </Text>
-            ),
-            headerLeft: (color) => (
-                <Ionicons name="notifications-sharp" size={25} color={Colors.light.darkerGrey}/>
-            ),
             headerRight: () => (
                 <Pressable
                     // onPress={handlePresentPress}

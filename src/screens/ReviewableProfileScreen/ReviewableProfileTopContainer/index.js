@@ -12,8 +12,6 @@ import RatingStack from "../../../components/RatingStack";
 
 export default function ReviewableProfileTopContainer({reviewable, navigation}) {
 
-    const [open, setOpen] = useState(false)
-    const [value, setValue] = useState('phone')
     const [rating, setRating] = useState(Math.round(
         (reviewable && reviewable.cumulativeRating && reviewable.numberOfReviews ?
         reviewable.cumulativeRating/reviewable.numberOfReviews : 0 )

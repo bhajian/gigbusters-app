@@ -12,7 +12,7 @@ const profileService = new ProfileService()
 const ProfileScreen = (props) => {
     const navigation = useNavigation();
     const [name, setName] = useState('');
-    const [accountNumber, setAccountNumber] = useState('');
+    const [accountCode, setAccountCode] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
     const [locationName, setLocationName] = useState('');
@@ -22,13 +22,15 @@ const ProfileScreen = (props) => {
 
 
     useEffect(() => {
-        getCurrentUserData().then(r => {})
-    }, []);
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+    }, [])
 
-    async function getCurrentUserData() {
+    async function loadData() {
         const profile = profileService.getProfile()
         if(profile && profile.accountCode){
-            setAccountNumber(profile.accountCode)
+            setAccountCode(profile.accountCode)
         }
         if(profile && profile.accountType){
             setAccountType(profile.accountType)
@@ -70,14 +72,18 @@ const ProfileScreen = (props) => {
         }
     }
 
-    const onUpgradePressed = () => {
-        navigation.navigate('UpgradePremium');
-    };
-
     const onEditPressed = () => {
         navigation.navigate('EditProfile');
-    };
+    }
 
+    async function onRatingProfilePressed() {
+        navigation.navigate('ReviewableProfileScreen', {
+            reviewable: {
+                name: name,
+                profilePhotoURL: image,
+                uri: accountCode
+            }})
+    }
     const onSwitchProfilePressed = async() => {
         try{
             props.updateAuthState('initializing')
@@ -114,7 +120,7 @@ const ProfileScreen = (props) => {
                     Phone: {phone}
                 </Text>
                 <Text style={styles.accountNumber} >
-                    ID: {accountNumber}
+                    ID: {accountCode}
                 </Text>
             </View>
 
@@ -172,6 +178,13 @@ const ProfileScreen = (props) => {
                 <CustomButton
                     text="Edit Profile"
                     onPress={onEditPressed}
+                    style={styles.regularButton}
+                    bgColor="#E3E8F1"
+                    fgColor="#000000"
+                />
+                <CustomButton
+                    text="Ratings and Reviews"
+                    onPress={onRatingProfilePressed}
                     style={styles.regularButton}
                     bgColor="#E3E8F1"
                     fgColor="#000000"

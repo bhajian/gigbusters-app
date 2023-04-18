@@ -9,59 +9,62 @@ import {
 } from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import CustomSettingRowButton from "../../../components/CustomSettingRowButton";
-import CustomSettingRow from "../../../components/CustomSettingRow";
 import {ProfileService} from "../../../backend/ProfileService";
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import loading from '../../../../assets/images/loading.gif'
+import loading from '../../../../assets/images/loading2.gif'
 import CustomSettingRowSwitch from "../../../components/CustomSettingRowSwitch";
+import CustomSettingRowCategory from "../../../components/CustomSettingRowCategory";
 
 const profileService = new ProfileService()
 const EditSettingsScreen = (props) => {
 
-    const [allowNotifications, setAllowNotifications] = useState('');
-    const [showMyIdentity, setShowMyIdentity] = useState('');
-    const [language, setLanguage] = useState('');
-    const [saved, setSaved] = useState(false);
+    const [notifications, setNotifications] = useState(true)
+    const [allowPublicMessages, setAllowPublicMessages] = useState(true)
+    const [showMyPhonePublicly, setShowMyPhonePublicly] = useState(true)
+    const [showMyEmailPublicly, setShowMyEmailPublicly] = useState(true)
+    const [country, setCountry] = useState('Canada')
+    const [language, setLanguage] = useState('English')
+    const [beingSaved, setBeingSaved] = useState(false)
 
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
-    const onSavePress = useCallback(async () => {
+    async function onSavePress() {
         try{
-            setSaved(true)
-            // const profile = profileService.getProfile()
-            // profile.name = name
-            // profile.bio = bio
-            // await profileService.updateProfile(profile)
+            setBeingSaved(true)
+            await profileService.setProfileSettings({
+                allowPublicMessages: allowPublicMessages,
+                notifications: notifications,
+                showMyEmailPublicly: showMyEmailPublicly,
+                showMyPhonePublicly: showMyPhonePublicly,
+                language: language,
+                country: country
+            })
             navigation.goBack()
         } catch (e) {
             console.log(e)
         }
-    },[])
+        setBeingSaved(false)
+    }
 
+    async function loadData() {
+        try{
+            const settings = await profileService.getProfileSettings()
 
-    const getCurrentUserData = useCallback(async () => {
-        // const profile = profileService.getProfile()
-        // if(profile && profile.accountCode){
-        //     setAccountNumber(profile.accountCode)
-        // }
-        // if(profile && profile.name){
-        //     setName(profile.name)
-        // }
-        // if(profile && profile.bio){
-        //     setBio(profile.bio)
-        // }
-        // if(profile && profile.email && profile.email.email){
-        //     setEmail(profile.email.email)
-        // }
-        // if(profile && profile.phone && profile.phone.phone){
-        //     setPhone(profile.phone.phone)
-        // }
-    },[])
+            setNotifications(settings?.notifications)
+            setAllowPublicMessages(settings?.allowPublicMessages)
+            setShowMyEmailPublicly(settings?.showMyEmailPublicly)
+            setShowMyPhonePublicly(settings?.showMyPhonePublicly)
+            setCountry(settings?.country)
+            setLanguage(settings?.language)
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
     useEffect(() => {
-        getCurrentUserData().then(r => {})
-    }, [getCurrentUserData]);
+        loadData().then(r => {}).catch(e => console.log(e))
+    }, [])
 
     useEffect(() => {
         navigation.setOptions({
@@ -77,8 +80,8 @@ const EditSettingsScreen = (props) => {
                 <Text> Edit Profile</Text>
             ),
             headerRight: () => (
-                saved ?
-                    <Image source={loading} style={{width: 40, height: 30}} />
+                beingSaved ?
+                    <Image source={loading} style={{width: 30, height: 30}} />
                 :
                     <Pressable
                         onPress={onSavePress}
@@ -93,51 +96,73 @@ const EditSettingsScreen = (props) => {
         })
         return
 
-    }, [onSavePress, saved]);
+    }, [navigation, onSavePress, beingSaved]);
 
 
 
     return (
         <ScrollView style={styles.container} >
-
             <View style={styles.settingsContainer}>
-
+                <CustomSettingRowCategory
+                    name="Notifications"
+                    value=""
+                    iconCategory="FontAwesome5"
+                    iconName="cog"
+                />
                 <CustomSettingRowSwitch
-                    // onPress={onEditEmailPressed}
+                    toggleSwitch={setNotifications}
                     name="Allow Notifications"
-                    isEnabled={true}
+                    isEnabled={notifications}
                     iconCategory="MaterialIcons"
                     iconName="notifications-active"
                 />
                 <CustomSettingRowSwitch
-                    // onPress={onEditEmailPressed}
-                    name="Show my identity"
-                    isEnabled={true}
-                    iconCategory="MaterialIcons"
-                    iconName="perm-identity"
+                    toggleSwitch={setAllowPublicMessages}
+                    name="Allow Messages from Unknown Users"
+                    isEnabled={allowPublicMessages}
+                    iconCategory="FontAwesome5"
+                    iconName="envelope"
+                />
+                <CustomSettingRowCategory
+                    name="Privacy"
+                    value=""
+                    iconCategory="FontAwesome5"
+                    iconName="cog"
+                />
+                <CustomSettingRowSwitch
+                    toggleSwitch={setShowMyPhonePublicly}
+                    name="Show My Phone Publicly"
+                    isEnabled={showMyPhonePublicly}
+                    iconCategory="FontAwesome5"
+                    iconName="phone"
+                />
+                <CustomSettingRowSwitch
+                    toggleSwitch={setShowMyEmailPublicly}
+                    name="Show My Email Publicly"
+                    isEnabled={showMyEmailPublicly}
+                    iconCategory="FontAwesome5"
+                    iconName="envelope"
                 />
                 <CustomSettingRowButton
-                    // onPress={onEditSettingPressed}
-                    name="Setting"
+                    name="Language"
+                    value={language}
+                    iconCategory="FontAwesome5"
+                    iconName="globe"
+                />
+                <CustomSettingRowButton
+                    name="Country"
+                    value={country}
+                    iconCategory="FontAwesome5"
+                    iconName="globe"
+                />
+                <CustomSettingRowCategory
+                    name="Deactivate"
                     value=""
                     iconCategory="FontAwesome5"
                     iconName="cog"
                 />
                 <CustomSettingRowButton
-                    name="Language"
-                    value="English"
-                    iconCategory="FontAwesome5"
-                    iconName="globe"
-                />
-                <CustomSettingRowButton
-                    name=""
-                    value=""
-                    iconCategory=""
-                    iconName=""
-                    hasArrow={false}
-                />
-                <CustomSettingRowButton
-                    name="Delete My Account"
+                    name="Deactivate My Account"
                     value=""
                     iconCategory="MaterialCommunityIcons"
                     iconName="delete-forever"

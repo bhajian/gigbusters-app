@@ -12,7 +12,6 @@ import Colors from "../../constants/Colors";
 import Entypo from "react-native-vector-icons/Entypo";
 import {ProfileService} from "../../backend/ProfileService";
 import ProfileSearchBottomSheet from "./ProfileSearchBottomSheet";
-import Fontisto from "react-native-vector-icons/Fontisto";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {TaskService} from "../../backend/TaskService";
 import {MaterialIcons} from "@expo/vector-icons";
@@ -67,7 +66,7 @@ export default function ConsumerMessageListScreen() {
         }
         const transactionsObj = await taskService.listMyTransaction({
             limit: 20,
-            type: 'CONSUMER'
+            persona: 'CONSUMER'
         })
         setTransactions(transactionsObj)
         setDataBeingLoaded(false)
@@ -77,7 +76,6 @@ export default function ConsumerMessageListScreen() {
     }, [])
 
     async function onChatPressed(params) {
-        console.log(params)
         navigation.navigate('ConsumerChatScreen', params)
     }
 

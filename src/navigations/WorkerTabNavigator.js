@@ -5,11 +5,10 @@ import Colors from '../constants/Colors';
 import {FontAwesome, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ReviewNavigation} from "./ReviewNavigation";
 import {ProfileNavigation} from "./ProfileNavigation";
-import RequestActivityScreen from "../screens/RequestActivityScreen";
 import MatchingCards from "../screens/MatchingScreen/matchingCards";
 import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
-import WorkerActivityLogScreen from "../screens/WorkerActivityLogScreen";
 import WorkerMessageListScreen from "../screens/WorkerMessageScreen/WorkerMessageListScreen";
+import NotificationScreen from "../screens/NotificationScreen/NotificationScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,13 +59,13 @@ const WorkerTabNavigator = props => {
                 }}
             />
             <Tab.Screen
-                name={'Review'}
-                component={ReviewNavigation}
+                name={'Notifications'}
+                component={NotificationScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
-                    headerShown: false,
+                    headerShown: true,
                     tabBarIcon: ({color}) => (
-                        <Fontisto name="react" size={25} color={color}/>
+                        <Ionicons name="notifications-sharp" size={25} color={color}/>
                     ),
                 }}
             />

@@ -24,7 +24,7 @@ export class TaskService {
         const data = {
             queryStringParameters: {
                 limit: params.limit,
-                type: params.type
+                persona: params.persona
             }
         }
         const transactions = await API.get(taskApiName, path, data)
@@ -36,6 +36,11 @@ export class TaskService {
             if(transactions[i].customer?.profilePhoto){
                 transactions[i].customer.profilePhotoURL =
                     await this.getMainPhoto(transactions[i].customer?.profilePhoto)
+            }
+            if(transactions[i].task?.photos && transactions[i].task?.photos[0]){
+                const photo = transactions[i].task?.photos[0]
+                transactions[i].task.photoURL =
+                    await this.getMainPhoto(photo)
             }
         }
         return transactions
