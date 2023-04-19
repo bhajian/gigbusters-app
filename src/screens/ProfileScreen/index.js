@@ -131,50 +131,6 @@ const ProfileScreen = (props) => {
                         locationNameParam={locationName}
                     />
                 </View>
-                {/*<View style={styles.doubleButton}>*/}
-                {/*    <CustomButton*/}
-                {/*        text="Link to"*/}
-                {/*        iconCategory="Entypo"*/}
-                {/*        iconName="instagram"*/}
-                {/*        onPress={onUpgradePressed}*/}
-                {/*        iconStyle={styles.instagrambuttonIcon}*/}
-                {/*        style={styles.linkAccountButton}*/}
-                {/*        bgColor="#E3E8F1"*/}
-                {/*        fgColor="#5B67CA"*/}
-                {/*    />*/}
-                {/*    <CustomButton*/}
-                {/*        text="Link to"*/}
-                {/*        iconCategory="FontAwesome5"*/}
-                {/*        iconName="tiktok"*/}
-                {/*        onPress={onUpgradePressed}*/}
-                {/*        iconStyle={[styles.tiktokbuttonIcon]}*/}
-                {/*        style={styles.linkAccountButton}*/}
-                {/*        bgColor="#E3E8F1"*/}
-                {/*        fgColor="#5B67CA"*/}
-                {/*    />*/}
-                {/*</View>*/}
-                {/*<View style={styles.doubleButton}>*/}
-                {/*    <CustomButton*/}
-                {/*        text="Link to"*/}
-                {/*        iconCategory="FontAwesome5"*/}
-                {/*        iconName="twitter"*/}
-                {/*        onPress={onUpgradePressed}*/}
-                {/*        iconStyle={styles.twitterbuttonIcon}*/}
-                {/*        style={styles.linkAccountButton}*/}
-                {/*        bgColor="#E3E8F1"*/}
-                {/*        fgColor="#5B67CA"*/}
-                {/*    />*/}
-                {/*    <CustomButton*/}
-                {/*        text="Link to"*/}
-                {/*        iconCategory="FontAwesome5"*/}
-                {/*        iconName="linkedin"*/}
-                {/*        onPress={onUpgradePressed}*/}
-                {/*        iconStyle={styles.linkedinbuttonIcon}*/}
-                {/*        style={styles.linkAccountButton}*/}
-                {/*        bgColor="#E3E8F1"*/}
-                {/*        fgColor="#5B67CA"*/}
-                {/*    />*/}
-                {/*</View>*/}
                 <CustomButton
                     text="Edit Profile"
                     onPress={onEditPressed}

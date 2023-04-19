@@ -31,7 +31,9 @@ export default function NeighborhoodFeedScreen(props) {
 
     async function loadData() {
         setDataBeingLoaded(true)
-        const requestObj = await taskService.listNeighborsTasks()
+        const requestObj = await taskService.listNeighborsTasks({
+            limit: 5,
+        })
         setRequestList(requestObj)
         setDataBeingLoaded(false)
     }

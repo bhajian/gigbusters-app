@@ -25,12 +25,12 @@ export default function CategoryMultiSelector({onSelectionChanged, selectedItems
             categoriesObj.categories.map((item, i) => {
                 item.key = i
             })
-            console.log(selectedItems)
-            await setCategoriesFistTime({
-                categories: categoriesObj.categories
-            })
 
-            await setSelectedCategoriesFistTime(selectedItems)
+            const lowerSelectedItems = selectedItems.map(word => word.toLowerCase())
+            await setCategoriesFistTime({
+                categories: categoriesObj.categories,
+                selectedItems: lowerSelectedItems
+            })
         }
 
         setDataBeingLoaded(false)
@@ -39,22 +39,28 @@ export default function CategoryMultiSelector({onSelectionChanged, selectedItems
     useEffect(() => {
         loadData().then(e => {
         }).catch(e => console.log(e))
-    }, [])
-
-    const setSelectedCategoriesFistTime = async (params) => {
-        for (let x = 0; x < params.length; x++) {
-            selectItem({key: params[x]})
-        }
-    }
+    }, [selectedItems])
 
     const setCategoriesFistTime = async(params) => {
         let data = [...params.categories]
+        let otherData = []
+        let selectedData = []
         for (let x = 0; x < params.categories.length; x++) {
             data[x].backgroundColor = Colors.light.grey
             data[x].textColor = '#000'
             data[x].key = data[x].category.toLowerCase()
+
+            if(params?.selectedItems?.indexOf(data[x].key) > -1){
+                data[x].backgroundColor = Colors.light.tint
+                data[x].textColor = '#FFF'
+                // const item = data.splice(x, 1)
+                selectedData.push(data[x])
+            } else{
+                otherData.push(data[x])
+            }
         }
-        setCategories(data)
+        setCategories(otherData)
+        setSelectedCategories(selectedData)
     }
     const selectItem = (params) => {
         let existingData = [...categories]

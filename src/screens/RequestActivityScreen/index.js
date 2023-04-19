@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
+    ActivityIndicator,
     FlatList, Image, Pressable,
     SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View,
 } from 'react-native';
@@ -13,6 +14,7 @@ import loading2 from "../../../assets/images/loading2.gif";
 export default function RequestActivityScreen({route}) {
     const [requestList, setRequestList] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
 
     const navigation = useNavigation()
     const taskService = new TaskService()
@@ -45,7 +47,9 @@ export default function RequestActivityScreen({route}) {
 
     async function loadData() {
         setDataBeingLoaded(true)
-        const requestObj = await taskService.fetchMyTasks()
+        const requestObj = await taskService.fetchMyTasks({
+            limit: 5,
+        })
         setRequestList(requestObj)
         setDataBeingLoaded(false)
     }
@@ -56,6 +60,19 @@ export default function RequestActivityScreen({route}) {
 
     const onNewRequestPress = () => {
         navigation.navigate('RequestGigScreen')
+    }
+
+    const loadMoreItem = () => {
+        setCurrentPage(currentPage + 1);
+    };
+
+    const renderLoader = () => {
+        return (
+            dataBeingLoaded ?
+                <View style={styles.loaderStyle}>
+                    <ActivityIndicator size="large" color="#aaa" />
+                </View> : null
+        )
     }
 
     return (
@@ -73,6 +90,9 @@ export default function RequestActivityScreen({route}) {
                         keyExtractor={(item) => item.id}
                         onRefresh={loadData}
                         refreshing={dataBeingLoaded}
+                        ListFooterComponent={renderLoader}
+                        onEndReached={loadMoreItem}
+                        onEndReachedThreshold={0}
                     />
             }
             <TouchableOpacity
@@ -173,6 +193,10 @@ const styles = StyleSheet.create({
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    loaderStyle: {
+        marginVertical: 16,
+        alignItems: "center",
     },
 });
 

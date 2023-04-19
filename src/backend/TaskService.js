@@ -10,7 +10,9 @@ const rejectPath = '/reject'
 const photoPath = '/photo'
 const queryPath = '/query'
 let myTasks = []
+let myTaskLastEvaluatedKey = undefined
 let neighboursTasks = []
+let neighboursTaskLastEvaluatedKey = undefined
 let lastTimeMyTasksFetched = null
 
 export class TaskService {
@@ -46,11 +48,18 @@ export class TaskService {
         return transactions
     }
 
-    async listTasks() {
+    async listTasks(params) {
         const path = taskPath
+        // if(myTaskLastEvaluatedKey)
+        //     params.lastEvaluatedKey = myTaskLastEvaluatedKey
         const data = {
+            queryStringParameters: params
         }
-        const tasks = await API.get(taskApiName, path, data)
+
+        const response = await API.get(taskApiName, path, data)
+        myTaskLastEvaluatedKey = response?.LastEvaluatedKey?.id
+
+        const tasks = response?.Items
         for(let i=0; i<tasks.length; i++){
             if(tasks[i].photos){
                 const mainPhoto = tasks[i].photos
@@ -63,21 +72,29 @@ export class TaskService {
 
     async listNeighborsTasks(params) {
         const path = taskPath + queryPath
+
+        // params.lastEvaluatedKey = neighboursTaskLastEvaluatedKey
         const data = {
             queryStringParameters: params
         }
-        const requests = await API.get(taskApiName, path, data)
-        for(let i=0; i<requests.length; i++){
-            if(requests[i].photos) {
-                const mainPhoto = requests[i].photos
+        console.log(data);
+        const response = await API.get(taskApiName, path, data)
+
+        neighboursTasks = response?.Items
+        // neighboursTaskLastEvaluatedKey = response?.LastEvaluatedKey?.id
+        for(let i=0; i< neighboursTasks.length; i++){
+            if(neighboursTasks[i].photos) {
+                const mainPhoto = neighboursTasks[i].photos
                     .filter((item) => item.type === 'main')
-                requests[i].mainPhotoURL = await this.getMainPhoto(mainPhoto[0])
+                neighboursTasks[i].mainPhotoURL =
+                    await this.getMainPhoto(mainPhoto[0])
             }
-            if(requests[i].profilePhoto){
-                requests[i].profilePhotoURL = await this.getMainPhoto(requests[i].profilePhoto)
+            if(neighboursTasks[i].profilePhoto){
+                neighboursTasks[i].profilePhotoURL =
+                    await this.getMainPhoto(neighboursTasks[i].profilePhoto)
             }
         }
-        return requests
+        return neighboursTasks
     }
 
     async listApplicants(params) {
@@ -213,14 +230,15 @@ export class TaskService {
         return undefined
     }
 
-    async fetchMyTasks() {
-        myTasks = await this.listTasks()
+    async fetchMyTasks(params) {
+        const tasks = await this.listTasks(params)
+        // myTasks = [...tasks, ...myTasks]
         lastTimeMyTasksFetched = new Date()
-        return myTasks
+        return tasks
     }
 
-    async fetchNeighboursTasks() {
-        neighboursTasks = await this.listNeighborsTasks()
+    async fetchNeighboursTasks(params) {
+        neighboursTasks = await this.listNeighborsTasks(params)
         return neighboursTasks
     }
 

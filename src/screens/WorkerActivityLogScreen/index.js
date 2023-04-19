@@ -65,7 +65,9 @@ export default function WorkerActivityLogScreen({route}) {
 
     async function loadData() {
         setDataBeingLoaded(true)
-        const requestObj = await taskService.fetchMyTasks()
+        const requestObj = await taskService.fetchMyTasks({
+            limit: 5,
+        })
         setRequestList(requestObj)
         setDataBeingLoaded(false)
     }

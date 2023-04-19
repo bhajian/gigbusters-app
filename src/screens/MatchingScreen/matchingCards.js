@@ -60,7 +60,9 @@ const MatchingCards = () => {
     }, []);
 
     async function loadData() {
-        const tasksObj = await taskService.listNeighborsTasks()
+        const tasksObj = await taskService.listNeighborsTasks({
+            limit: 5,
+        })
         setCardList(tasksObj)
     }
 
