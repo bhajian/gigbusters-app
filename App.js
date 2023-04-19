@@ -45,7 +45,9 @@ export default function App() {
                 userId: currentUser.sub
             })
             if(currentUser) {
-                if (profile && profile.userId) {
+                if (profile && profile.userId &&
+                    (profile.accountType === 'CONSUMER' || profile.accountType === 'WORKER')
+                    && profile.active) {
                     setUserStatus('loggedIn')
                 } else {
                     setUserStatus('profileCreation')

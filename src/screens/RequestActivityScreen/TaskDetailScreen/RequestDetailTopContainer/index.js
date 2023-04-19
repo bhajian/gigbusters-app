@@ -18,30 +18,30 @@ export default function RequestDetailTopContainer({task}) {
         <View style={styles.topContainer}>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.leftContainer}>
-                    <Image source={{uri: task.mainPhotoURL}} style={styles.image} />
+                    <Image source={{uri: task?.mainPhotoURL}} style={styles.image} />
                     <Text style={styles.titleText}>
-                        {task.title}
+                        {task?.title}
                     </Text>
                 </View>
                 <View style={styles.rightContainer}>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >{task.category}</Text>
+                            <Text style={styles.textTag} >{task?.category}</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >{task.price}$/{task.priceUnit}</Text>
+                            <Text style={styles.textTag} >{task?.price}$/{task?.priceUnit}</Text>
                         </View>
                     </View>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >{task.city}</Text>
+                            <Text style={styles.textTag} >{task?.city}</Text>
                         </View>
 
                     </View>
                 </View>
             </View>
             <View style={styles.description}>
-                <Text style={styles.description} >{task.description}</Text>
+                <Text style={styles.description} >{task?.description}</Text>
             </View>
         </View>
     );

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import {Button, Image, KeyboardAvoidingView, Pressable, ScrollView, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather"
-import ChoiceSelector from "../../../components/ChoiceSelector";
+import CategorySelector from "../../../components/CategorySelector";
 import {Slider} from "@miblanchard/react-native-slider";
 import Colors from "../../../constants/Colors";
 import {LocationSelector} from "../../../components/LocationSearch";
@@ -135,7 +135,7 @@ export default function GigRequestBottomSheet({
                                         fgColor="white"
                                     />
                                 </View>
-                                <ChoiceSelector
+                                <CategorySelector
                                     passSelectedValue={getCategorySelectedValue}
                                 />
                                 <View style={styles.locationContainer}>

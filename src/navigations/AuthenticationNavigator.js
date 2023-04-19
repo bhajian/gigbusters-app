@@ -7,6 +7,7 @@ import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen";
 import ForgetPasswordScreen from "../screens/ForgotPassword";
 import PasswordResetScreen from "../screens/ForgotPassword/PasswordResetScreen";
 import FirstScreen from "../screens/FirstScreen";
+import CompleteProfileScreen from "../screens/SignUpScreen/CompleteProfileScreen";
 
 const AuthenticationStack = createStackNavigator();
 
@@ -51,10 +52,6 @@ const AuthenticationNavigator = props => {
             <AuthenticationStack.Screen
                 name="PasswordResetScreen"
                 component={PasswordResetScreen}
-            />
-            <AuthenticationStack.Screen
-                name="CreateProfileScreen"
-                component={CreateProfileScreen}
             />
         </AuthenticationStack.Navigator>
     );

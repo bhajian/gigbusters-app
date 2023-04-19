@@ -13,6 +13,14 @@ export class ReviewService {
     constructor() {
 
     }
+
+    async getReviewable(params) {
+        const path = `${reviewablePath}/${params.type}/${params.uri}`
+        const data = {
+        }
+        const reviewable = await API.get(reviewApiName, path, data)
+        return reviewable
+    }
     async queryReviews(params) {
         const path = reviewPath + queryPath
         const data = {
@@ -101,6 +109,4 @@ export class ReviewService {
             console.log(e)
         }
     }
-
-
 }

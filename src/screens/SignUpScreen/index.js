@@ -9,10 +9,10 @@ import jobAnim from "../../../assets/animations/107800-login-leady.json";
 import Lottie from "lottie-react-native";
 
 const SignUpScreen = () => {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [passwordRepeat, setPasswordRepeat] = useState('');
-    const navigation = useNavigation();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [passwordRepeat, setPasswordRepeat] = useState('')
+    const navigation = useNavigation()
 
     async function onRegisterPressed() {
         try {
@@ -29,11 +29,11 @@ const SignUpScreen = () => {
                 },
             });
 
-            navigation.navigate('VerificationScreen',
+            navigation.navigate('Verification',
                 {
                     usernameParam: lowerEmail,
                     passwordParam: password,
-                });
+                })
         } catch (error) {
             Alert.alert(error.message)
         }
@@ -44,7 +44,7 @@ const SignUpScreen = () => {
     };
 
     const onConfirmCodePress = () => {
-        navigation.navigate('VerificationScreen');
+        navigation.navigate('Verification');
     };
 
     const onTermsOfUsePressed = () => {

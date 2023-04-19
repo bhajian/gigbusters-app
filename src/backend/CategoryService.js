@@ -3,11 +3,15 @@ import {API} from "aws-amplify";
 const reviewApiName = 'GigbusterApi'
 const reviewPath = '/category'
 
-let profile = null
+let categories = []
 export class CategoryService {
 
     constructor() {
 
+    }
+
+    async getCategories() {
+        return categories
     }
 
     async createCategory(params) {
@@ -31,8 +35,8 @@ export class CategoryService {
                 lastEvaluatedCategory: params.lastEvaluatedCategory
             }
         }
-        const reviews = await API.get(reviewApiName, path, data)
-        return reviews
+        categories = await API.get(reviewApiName, path, data)
+        return categories
     }
 
 }

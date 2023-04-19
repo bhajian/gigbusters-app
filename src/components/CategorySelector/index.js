@@ -6,7 +6,7 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import {useNavigation} from "@react-navigation/native";
 import loading2 from "../../../assets/images/loading2.gif";
 
-export default function ApplicantRequestItem(props) {
+export default function CategorySelector(props) {
     const [categories, setCategories] = useState([])
     const [selectedValue, setSelectedValue] = useState('')
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
@@ -15,7 +15,7 @@ export default function ApplicantRequestItem(props) {
     const navigation = useNavigation()
     const categoryService = new CategoryService()
 
-    async function getCurrentUserData() {
+    async function loadData() {
         setDataBeingLoaded(true)
         const categoriesObj = await categoryService.queryCategories({
             limit: 15
@@ -34,7 +34,7 @@ export default function ApplicantRequestItem(props) {
     }
 
     useEffect(() => {
-        getCurrentUserData().then(e => {
+        loadData().then(e => {
         }).catch(e => console.log(e))
     }, [])
 

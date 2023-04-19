@@ -6,21 +6,16 @@ import {
     Switch, ScrollView, SafeAreaView, FlatList, Image, Pressable,
 } from 'react-native';
 import ReviewableProfileTopContainer from "./ReviewableProfileTopContainer";
-import tipoffs from "../../../assets/data/reviews";
 import Review from "../../components/Review";
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import {useNavigation} from "@react-navigation/native";
 import {ReviewService} from "../../backend/ReviewService";
 
 export default function ReviewableProfileScreen({navigation, route}) {
-    let reviewable = route.params ? route.params.reviewable : {
-        name: 'behnam',
-        image: 'https://d14u0p1qkech25.cloudfront.net/1073359577_1fc084e5-1ae2-4875-b27d-1a42fd80ff28_thumbnail_250x250',
-        id: 1
-    }
+    let reviewableParam = route?.params?.reviewable
 
     const [reviews, setReviews] = useState([])
+    const [reviewable, setReviewable] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
 
     const reviewService = new ReviewService()
@@ -34,8 +29,14 @@ export default function ReviewableProfileScreen({navigation, route}) {
 
     async function loadData() {
         setDataBeingLoaded(true)
+        const reviewableObj = await reviewService.getReviewable({
+            uri: reviewableParam.uri,
+            type: 'gigbusters'
+        })
+        setReviewable(reviewableObj)
+
         const reviewsObj = await reviewService.queryReviews({
-            uri: reviewable.uri,
+            uri: reviewableParam.uri,
             limit: 20,
             type: 'gigbusters'
         })

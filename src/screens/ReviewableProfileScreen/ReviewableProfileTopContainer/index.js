@@ -13,13 +13,13 @@ import RatingStack from "../../../components/RatingStack";
 export default function ReviewableProfileTopContainer({reviewable, navigation}) {
 
     const [rating, setRating] = useState(Math.round(
-        (reviewable && reviewable.cumulativeRating && reviewable.numberOfReviews ?
-        reviewable.cumulativeRating/reviewable.numberOfReviews : 0 )
+        (reviewable && reviewable?.cumulativeRating && reviewable?.numberOfReviews ?
+        reviewable?.cumulativeRating/reviewable?.numberOfReviews : 0 )
         * 100 + Number.EPSILON) / 100)
 
     useEffect(() => {
 
-    }, []);
+    }, [])
 
     return (
         <View style={styles.topContainer}>
@@ -47,8 +47,8 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
             <View style={styles.numberContainer}>
                 <Text style={styles.text}> Rating:</Text>
                 <Text style={styles.average}>{rating}</Text>
-                <Text style={styles.text}> {reviewable.numberOfReplies} Based on {(reviewable && reviewable.numberOfReviews ?
-                    reviewable.numberOfReviews : 0)} reviews</Text>
+                <Text style={styles.text}> {reviewable.numberOfReplies}
+                    Based on {(reviewable?.numberOfReviews)} reviews</Text>
             </View>
             <View style={styles.headerExtensionContainer}>
                 <View style={styles.searchContainer}>

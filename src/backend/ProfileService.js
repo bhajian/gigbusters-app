@@ -1,4 +1,4 @@
-import {API, Storage} from "aws-amplify";
+import {API, Auth, Storage} from "aws-amplify";
 
 const profileApiName = 'GigbusterApi'
 const profilePath = '/profile'
@@ -14,7 +14,9 @@ export class ProfileService {
 
     }
     async fetchProfile(params) {
-        const path = `${profilePath}/${params.userId}`
+        const currentUser = await Auth.currentAuthenticatedUser()
+        const userId = currentUser.sub
+        const path = `${profilePath}/${userId}`
         const data = {}
         profile = await API.get(profileApiName, path, data)
         if(profile && profile.photos){

@@ -2,7 +2,7 @@ import React, {useCallback, useMemo, useState} from "react";
 import {Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather";
-import ChoiceSelector from "../../../components/ChoiceSelector";
+import ChoiceSelector from "../../../components/CategorySelector";
 import {Slider} from '@miblanchard/react-native-slider'
 import Colors from "../../../constants/Colors";
 import {LocationSelector} from "../../../components/LocationSearch";

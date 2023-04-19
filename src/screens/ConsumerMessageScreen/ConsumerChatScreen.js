@@ -16,8 +16,8 @@ import { useHeaderHeight } from "@react-navigation/elements"
 
 const ConsumerChatScreen = (props) => {
     const headerHeight = useHeaderHeight()
-
     const transaction = props?.route?.params
+
     const [name, setName] = useState(transaction.worker.name)
     const [profilePhoto, setProfilePhoto] = useState(transaction.worker.profilePhotoURL)
     const [messages, setMessages] = useState([])

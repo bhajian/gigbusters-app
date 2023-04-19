@@ -7,7 +7,6 @@ import {useNavigation} from "@react-navigation/native";
 import GigRequestItem from "../../components/GigRequestItem";
 import Colors from "../../constants/Colors";
 import {TaskService} from "../../backend/TaskService";
-import Fontisto from "react-native-vector-icons/Fontisto";
 import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import loading2 from "../../../assets/images/loading2.gif";
 
@@ -41,10 +40,7 @@ export default function RequestActivityScreen({route}) {
     }, [navigation])
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
-        })
-        return unsubscribe
+        loadData().then().catch(e => console.log(e))
     }, [navigation])
 
     async function loadData() {
@@ -75,6 +71,8 @@ export default function RequestActivityScreen({route}) {
                             handler={requestActivityClickHandler}
                         />}
                         keyExtractor={(item) => item.id}
+                        onRefresh={loadData}
+                        refreshing={dataBeingLoaded}
                     />
             }
             <TouchableOpacity

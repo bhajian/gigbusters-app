@@ -34,7 +34,7 @@ export default function TaskDetailScreen({route}) {
             await taskService.acceptApplication({
                 applicantId: params?.transaction?.workerId,
                 transactionId: params?.transaction?.id,
-                taskId: task.id
+                taskId: task?.id
             })
             const index = applicants.findIndex(x=> x.userId === params.userId)
             let newApplicant = [...applicants]
@@ -50,7 +50,7 @@ export default function TaskDetailScreen({route}) {
             await taskService.rejectApplication({
                 applicantId: params?.transaction?.workerId,
                 transactionId: params?.transaction?.id,
-                taskId: task.id
+                taskId: task?.id
             })
             const index = applicants.findIndex(x=> x.userId === params.userId)
             let newApplicant = [...applicants]
@@ -66,7 +66,7 @@ export default function TaskDetailScreen({route}) {
     }
 
     async function onChatPressed(cardIndex) {
-        navigation.navigate('ChatScreen')
+        navigation.navigate('ConsumerChatScreen')
     }
 
     useEffect(() => {
@@ -76,7 +76,7 @@ export default function TaskDetailScreen({route}) {
     async function loadData() {
         setDataBeingLoaded(true)
         const applicantsObj = await taskService.listApplicants({
-            taskId: task.id
+            taskId: task?.id
         })
         setApplicants(applicantsObj)
         setDataBeingLoaded(false)

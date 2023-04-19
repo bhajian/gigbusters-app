@@ -17,6 +17,8 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import * as ImagePicker from "expo-image-picker";
 import {Auth, Storage} from 'aws-amplify';
 import loading from '../../../../assets/images/loading2.gif'
+import CategorySelector from "../../../components/CategorySelector";
+import CategoryMultiSelector from "../../../components/CategoryMultiSelector";
 
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
@@ -27,27 +29,30 @@ const EditProfileScreen = (props) => {
     const [phone, setPhone] = useState('')
     const [bio, setBio] = useState('')
     const [image, setImage] = useState(null)
+    const [categories, setCategories] = useState([])
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
-    const onSavePress = useCallback(async () => {
+    async function onSavePress() {
         try{
             setDataBeingSaved(true)
             const profile = profileService.getProfile()
             profile.name = name
             profile.bio = bio
+            profile.interestedCategories = categories
             await profileService.updateProfile(profile)
+            await profileService.fetchProfile()
             navigation.goBack()
         } catch (e) {
             console.log(e)
         }
         setDataBeingSaved(false)
-    },[name, bio])
+    }
 
-
-    const loadData = useCallback(async () => {
+    async function loadData() {
         const profile = profileService.getProfile()
+
         if(profile && profile.accountCode){
             setAccountNumber(profile.accountCode)
         }
@@ -56,6 +61,9 @@ const EditProfileScreen = (props) => {
         }
         if(profile && profile.bio){
             setBio(profile.bio)
+        }
+        if(profile && profile.interestedCategories){
+            setCategories(profile.interestedCategories)
         }
         if(profile && profile.email && profile.email.email){
             setEmail(profile.email.email)
@@ -67,7 +75,7 @@ const EditProfileScreen = (props) => {
             const url = profile.mainPhotoUrl
             setImage(url)
         }
-    },[])
+    }
 
     const onSettingPressed = () => {
         navigation.navigate('EditSettingsScreen');
@@ -77,7 +85,7 @@ const EditProfileScreen = (props) => {
         const unsubscribe = navigation.addListener('focus', () => {
             loadData().then().catch(e => console.log(e))
         })
-    }, [loadData])
+    }, [])
 
     useEffect(() => {
         navigation.setOptions({
@@ -144,8 +152,7 @@ const EditProfileScreen = (props) => {
 
                 }
             })
-            const currentUser = await Auth.currentAuthenticatedUser()
-            await profileService.fetchProfile({userId: currentUser.sub})
+            await profileService.fetchProfile()
             loadData().then(r => {})
         } catch (e) {
             console.log(e)
@@ -159,7 +166,15 @@ const EditProfileScreen = (props) => {
                 changeObject: 'phone',
                 phone: phone
             })
-    };
+    }
+
+    const onCategoriesChanged = async(params) => {
+        const catList = []
+        for(let i=0; i<params.length; i++){
+            catList.push(params[i].category)
+        }
+        setCategories(catList)
+    }
 
     return (
         <ScrollView style={styles.container} >
@@ -239,6 +254,12 @@ const EditProfileScreen = (props) => {
                     iconCategory="FontAwesome5"
                     iconName="question-circle"
                 />
+                <View style={styles.categoriesContainer}>
+                    <CategoryMultiSelector
+                        onSelectionChanged={onCategoriesChanged}
+                        selectedItems={categories}
+                    />
+                </View>
             </View>
 
         </ScrollView>
@@ -260,6 +281,10 @@ const styles = StyleSheet.create({
     bottomContainer:{
         paddingTop: 20,
         margin: 20,
+    },
+    categoriesContainer:{
+        width: '100%',
+        alignItems: 'center'
     },
     settingsContainer:{
         margin: 10,

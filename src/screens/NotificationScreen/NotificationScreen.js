@@ -13,6 +13,7 @@ import {ProfileService} from "../../backend/ProfileService";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {TaskService} from "../../backend/TaskService";
 import {Ionicons, MaterialIcons} from "@expo/vector-icons";
+import NotificationItem from "../../components/NotificationItem";
 
 export default function NotificationScreen() {
     const [profileName, setProfileName] = useState('')
@@ -45,19 +46,7 @@ export default function NotificationScreen() {
 
     async function loadData() {
         setDataBeingLoaded(true)
-        const profile = profileService.getProfile()
-        if(profile && profile.name){
-            setProfileName(profile.name)
-        }
-        if(profile && profile.photos){
-            const url = profile.mainPhotoUrl
-            setProfileImage(url)
-        }
-        const transactionsObj = await taskService.listMyTransaction({
-            limit: 20,
-            persona: 'WORKER'
-        })
-        setTransactions(transactionsObj)
+
         setDataBeingLoaded(false)
     }
 
@@ -76,18 +65,18 @@ export default function NotificationScreen() {
                     <Image source={loading2} style={styles.loading2} />
                     :
                     <FlatList
-                        data={transactions}
+                        data={tipoffs}
                         renderItem={({item}) => {
                             return(
-                                <MessageItem
-                                    transaction={item}
+                                <NotificationItem
+                                    notification={item}
                                     accountType={"WORKER"}
                                     onChatPressed={onChatPressed}
                                     onProfilePressed={onProfilePressed}
                                 />
                             )
                         }}
-                        keyExtractor={(item) => item.transaction.id}
+                        keyExtractor={(item) => item.id}
                     />
             }
         </SafeAreaView>

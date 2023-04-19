@@ -40,6 +40,7 @@ const EditSettingsScreen = (props) => {
                 language: language,
                 country: country
             })
+            await profileService.fetchProfile()
             navigation.goBack()
         } catch (e) {
             console.log(e)
@@ -49,7 +50,7 @@ const EditSettingsScreen = (props) => {
 
     async function loadData() {
         try{
-            const settings = await profileService.getProfileSettings()
+            const settings = profileService.getProfile()?.settings
 
             setNotifications(settings?.notifications)
             setAllowPublicMessages(settings?.allowPublicMessages)

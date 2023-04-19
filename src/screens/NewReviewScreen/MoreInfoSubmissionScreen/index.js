@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Colors from "../../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
-import ChoiceSelector from "../../../components/ChoiceSelector";
+import ChoiceSelector from "../../../components/CategorySelector";
 import {LocationSelector} from "../../../components/LocationSearch";
 import {ReviewService} from "../../../backend/ReviewService";
 import loading from "../../../../assets/images/loading2.gif";

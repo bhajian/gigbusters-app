@@ -17,10 +17,11 @@ const CreateProfileScreen = (props) => {
 
     let email = ''
     const subscription = ''
-    const [phone, setPhone] = useState('');
-    const [name, setName] = useState('');
-    const [accountType, setAccountType] = useState('CONSUMER');
+    const [phone, setPhone] = useState('')
+    const [name, setName] = useState('')
+    const [accountType, setAccountType] = useState('CONSUMER')
     const profileService = new ProfileService()
+    const navigation = useNavigation()
 
     async function onNextPressed() {
         try {
@@ -30,24 +31,19 @@ const CreateProfileScreen = (props) => {
             if(!name ){
                 throw new Error('Name is required')
             }
-            props.updateAuthState('initializing');
+
             const currentUser = await Auth.currentAuthenticatedUser()
             email = currentUser.attributes.email
 
-            await profileService.createProfile({
-                name: name,
-                subscription: subscription,
-                accountType: accountType,
-                email: {
+            navigation.navigate('CompleteProfileScreen',
+                {
+                    name: name,
+                    subscription: subscription,
+                    accountType: accountType,
                     email: email,
-                    verified: true // FIX me should be written in the server by default
-                },
-                phone: {
                     phone: phone,
-                    verified: false // FIX me should be written in the server by default
-                }
-            })
-            props.updateAuthState('loggedIn');
+                })
+
         } catch (error) {
             Alert.alert(error.message)
         }
@@ -102,7 +98,7 @@ const CreateProfileScreen = (props) => {
                     </RadioButton.Group>
                 </View>
                 <CustomButton
-                    text="Finish"
+                    text="Next"
                     style={styles.component}
                     onPress={onNextPressed}
                 />

@@ -27,9 +27,6 @@ export default function VerificationScreen({navigation, route, updateAuthState})
             await Auth.confirmSignUp(username, authCode);
             if(username && passwordParam){
                 const user = await Auth.signIn(username, passwordParam)
-                console.log('verification:')
-                console.log(user)
-
                 updateAuthState('profileCreation');
             } else{
                 updateAuthState('loggedOut');

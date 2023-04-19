@@ -122,7 +122,7 @@ const RootRouter = props => {
                     }}
                 />
             )}
-            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
                 <Stack.Screen
                     name={'ReviewableProfileScreen'}
                     component={ReviewableProfileScreen}
