@@ -10,7 +10,7 @@ export default function IdContainer({reviewable}) {
         <View style={styles.mainContainer}>
             <View style={styles.nameIdContainer}>
                 <View>
-                    <Text style={styles.toName} >{reviewable.name}</Text>
+                    <Text style={styles.toName} >{reviewable?.profile?.name}</Text>
                 </View>
                 <View style={styles.userIdContainer}>
                     <MaterialCommunityIcons

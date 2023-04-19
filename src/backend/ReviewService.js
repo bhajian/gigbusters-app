@@ -54,8 +54,9 @@ export class ReviewService {
         }
         const reviewables = await API.get(reviewApiName, path, data)
         for(let i=0; i<reviewables.length; i++){
-            if(reviewables[i].profilePhoto){
-                reviewables[i].profilePhotoURL = await this.getMainPhoto(reviewables[i].profilePhoto)
+            if(reviewables[i]?.profile?.profilePhoto){
+                reviewables[i].profile.profilePhotoURL =
+                    await this.getMainPhoto(reviewables[i]?.profile?.profilePhoto)
             }
         }
         return reviewables

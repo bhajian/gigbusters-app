@@ -31,6 +31,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                     <UserAvatar
                         size={70}
                         active
+                        name={reviewable?.profile?.name}
                         src={reviewable?.profile?.profilePhotoURL}
                     />
                     <View>

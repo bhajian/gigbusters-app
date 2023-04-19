@@ -13,10 +13,7 @@ export default function ReviewFeed() {
     const reviewService = new ReviewService()
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
-        })
-        return unsubscribe
+        loadData().then().catch(e => console.log(e))
     }, [])
 
     async function loadData() {
@@ -37,6 +34,8 @@ export default function ReviewFeed() {
                 data={reviews}
                 renderItem={({item}) => <Reviewable reviewable={item} />}
                 keyExtractor={(item) => (item.type + ':' + item.uri)}
+                onRefresh={loadData}
+                refreshing={dataBeingLoaded}
             />
     )
 }
