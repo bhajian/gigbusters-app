@@ -13,6 +13,7 @@ import {ReviewService} from "../../backend/ReviewService";
 
 export default function ReviewableProfileScreen({navigation, route}) {
     let reviewableParam = route?.params?.reviewable
+    // console.log(reviewableParam)
 
     const [reviews, setReviews] = useState([])
     const [reviewable, setReviewable] = useState([])
@@ -21,10 +22,8 @@ export default function ReviewableProfileScreen({navigation, route}) {
     const reviewService = new ReviewService()
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
-        })
-        return unsubscribe
+        loadData().then().catch(e => console.log(e))
+
     }, [])
 
     async function loadData() {

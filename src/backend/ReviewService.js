@@ -19,6 +19,9 @@ export class ReviewService {
         const data = {
         }
         const reviewable = await API.get(reviewApiName, path, data)
+        if(reviewable?.profile?.photos?.length > 0){
+            reviewable.profile.profilePhotoURL = await this.getMainPhoto(reviewable?.profile?.photos[0])
+        }
         return reviewable
     }
     async queryReviews(params) {

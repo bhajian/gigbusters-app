@@ -11,7 +11,6 @@ import EditDeleteBottomSheet from "./EditDeleteBottomSheet";
 import EditPageBottomSheet from "./EditPageBottomSheet";
 import {TaskService} from "../../../backend/TaskService";
 import ApplicantAcceptedItem from "../../../components/ApplicantAcceptedItem"
-import tipoffs from "../../../../assets/data/tipoffs"
 export default function TaskDetailScreen({route}) {
     const task = route.params
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
@@ -62,7 +61,8 @@ export default function TaskDetailScreen({route}) {
     }
 
     async function onProfilePressed(params) {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
+        params.uri = params?.accountCode
+        navigation.navigate('ReviewableProfileScreen', {reviewable: params})
     }
 
     async function onChatPressed(cardIndex) {

@@ -24,6 +24,19 @@ export default function RatingStack({reviewable}) {
     && reviewable.fiveStar > 0 ?
         reviewable.fiveStar/reviewable.numberOfReviews : 0)
 
+    useEffect(() => {
+        setOneStar(reviewable && reviewable.numberOfReviews > 0
+        && reviewable.oneStar > 0 ? reviewable.oneStar/reviewable.numberOfReviews : 0)
+        setTwoStar(reviewable && reviewable.numberOfReviews > 0
+        && reviewable.twoStar > 0 ? reviewable.twoStar/reviewable.numberOfReviews : 0)
+        setThreeStar(reviewable && reviewable.numberOfReviews > 0
+        && reviewable.threeStar > 0 ? reviewable.threeStar/reviewable.numberOfReviews : 0)
+        setFourStar(reviewable && reviewable.numberOfReviews > 0
+        && reviewable.fourStar > 0 ? reviewable.fourStar/reviewable.numberOfReviews : 0)
+        setFiveStar(reviewable && reviewable.numberOfReviews > 0
+        && reviewable.fiveStar > 0 ? reviewable.fiveStar/reviewable.numberOfReviews : 0)
+    }, [reviewable])
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.starColContainer}>

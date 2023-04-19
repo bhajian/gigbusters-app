@@ -18,8 +18,11 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
         * 100 + Number.EPSILON) / 100)
 
     useEffect(() => {
-
-    }, [])
+        setRating(Math.round(
+            (reviewable && reviewable?.cumulativeRating && reviewable?.numberOfReviews ?
+                reviewable?.cumulativeRating/reviewable?.numberOfReviews : 0 )
+            * 100 + Number.EPSILON) / 100)
+    }, [reviewable])
 
     return (
         <View style={styles.topContainer}>
@@ -28,11 +31,13 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                     <UserAvatar
                         size={70}
                         active
-                        src={reviewable.profilePhotoURL}
+                        src={reviewable?.profile?.profilePhotoURL}
                     />
                     <View>
-                        <Text style={styles.contactName}>{reviewable.name}</Text>
-                        <Text style={styles.contactName}>ID: {reviewable.uri}</Text>
+                        <Text style={styles.contactName}>{reviewable?.profile?.name}</Text>
+                        <Text style={styles.personalInfo}>ID: {reviewable?.uri}</Text>
+                        <Text style={styles.personalInfo}>Email: {reviewable?.profile?.email?.email}</Text>
+                        <Text style={styles.personalInfo}>Phone: {reviewable?.profile?.phone?.phone}</Text>
                     </View>
                 </View>
                 <View style={styles.headerRight}>
@@ -54,13 +59,20 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                 <View style={styles.searchContainer}>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >Toronto</Text>
+                            <Text style={styles.textTag} >
+                                {reviewable?.profile?.location?.locationName}
+                            </Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >10$/hr</Text>
+                            <Text style={styles.textTag} >TBD</Text>
                         </View>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >Personal Trainer</Text>
+                            <Text style={styles.textTag} >
+                                {(reviewable?.profile?.interestedCategories?.length > 0 ?
+                                        reviewable?.profile?.interestedCategories[0] : 'TBD'
+                                )
+                                    }
+                            </Text>
                         </View>
                     </View>
 
@@ -143,9 +155,13 @@ const styles = StyleSheet.create({
         color: Colors.light.tint,
     },
     contactName: {
-        alignSelf: 'center',
+        alignSelf: 'flex-start',
         marginLeft: 10,
         fontWeight: 'bold'
+    },
+    personalInfo: {
+        alignSelf: 'flex-start',
+        marginLeft: 10,
     },
     shareButton: {
         marginTop: 5,
