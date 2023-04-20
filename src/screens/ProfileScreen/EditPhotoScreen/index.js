@@ -1,9 +1,6 @@
 import React, {useState} from "react";
-import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet} from "react-native";
+import {View, StyleSheet} from "react-native";
 import {Auth} from "aws-amplify";
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import CustomButton from "../../../components/CustomButton";
-import CustomInput from "../../../components/CustomInput";
 
 const EditPhotoScreen = (props) => {
     const [username, setUsername] = useState('');

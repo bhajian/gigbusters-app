@@ -48,7 +48,7 @@ export default function RequestActivityScreen({route}) {
     async function loadData() {
         setDataBeingLoaded(true)
         const requestObj = await taskService.fetchMyTasks({
-            limit: 5,
+            limit: 500,
         })
         setRequestList(requestObj)
         setDataBeingLoaded(false)

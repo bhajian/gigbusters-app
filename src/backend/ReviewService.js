@@ -35,6 +35,12 @@ export class ReviewService {
                 reviews[i].mainPhotoURL = await this.getMainPhoto(reviews[i].photos[0])
             }
         }
+        for(let i=0; i<reviews.length; i++){
+            if(reviews[i]?.profile?.profilePhoto){
+                reviews[i].profile.profilePhotoURL =
+                    await this.getMainPhoto(reviews[i]?.profile?.profilePhoto)
+            }
+        }
         return reviews
     }
 

@@ -19,6 +19,7 @@ import {Auth, Storage} from 'aws-amplify';
 import loading from '../../../../assets/images/loading2.gif'
 import CategorySelector from "../../../components/CategorySelector";
 import CategoryMultiSelector from "../../../components/CategoryMultiSelector";
+import CustomSettingRowSwitch from "../../../components/CustomSettingRowSwitch";
 
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
@@ -254,12 +255,20 @@ const EditProfileScreen = (props) => {
                     iconCategory="FontAwesome5"
                     iconName="question-circle"
                 />
+                <CustomSettingRowSwitch
+                    // toggleSwitch={setNotifications}
+                    name="Enable Worker Account"
+                    // isEnabled={notifications}
+                    iconCategory="MaterialIcons"
+                    iconName="notifications-active"
+                />
                 <View style={styles.categoriesContainer}>
                     <CategoryMultiSelector
                         onSelectionChanged={onCategoriesChanged}
                         selectedItems={categories}
                     />
                 </View>
+
             </View>
 
         </ScrollView>

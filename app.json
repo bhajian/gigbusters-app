@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/68d84fc6-dd45-405f-a8f2-db7b7e3d2958"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -21,14 +22,21 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "LSApplicationQueriesSchemes": ["gigbusters"]
-      }
+        "LSApplicationQueriesSchemes": [
+          "gigbusters"
+        ]
+      },
+      "bundleIdentifier": "com.orbitstellar.gigbusters"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.orbitstellar.gigbusters"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -40,6 +48,15 @@
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "68d84fc6-dd45-405f-a8f2-db7b7e3d2958"
+      }
+    },
+    "owner": "orbitstellar",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    }
   }
 }

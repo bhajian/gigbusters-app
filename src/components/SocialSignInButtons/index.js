@@ -31,14 +31,14 @@ const SocialSignInButtons = () => {
             </View>
 
             <View style={styles.login_social_buttons}>
-                <Pressable
-                    onPress={onSignInFacebook}
-                    style={styles.FB_container}>
-                    <FontAwesome5
-                        style={styles.icon}
-                        name={"facebook"}
-                    />
-                </Pressable>
+                {/*<Pressable*/}
+                {/*    onPress={onSignInFacebook}*/}
+                {/*    style={styles.FB_container}>*/}
+                {/*    <FontAwesome5*/}
+                {/*        style={styles.icon}*/}
+                {/*        name={"facebook"}*/}
+                {/*    />*/}
+                {/*</Pressable>*/}
 
                 <Pressable
                     onPress={onSignInGoogle}
@@ -48,14 +48,15 @@ const SocialSignInButtons = () => {
                         name={"google"}
                     />
                 </Pressable>
-                <Pressable
-                    onPress={onSignInFacebook}
-                    style={styles.APPL_container}>
-                    <FontAwesome5
-                        style={styles.icon}
-                        name={"apple"}
-                    />
-                </Pressable>
+
+                {/*<Pressable*/}
+                {/*    onPress={onSignInFacebook}*/}
+                {/*    style={styles.APPL_container}>*/}
+                {/*    <FontAwesome5*/}
+                {/*        style={styles.icon}*/}
+                {/*        name={"apple"}*/}
+                {/*    />*/}
+                {/*</Pressable>*/}
             </View>
         </>
     );
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 45,
         justifyContent: 'center',
-        backgroundColor: 'rgba(234,49,43,0.83)',
+        backgroundColor: 'rgb(255,0,0)',
     },
     APPL_container: {
         width: 45,

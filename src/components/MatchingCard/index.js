@@ -1,10 +1,11 @@
-import React from 'react';
-import {Text, ImageBackground, View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
+import {Text, ImageBackground, View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import ProfilePicture from "../ProfilePicture";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
+import MapView from "react-native-maps";
 
 const MatchingCard = props => {
     const {
@@ -16,8 +17,18 @@ const MatchingCard = props => {
         city,
         country,
         name,
-        profilePhotoURL
+        profilePhotoURL,
+        location
     } = props.card
+
+    const [mapRegion, setmapRegion] = useState({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        latitudeDelta: 0.0222,
+        longitudeDelta: 0.0121,
+    })
+
+
     const onRightPressed = props.onRightPressed
     const onLeftPressed = props.onLeftPressed
     return (
@@ -66,6 +77,10 @@ const MatchingCard = props => {
                     <Text style={styles.description}>
                         {description}
                     </Text>
+                    <MapView
+                        style={{ alignSelf: 'stretch', height: '40%', marginTop: 80 }}
+                        region={mapRegion}
+                    />
                 </View>
             </View>
         </View>
@@ -108,7 +123,7 @@ const styles = StyleSheet.create({
     },
     parentButtonsContainer: {
         position: 'absolute',
-        top: 280
+        top: 180
     },
     buttonsContainer: {
         marginHorizontal: 5,
@@ -134,7 +149,7 @@ const styles = StyleSheet.create({
     },
     image: {
         width: '100%',
-        height: 350,
+        height: 250,
         // borderRadius: 15,
         // borderWidth: 0.5,
         // overflow: 'hidden',
