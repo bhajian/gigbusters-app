@@ -130,7 +130,7 @@ export default function TaskDetailScreen({route}) {
                         renderItem={({item}) => {
                             if(item?.transaction?.status === 'applied'){
                                 return <ApplicantRequestItem
-                                    item={item.worker}
+                                    item={item}
                                     onAcceptPressed={onAcceptPressed}
                                     onRejectPressed={onRejectPressed}
                                     onProfilePressed={onProfilePressed}

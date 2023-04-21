@@ -77,6 +77,7 @@ export default function ConsumerMessageListScreen() {
     }
 
     async function onProfilePressed(params) {
+        params.uri = params.accountCode
         navigation.navigate('ReviewableProfileScreen', {reviewable: params})
     }
 
