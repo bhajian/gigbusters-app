@@ -103,6 +103,8 @@ export default function ConsumerMessageListScreen() {
                                 />
                             )
                         }}
+                        onRefresh={loadData}
+                        refreshing={dataBeingLoaded}
                         keyExtractor={(item) => item.transaction.id}
                     />
             }

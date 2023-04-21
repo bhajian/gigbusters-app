@@ -75,7 +75,6 @@ export class TaskService {
         const data = {
             queryStringParameters: params
         }
-        console.log(data);
         const response = await API.get(taskApiName, path, data)
 
         neighboursTasks = response?.Items

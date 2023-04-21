@@ -19,7 +19,7 @@ export default function ReviewFeed() {
     async function loadData() {
         setDataBeingLoaded(true)
         const reviewsObj = await reviewService.queryReviewables({
-            limit: 20,
+            limit: 200,
             type: 'gigbusters'
         })
         setReviews(reviewsObj)

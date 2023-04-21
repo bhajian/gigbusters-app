@@ -19,7 +19,6 @@ export default function ReviewableSearch({bottomSheetModalRef, handleSheetChange
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close');
 
     const handleTogglePressBehavior = useCallback(() => {
-        console.log('I am toggled')
         setBackdropPressBehavior(state => {
             switch (state) {
                 case 'none':

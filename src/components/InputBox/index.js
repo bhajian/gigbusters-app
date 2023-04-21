@@ -27,8 +27,6 @@ const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
                 dateTime: (new Date()).toISOString()
             }
 
-            console.log(newMessage)
-
             const newMessageData = await API.graphql(
                 graphqlOperation(createMessage, { input: newMessage })
             )

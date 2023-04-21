@@ -4,7 +4,6 @@ import ProfilePicture from "../../ProfilePicture";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 
 export default function LeftContainer({user}) {
-    console.log(user)
     return (
         <View style={styles.headerLeft}>
             <UserAvatar
@@ -13,7 +12,7 @@ export default function LeftContainer({user}) {
                 name={user?.profile?.name}
                 src={user?.profile?.profilePhotoURL}
             />
-            <View>
+            <View style={styles.nameContainer}>
                 <Text style={styles.contactName}>{user?.profile?.name}</Text>
             </View>
         </View>
@@ -29,6 +28,12 @@ const styles = StyleSheet.create({
     headerLeft: {
         flexDirection: 'row',
         paddingStart: 5,
-        paddingEnd: 10,
+        paddingEnd: 5,
     },
+    nameContainer: {
+        margin: 5
+    },
+    contactName: {
+        fontWeight: '500',
+    }
 });

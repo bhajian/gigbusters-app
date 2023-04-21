@@ -1,8 +1,8 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {AppState, StyleSheet, Text, View} from 'react-native';
 import awsconfig from './src/backend/aws-exports';
 import {Amplify, Auth, Hub} from "aws-amplify";
-import React, {useEffect, useState} from "react";
-import {NavigationContainer} from "@react-navigation/native";
+import React, {useEffect, useRef, useState} from "react";
+import {NavigationContainer, useNavigation} from "@react-navigation/native";
 import RootRouter from "./src/navigations/RootRouter";
 import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
 import Lottie from 'lottie-react-native';
@@ -15,6 +15,7 @@ Amplify.configure(awsconfig);
 export default function App() {
     const [userStatus, setUserStatus] = useState('initializing')
     const profileService = new ProfileService()
+    const appState = useRef(AppState.currentState)
 
     useEffect(() => {
         const unsubscribe = Hub.listen("auth",
@@ -36,6 +37,26 @@ export default function App() {
                 console.error(e);
             })
         return unsubscribe
+    }, [])
+
+    useEffect(() => {
+        const subscription = AppState.addEventListener("change", nextAppState => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === "active"
+            ) {
+                checkAuthState()
+                    .then(() => {
+                    })
+                    .catch(e => {
+                        console.error(e)
+                    })
+            }
+            appState.current = nextAppState
+        })
+        return () => {
+            subscription.remove()
+        };
     }, [])
 
     async function checkAuthState() {

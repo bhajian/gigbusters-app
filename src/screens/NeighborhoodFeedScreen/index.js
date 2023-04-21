@@ -27,7 +27,7 @@ export default function NeighborhoodFeedScreen(props) {
         })
         return unsubscribe
 
-    }, [navigation]);
+    }, [navigation])
 
     async function loadData() {
         setDataBeingLoaded(true)
@@ -81,6 +81,8 @@ export default function NeighborhoodFeedScreen(props) {
                         data={requestList}
                         renderItem={({item}) => <RequestItem request={item} />}
                         keyExtractor={(item) => item.id}
+                        onRefresh={loadData}
+                        refreshing={dataBeingLoaded}
                     />
             }
             <FeedSearchSearch
