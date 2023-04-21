@@ -24,7 +24,7 @@ export default function TaskDetailScreen({route}) {
     }, [])
 
     const editPageBottomSheetModalRef = useRef(null)
-    const editPageHandlePresentPress = () => editDeleteBottomSheetModalRef.current.present()
+    const editPageHandlePresentPress = () => editPageBottomSheetModalRef.current.present()
     const editPageHandleSheetChanges = useCallback((index) => {
     }, [])
 
@@ -35,7 +35,7 @@ export default function TaskDetailScreen({route}) {
                 transactionId: params?.transaction?.id,
                 taskId: task?.id
             })
-            const index = applicants.findIndex(x=> x.userId === params.userId)
+            const index = applicants.findIndex(x=> x.transaction?.workerId === params?.transaction?.workerId)
             let newApplicant = [...applicants]
             newApplicant[index].transaction.status = 'applicationAccepted'
             setApplicants([...newApplicant])
@@ -51,7 +51,7 @@ export default function TaskDetailScreen({route}) {
                 transactionId: params?.transaction?.id,
                 taskId: task?.id
             })
-            const index = applicants.findIndex(x=> x.userId === params.userId)
+            const index = applicants.findIndex(x=> x.transaction?.workerId === params?.transaction?.workerId)
             let newApplicant = [...applicants]
             newApplicant[index].transaction.status = 'rejected'
             setApplicants([...newApplicant])
@@ -116,7 +116,7 @@ export default function TaskDetailScreen({route}) {
         return(<View style={styles.topContainer}>
             <RequestDetailTopContainer task={task} />
         </View>)
-    };
+    }
 
     return (
         <SafeAreaView style={styles.container}>

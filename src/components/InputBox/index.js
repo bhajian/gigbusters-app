@@ -12,7 +12,7 @@ import {
 } from "../../backend/graphql/mutations"
 import {API, graphqlOperation} from "aws-amplify";
 
-const InputBox = ({ transactionId, fromUserId, toUserId }) => {
+const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
     const [text, setText] = useState("");
     const [files, setFiles] = useState([]);
     const [progresses, setProgresses] = useState({});
@@ -52,14 +52,16 @@ const InputBox = ({ transactionId, fromUserId, toUserId }) => {
                     onChangeText={setText}
                     style={styles.input}
                     placeholder="Type your message..."
+                    editable={!disabled}
                 />
 
                 <TouchableOpacity
                     style={styles.leftContainer}
                     onPress={onSendPressed}
+                    disabled={disabled}
                 >
                     <MaterialIcons
-                        style={styles.send}
+                        style={[{backgroundColor: disabled ? Colors.dark.grey: Colors.light.tint}, styles.send]}
                         name="send"
                         size={16}
                         color="white"
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
         borderWidth: StyleSheet.hairlineWidth,
     },
     send: {
-        backgroundColor: Colors.light.tint,
+        // backgroundColor: Colors.light.tint,
         padding: 7,
         borderRadius: 15,
         overflow: "hidden",
