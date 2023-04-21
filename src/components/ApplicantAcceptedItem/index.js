@@ -13,10 +13,10 @@ export default function ApplicantAcceptedItem({item, onChatPressed, onProfilePre
         <View style={styles.container}>
             <View style={styles.mainContainer}>
                 <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(item)}>
-                    <Image source={{uri: item.profilePhotoURL}} style={styles.image} />
+                    <Image source={{uri: item?.worker?.profilePhotoURL}} style={styles.image} />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
-                            {item.name}
+                            {item?.worker?.name}
                         </Text>
                         <AirbnbRating
                             type='custom'

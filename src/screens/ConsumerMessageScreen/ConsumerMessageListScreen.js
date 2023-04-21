@@ -28,10 +28,7 @@ export default function ConsumerMessageListScreen() {
     const taskService = new TaskService()
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
-        })
-        return unsubscribe
+        loadData().then().catch(e => console.log(e))
     }, [])
 
     useEffect(() => {
@@ -65,7 +62,7 @@ export default function ConsumerMessageListScreen() {
             setProfileImage(url)
         }
         const transactionsObj = await taskService.listMyTransaction({
-            limit: 20,
+            limit: 2000,
             persona: 'CONSUMER'
         })
         setTransactions(transactionsObj)
@@ -80,7 +77,7 @@ export default function ConsumerMessageListScreen() {
     }
 
     async function onProfilePressed(params) {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
+        navigation.navigate('ReviewableProfileScreen', {reviewable: params})
     }
 
     const onNewMessagePress = () => {

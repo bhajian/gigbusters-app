@@ -13,7 +13,6 @@ import {ReviewService} from "../../backend/ReviewService";
 
 export default function ReviewableProfileScreen({navigation, route}) {
     let reviewableParam = route?.params?.reviewable
-    // console.log(reviewableParam)
 
     const [reviews, setReviews] = useState([])
     const [reviewable, setReviewable] = useState([])

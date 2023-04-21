@@ -55,10 +55,8 @@ export class TaskService {
         const data = {
             queryStringParameters: params
         }
-
         const response = await API.get(taskApiName, path, data)
-        myTaskLastEvaluatedKey = response?.LastEvaluatedKey?.id
-
+        // myTaskLastEvaluatedKey = response?.LastEvaluatedKey?.id
         const tasks = response?.Items
         for(let i=0; i<tasks.length; i++){
             if(tasks[i].photos){
@@ -102,6 +100,24 @@ export class TaskService {
         const data = {
         }
         const applicants = await API.get(taskApiName, path, data)
+
+        for(let i=0; i<applicants.length; i++){
+            if(applicants[i].worker?.profilePhoto){
+                applicants[i].worker.profilePhotoURL =
+                    await this.getMainPhoto(applicants[i].worker?.profilePhoto)
+            }
+            if(applicants[i].customer?.profilePhoto){
+                applicants[i].customer.profilePhotoURL =
+                    await this.getMainPhoto(applicants[i].customer?.profilePhoto)
+            }
+            if(applicants[i].task?.photos && applicants[i].task?.photos[0]){
+                const photo = applicants[i].task?.photos[0]
+                applicants[i].task.photoURL =
+                    await this.getMainPhoto(photo)
+            }
+        }
+
+
         for(let i=0; i<applicants.length; i++){
             if(applicants[i].profilePhoto){
                 applicants[i].profilePhotoURL = await this.getMainPhoto(applicants[i].profilePhoto)

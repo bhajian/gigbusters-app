@@ -29,10 +29,10 @@ import OptionsBottomSheet from "./OptionsBottomSheet";
 const ConsumerChatScreen = (props) => {
     const headerHeight = useHeaderHeight()
     const transaction = props?.route?.params
-    console.log(transaction)
+    // console.log(transaction)
 
-    const [name, setName] = useState(transaction.worker.name)
-    const [profilePhoto, setProfilePhoto] = useState(transaction.worker.profilePhotoURL)
+    const [name, setName] = useState(transaction?.worker?.name)
+    const [profilePhoto, setProfilePhoto] = useState(transaction?.worker?.profilePhotoURL)
     const [messages, setMessages] = useState([])
     const [currentUserId, setCurrentUserId] = useState('')
     const taskService = new TaskService()
@@ -50,7 +50,7 @@ const ConsumerChatScreen = (props) => {
         })
         const subscription = API.graphql(
             graphqlOperation(onCreateMessage, {
-                filter: { transactionId: { eq: transaction.transaction.id } },
+                filter: { transactionId: { eq: transaction?.transaction?.id } },
             })
         ).subscribe({
             next: ({ value }) => {
@@ -71,7 +71,7 @@ const ConsumerChatScreen = (props) => {
             const messagesObj = await API.graphql(graphqlOperation(listMessages, {
                 filter: {
                     transactionId: {
-                        eq: transaction.transaction.id
+                        eq: transaction?.transaction?.id
                     }
                 },
             }))
@@ -183,9 +183,9 @@ const ConsumerChatScreen = (props) => {
                     inverted
                 />
                 <InputBox
-                    transactionId={transaction.transaction.id}
-                    fromUserId={transaction.transaction.customerId}
-                    toUserId={transaction.transaction.workerId}
+                    transactionId={transaction?.transaction?.id}
+                    fromUserId={transaction?.transaction?.customerId}
+                    toUserId={transaction?.transaction?.workerId}
                     disabled={false}
                 />
             </ImageBackground>

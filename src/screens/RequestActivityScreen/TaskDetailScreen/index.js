@@ -61,12 +61,12 @@ export default function TaskDetailScreen({route}) {
     }
 
     async function onProfilePressed(params) {
-        params.uri = params?.accountCode
+        params.uri = params?.worker?.accountCode
         navigation.navigate('ReviewableProfileScreen', {reviewable: params})
     }
 
-    async function onChatPressed(cardIndex) {
-        navigation.navigate('ConsumerChatScreen')
+    async function onChatPressed(params) {
+        navigation.navigate('ConsumerChatScreen', params)
     }
 
     useEffect(() => {
@@ -130,7 +130,7 @@ export default function TaskDetailScreen({route}) {
                         renderItem={({item}) => {
                             if(item?.transaction?.status === 'applied'){
                                 return <ApplicantRequestItem
-                                    item={item}
+                                    item={item.worker}
                                     onAcceptPressed={onAcceptPressed}
                                     onRejectPressed={onRejectPressed}
                                     onProfilePressed={onProfilePressed}
@@ -144,7 +144,7 @@ export default function TaskDetailScreen({route}) {
                                 />
                             }
                         }}
-                        keyExtractor={(item) => item.userId}
+                        keyExtractor={(item) => item.transaction.id}
                     />
             }
             <EditDeleteBottomSheet

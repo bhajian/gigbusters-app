@@ -20,6 +20,9 @@
       "**/*"
     ],
     "ios": {
+      "config": {
+        "googleMapsApiKey": "AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s"
+      },
       "supportsTablet": true,
       "infoPlist": {
         "LSApplicationQueriesSchemes": [
@@ -29,6 +32,11 @@
       "bundleIdentifier": "com.orbitstellar.gigbusters"
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
@@ -55,8 +63,6 @@
       }
     },
     "owner": "orbitstellar",
-    "runtimeVersion": {
-      "policy": "sdkVersion"
-    }
+    "runtimeVersion": "exposdk:47.0.0",
   }
 }

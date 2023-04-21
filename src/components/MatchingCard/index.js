@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import {Text, ImageBackground, View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
-import ProfilePicture from "../ProfilePicture";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import MapView from "react-native-maps";
+import { PROVIDER_GOOGLE } from "react-native-maps"
 
 const MatchingCard = props => {
     const {
@@ -80,6 +80,7 @@ const MatchingCard = props => {
                     <MapView
                         style={{ alignSelf: 'stretch', height: '40%', marginTop: 80 }}
                         region={mapRegion}
+                        provider={PROVIDER_GOOGLE}
                     />
                 </View>
             </View>
