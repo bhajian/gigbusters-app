@@ -5,6 +5,7 @@ const applicantPath = '/applicant'
 const transactionPath = '/transaction'
 const applyPath = '/apply'
 const withdrawPath = '/withdraw'
+const passPath = '/pass'
 const acceptPath = '/accept'
 const rejectPath = '/reject'
 const photoPath = '/photo'
@@ -169,6 +170,15 @@ export class TaskService {
 
     async applyTask(params) {
         const path = `${taskPath}/${params.taskId}${applyPath}`
+        const data = {
+            body: {},
+        }
+        const res = await API.put(taskApiName, path, data)
+        return res
+    }
+
+    async passTask(params) {
+        const path = `${taskPath}/${params.taskId}${passPath}`
         const data = {
             body: {},
         }

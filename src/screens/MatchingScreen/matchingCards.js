@@ -69,7 +69,7 @@ const MatchingCards = () => {
     async function onRightSwiped(cardIndex) {
         try{
             const card = cardList[cardIndex]
-            const res = await taskService.applyTask({
+            await taskService.applyTask({
                 taskId: card.id
             })
         } catch (e) {
@@ -78,7 +78,14 @@ const MatchingCards = () => {
     }
 
     async function onLeftSwiped(cardIndex) {
-
+        try{
+            const card = cardList[cardIndex]
+            await taskService.passTask({
+                taskId: card.id
+            })
+        } catch (e) {
+            console.log(e)
+        }
     }
     async function onRightPressed() {
         swiperRef.current.swipeRight()
