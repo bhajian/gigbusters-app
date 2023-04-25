@@ -59,7 +59,7 @@ export default function App() {
         return () => {
             subscription.remove()
         };
-    }, [])
+    }, [userStatus])
 
     async function checkAuthState() {
         try {
@@ -83,7 +83,7 @@ export default function App() {
                 setUserStatus('loggedOut')
             }
         } catch (err) {
-            console.error(err)
+            // console.error(err)
             setUserStatus('loggedOut')
         }
     }

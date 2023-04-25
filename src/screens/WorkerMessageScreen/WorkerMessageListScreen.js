@@ -44,8 +44,7 @@ export default function WorkerMessageListScreen() {
             headerLeft: () => (
                 <UserAvatar
                     size={30}
-                    active
-                    name={profileName}
+                    userName={profileName}
                     src={profileImage}
                 />
             ),
