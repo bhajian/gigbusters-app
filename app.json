@@ -1,33 +1,68 @@
 {
   "expo": {
-    "name": "fameorbit-app",
-    "slug": "fameorbit-app",
+    "name": "gigbusters",
+    "slug": "gigbusters",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "gigb",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/68d84fc6-dd45-405f-a8f2-db7b7e3d2958"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "config": {
+        "googleMapsApiKey": "AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s"
+      },
+      "supportsTablet": true,
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": [
+          "gigbusters"
+        ]
+      },
+      "bundleIdentifier": "com.orbitstellar.gigbusters"
     },
     "android": {
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s"
+        }
+      },
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.orbitstellar.gigbusters"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "68d84fc6-dd45-405f-a8f2-db7b7e3d2958"
+      }
+    },
+    "owner": "orbitstellar",
+    "runtimeVersion": "exposdk:47.0.0",
   }
 }
