@@ -15,14 +15,16 @@ import {TaskService} from "../../backend/TaskService";
 import {MaterialIcons} from "@expo/vector-icons";
 
 export default function WorkerMessageListScreen() {
-    const [profileName, setProfileName] = useState('')
-    const [profileImage, setProfileImage] = useState(null)
-    const [transactions, setTransactions] = useState([])
-    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
     const navigation = useNavigation()
-
     const profileService = new ProfileService()
     const taskService = new TaskService()
+    const profile = profileService.getProfile()
+
+    const [profileName, setProfileName] = useState(profile?.name)
+    const [profileImage, setProfileImage] = useState(profile?.mainPhotoUrl)
+    const [transactions, setTransactions] = useState([])
+    const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
+
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -43,7 +45,7 @@ export default function WorkerMessageListScreen() {
             ),
             headerLeft: () => (
                 <UserAvatar
-                    size={30}
+                    size={35}
                     userName={profileName}
                     src={profileImage}
                 />
@@ -51,35 +53,35 @@ export default function WorkerMessageListScreen() {
         })
     }, [navigation, profileName])
 
-    async function loadData() {
+    async function fetchData() {
         setDataBeingLoaded(true)
-        const profile = profileService.getProfile()
-        if(profile && profile.name){
-            setProfileName(profile.name)
-        }
-        if(profile && profile.photos){
-            const url = profile.mainPhotoUrl
-            setProfileImage(url)
-        }
         const transactionsObj = await taskService.fetchMyTransaction({
-            limit: 20,
+            limit: 2000,
             persona: 'WORKER'
         })
         setTransactions(transactionsObj)
         setDataBeingLoaded(false)
     }
 
+    async function loadData() {
+        setDataBeingLoaded(true)
+        const transactionsObj = taskService.getMyTransactions()
+        setTransactions(transactionsObj)
+        setDataBeingLoaded(false)
+    }
+
     async function onChatPressed(params) {
-        navigation.navigate('WorkerChatScreen', params)
+        navigation.navigate('WorkerChatScreen', {transactionId: params?.transaction?.id})
     }
 
     async function onProfilePressed(params) {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
+        params.uri = params.accountCode
+        navigation.navigate('ReviewableProfileScreen', {reviewable: params})
     }
 
     const onButtomSheetPressed = () => {
         bottomSheetModalRef.current.present()
-    };
+    }
 
     return (
         <SafeAreaView style={styles.container}>
@@ -99,6 +101,8 @@ export default function WorkerMessageListScreen() {
                                 />
                             )
                         }}
+                        onRefresh={fetchData}
+                        refreshing={dataBeingLoaded}
                         keyExtractor={(item) => item.transaction.id}
                     />
             }

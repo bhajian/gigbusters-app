@@ -17,10 +17,11 @@ import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 dayjs.extend(relativeTime)
 
-const AcceptRejectMessage = ({transaction, subject, onAcceptPressed, onRejectPressed}) => {
+const AcceptRejectTransaction = ({transaction, subject, onAcceptPressed, onRejectPressed}) => {
 
 
     const [status, setStatus] = useState(transaction?.transaction?.status)
+    const [type, setType] = useState(transaction?.transaction?.type)
     const { width } = useWindowDimensions()
 
     useEffect(() => {
@@ -32,20 +33,19 @@ const AcceptRejectMessage = ({transaction, subject, onAcceptPressed, onRejectPre
             style={[
                 styles.container,
                 {
-                    backgroundColor: (status === 'applied'? Colors.light.tint : Colors.light.grey),
+                    backgroundColor: ((type === 'transactionRequest' && status === 'transactionRequest')
+                        ? Colors.light.tint : Colors.light.grey),
                     alignSelf: "center",
                 },
             ]}
         >
             {
-                status === 'applied'?
+                (type === 'transactionRequest' && status === 'transactionRequest')?
                     <View>
-
+                        <Text style={styles.messageText}>{transaction?.customer?.name} requested to chat with you. </Text>
                         <Text style={styles.messageText}>Do you accept the request from </Text>
-                        <Text style={styles.workerName}>{transaction?.worker?.name} for
-                            {transaction?.task?.category}? </Text>
+                        <Text style={styles.workerName}>{transaction?.worker?.name}?</Text>
 
-                        <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
                         <View style={styles.decisionContainer}>
                             <TouchableOpacity style={styles.rejectButton} onPress={e=> onRejectPressed(transaction)}>
                                 <Feather name="x-circle" size={30} color="red"/>
@@ -57,13 +57,14 @@ const AcceptRejectMessage = ({transaction, subject, onAcceptPressed, onRejectPre
                         <Text style={styles.messageText}>{dayjs(transaction.createdAt).fromNow(true)}</Text>
                     </View>
                 :
-                <Text style={{color: 'black', }} >You have {(transaction?.transaction?.status === 'applicationAccepted'? 'accepted': 'rejected')} to chat with {transaction?.worker?.name}</Text>
+                <Text style={{color: 'black', }} >You have {(transaction?.transaction?.status === 'transactionRequestAccepted'? 'accepted': 'rejected')}
+                    to chat with {transaction?.customer?.name}.</Text>
             }
         </View>
     )
 }
 
-export default AcceptRejectMessage
+export default AcceptRejectTransaction
 
 const styles = StyleSheet.create({
     container: {

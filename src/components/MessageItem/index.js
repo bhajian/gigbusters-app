@@ -15,6 +15,7 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
                         backgroundColor={Colors.light.turquoise}
                         userName={profile.name}
                         src={profile.profilePhotoURL}
+                        fontSize={30}
                     />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>

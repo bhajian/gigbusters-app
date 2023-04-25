@@ -221,6 +221,18 @@ export class TaskService {
         return res
     }
 
+    async terminateTransaction(params) {
+        const path = `${taskPath}/${params.taskId}${rejectPath}`
+        const data = {
+            body: {
+                applicantId: params.applicantId,
+                transactionId: params.transactionId,
+            },
+        }
+        const res = await API.put(taskApiName, path, data)
+        return res
+    }
+
     async addPhoto(params) {
         const path = `${taskPath}/${params.taskId}${photoPath}`
         const data = {

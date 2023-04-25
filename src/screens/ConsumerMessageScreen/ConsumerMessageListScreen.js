@@ -26,13 +26,6 @@ export default function ConsumerMessageListScreen() {
     const taskService = new TaskService()
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
-        })
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
             tabBarIcon: ({color}) => (
@@ -51,6 +44,13 @@ export default function ConsumerMessageListScreen() {
             ),
         })
     }, [navigation, profileName])
+
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
+    }, [])
 
     async function fetchData() {
         setDataBeingLoaded(true)
@@ -71,10 +71,7 @@ export default function ConsumerMessageListScreen() {
             const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
-        const transactionsObj = taskService.getMyTransactions({
-            limit: 2000,
-            persona: 'CONSUMER'
-        })
+        const transactionsObj = taskService.getMyTransactions()
         setTransactions(transactionsObj)
         setDataBeingLoaded(false)
     }
@@ -115,7 +112,7 @@ export default function ConsumerMessageListScreen() {
                         }}
                         onRefresh={fetchData}
                         refreshing={dataBeingLoaded}
-                        keyExtractor={(item) => item.transaction.id}
+                        keyExtractor={(item) => item?.transaction?.id}
                     />
             }
             <ProfileSearchBottomSheet

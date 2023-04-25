@@ -14,20 +14,28 @@ import NewReviewScreen from "../screens/NewReviewScreen";
 import MoreInfoSubmissionScreen from "../screens/NewReviewScreen/MoreInfoSubmissionScreen";
 import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchReviewScreen";
 import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen";
+import {TaskService} from "../backend/TaskService";
 
 const Stack = createNativeStackNavigator()
 
 const RootRouter = props => {
     const profileService = new ProfileService()
-    const [accountType, setAccountType] = useState('CONSUMER')
+    const taskService = new TaskService()
+    const profile = profileService.getProfile()
+
+    const [accountType, setAccountType] = useState(profile.accountType)
 
     useEffect(() => {
-        getCurrentUserData().then(r => {})
-    }, []);
+        loadData().then(r => {})
+    }, [])
 
-    async function getCurrentUserData() {
-        const profile = profileService.getProfile()
-        setAccountType(profile.accountType)
+    async function loadData() {
+
+        await taskService.fetchMyTransaction({
+            limit: 2000,
+            persona: profile.accountType
+        })
+        // setAccountType(profile.accountType)
     }
     function updateAccountType(type) {
         setAccountType(type)

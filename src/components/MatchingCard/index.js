@@ -38,6 +38,8 @@ const MatchingCard = props => {
                     size={45}
                     active
                     src={profilePhotoURL}
+                    userName={name}
+                    fontSize={20}
                 />
                 <Text style={styles.contactName}>{name}</Text>
             </View>

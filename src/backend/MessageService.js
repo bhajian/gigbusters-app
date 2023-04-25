@@ -1,25 +1,31 @@
-import {API, Storage} from "aws-amplify";
+import {API, Auth, graphqlOperation} from "aws-amplify";
+import {listMessagesByTransactionId} from "../backend/graphql/queries";
+import {onCreateMessage} from "../backend/graphql/subscriptions";
 
-const transactionApiName = 'GigbusterApi'
-const transactionPath = '/profile'
 
 export class MessageService {
 
     constructor() {
 
     }
-    async fetchProfile(params) {
-
-        return null
+    subscribeToMessages(params) {
+        const subscription = API.graphql(
+            graphqlOperation(onCreateMessage, {
+                filter: { transactionId: { eq: params?.transactionId } },
+            })
+        ).subscribe({
+            next: params.next,
+            error: (err) => console.warn(err),
+        })
+        return subscription
     }
 
-    async listProfiles(params) {
-
-        return null
-    }
-
-    async createProfile(profileData) {
-
+    async listMessagesByTransaction(params) {
+        const messagesObj = await API.graphql(graphqlOperation(listMessagesByTransactionId, {
+            transactionId: params.transactionId,
+            sortDirection: params.sortDirection,
+        }))
+        return messagesObj?.data?.listMessagesByTransactionId?.items
     }
 
 }

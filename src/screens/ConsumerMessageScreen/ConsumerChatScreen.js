@@ -20,10 +20,11 @@ import {API, Auth, graphqlOperation} from "aws-amplify";
 import {listMessages, listMessagesByTransactionId} from "../../backend/graphql/queries";
 import {onCreateMessage} from "../../backend/graphql/subscriptions";
 import { useHeaderHeight } from "@react-navigation/elements"
-import AcceptRejectMessage from "../../components/AcceptRejectMessage";
+import AcceptRejectApplication from "../../components/AcceptRejectApplication/CustomerAcceptRejectApplication";
 import {TaskService} from "../../backend/TaskService";
 import Entypo from "react-native-vector-icons/Entypo";
 import OptionsBottomSheet from "./OptionsBottomSheet";
+import {MessageService} from "../../backend/MessageService";
 
 const ConsumerChatScreen = (props) => {
     const headerHeight = useHeaderHeight()
@@ -31,6 +32,7 @@ const ConsumerChatScreen = (props) => {
     const transactionProp = props?.route?.params
     const taskService = new TaskService()
     const tr = taskService.getTransaction(transactionProp.transactionId)
+    const messageService = new MessageService()
 
     const [name, setName] = useState(tr?.worker?.name)
     const [transaction, setTransaction] = useState(tr)
@@ -45,7 +47,6 @@ const ConsumerChatScreen = (props) => {
     }, [])
 
     useEffect(() => {
-        setEditable(transaction?.transaction?.status === 'applicationAccepted')
         const unsubscribe = navigation.addListener('focus', () => {
             loadData().then().catch(e => console.log(e))
         })
@@ -54,17 +55,13 @@ const ConsumerChatScreen = (props) => {
     }, [navigation])
 
     useEffect(() => {
-        const subscription = API.graphql(
-            graphqlOperation(onCreateMessage, {
-                filter: { transactionId: { eq: transactionProp.transactionId } },
-            })
-        ).subscribe({
+        setEditable(transaction?.transaction?.status === 'applicationAccepted')
+        const subscription = messageService.subscribeToMessages({
             next: ({ value }) => {
-                setMessages((m) => [value.data.onCreateMessage, ...m]);
+                setMessages((m) => [value?.data?.onCreateMessage, ...m]);
             },
-            error: (err) => console.warn(err),
+            transactionId: transactionProp?.transactionId
         })
-
         return () => {
             subscription.unsubscribe()
         }
@@ -74,11 +71,11 @@ const ConsumerChatScreen = (props) => {
         try{
             const currentUser = await Auth.currentAuthenticatedUser()
             setCurrentUserId(currentUser.attributes.sub)
-            const messagesObj = await API.graphql(graphqlOperation(listMessagesByTransactionId, {
+            const messagesObj = await messageService.listMessagesByTransaction({
                 transactionId: transactionProp.transactionId,
-                sortDirection: "DESC",
-            }))
-            setMessages(messagesObj?.data?.listMessagesByTransactionId?.items)
+                sortDirection: "DESC"
+            })
+            setMessages(messagesObj)
         } catch (e) {
             console.log(e)
         }
@@ -161,7 +158,7 @@ const ConsumerChatScreen = (props) => {
 
     const header = () => {
         return(<View style={styles.topContainer}>
-            <AcceptRejectMessage
+            <AcceptRejectApplication
                 transaction={transaction}
                 onAcceptPressed={onAcceptPressed}
                 onRejectPressed={onRejectPressed}

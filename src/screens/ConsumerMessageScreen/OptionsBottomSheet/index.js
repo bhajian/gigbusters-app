@@ -2,6 +2,7 @@ import React, {useCallback, useMemo, useState} from "react";
 import {Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather";
+import CustomButton from "../../../components/CustomButton";
 
 export default function OptionsBottomSheet({bottomSheetModalRef, handleSheetChanges}) {
 
@@ -64,12 +65,18 @@ export default function OptionsBottomSheet({bottomSheetModalRef, handleSheetChan
                         <Pressable onPress={handleClosePress}>
                             <Feather name="x" size={25} style={styles.closeButton}/>
                         </Pressable>
-                        <Text style={styles.title}>Search Filter</Text>
+                        <Text style={styles.title}>Options</Text>
                         <View></View>
                     </View>
                     <View style={styles.mainContainer}>
                         <View style={styles.buttonContainer}>
-
+                            <CustomButton
+                                text="Terminate the chat"
+                                // onPress={terminateChat}
+                                style={styles.regularButton}
+                                bgColor="#E3E8F1"
+                                fgColor="#FB1F1F"
+                            />
                         </View>
                     </View>
                 </BottomSheetView>
