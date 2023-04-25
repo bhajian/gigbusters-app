@@ -38,6 +38,8 @@ export default function TaskDetailScreen({route}) {
             const index = applicants.findIndex(x=> x.transaction?.workerId === params?.transaction?.workerId)
             let newApplicant = [...applicants]
             newApplicant[index].transaction.status = 'applicationAccepted'
+            const tr = taskService.getTransaction(newApplicant[index]?.transaction?.id)
+            tr.transaction.status = 'applicationAccepted'
             setApplicants([...newApplicant])
         } catch (e) {
             console.log(e)
@@ -55,6 +57,7 @@ export default function TaskDetailScreen({route}) {
             let newApplicant = [...applicants]
             newApplicant[index].transaction.status = 'rejected'
             setApplicants([...newApplicant])
+            taskService.deleteTransaction(newApplicant[index].transaction.id)
         } catch (e) {
             console.log(e)
         }
@@ -66,7 +69,7 @@ export default function TaskDetailScreen({route}) {
     }
 
     async function onChatPressed(params) {
-        navigation.navigate('ConsumerChatScreen', params)
+        navigation.navigate('ConsumerChatScreen', {transactionId: params?.transaction?.id})
     }
 
     useEffect(() => {
@@ -75,9 +78,8 @@ export default function TaskDetailScreen({route}) {
 
     async function loadData() {
         setDataBeingLoaded(true)
-        const applicantsObj = await taskService.listApplicants({
-            taskId: task?.id
-        })
+        const transactionsObj = taskService.getMyTransactions()
+        const applicantsObj = transactionsObj.filter(e => (e?.transaction?.taskId === task?.id))
         setApplicants(applicantsObj)
         setDataBeingLoaded(false)
     }

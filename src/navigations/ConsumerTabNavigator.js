@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import Fontisto from 'react-native-vector-icons/Fontisto';
@@ -13,6 +13,8 @@ import {MessageNavigation} from "./MessageNavigation";
 import ReviewScreen from "../screens/ReviewScreen";
 import NotificationScreen from "../screens/NotificationScreen/NotificationScreen";
 import RequestActivityScreen from "../screens/RequestActivityScreen";
+import UserAvatar from "@muhzi/react-native-user-avatar";
+import {ProfileService} from "../backend/ProfileService";
 
 const Tab = createBottomTabNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -42,6 +44,24 @@ const TopTabNavigator = () => {
 };
 
 const ConsumerTabNavigator = props => {
+    // const profileService = new ProfileService()
+    // const [profileName, setProfileName] = useState('')
+    // const [profileImage, setProfileImage] = useState(null)
+    //
+    // useEffect(() => {
+    //     loadData().then().catch(e => console.log(e))
+    // }, [])
+    //
+    // async function loadData() {
+    //     const profile = profileService.getProfile()
+    //     if(profile && profile.name){
+    //         setProfileName(profile.name)
+    //     }
+    //     if(profile && profile.photos){
+    //         const url = profile.mainPhotoUrl
+    //         setProfileImage(url)
+    //     }
+    // }
 
     return (
         <Tab.Navigator screenOptions={{}}>
@@ -55,6 +75,9 @@ const ConsumerTabNavigator = props => {
                     tabBarIcon: ({color}) => (
                         <Fontisto name="home" size={25} color={color}/>
                     ),
+                    headerLeftType: {
+                        marginHeight: 10
+                    }
                 }}
             />
             <Tab.Screen
@@ -119,4 +142,7 @@ const styles = StyleSheet.create({
         paddingEnd: 10,
         paddingTop: 10,
     },
+    avatar: {
+        marginLeft: 10,
+    }
 });

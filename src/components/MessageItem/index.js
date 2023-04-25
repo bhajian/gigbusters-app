@@ -2,14 +2,20 @@ import React from "react";
 import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Colors from "../../constants/Colors";
 import {AntDesign} from "@expo/vector-icons";
+import UserAvatar from "@muhzi/react-native-user-avatar";
 
 export default function MessageItem({transaction, accountType, onChatPressed, onProfilePressed}) {
-    const profile = (accountType === 'WORKER' ? transaction.customer : transaction.worker)
+    const profile = (accountType === 'WORKER' ? transaction?.customer : transaction?.worker)
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
                 <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(profile)}>
-                    <Image source={{uri: profile.profilePhotoURL}} style={styles.image} />
+                    <UserAvatar
+                        size={50}
+                        backgroundColor={Colors.light.turquoise}
+                        userName={profile.name}
+                        src={profile.profilePhotoURL}
+                    />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
                             {profile.name}
@@ -18,7 +24,7 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
                 </TouchableOpacity>
                 <View style={styles.rightContainer}>
                     <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
-                    <TouchableOpacity style={styles.rejectButton} onPress={e => onChatPressed(transaction)}>
+                    <TouchableOpacity style={styles.chatButton} onPress={e => onChatPressed(transaction)}>
                         <AntDesign name="wechat" size={30} color={Colors.light.tint}/>
                     </TouchableOpacity>
                 </View>
@@ -34,8 +40,8 @@ const styles = StyleSheet.create({
         borderRadius: 30,
     },
     taskImage: {
-        width: 50,
-        height: 50,
+        width: 70,
+        height: 70,
         borderRadius: 5,
     },
     container: {
@@ -102,11 +108,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    rejectButton: {
+    chatButton: {
         backgroundColor: 'white',
         borderRadius: 10,
         width: 40,
-        height: 50,
+        height: 65,
         marginHorizontal: 5,
         alignItems: 'center',
         justifyContent: 'center',

@@ -18,12 +18,12 @@ const Footer = ({ review }) => {
                 <Feather name={"message-circle"} size={20} color={Colors.dark.grey}/>
                 <Text style={styles.number}>review</Text>
             </View>
-            <View style={styles.iconContainer}>
-                <TouchableOpacity>
-                    <AntDesign name="hearto" size={20} color="grey" />
-                </TouchableOpacity>
-                <Text style={styles.number}> review </Text>
-            </View>
+            {/*<View style={styles.iconContainer}>*/}
+            {/*    <TouchableOpacity>*/}
+            {/*        <AntDesign name="hearto" size={20} color="grey" />*/}
+            {/*    </TouchableOpacity>*/}
+            {/*    <Text style={styles.number}> review </Text>*/}
+            {/*</View>*/}
             <View style={styles.iconContainer}>
                 <EvilIcons name={"share-google"} size={28} color={Colors.dark.grey}/>
             </View>

@@ -62,7 +62,7 @@ export default function WorkerMessageListScreen() {
             const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
-        const transactionsObj = await taskService.listMyTransaction({
+        const transactionsObj = await taskService.fetchMyTransaction({
             limit: 20,
             persona: 'WORKER'
         })

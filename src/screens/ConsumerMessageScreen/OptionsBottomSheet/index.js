@@ -5,7 +5,7 @@ import Feather from "react-native-vector-icons/Feather";
 
 export default function OptionsBottomSheet({bottomSheetModalRef, handleSheetChanges}) {
 
-    const snapPoints = useMemo(() => ['25%', '70%'], []);
+    const snapPoints = useMemo(() => ['30%', '30%'], []);
     const [enablePanDownToClose, setEnablePanDownToClose] = useState(true);
     const [enableDismissOnClose, setEnableDismissOnClose] = useState(true);
     const [locationMax, setLocationMax] = useState(50);

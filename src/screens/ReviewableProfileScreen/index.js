@@ -10,6 +10,7 @@ import Review from "../../components/Review";
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {ReviewService} from "../../backend/ReviewService";
+import loading2 from "../../../assets/images/loading2.gif";
 
 export default function ReviewableProfileScreen({navigation, route}) {
     let reviewableParam = route?.params?.reviewable
@@ -63,16 +64,19 @@ export default function ReviewableProfileScreen({navigation, route}) {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View >
-                <View style={styles.reviewsList}>
-                    <FlatList
-                        data={reviews}
-                        renderItem={({item}) => <Review review={item} />}
-                        keyExtractor={(item) => item.id}
-                        ListHeaderComponent={<ReviewableProfileTopContainer reviewable={reviewable} />}
-                    />
-                </View>
-            </View>
+            {
+                dataBeingLoaded ?
+                    <Image source={loading2} style={styles.loading2} />
+                    :
+                    <View style={styles.reviewsList}>
+                        <FlatList
+                            data={reviews}
+                            renderItem={({item}) => <Review review={item} />}
+                            keyExtractor={(item) => item.id}
+                            ListHeaderComponent={<ReviewableProfileTopContainer reviewable={reviewable} />}
+                        />
+                    </View>
+            }
         </SafeAreaView>
     );
 }
@@ -92,5 +96,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: 'lightgrey',
     },
-
+    loading2: {
+        width: 100,
+        height: 100,
+        top: 150,
+        alignSelf: 'center'
+    },
 });

@@ -9,12 +9,14 @@ import Lottie from 'lottie-react-native';
 import loadingAnim from './assets/animations/136078-feesbee-section-2.json'
 import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
 import {ProfileService} from "./src/backend/ProfileService";
+import {TaskService} from "./src/backend/TaskService";
 
 Amplify.configure(awsconfig);
 
 export default function App() {
     const [userStatus, setUserStatus] = useState('initializing')
     const profileService = new ProfileService()
+    const taskService = new TaskService()
     const appState = useRef(AppState.currentState)
 
     useEffect(() => {
@@ -69,6 +71,10 @@ export default function App() {
                 if (profile && profile.userId &&
                     (profile.accountType === 'CONSUMER' || profile.accountType === 'WORKER')
                     && profile.active) {
+                    await taskService.fetchMyTransaction({
+                        limit: 2000,
+                        persona: profile.accountType
+                    })
                     setUserStatus('loggedIn')
                 } else {
                     setUserStatus('profileCreation')

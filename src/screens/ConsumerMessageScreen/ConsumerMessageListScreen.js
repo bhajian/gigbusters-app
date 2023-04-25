@@ -2,14 +2,12 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
     View,
     Image,
-    ScrollView, Text, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, Pressable,
+    ScrollView, Text, StyleSheet, FlatList, SafeAreaView,
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native"
 import loading2 from "../../../assets/images/loading2.gif";
 import MessageItem from "../../components/MessageItem";
-import tipoffs from "../../../assets/data/tipoffs";
 import Colors from "../../constants/Colors";
-import Entypo from "react-native-vector-icons/Entypo";
 import {ProfileService} from "../../backend/ProfileService";
 import ProfileSearchBottomSheet from "./ProfileSearchBottomSheet";
 import UserAvatar from "@muhzi/react-native-user-avatar";
@@ -28,7 +26,10 @@ export default function ConsumerMessageListScreen() {
     const taskService = new TaskService()
 
     useEffect(() => {
-        loadData().then().catch(e => console.log(e))
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
     }, [])
 
     useEffect(() => {
@@ -42,15 +43,24 @@ export default function ConsumerMessageListScreen() {
             ),
             headerLeft: () => (
                 <UserAvatar
-                    size={30}
+                    size={35}
                     active
-                    name={profileName}
+                    userName={profileName}
                     src={profileImage}
                 />
             ),
         })
     }, [navigation, profileName])
 
+    async function fetchData() {
+        setDataBeingLoaded(true)
+        const transactionsObj = await taskService.fetchMyTransaction({
+            limit: 2000,
+            persona: 'CONSUMER'
+        })
+        setTransactions(transactionsObj)
+        setDataBeingLoaded(false)
+    }
     async function loadData() {
         setDataBeingLoaded(true)
         const profile = profileService.getProfile()
@@ -61,7 +71,7 @@ export default function ConsumerMessageListScreen() {
             const url = profile.mainPhotoUrl
             setProfileImage(url)
         }
-        const transactionsObj = await taskService.listMyTransaction({
+        const transactionsObj = taskService.getMyTransactions({
             limit: 2000,
             persona: 'CONSUMER'
         })
@@ -73,7 +83,7 @@ export default function ConsumerMessageListScreen() {
     }, [])
 
     async function onChatPressed(params) {
-        navigation.navigate('ConsumerChatScreen', params)
+        navigation.navigate('ConsumerChatScreen', {transactionId: params?.transaction?.id})
     }
 
     async function onProfilePressed(params) {
@@ -103,17 +113,11 @@ export default function ConsumerMessageListScreen() {
                                 />
                             )
                         }}
-                        onRefresh={loadData}
+                        onRefresh={fetchData}
                         refreshing={dataBeingLoaded}
                         keyExtractor={(item) => item.transaction.id}
                     />
             }
-            <TouchableOpacity
-                style={styles.button}
-                activeOpacity={0.8}
-                onPress={onNewMessagePress}>
-                <Entypo name="new-message" size={27} color="white"/>
-            </TouchableOpacity>
             <ProfileSearchBottomSheet
                 bottomSheetModalRef={bottomSheetModalRef}
                 handleSheetChanges={handleSheetChanges}

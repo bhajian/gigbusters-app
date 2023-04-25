@@ -23,21 +23,21 @@ import { useHeaderHeight } from "@react-navigation/elements"
 import AcceptRejectMessage from "../../components/AcceptRejectMessage";
 import {TaskService} from "../../backend/TaskService";
 import Entypo from "react-native-vector-icons/Entypo";
-import EditPageBottomSheet from "../RequestActivityScreen/TaskDetailScreen/EditPageBottomSheet";
 import OptionsBottomSheet from "./OptionsBottomSheet";
 
 const ConsumerChatScreen = (props) => {
     const headerHeight = useHeaderHeight()
-    const transaction = props?.route?.params
-    // console.log(transaction)
+    const navigation = useNavigation()
+    const transactionProp = props?.route?.params
+    const taskService = new TaskService()
+    const tr = taskService.getTransaction(transactionProp.transactionId)
 
-    const [name, setName] = useState(transaction?.worker?.name)
-    const [profilePhoto, setProfilePhoto] = useState(transaction?.worker?.profilePhotoURL)
+    const [name, setName] = useState(tr?.worker?.name)
+    const [transaction, setTransaction] = useState(tr)
+    const [profilePhoto, setProfilePhoto] = useState(tr?.worker?.profilePhotoURL)
     const [messages, setMessages] = useState([])
     const [currentUserId, setCurrentUserId] = useState('')
-    const taskService = new TaskService()
-
-    const navigation = useNavigation()
+    const [editable, setEditable] = useState(false)
 
     const editPageBottomSheetModalRef = useRef(null)
     const editPageHandlePresentPress = () => editPageBottomSheetModalRef.current.present()
@@ -45,12 +45,18 @@ const ConsumerChatScreen = (props) => {
     }, [])
 
     useEffect(() => {
+        setEditable(transaction?.transaction?.status === 'applicationAccepted')
         const unsubscribe = navigation.addListener('focus', () => {
             loadData().then().catch(e => console.log(e))
         })
+        return unsubscribe
+
+    }, [navigation])
+
+    useEffect(() => {
         const subscription = API.graphql(
             graphqlOperation(onCreateMessage, {
-                filter: { transactionId: { eq: transaction?.transaction?.id } },
+                filter: { transactionId: { eq: transactionProp.transactionId } },
             })
         ).subscribe({
             next: ({ value }) => {
@@ -71,7 +77,7 @@ const ConsumerChatScreen = (props) => {
             const messagesObj = await API.graphql(graphqlOperation(listMessages, {
                 filter: {
                     transactionId: {
-                        eq: transaction?.transaction?.id
+                        eq: transactionProp.transactionId
                     }
                 },
             }))
@@ -86,12 +92,13 @@ const ConsumerChatScreen = (props) => {
             await taskService.acceptApplication({
                 applicantId: params?.transaction?.workerId,
                 transactionId: params?.transaction?.id,
-                taskId: task?.id
+                taskId: params?.task?.id
             })
-            const index = applicants.findIndex(x=> x.transaction?.workerId === params?.transaction?.workerId)
-            let newApplicant = [...applicants]
-            newApplicant[index].transaction.status = 'applicationAccepted'
-            setApplicants([...newApplicant])
+            let clone = JSON.parse(JSON.stringify(transaction))
+            clone.transaction.status = 'applicationAccepted'
+            taskService.setTransaction(clone)
+            setTransaction(clone)
+            setEditable(true)
         } catch (e) {
             console.log(e)
         }
@@ -102,12 +109,13 @@ const ConsumerChatScreen = (props) => {
             await taskService.rejectApplication({
                 applicantId: params?.transaction?.workerId,
                 transactionId: params?.transaction?.id,
-                taskId: task?.id
+                taskId: params?.task?.id
             })
-            const index = applicants.findIndex(x=> x.transaction?.workerId === params?.transaction?.workerId)
-            let newApplicant = [...applicants]
-            newApplicant[index].transaction.status = 'rejected'
-            setApplicants([...newApplicant])
+            let clone = JSON.parse(JSON.stringify(transaction))
+            clone.transaction.status = 'rejected'
+            taskService.deleteTransaction(clone?.transaction?.id)
+            setTransaction(clone)
+            setEditable(false)
         } catch (e) {
             console.log(e)
         }
@@ -127,8 +135,8 @@ const ConsumerChatScreen = (props) => {
                         marginRight: 10,
                     }), styles.avatar]}>
                     <UserAvatar
-                        size={30}
-                        name={name}
+                        size={35}
+                        userName={name}
                         src={profilePhoto}
                     />
                     <Text style={styles.name}>{name}</Text>
@@ -179,14 +187,14 @@ const ConsumerChatScreen = (props) => {
                         message={item}
                     />}
                     style={styles.list}
-                    keyExtractor={(item) => item.transaction?.id}
+                    keyExtractor={(item) => item?.id}
                     inverted
                 />
                 <InputBox
                     transactionId={transaction?.transaction?.id}
                     fromUserId={transaction?.transaction?.customerId}
                     toUserId={transaction?.transaction?.workerId}
-                    disabled={false}
+                    disabled={!editable}
                 />
             </ImageBackground>
             <OptionsBottomSheet

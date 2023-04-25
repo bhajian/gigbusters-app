@@ -14,6 +14,7 @@ let myTaskLastEvaluatedKey = undefined
 let neighboursTasks = []
 let neighboursTaskLastEvaluatedKey = undefined
 let lastTimeMyTasksFetched = null
+let transactions = new Map()
 
 export class TaskService {
 
@@ -21,7 +22,22 @@ export class TaskService {
 
     }
 
-    async listMyTransaction(params) {
+    getTransaction(transactionId) {
+        return transactions?.get(transactionId)
+    }
+
+    setTransaction(transaction) {
+        transactions.set(transaction?.transaction?.id, transaction)
+    }
+
+    deleteTransaction(transactionId) {
+        transactions.delete(transactionId)
+    }
+    getMyTransactions() {
+        return [...transactions.values()]
+    }
+
+    async fetchMyTransaction(params) {
         const path = taskPath + transactionPath
         const data = {
             queryStringParameters: {
@@ -29,23 +45,24 @@ export class TaskService {
                 persona: params.persona
             }
         }
-        const transactions = await API.get(taskApiName, path, data)
-        for(let i=0; i<transactions.length; i++){
-            if(transactions[i].worker?.profilePhoto){
-                transactions[i].worker.profilePhotoURL =
-                    await this.getMainPhoto(transactions[i].worker?.profilePhoto)
+        const trnsactionArray = await API.get(taskApiName, path, data)
+        for(let i=0; i<trnsactionArray.length; i++){
+            if(trnsactionArray[i].worker?.profilePhoto){
+                trnsactionArray[i].worker.profilePhotoURL =
+                    await this.getMainPhoto(trnsactionArray[i].worker?.profilePhoto)
             }
-            if(transactions[i].customer?.profilePhoto){
-                transactions[i].customer.profilePhotoURL =
-                    await this.getMainPhoto(transactions[i].customer?.profilePhoto)
+            if(trnsactionArray[i].customer?.profilePhoto){
+                trnsactionArray[i].customer.profilePhotoURL =
+                    await this.getMainPhoto(trnsactionArray[i].customer?.profilePhoto)
             }
-            if(transactions[i].task?.photos && transactions[i].task?.photos[0]){
-                const photo = transactions[i].task?.photos[0]
-                transactions[i].task.photoURL =
+            if(trnsactionArray[i].task?.photos && trnsactionArray[i].task?.photos[0]){
+                const photo = trnsactionArray[i].task?.photos[0]
+                trnsactionArray[i].task.photoURL =
                     await this.getMainPhoto(photo)
             }
         }
-        return transactions
+        transactions = new Map(trnsactionArray.map(i => [i?.transaction?.id, i]))
+        return trnsactionArray
     }
 
     async listTasks(params) {
@@ -115,8 +132,6 @@ export class TaskService {
                     await this.getMainPhoto(photo)
             }
         }
-
-
         for(let i=0; i<applicants.length; i++){
             if(applicants[i].profilePhoto){
                 applicants[i].profilePhotoURL = await this.getMainPhoto(applicants[i].profilePhoto)
@@ -179,6 +194,9 @@ export class TaskService {
             },
         }
         const res = await API.put(taskApiName, path, data)
+        const t = transactions.get(params.transactionId)
+        t.transaction.status = 'applicationAccepted'
+        transactions.set(params.transactionId, t)
         return res
     }
     async rejectApplication(params) {

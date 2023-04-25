@@ -22,11 +22,7 @@ export default function NeighborhoodFeedScreen(props) {
     const taskService = new TaskService()
 
     useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
-        })
-        return unsubscribe
-
+        loadData().then().catch(e => console.log(e))
     }, [navigation])
 
     async function loadData() {

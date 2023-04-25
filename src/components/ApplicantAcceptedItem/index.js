@@ -6,6 +6,7 @@ import {AirbnbRating} from "react-native-ratings";
 import Feather from "react-native-vector-icons/Feather";
 import {AntDesign} from "@expo/vector-icons";
 import {useNavigation} from "@react-navigation/native";
+import UserAvatar from "@muhzi/react-native-user-avatar";
 
 export default function ApplicantAcceptedItem({item, onChatPressed, onProfilePressed}) {
 
@@ -13,7 +14,12 @@ export default function ApplicantAcceptedItem({item, onChatPressed, onProfilePre
         <View style={styles.container}>
             <View style={styles.mainContainer}>
                 <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(item)}>
-                    <Image source={{uri: item?.worker?.profilePhotoURL}} style={styles.image} />
+                    <UserAvatar
+                        size={55}
+                        active
+                        userName={item?.worker?.name}
+                        src={item?.worker?.profilePhotoURL}
+                    />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
                             {item?.worker?.name}
