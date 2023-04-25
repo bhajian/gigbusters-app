@@ -32,7 +32,7 @@ const TopTabNavigator = () => {
                 }}
             />
             <TopTab.Screen
-                name={'Worker Pool'}
+                name={'Worker Reviews'}
                 component={ReviewScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
@@ -44,24 +44,11 @@ const TopTabNavigator = () => {
 };
 
 const ConsumerTabNavigator = props => {
-    // const profileService = new ProfileService()
-    // const [profileName, setProfileName] = useState('')
-    // const [profileImage, setProfileImage] = useState(null)
-    //
-    // useEffect(() => {
-    //     loadData().then().catch(e => console.log(e))
-    // }, [])
-    //
-    // async function loadData() {
-    //     const profile = profileService.getProfile()
-    //     if(profile && profile.name){
-    //         setProfileName(profile.name)
-    //     }
-    //     if(profile && profile.photos){
-    //         const url = profile.mainPhotoUrl
-    //         setProfileImage(url)
-    //     }
-    // }
+    const profileService = new ProfileService()
+    const profile = profileService.getProfile()
+
+    const [profileName, setProfileName] = useState(profile.name)
+    const [profileImage, setProfileImage] = useState(profile.mainPhotoUrl)
 
     return (
         <Tab.Navigator screenOptions={{}}>
@@ -74,6 +61,14 @@ const ConsumerTabNavigator = props => {
                     headerShown: true,
                     tabBarIcon: ({color}) => (
                         <Fontisto name="home" size={25} color={color}/>
+                    ),
+                    headerLeft: () => (
+                        <UserAvatar
+                            size={35}
+                            active
+                            userName={profileName}
+                            src={profileImage}
+                        />
                     ),
                     headerLeftType: {
                         marginHeight: 10

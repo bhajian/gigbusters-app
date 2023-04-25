@@ -17,23 +17,24 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import * as ImagePicker from "expo-image-picker";
 import {Auth, Storage} from 'aws-amplify';
 import loading from '../../../../assets/images/loading2.gif'
-import CategorySelector from "../../../components/CategorySelector";
 import CategoryMultiSelector from "../../../components/CategoryMultiSelector";
 import CustomSettingRowSwitch from "../../../components/CustomSettingRowSwitch";
 
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
+    const profile = profileService.getProfile()
+    const navigation = useNavigation()
 
-    const [name, setName] = useState('')
-    const [accountNumber, setAccountNumber] = useState('')
-    const [email, setEmail] = useState('')
-    const [phone, setPhone] = useState('')
-    const [bio, setBio] = useState('')
-    const [image, setImage] = useState(null)
-    const [categories, setCategories] = useState([])
+    const [name, setName] = useState(profile?.name)
+    const [accountNumber, setAccountNumber] = useState(profile?.accountCode)
+    const [email, setEmail] = useState(profile?.email?.email)
+    const [phone, setPhone] = useState(profile?.phone?.phone)
+    const [bio, setBio] = useState(profile?.bio)
+    const [image, setImage] = useState(profile?.mainPhotoUrl)
+    const [categories, setCategories] = useState(profile?.interestedCategories)
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
-    const navigation = useNavigation()
+
 
     async function onSavePress() {
         try{
@@ -52,30 +53,7 @@ const EditProfileScreen = (props) => {
     }
 
     async function loadData() {
-        const profile = profileService.getProfile()
 
-        if(profile && profile.accountCode){
-            setAccountNumber(profile.accountCode)
-        }
-        if(profile && profile.name){
-            setName(profile.name)
-        }
-        if(profile && profile.bio){
-            setBio(profile.bio)
-        }
-        if(profile && profile.interestedCategories){
-            setCategories(profile.interestedCategories)
-        }
-        if(profile && profile.email && profile.email.email){
-            setEmail(profile.email.email)
-        }
-        if(profile && profile.phone && profile.phone.phone){
-            setPhone(profile.phone.phone)
-        }
-        if(profile && profile.photos){
-            const url = profile.mainPhotoUrl
-            setImage(url)
-        }
     }
 
     const onSettingPressed = () => {
@@ -182,9 +160,10 @@ const EditProfileScreen = (props) => {
             <View style={styles.topContainer} >
                 <UserAvatar
                     size={80}
-                    name={name}
+                    userName={name}
                     style={styles.avatar}
                     src={image}
+                    fontSize={50}
                 />
                 {
                     dataBeingSaved ?
@@ -268,9 +247,7 @@ const EditProfileScreen = (props) => {
                         selectedItems={categories}
                     />
                 </View>
-
             </View>
-
         </ScrollView>
     )
 };
@@ -293,6 +270,7 @@ const styles = StyleSheet.create({
     },
     categoriesContainer:{
         width: '100%',
+        marginLeft: 10,
         alignItems: 'center'
     },
     settingsContainer:{

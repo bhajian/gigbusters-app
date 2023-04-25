@@ -16,9 +16,7 @@ import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {useNavigation} from "@react-navigation/native";
-import {API, Auth, graphqlOperation} from "aws-amplify";
-import {listMessages, listMessagesByTransactionId} from "../../backend/graphql/queries";
-import {onCreateMessage} from "../../backend/graphql/subscriptions";
+import {Auth} from "aws-amplify";
 import { useHeaderHeight } from "@react-navigation/elements"
 import AcceptRejectApplication from "../../components/AcceptRejectApplication/CustomerAcceptRejectApplication";
 import {TaskService} from "../../backend/TaskService";
