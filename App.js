@@ -83,6 +83,7 @@ export default function App() {
                 setUserStatus('loggedOut')
             }
         } catch (err) {
+            console.error(err)
             setUserStatus('loggedOut')
         }
     }

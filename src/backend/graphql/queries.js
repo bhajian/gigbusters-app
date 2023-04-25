@@ -74,6 +74,41 @@ export const syncMessages = /* GraphQL */ `
     }
   }
 `;
+export const listMessagesByTransactionId = /* GraphQL */ `
+  query ListMessagesByTransactionId(
+    $transactionId: String!
+    $dateTime: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMessagesByTransactionId(
+      transactionId: $transactionId
+      dateTime: $dateTime
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        fromUserId
+        toUserId
+        message
+        dateTime
+        transactionId
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
 export const searchMessages = /* GraphQL */ `
   query SearchMessages(
     $filter: SearchableMessageFilterInput

@@ -17,7 +17,7 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {useNavigation} from "@react-navigation/native";
 import {API, Auth, graphqlOperation} from "aws-amplify";
-import {listMessages} from "../../backend/graphql/queries";
+import {listMessages, listMessagesByTransactionId} from "../../backend/graphql/queries";
 import {onCreateMessage} from "../../backend/graphql/subscriptions";
 import { useHeaderHeight } from "@react-navigation/elements"
 import AcceptRejectMessage from "../../components/AcceptRejectMessage";
@@ -74,14 +74,11 @@ const ConsumerChatScreen = (props) => {
         try{
             const currentUser = await Auth.currentAuthenticatedUser()
             setCurrentUserId(currentUser.attributes.sub)
-            const messagesObj = await API.graphql(graphqlOperation(listMessages, {
-                filter: {
-                    transactionId: {
-                        eq: transactionProp.transactionId
-                    }
-                },
+            const messagesObj = await API.graphql(graphqlOperation(listMessagesByTransactionId, {
+                transactionId: transactionProp.transactionId,
+                sortDirection: "DESC",
             }))
-            setMessages(messagesObj?.data?.listMessages?.items)
+            setMessages(messagesObj?.data?.listMessagesByTransactionId?.items)
         } catch (e) {
             console.log(e)
         }

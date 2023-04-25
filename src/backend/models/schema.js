@@ -70,6 +70,21 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "searchable",
+                    "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byTransaction",
+                        "queryField": "listMessagesByTransactionId",
+                        "fields": [
+                            "transactionId",
+                            "dateTime"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
