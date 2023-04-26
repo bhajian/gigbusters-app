@@ -83,11 +83,6 @@ export default function ConsumerMessageListScreen() {
         navigation.navigate('ConsumerChatScreen', {transactionId: params?.transaction?.id})
     }
 
-    async function onProfilePressed(params) {
-        params.uri = params.accountCode
-        navigation.navigate('ReviewableProfileScreen', {reviewable: params})
-    }
-
     const onNewMessagePress = () => {
         bottomSheetModalRef.current.present()
     };
@@ -106,7 +101,6 @@ export default function ConsumerMessageListScreen() {
                                     transaction={item}
                                     accountType={"CONSUMER"}
                                     onChatPressed={onChatPressed}
-                                    onProfilePressed={onProfilePressed}
                                 />
                             )
                         }}

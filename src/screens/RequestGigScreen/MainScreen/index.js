@@ -23,6 +23,7 @@ import GigRequestBottomSheet from "../RequestGigBottomSheet";
 import Fontisto from "react-native-vector-icons/Fontisto";
 
 export default function RequestGigScreen(props) {
+    const params = props?.route?.params
 
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState('')
@@ -56,7 +57,9 @@ export default function RequestGigScreen(props) {
     }
 
     useEffect(() => {
-        bottomSheetModalRef.current.present()
+        if(params?.operation === 'create'){
+            bottomSheetModalRef.current.present()
+        }
         loadData().catch((e) => console.log(e))
     }, [])
 
@@ -115,30 +118,43 @@ export default function RequestGigScreen(props) {
     async function submitRequest() {
         setDataBeingSaved(true)
         try{
-            const response = await taskService.createTask({
-                category: category,
-                description: description,
-                distance: distance,
-                price: price,
-                priceUnit: 'hr',
-                location: {
-                    latitude: location.latitude,
-                    longitude: location.longitude
-                },
-                country: 'Canada', // FIX ME
-                stateProvince: 'ON', // FIX ME
-                city: location.locationName,
-                validTillDateTime: '2023-03-31' // FIX ME
-            })
-            const user = await Auth.currentCredentials()
-            images.map(async(e)=> {
-                await taskService.addPhoto({
-                    type: 'main',
-                    taskId: response.id,
-                    identityId: user.identityId,
-                    photo: e
+            if(params?.operation === 'create') {
+                const response = await taskService.createTask({
+                    category: category,
+                    description: description,
+                    distance: distance,
+                    price: price,
+                    priceUnit: 'hr',
+                    location: {
+                        latitude: location.latitude,
+                        longitude: location.longitude
+                    },
+                    country: 'Canada', // FIX ME
+                    stateProvince: 'ON', // FIX ME
+                    city: location.locationName,
+                    validTillDateTime: '2023-03-31', // FIX ME
+                    images: images
                 })
-            })
+            }
+            if(params?.operation === 'edit') {
+                await taskService.updateTask({
+                    id: params.id,
+                    category: category,
+                    description: description,
+                    distance: distance,
+                    price: price,
+                    priceUnit: 'hr',
+                    location: {
+                        latitude: location.latitude,
+                        longitude: location.longitude
+                    },
+                    country: 'Canada', // FIX ME
+                    stateProvince: 'ON', // FIX ME
+                    city: location.locationName,
+                    validTillDateTime: '2023-03-31', // FIX ME
+                    images: images
+                })
+            }
             // Generate the signedurl and set that in the task object
             navigation.navigate('RequestCompletedScreen')
         } catch (e) {

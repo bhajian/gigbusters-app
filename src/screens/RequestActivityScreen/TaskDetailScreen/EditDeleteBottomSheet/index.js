@@ -1,5 +1,5 @@
 import React, {useCallback, useMemo, useState} from "react";
-import {Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
+import {Alert, Button, Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather";
 import CustomButton from "../../../../components/CustomButton";
@@ -46,13 +46,31 @@ export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetC
     )
 
     async function onDeleteTaskPressed() {
-        try{
-            await taskService.deleteTask({taskId: task.id})
-            navigation.goBack()
-        } catch (e) {
-            console.log(e)
-        }
+        Alert.alert('Do you want to delete a task?', 'You are about to delete a task,' +
+            ' this cannot be undone, and all of the related messages and applicants will be removed.', [
+            {
+                text: 'Cancel',
+                onPress: () => {},
+                style: 'cancel',
+            },
+            {text: 'OK', onPress: async () => {
+                    try {
+                        await taskService.deleteTask({taskId: task.id})
+                        taskService.deleteTaskById(task.id)
+                        navigation.goBack()
+                    } catch (e) {
+                        console.log(e)
+                    }
+                }},
+        ])
         bottomSheetModalRef.current?.close()
+    }
+
+    async function onEditTaskPressed() {
+        navigation.navigate('RequestGigScreen', {
+            operation: 'edit',
+            task: task
+        })
     }
 
     return (
@@ -80,7 +98,7 @@ export default function EditDeleteBottomSheet({bottomSheetModalRef, handleSheetC
                         <View style={styles.buttonContainer}>
                             <CustomButton
                                 text="Edit"
-                                // onPress={onSwitchProfilePressed}
+                                onPress={onEditTaskPressed}
                                 style={styles.regularButton}
                                 bgColor="#E3E8F1"
                                 fgColor="#000000"

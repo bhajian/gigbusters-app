@@ -10,10 +10,11 @@ Location.installWebGeolocationPolyfill()
 const LocationSelectorScreen = ({route, navigation}) => {
     const {onGoBack} = (route && route.params ? route.params : null)
 
+
     return (
         <View style={styles.container}>
             <GooglePlacesAutocomplete
-                placeholder='Search Locations ..'
+                placeholder='Search Your City ..'
                 query={{
                     key: 'AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s',
                     language: 'en',
@@ -21,8 +22,8 @@ const LocationSelectorScreen = ({route, navigation}) => {
                 }}
                 GooglePlacesDetailsQuery={{ fields: 'geometry', }}
                 fetchDetails={true}
-                currentLocation={true}
-                currentLocationLabel='Current location'
+                currentLocation={false}
+                // currentLocationLabel='Current location'
                 onPress={(data, details ) => {
                     if(onGoBack){
                         onGoBack({
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
     },
     textInput: {
         backgroundColor: Colors.light.grey,
+        fontWeight: '600',
         borderRadius: 10,
         height: 40
     },

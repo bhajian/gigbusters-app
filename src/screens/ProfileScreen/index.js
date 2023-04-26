@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, StyleSheet, ScrollView} from "react-native";
+import {View, Text, StyleSheet, ScrollView, Image} from "react-native";
 import {API, Auth} from "aws-amplify";
 import CustomButton from "../../components/CustomButton";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
@@ -7,6 +7,8 @@ import Colors from "../../constants/Colors";
 import UserAvatar from 'react-native-user-avatar';
 import {LocationSelector} from "../../components/LocationSearch";
 import {ProfileService} from "../../backend/ProfileService";
+import workerImage from '../../../assets/images/worker.png'
+import customerImage from '../../../assets/images/customer.png'
 
 const profileService = new ProfileService()
 const ProfileScreen = (props) => {
@@ -103,8 +105,8 @@ const ProfileScreen = (props) => {
     };
 
     return (
-        <ScrollView style={styles.container} >
-            <View style={styles.topContainer} >
+        <ScrollView style={styles.container}>
+            <View style={styles.topContainer}>
                 <UserAvatar
                     size={80}
                     name={name}
@@ -122,6 +124,18 @@ const ProfileScreen = (props) => {
                 <Text style={styles.accountNumber} >
                     ID: {accountCode}
                 </Text>
+                <View style={styles.roleContainer}>
+                    <Text style={styles.roleText}>
+                        Role:
+                    </Text>
+                    <Image
+                        source={accountType === 'CONSUMER' ?
+                            customerImage : workerImage} style={styles.roleImage}
+                    />
+                    <Text style={styles.roleText}>
+                        {accountType === 'CONSUMER'? 'Customer' : 'Worker'}
+                    </Text>
+                </View>
             </View>
 
             <View style={styles.bottomContainer}>
@@ -145,10 +159,9 @@ const ProfileScreen = (props) => {
                     bgColor="#E3E8F1"
                     fgColor="#000000"
                 />
-
                 <CustomButton
                     text={'Switch to ' +
-                        (accountType === 'CONSUMER'? 'Worker': 'Consumer')+ ' Account'}
+                        (accountType === 'CONSUMER'? 'Worker': 'Customer')+ ' Account'}
                     onPress={onSwitchProfilePressed}
                     style={styles.regularButton}
                     bgColor="#E3E8F1"
@@ -240,4 +253,16 @@ const styles = StyleSheet.create({
         margin: 5,
         color: Colors.light.tint,
     },
+    roleImage: {
+        height: 40,
+        width: 40,
+        borderRadius: 30
+    },
+    roleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    roleText: {
+        marginHorizontal: 5
+    }
 });

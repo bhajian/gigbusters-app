@@ -1,4 +1,4 @@
-import {API, Storage} from "aws-amplify"
+import {API, Auth, Storage} from "aws-amplify"
 const taskApiName = 'GigbusterApi'
 const taskPath = '/task'
 const applicantPath = '/applicant'
@@ -10,12 +10,12 @@ const acceptPath = '/accept'
 const rejectPath = '/reject'
 const photoPath = '/photo'
 const queryPath = '/query'
-let myTasks = []
 let myTaskLastEvaluatedKey = undefined
-let neighboursTasks = []
 let neighboursTaskLastEvaluatedKey = undefined
 let lastTimeMyTasksFetched = null
 let transactions = new Map()
+let myTasks = new Map()
+let neighboursTasks = []
 
 export class TaskService {
 
@@ -68,13 +68,10 @@ export class TaskService {
 
     async listTasks(params) {
         const path = taskPath
-        // if(myTaskLastEvaluatedKey)
-        //     params.lastEvaluatedKey = myTaskLastEvaluatedKey
         const data = {
             queryStringParameters: params
         }
         const response = await API.get(taskApiName, path, data)
-        // myTaskLastEvaluatedKey = response?.LastEvaluatedKey?.id
         const tasks = response?.Items
         for(let i=0; i<tasks.length; i++){
             if(tasks[i].photos){
@@ -88,15 +85,11 @@ export class TaskService {
 
     async listNeighborsTasks(params) {
         const path = taskPath + queryPath
-
-        // params.lastEvaluatedKey = neighboursTaskLastEvaluatedKey
         const data = {
             queryStringParameters: params
         }
         const response = await API.get(taskApiName, path, data)
-
         neighboursTasks = response?.Items
-        // neighboursTaskLastEvaluatedKey = response?.LastEvaluatedKey?.id
         for(let i=0; i< neighboursTasks.length; i++){
             if(neighboursTasks[i].photos) {
                 const mainPhoto = neighboursTasks[i].photos
@@ -142,13 +135,32 @@ export class TaskService {
     }
 
     async createTask(params) {
+        const images = params.images
+        delete params.images
         const path = taskPath
         const data = {
             body: params,
         }
-        const res = await API.post(taskApiName, path, data)
-        myTasks.push(res)
-        return res
+        const task = await API.post(taskApiName, path, data)
+
+        task.photos=[]
+        const user = await Auth.currentCredentials()
+        for(let x=0; x<images.length; x++){
+            const photo = await this.addPhoto({
+                type: 'main',
+                taskId: task.id,
+                identityId: user.identityId,
+                photo: images[x]
+            })
+            task.photos.push(photo)
+        }
+
+        if(task?.photos?.length > 0){
+            task.mainPhotoURL = await this.getMainPhoto(task?.photos[0])
+        }
+
+        this.setTask(task)
+        return task
     }
 
     async updateTask(params) {
@@ -164,8 +176,8 @@ export class TaskService {
         const path = `${taskPath}/${params.taskId}`
         const data = {
         }
-        const reviews = await API.del(taskApiName, path, data)
-        return reviews
+        const res = await API.del(taskApiName, path, data)
+        this.deleteTaskById(params.taskId)
     }
 
     async applyTask(params) {
@@ -286,26 +298,28 @@ export class TaskService {
     }
 
     async fetchMyTasks(params) {
-        const tasks = await this.listTasks(params)
-        // myTasks = [...tasks, ...myTasks]
-        lastTimeMyTasksFetched = new Date()
-        return tasks
+        const tasksArray = await this.listTasks(params)
+        myTasks = new Map(tasksArray.map(i => [i?.id, i]))
+        return tasksArray
+    }
+
+    getTaskById(taskId) {
+        return myTasks?.get(taskId)
+    }
+
+    setTask(task) {
+        myTasks.set(task?.transaction?.id, task)
+    }
+
+    deleteTaskById(taskId) {
+        myTasks.delete(taskId)
+    }
+    getMyTasks() {
+        return [...myTasks.values()]
     }
 
     async fetchNeighboursTasks(params) {
         neighboursTasks = await this.listNeighborsTasks(params)
-        return neighboursTasks
-    }
-
-    async getMyTasks() {
-        return myTasks
-    }
-
-    async clearMyTasks() {
-        myTasks = []
-    }
-
-    getNeighboursTasks() {
         return neighboursTasks
     }
 

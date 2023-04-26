@@ -7,7 +7,6 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 export default function PhotoContainer({user}) {
     return (
         <View style={styles.container}>
-
             <UserAvatar
                 size={40}
                 active

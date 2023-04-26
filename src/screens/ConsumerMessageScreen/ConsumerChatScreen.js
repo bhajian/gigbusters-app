@@ -49,7 +49,6 @@ const ConsumerChatScreen = (props) => {
             loadData().then().catch(e => console.log(e))
         })
         return unsubscribe
-
     }, [navigation])
 
     useEffect(() => {
@@ -113,6 +112,11 @@ const ConsumerChatScreen = (props) => {
         }
     }
 
+    async function onProfilePressed(params) {
+        params.uri = tr?.worker?.accountCode
+        navigation.navigate('ReviewableProfileScreen', {reviewable: params})
+    }
+
     useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
@@ -121,7 +125,7 @@ const ConsumerChatScreen = (props) => {
             ),
             headerTitle: () => (
                 <Pressable
-                    // onPress={handlePresentPress}
+                    onPress={onProfilePressed}
                     style={[({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,

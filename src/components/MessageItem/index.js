@@ -8,8 +8,8 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
     const profile = (accountType === 'WORKER' ? transaction?.customer : transaction?.worker)
     return (
         <View style={styles.container}>
-            <View style={styles.mainContainer}>
-                <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(profile)}>
+            <TouchableOpacity style={styles.mainContainer} onPress={e => onChatPressed(transaction)}>
+                <View style={styles.leftContainer}>
                     <UserAvatar
                         size={50}
                         backgroundColor={Colors.light.turquoise}
@@ -22,14 +22,14 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
                             {profile.name}
                         </Text>
                     </View>
-                </TouchableOpacity>
+                </View>
                 <View style={styles.rightContainer}>
                     <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
-                    <TouchableOpacity style={styles.chatButton} onPress={e => onChatPressed(transaction)}>
+                    <View style={styles.chatButton} >
                         <AntDesign name="wechat" size={30} color={Colors.light.tint}/>
-                    </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
+            </TouchableOpacity>
         </View>
     );
 }

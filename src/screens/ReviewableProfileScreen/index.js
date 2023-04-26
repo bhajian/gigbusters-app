@@ -23,7 +23,6 @@ export default function ReviewableProfileScreen({navigation, route}) {
 
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
-
     }, [])
 
     async function loadData() {

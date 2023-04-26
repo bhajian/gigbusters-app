@@ -30,12 +30,13 @@ const RootRouter = props => {
     }, [])
 
     async function loadData() {
-
         await taskService.fetchMyTransaction({
             limit: 2000,
             persona: profile.accountType
         })
-        // setAccountType(profile.accountType)
+        await taskService.fetchMyTasks({
+            limit: 500,
+        })
     }
     function updateAccountType(type) {
         setAccountType(type)
@@ -73,7 +74,7 @@ const RootRouter = props => {
                     )}
                 </Stack.Screen>
             )}
-            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
                 <Stack.Screen
                     name={'LocationSelectorScreen'}
                     component={LocationSelectorScreen}
@@ -83,7 +84,7 @@ const RootRouter = props => {
                     }}
                 />
             )}
-            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
                 <Stack.Screen
                     name={'SearchCategory'}
                     component={SearchCategory}
@@ -111,7 +112,7 @@ const RootRouter = props => {
                     }}
                 />
             )}
-            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+            {accountType === 'CONSUMER' && (
                 <Stack.Screen
                     name={'RequestGigScreen'}
                     component={RequestGigScreen}
@@ -121,7 +122,7 @@ const RootRouter = props => {
                     }}
                 />
             )}
-            {accountType === 'WORKER' || accountType === 'CONSUMER' && (
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
                 <Stack.Screen
                     name={'RequestCompletedScreen'}
                     component={RequestCompletedScreen}
@@ -139,34 +140,42 @@ const RootRouter = props => {
                     }}
                 />
             )}
-            <Stack.Screen
-                name={'TaskDetailScreen'}
-                component={TaskDetailScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'NewReviewScreen'}
-                component={NewReviewScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'MoreInfoSubmissionScreen'}
-                component={MoreInfoSubmissionScreen}
-                options={{
-                    headerShown: true,
-                }}
-            />
-            <Stack.Screen
-                name={'AccountSearchReviewScreen'}
-                component={AccountSearchReviewScreen}
-                options={{
-                    headerShown: false,
-                }}
-            />
+            {accountType === 'CONSUMER' && (
+                <Stack.Screen
+                    name={'TaskDetailScreen'}
+                    component={TaskDetailScreen}
+                    options={{
+                        headerShown: true,
+                    }}
+                />
+            )}
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
+                <Stack.Screen
+                    name={'NewReviewScreen'}
+                    component={NewReviewScreen}
+                    options={{
+                        headerShown: true,
+                    }}
+                />
+            )}
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
+                <Stack.Screen
+                    name={'MoreInfoSubmissionScreen'}
+                    component={MoreInfoSubmissionScreen}
+                    options={{
+                        headerShown: true,
+                    }}
+                />
+            )}
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
+                <Stack.Screen
+                    name={'AccountSearchReviewScreen'}
+                    component={AccountSearchReviewScreen}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            )}
         </Stack.Navigator>
 
     );
