@@ -126,6 +126,11 @@ const WorkerChatScreen = (props) => {
         </View>)
     }
 
+    async function onProfilePressed(params) {
+        params.uri = tr?.customer?.accountCode
+        navigation.navigate('ReviewableProfileScreen', {reviewable: params})
+    }
+
     useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
@@ -134,14 +139,16 @@ const WorkerChatScreen = (props) => {
             ),
             headerTitle: () => (
                 <Pressable
-                    // onPress={handlePresentPress}
+                    onPress={onProfilePressed}
                     style={[({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,
                     }), styles.avatar]}>
                     <UserAvatar
-                        size={30}
-                        name={name}
+                        size={35}
+                        fontSize={20}
+                        backgroundColor={Colors.light.turquoise}
+                        userName={name}
                         src={profilePhoto}
                     />
                     <Text style={styles.name}>{name}</Text>

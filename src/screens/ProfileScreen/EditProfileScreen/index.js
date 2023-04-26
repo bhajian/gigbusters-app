@@ -234,13 +234,6 @@ const EditProfileScreen = (props) => {
                     iconCategory="FontAwesome5"
                     iconName="question-circle"
                 />
-                <CustomSettingRowSwitch
-                    // toggleSwitch={setNotifications}
-                    name="Enable Worker Account"
-                    // isEnabled={notifications}
-                    iconCategory="MaterialIcons"
-                    iconName="notifications-active"
-                />
                 <View style={styles.categoriesContainer}>
                     <CategoryMultiSelector
                         onSelectionChanged={onCategoriesChanged}

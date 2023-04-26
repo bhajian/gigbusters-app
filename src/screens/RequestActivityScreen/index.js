@@ -46,7 +46,7 @@ export default function RequestActivityScreen({route}) {
             loadData().then().catch(e => console.log(e))
         })
         return unsubscribe
-    }, [])
+    }, [navigation])
 
     async function loadData() {
         setDataBeingLoaded(true)
