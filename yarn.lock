@@ -8162,11 +8162,6 @@ react-native-codegen@^0.70.6:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-react-native-contacts@^7.0.5:
-  version "7.0.5"
-  resolved "https://registry.npmjs.org/react-native-contacts/-/react-native-contacts-7.0.5.tgz"
-  integrity sha512-RsWf5udhL/wpnBVu/oKVoIzogKcd7IwnxvNK48M4abICGtHxxv+te7hi4q04QjClytIsa5SylpJC2VsnpFDS2A==
-
 react-native-country-flag@^1.1.9:
   version "1.1.9"
   resolved "https://registry.npmjs.org/react-native-country-flag/-/react-native-country-flag-1.1.9.tgz"
