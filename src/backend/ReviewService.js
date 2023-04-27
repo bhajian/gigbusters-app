@@ -111,7 +111,7 @@ export class ReviewService {
             await Storage.put(key, blob, {
                 bucket: params.bucket,
                 level: 'protected',
-                contentType: blob.type,
+                contentType: blob?.type,
                 progressCallback: progress => {
                 }
             })

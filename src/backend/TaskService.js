@@ -47,17 +47,17 @@ export class TaskService {
             }
         }
         const trnsactionArray = await API.get(taskApiName, path, data)
-        for(let i=0; i<trnsactionArray.length; i++){
-            if(trnsactionArray[i].worker?.profilePhoto){
+        for(let i=0; i<trnsactionArray?.length; i++){
+            if(trnsactionArray[i]?.worker?.profilePhoto){
                 trnsactionArray[i].worker.profilePhotoURL =
-                    await this.getMainPhoto(trnsactionArray[i].worker?.profilePhoto)
+                    await this.getMainPhoto(trnsactionArray[i]?.worker?.profilePhoto)
             }
-            if(trnsactionArray[i].customer?.profilePhoto){
+            if(trnsactionArray[i]?.customer?.profilePhoto){
                 trnsactionArray[i].customer.profilePhotoURL =
-                    await this.getMainPhoto(trnsactionArray[i].customer?.profilePhoto)
+                    await this.getMainPhoto(trnsactionArray[i]?.customer?.profilePhoto)
             }
-            if(trnsactionArray[i].task?.photos && trnsactionArray[i].task?.photos[0]){
-                const photo = trnsactionArray[i].task?.photos[0]
+            if(trnsactionArray[i]?.task?.photos && trnsactionArray[i]?.task?.photos[0]){
+                const photo = trnsactionArray[i]?.task?.photos[0]
                 trnsactionArray[i].task.photoURL =
                     await this.getMainPhoto(photo)
             }
@@ -73,10 +73,10 @@ export class TaskService {
         }
         const response = await API.get(taskApiName, path, data)
         const tasksArray = response?.Items
-        for(let i=0; i<tasksArray.length; i++){
-            if(tasksArray[i].photos){
+        for(let i=0; i<tasksArray?.length; i++){
+            if(tasksArray[i]?.photos){
                 const mainPhoto = tasksArray[i].photos
-                    .filter((item) => item.type === 'main')
+                    .filter((item) => item?.type === 'main')
                 tasksArray[i].mainPhotoURL = await this.getMainPhoto(mainPhoto[0])
             }
         }
@@ -91,16 +91,16 @@ export class TaskService {
         }
         const response = await API.get(taskApiName, path, data)
         neighboursTasks = response?.Items
-        for(let i=0; i< neighboursTasks.length; i++){
+        for(let i=0; i< neighboursTasks?.length; i++){
             if(neighboursTasks[i].photos) {
-                const mainPhoto = neighboursTasks[i].photos
-                    .filter((item) => item.type === 'main')
+                const mainPhoto = neighboursTasks[i]?.photos
+                    .filter((item) => item?.type === 'main')
                 neighboursTasks[i].mainPhotoURL =
                     await this.getMainPhoto(mainPhoto[0])
             }
-            if(neighboursTasks[i].profilePhoto){
+            if(neighboursTasks[i]?.profilePhoto){
                 neighboursTasks[i].profilePhotoURL =
-                    await this.getMainPhoto(neighboursTasks[i].profilePhoto)
+                    await this.getMainPhoto(neighboursTasks[i]?.profilePhoto)
             }
         }
         return neighboursTasks
@@ -254,14 +254,13 @@ export class TaskService {
     }
 
     async terminateTransaction(params) {
-        const path = `${taskPath}/${params.taskId}${rejectPath}`
+        const path = `${taskPath}${transactionPath}/${params.transactionId}`
         const data = {
             body: {
-                applicantId: params.applicantId,
-                transactionId: params.transactionId,
             },
         }
-        const res = await API.put(taskApiName, path, data)
+        const res = await API.del(taskApiName, path, data)
+        transactions.delete(params.transactionId)
         return res
     }
 
@@ -297,7 +296,7 @@ export class TaskService {
 
     async getMainPhoto(params) {
         try {
-            if (params) {
+            if (params && params.key && params.bucket) {
                 const key = params.key
                 const bucket = params.bucket
                 const identityId = params.identityId

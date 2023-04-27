@@ -95,6 +95,19 @@ const ConsumerChatScreen = (props) => {
         }
     }
 
+
+    async function terminateChat(params) {
+        try{
+            await taskService.terminateTransaction({
+                transactionId: params?.transaction?.id,
+            })
+            taskService.deleteTransaction(params?.transaction?.id)
+            setEditable(false)
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
+        }
+    }
     async function onRejectPressed(params) {
         try{
             await taskService.rejectApplication({
@@ -198,6 +211,8 @@ const ConsumerChatScreen = (props) => {
             <OptionsBottomSheet
                 bottomSheetModalRef={editPageBottomSheetModalRef}
                 handleSheetChanges={editPageHandleSheetChanges}
+                transaction={transaction}
+                terminateChat={terminateChat}
             />
         </KeyboardAvoidingView>
     )

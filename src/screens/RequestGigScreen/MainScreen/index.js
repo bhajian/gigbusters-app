@@ -53,7 +53,7 @@ export default function RequestGigScreen(props) {
             []
     ))
     const [photos, setPhotos] = useState((operation === 'edit' ?
-            [params?.task?.photos] :
+            params?.task?.photos :
             []
     ))
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
