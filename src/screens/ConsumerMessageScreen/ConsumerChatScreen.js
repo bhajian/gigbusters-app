@@ -26,6 +26,7 @@ import {MessageService} from "../../backend/MessageService";
 
 const ConsumerChatScreen = (props) => {
     const headerHeight = useHeaderHeight()
+
     const navigation = useNavigation()
     const transactionProp = props?.route?.params
     const taskService = new TaskService()

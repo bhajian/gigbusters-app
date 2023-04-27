@@ -15,16 +15,17 @@ import {ProfileService} from "../../../backend/ProfileService";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "../../../constants/Colors";
 import ImageList from "../../../components/ImageList";
-import Entypo from "react-native-vector-icons/Entypo";
 import {TaskService} from "../../../backend/TaskService";
 import loading from "../../../../assets/images/loading2.gif";
 import GigRequestBottomSheet from "../RequestGigBottomSheet";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import {useHeaderHeight} from "@react-navigation/elements";
 
 export default function RequestGigScreen(props) {
     const params = props?.route?.params
     const operation = (params?.operation ? params?.operation : 'create')
 
+    const headerHeight = useHeaderHeight()
     const [isKeyboardVisible, setKeyboardVisible] = useState(false)
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState((operation === 'edit' ?
@@ -210,7 +211,7 @@ export default function RequestGigScreen(props) {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 155}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 90 : headerHeight + 90}
             style={styles.container}
         >
             <ScrollView keyboardShouldPersistTaps="always">
