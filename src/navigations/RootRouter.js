@@ -15,6 +15,7 @@ import MoreInfoSubmissionScreen from "../screens/NewReviewScreen/MoreInfoSubmiss
 import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchReviewScreen";
 import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen";
 import {TaskService} from "../backend/TaskService";
+import Initializing from "../components/Initializing";
 
 const Stack = createNativeStackNavigator()
 
@@ -24,6 +25,7 @@ const RootRouter = props => {
     const profile = profileService.getProfile()
 
     const [accountType, setAccountType] = useState(profile.accountType)
+    const [dataLoaded, setDataLoaded] = useState(false)
 
     useEffect(() => {
         loadData().then(r => {})
@@ -37,12 +39,13 @@ const RootRouter = props => {
         await taskService.fetchMyTasks({
             limit: 500,
         })
+        setDataLoaded(true)
     }
     function updateAccountType(type) {
         setAccountType(type)
     }
 
-    return (
+    return (dataLoaded ? (
         <Stack.Navigator>
             {accountType === 'CONSUMER' && (
                 <Stack.Screen
@@ -177,8 +180,10 @@ const RootRouter = props => {
                 />
             )}
         </Stack.Navigator>
-
-    );
-};
+    )
+            :
+        <Initializing/>
+    )
+}
 
 export default RootRouter;

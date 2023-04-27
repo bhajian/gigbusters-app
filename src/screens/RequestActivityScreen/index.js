@@ -12,12 +12,14 @@ import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icon
 import loading2 from "../../../assets/images/loading2.gif";
 
 export default function RequestActivityScreen({route}) {
+    const taskService = new TaskService()
+    // const tasksObj = taskService.getMyTasks()
+
     const [requestList, setRequestList] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
 
     const navigation = useNavigation()
-    const taskService = new TaskService()
 
     useEffect(() => {
         navigation.setOptions({
@@ -42,6 +44,7 @@ export default function RequestActivityScreen({route}) {
     }, [navigation])
 
     useEffect(() => {
+
         const unsubscribe = navigation.addListener('focus', () => {
             loadData().then().catch(e => console.log(e))
         })

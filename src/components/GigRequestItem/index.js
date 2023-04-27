@@ -26,16 +26,16 @@ export default function GigRequestItem({item, handler}) {
                 <View style={styles.rightContainer}>
                     <View style={styles.infoContainer}>
                         <View style={styles.info}>
-                            <Text style={styles.textTag} >{item.country}</Text>
+                            <Text style={styles.textTag} >{item.city}</Text>
                         </View>
                         <View style={styles.info}>
                             <Text style={styles.textTag} >{item.price}/{item.priceUnit}</Text>
                         </View>
                     </View>
                     <View style={styles.notificationNumberContainer}>
-                        <View style={styles.notificationInfo}>
-                            <Text style={styles.notificationTag}>3</Text>
-                        </View>
+                        {/*<View style={styles.notificationInfo}>*/}
+                        {/*    <Text style={styles.notificationTag}>3</Text>*/}
+                        {/*</View>*/}
                     </View>
                 </View>
             </View>

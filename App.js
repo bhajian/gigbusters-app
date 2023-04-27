@@ -9,6 +9,7 @@ import Lottie from 'lottie-react-native';
 import loadingAnim from './assets/animations/136078-feesbee-section-2.json'
 import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
 import {ProfileService} from "./src/backend/ProfileService";
+import Initializing from "./src/components/Initializing";
 
 Amplify.configure(awsconfig);
 
@@ -107,14 +108,6 @@ export default function App() {
             )}
         </NavigationContainer>
     );
-}
-
-const Initializing = () => {
-    return (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <Lottie source={loadingAnim} autoPlay loop />
-        </View>
-    )
 }
 
 const styles = StyleSheet.create({

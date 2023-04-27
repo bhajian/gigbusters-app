@@ -66,21 +66,22 @@ export class TaskService {
         return trnsactionArray
     }
 
-    async listTasks(params) {
+    async fetchMyTasks(params) {
         const path = taskPath
         const data = {
             queryStringParameters: params
         }
         const response = await API.get(taskApiName, path, data)
-        const tasks = response?.Items
-        for(let i=0; i<tasks.length; i++){
-            if(tasks[i].photos){
-                const mainPhoto = tasks[i].photos
+        const tasksArray = response?.Items
+        for(let i=0; i<tasksArray.length; i++){
+            if(tasksArray[i].photos){
+                const mainPhoto = tasksArray[i].photos
                     .filter((item) => item.type === 'main')
-                tasks[i].mainPhotoURL = await this.getMainPhoto(mainPhoto[0])
+                tasksArray[i].mainPhotoURL = await this.getMainPhoto(mainPhoto[0])
             }
         }
-        return tasks
+        myTasks = new Map(tasksArray.map(i => [i?.id, i]))
+        return tasksArray
     }
 
     async listNeighborsTasks(params) {
@@ -164,12 +165,31 @@ export class TaskService {
     }
 
     async updateTask(params) {
+        const images = params.images
+        delete params.images
         const path = taskPath
         const data = {
             body: params,
         }
-        const res = await API.put(taskApiName, path, data)
-        return res
+
+        const task = await API.put(taskApiName, path, data)
+
+        const user = await Auth.currentCredentials()
+        for(let x=0; x<images.length; x++){
+            const photo = await this.addPhoto({
+                type: 'main',
+                taskId: task.id,
+                identityId: user.identityId,
+                photo: images[x]
+            })
+            task.photos = [photo, ...params.photos]
+        }
+
+        if(task?.photos?.length > 0){
+            task.mainPhotoURL = await this.getMainPhoto(task?.photos[0])
+        }
+        this.setTask(task)
+        return task
     }
 
     async deleteTask(params) {
@@ -297,18 +317,14 @@ export class TaskService {
         return undefined
     }
 
-    async fetchMyTasks(params) {
-        const tasksArray = await this.listTasks(params)
-        myTasks = new Map(tasksArray.map(i => [i?.id, i]))
-        return tasksArray
-    }
+
 
     getTaskById(taskId) {
         return myTasks?.get(taskId)
     }
 
     setTask(task) {
-        myTasks.set(task?.transaction?.id, task)
+        myTasks.set(task?.id, task)
     }
 
     deleteTaskById(taskId) {

@@ -16,7 +16,7 @@ export default function ApplicantAcceptedItem({item, onChatPressed, onProfilePre
                 <TouchableOpacity style={styles.leftContainer} onPress={e=>onProfilePressed(item)}>
                     <UserAvatar
                         size={55}
-                        active
+                        backgroundColor={Colors.light.turquoise}
                         userName={item?.worker?.name}
                         src={item?.worker?.profilePhotoURL}
                     />

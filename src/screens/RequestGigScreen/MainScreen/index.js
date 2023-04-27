@@ -11,7 +11,6 @@ import {useNavigation} from "@react-navigation/native";
 import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
-import {Auth, Storage} from "aws-amplify";
 import {ProfileService} from "../../../backend/ProfileService";
 import * as ImagePicker from "expo-image-picker";
 import Colors from "../../../constants/Colors";
@@ -24,15 +23,39 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 
 export default function RequestGigScreen(props) {
     const params = props?.route?.params
+    const operation = (params?.operation ? params?.operation : 'create')
 
     const [profileName, setProfileName] = useState('')
-    const [category, setCategory] = useState('')
-    const [location, setLocation] = useState('')
+    const [category, setCategory] = useState((operation === 'edit' ?
+            params?.task?.category :
+            ''
+    ))
+    const [location, setLocation] = useState((operation === 'edit' ?
+            params?.task?.location :
+            ''
+    ))
     const [distance, setDistance] = useState([50])
-    const [description, setDescription] = useState('')
-    const [price, setPrice] = useState([20])
+    const [description, setDescription] = useState((operation === 'edit' ?
+            params?.task?.description :
+            ''
+    ))
+    const [price, setPrice] = useState((operation === 'edit' ?
+            [params?.task?.price] :
+            [20]
+    ))
+    const [priceUnit, setPriceUnit] = useState((operation === 'edit' ?
+            params?.task?.priceUnit :
+            'hr'
+    ))
     const [profileImage, setProfileImage] = useState(null)
-    const [images, setImages] = useState([])
+    const [images, setImages] = useState((operation === 'edit' ?
+        (params?.task?.mainPhotoURL? [params?.task?.mainPhotoURL] : []) :
+            []
+    ))
+    const [photos, setPhotos] = useState((operation === 'edit' ?
+            [params?.task?.photos] :
+            []
+    ))
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
     const navigation = useNavigation()
@@ -124,34 +147,30 @@ export default function RequestGigScreen(props) {
                     description: description,
                     distance: distance,
                     price: price,
-                    priceUnit: 'hr',
+                    priceUnit: priceUnit,
                     location: {
                         latitude: location.latitude,
-                        longitude: location.longitude
+                        longitude: location.longitude,
+                        locationName: location.locationName,
                     },
-                    country: 'Canada', // FIX ME
-                    stateProvince: 'ON', // FIX ME
                     city: location.locationName,
-                    validTillDateTime: '2023-03-31', // FIX ME
                     images: images
                 })
             }
             if(params?.operation === 'edit') {
                 await taskService.updateTask({
-                    id: params.id,
+                    id: params?.task?.id,
                     category: category,
                     description: description,
                     distance: distance,
                     price: price,
-                    priceUnit: 'hr',
+                    priceUnit: priceUnit,
                     location: {
                         latitude: location.latitude,
                         longitude: location.longitude
                     },
-                    country: 'Canada', // FIX ME
-                    stateProvince: 'ON', // FIX ME
                     city: location.locationName,
-                    validTillDateTime: '2023-03-31', // FIX ME
+                    photos: photos,
                     images: images
                 })
             }
@@ -208,7 +227,7 @@ export default function RequestGigScreen(props) {
 
                 <View style={styles.imageContainer}>
                     {
-                        images.map((e)=> <ImageList key={e.toString()} item={e} remove={removeImage} />)
+                        images?.map((e)=> <ImageList key={e?.toString()} item={e} remove={removeImage} />)
                     }
                 </View>
             </ScrollView>

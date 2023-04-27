@@ -38,8 +38,20 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                     <View>
                         <Text style={styles.contactName}>{reviewable?.profile?.name}</Text>
                         <Text style={styles.personalInfo}>ID: {reviewable?.uri}</Text>
-                        <Text style={styles.personalInfo}>Email: {reviewable?.profile?.email?.email}</Text>
-                        <Text style={styles.personalInfo}>Phone: {reviewable?.profile?.phone?.phone}</Text>
+                        <Text style={styles.personalInfo}>
+                            {(reviewable?.profile?.settings?.showMyEmailPublicly
+                                ?
+                                    'Email: ' + reviewable?.profile?.email?.email
+                                :   ''
+                            )}
+                        </Text>
+                        <Text style={styles.personalInfo}>
+                            {(reviewable?.profile?.settings?.showMyPhonePublicly
+                                    ?
+                                    'Phone: ' + reviewable?.profile?.phone?.phone
+                                    :   ''
+                            )}
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.headerRight}>

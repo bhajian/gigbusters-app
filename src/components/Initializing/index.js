@@ -2,19 +2,18 @@ import React from 'react';
 import {View, Text, StyleSheet, Pressable, TouchableOpacity, Image} from 'react-native';
 import Feather from "react-native-vector-icons/Feather";
 import Colors from "../../constants/Colors";
+import Lottie from "lottie-react-native";
+import loadingAnim from "../../../assets/animations/136078-feesbee-section-2.json";
 
-const ImageList = ({ item, remove }) => {
-  return <View>
-    <TouchableOpacity
-        onPress={(e) => remove(item)}
-        style={styles.ImageItem}>
-      <Feather name="x-circle" style={styles.icon}/>
-      <Image source={{uri: item}} style={ {width: 100, height: 100 }} />
-    </TouchableOpacity>
-  </View>
+const Initializing = () => {
+  return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Lottie source={loadingAnim} autoPlay loop />
+      </View>
+  )
 }
 
-export default ImageList
+export default Initializing
 
 const styles = StyleSheet.create({
   container: {

@@ -133,6 +133,8 @@ const ConsumerChatScreen = (props) => {
                     <UserAvatar
                         size={35}
                         userName={name}
+                        backgroundColor={Colors.light.turquoise}
+                        fontSize={20}
                         src={profilePhoto}
                     />
                     <Text style={styles.name}>{name}</Text>
