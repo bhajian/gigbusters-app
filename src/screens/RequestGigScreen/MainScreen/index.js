@@ -211,7 +211,7 @@ export default function RequestGigScreen(props) {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 90 : headerHeight + 90}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 90 : headerHeight + 105}
             style={styles.container}
         >
             <ScrollView keyboardShouldPersistTaps="always">

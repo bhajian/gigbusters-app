@@ -26,16 +26,17 @@ import {ReviewService} from "../../backend/ReviewService";
 import {useNavigation} from "@react-navigation/native";
 import ReviewDetailBottomSheet from "./ReviewDetailBottomSheet";
 import loading from "../../../assets/images/loading2.gif";
+import {useHeaderHeight} from "@react-navigation/elements";
 
 let {width, height} = Dimensions.get('window')
 
 export default function NewReviewScreen({route}) {
-
-    const [dataBeingSaved, setDataBeingSaved] = useState(false)
+    const headerHeight = useHeaderHeight()
+    const navigation = useNavigation()
     const reviewService = new ReviewService()
     const profileService = new ProfileService()
-    const navigation = useNavigation()
 
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [isKeyboardVisible, setKeyboardVisible] = useState(false)
     const [category, setCategory] = useState('')
     const [review, setReview] = useState('')
@@ -212,7 +213,7 @@ export default function NewReviewScreen({route}) {
         <KeyboardAvoidingView
             style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 95 : 155}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 95 : headerHeight + 100}
         >
             <ScrollView keyboardShouldPersistTaps="always">
                 <View style={styles.newReviewContainer}>
