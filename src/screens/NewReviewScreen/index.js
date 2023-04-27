@@ -123,7 +123,7 @@ export default function NewReviewScreen({navigation, route}) {
             aspect: [3, 3],
             quality: 0.1,
         })
-        const imageUri = result.assets[0].uri
+        const imageUri = result?.assets[0]?.uri
         if (!result.canceled) {
             setImages([...images, imageUri])
         } else{
@@ -147,8 +147,9 @@ export default function NewReviewScreen({navigation, route}) {
                         <View style={styles.avatarReviewerContainer}>
                             <UserAvatar
                                 size={35}
-                                active
-                                name={reviewerName}
+                                fontSize={20}
+                                backgroundColor={Colors.light.turquoise}
+                                userName={reviewerName}
                                 src={profileImage}
                             />
                             <TouchableOpacity
@@ -169,8 +170,9 @@ export default function NewReviewScreen({navigation, route}) {
                                     :
                                     <UserAvatar
                                         size={35}
-                                        active
-                                        name={revieweeName}
+                                        fontSize={20}
+                                        backgroundColor={Colors.light.turquoise}
+                                        userName={revieweeName}
                                         src={revieweeImage}
                                     />
                             }

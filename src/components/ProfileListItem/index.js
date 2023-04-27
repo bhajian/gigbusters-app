@@ -2,13 +2,20 @@ import React from "react";
 import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Colors from "../../constants/Colors";
 import {AntDesign} from "@expo/vector-icons";
+import UserAvatar from "@muhzi/react-native-user-avatar";
 
 export default function ProfileListItem({item, onProfilePressed}) {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.mainContainer} onPress={e => onProfilePressed(item)}>
                 <View style={styles.leftContainer}>
-                    <Image source={{uri: item.mainPhotoUrl}} style={styles.image} />
+                    <UserAvatar
+                        size={30}
+                        fontSize={15}
+                        backgroundColor={Colors.light.turquoise}
+                        userName={item?.name}
+                        src={item?.mainPhotoUrl}
+                    />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
                             {item.name}

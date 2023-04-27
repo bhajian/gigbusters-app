@@ -3,14 +3,16 @@ import {Image, StyleSheet, Text, View} from "react-native";
 import ProfilePicture from "../../ProfilePicture";
 import {Button} from "react-native-paper";
 import UserAvatar from "@muhzi/react-native-user-avatar";
+import Colors from "../../../constants/Colors";
 
 export default function PhotoContainer({user}) {
     return (
         <View style={styles.container}>
             <UserAvatar
                 size={40}
-                active
-                name={user?.profile?.name}
+                fontSize={20}
+                backgroundColor={Colors.light.turquoise}
+                userName={user?.profile?.name}
                 src={user?.profile?.profilePhotoURL}
             />
         </View>

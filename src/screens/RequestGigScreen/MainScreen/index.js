@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     TextInput,
     ScrollView,
-    KeyboardAvoidingView, Platform, StyleSheet, Image, Pressable,
+    KeyboardAvoidingView, Platform, StyleSheet, Image, Pressable, Keyboard,
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native";
 import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
@@ -25,6 +25,7 @@ export default function RequestGigScreen(props) {
     const params = props?.route?.params
     const operation = (params?.operation ? params?.operation : 'create')
 
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState((operation === 'edit' ?
             params?.task?.category :
@@ -106,6 +107,25 @@ export default function RequestGigScreen(props) {
             ),
             headerTintColor: Colors.light.tint
         })
+
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true);
+            },
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false);
+            },
+        );
+
+        return () => {
+            keyboardDidHideListener.remove();
+            keyboardDidShowListener.remove();
+        };
+
     }, [navigation, submitRequest, dataBeingSaved])
 
     const removeImage = (value) => {
@@ -185,11 +205,11 @@ export default function RequestGigScreen(props) {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 105 : 85}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 95 : 85}
             style={styles.container}
         >
             <ScrollView>
-                <View style={styles.imageContainer}>
+                <View style={styles.topContainer}>
                     <View style={styles.avatarReviewerContainer}>
                         <UserAvatar
                             size={35}
@@ -202,8 +222,16 @@ export default function RequestGigScreen(props) {
                             <Feather name="chevron-down" size={20}/>
                         </TouchableOpacity>
                     </View>
-
+                    <View style={styles.detailTopContainer}>
+                        <TouchableOpacity onPress={onImagePickerPress} style={styles.detailButton}>
+                            <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={onDetailPress} style={styles.detailButton}>
+                            <MaterialIcons name="category" style={{fontSize: 30, color: Colors.light.tint}}/>
+                        </TouchableOpacity>
+                    </View>
                 </View>
+
                 <View style={styles.tagsContainer}>
                     <View style={styles.tag}>
                         <Text style={styles.text} >{location.locationName}</Text>
@@ -225,23 +253,18 @@ export default function RequestGigScreen(props) {
                     />
                 </View>
 
-                <View style={styles.imageContainer}>
+                <View style={styles.topContainer}>
                     {
                         images?.map((e)=> <ImageList key={e?.toString()} item={e} remove={removeImage} />)
                     }
                 </View>
             </ScrollView>
-            <View style={styles.detailContainer}>
+            <View style={[{marginBottom: !isKeyboardVisible ? 25: 0}, styles.detailContainer]}>
                 <TouchableOpacity onPress={onImagePickerPress} style={styles.detailButton}>
                     <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={onDetailPress} style={styles.detailButton}>
                     <MaterialIcons name="category" style={{fontSize: 30, color: Colors.light.tint}}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.locationBar}>
-                    <View style={styles.detailButton}>
-                        <Entypo name="location" style={{fontSize: 30, color: Colors.light.tint}}/>
-                    </View>
                 </TouchableOpacity>
             </View>
             <GigRequestBottomSheet
@@ -314,18 +337,25 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         margin: 10
     },
+    detailTopContainer: {
+        backgroundColor: 'white',
+        borderColor: Colors.light.darkerGrey,
+        flexDirection: 'row',
+        paddingVertical: 5,
+        marginRight: 5,
+    },
     detailContainer: {
         backgroundColor: 'white',
         borderTopWidth: 1,
         borderColor: Colors.light.darkerGrey,
         flexDirection: 'row',
         paddingVertical: 5,
-        borderBottomWidth: 20,
-        borderBottomColor: Colors.dark.tint
+        marginLeft: 5,
     },
-    imageContainer: {
+    topContainer: {
         width: '100%',
         flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     reviewerName: {
         marginHorizontal: 10,
