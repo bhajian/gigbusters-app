@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pc-api-8970497159967627692-346",
+  "private_key_id": "d188e9676a3b61d8d979791207736473bf61efe5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClbTOxX6GIuyp7\nAIaktW2U/je9FCw6lEsnuI1s2HgtTtfEneqrMaA4SKKPBWY4uNO1IOhFELgngEhJ\nhQDnLfnco/uQ5TRHoBQWwB6iQ5AXOjOofm6LmoOAA7oxkJIvhIZbjo4sXqmirjJS\n4UOB7dxVfclIRbxSbkCK38aUaFpH98k5GJRK2fDwoUsZsl1TdBLnoaCZeDAlwSmY\nhV3Mm9Zr/qj4kC1mwXs7nzKoV2dDCzerJO/+/F066if4+naCoKHPExXHziWeaRqs\nWdGmNZ6evhI+wHF5pP1aCjJYj6ANUHkEzivZvrRdJ4CFcrvz8pNQhNvtZWWLIxkN\nH+QUMfuJAgMBAAECggEAGFoYe3pv7ZBb4wqDR5jbnkzECMYA8sikvZ6p1wWQv161\nXaC/jF78TnzGzVYGo7/1jlrfRld9PHdibMwzA1UdzJCpNj2/cfHLM0Qp3koi2oB7\nXUjrXgqrY/toe+Zj1rHkE3NLU5XF1AhfqRq3FNfekQk4ybZWUC4huy/Q7ETmUWSY\ndsxm1wVw5AUZMNHjTd7Uwpq/iyji9z6dqwZvcfVBM//7qV6gmbrxpIs6a3xWFaps\nBMQ7W4xSq7kM/Zl978DtggCBKGG7/bHqONj79tOzMbHIRMzIRBz2d6wEoMYrBMyV\nwBUy1qhbiu21iEptIaAQOP8IYdd8EfCMYsODjurY9wKBgQDQ5tPzrUsd4f+oHTEw\n91nMMAaq2G6esGiUBu3bl0ywDVVqINnbfdfsLmfGC7tKuSwCpFdhvaMima5fDpel\npMYIfEOYhyyLV3/0EVTwjZ9rbK8d2toKOL1MPhfOeljpb010+xju/PU9lJUcYZSW\ns0YqSjirntE/wGPW3MzRzkxULwKBgQDKuR9rz+a9DA7IycRRV93dcJiv8SJ0fdXO\nlujQVMnAlisNXw+7T+Uarlsg6feGItJVJIQTcS/hkAhhUUcBf9sfaJiA9Qjr5tQj\nEcJmX/0yS8/GYC8HZbQa3MDTzLt5rfu7AhSU2CNY5aXeggr6phK/eaqoaMyXOC0D\nc2v+KTplxwKBgCEia737361GuoFU2AeXRDQB7hzNJYagHoZULwgkkHJgOwsRWNza\nshPxLF6aX8OzaUql/IIxTR3g2GqVavJIF20jIKmhzyvu3gm9cgaRwBaO75vBqdHz\nO/tK4gXLHC0yjUufxE2r684vshMFW0cn+loc2a5HC5OcFXnwHcCtgyfbAoGABOvf\nlmdyq446Yad8S5k9ep28JzFMa9WONji1qDEWwMUkgGuZXyu+XRp0feUQLEJ2Jrj/\nN9WcmvY7LdmiRqgK8sVARoksUUXGSp+ov4F/DRSIE8HMAnr2l1xalgm3V2ng3ZZc\nV4yztvnEQBWaHKGhfOKAQRxiMx2bAiVwLrhjgYsCgYEAswtIQVHEyhbj6rEOpUJl\ntRoB53gV3Fqs7DcnTU1Ni93cEoTP3PHCBA2V1l9kXt5Ur/xBUC7xKp2092ebp/PM\nrvFkK3XcBds58t8xKH41Igo5DQtgfHXFMO3+w1MJ8kMbCX/iJNkfgkVYyum3bFbO\n3TBgjpHV6R+V84tMpNIxbDw=\n-----END PRIVATE KEY-----\n",
+  "client_email": "gigbusters-app-store@pc-api-8970497159967627692-346.iam.gserviceaccount.com",
+  "client_id": "109004199729226697890",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/gigbusters-app-store%40pc-api-8970497159967627692-346.iam.gserviceaccount.com"
+}

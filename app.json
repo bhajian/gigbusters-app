@@ -32,7 +32,7 @@
         "NSContactsUsageDescription": "We might need your contact list to invite them to the app only if you allow the app."
       },
       "bundleIdentifier": "com.orbitstellar.gigbusters",
-      "buildNumber": "3"
+      "buildNumber": "4"
     },
     "android": {
       "config": {
@@ -47,7 +47,8 @@
       "permissions": [
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.orbitstellar.gigbusters"
+      "package": "com.orbitstellar.gigbusters",
+      "versionCode ": 2
     },
     "web": {
       "favicon": "./assets/favicon.png"
