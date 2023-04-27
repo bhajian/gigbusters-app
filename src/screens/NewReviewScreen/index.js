@@ -216,39 +216,49 @@ export default function NewReviewScreen({route}) {
         >
             <ScrollView keyboardShouldPersistTaps="always">
                 <View style={styles.newReviewContainer}>
-                    <View style={styles.reviewUsersContainer}>
-                        <View style={styles.avatarReviewerContainer}>
-                            <UserAvatar
-                                size={35}
-                                fontSize={20}
-                                backgroundColor={Colors.light.turquoise}
-                                userName={reviewerName}
-                                src={profileImage}
-                            />
-                            <View style={styles.reviewerName}>
-                                <Text style={styles.reviewerText}>{reviewerName}</Text>
-                                <Feather name="chevron-right" size={20}/>
+                    <View style={styles.topContainer}>
+                        <View style={styles.reviewUsersContainer}>
+                            <View style={styles.avatarReviewerContainer}>
+                                <UserAvatar
+                                    size={35}
+                                    fontSize={20}
+                                    backgroundColor={Colors.light.turquoise}
+                                    userName={reviewerName}
+                                    src={profileImage}
+                                />
+                                <View style={styles.reviewerName}>
+                                    <Text style={styles.reviewerText}>{reviewerName}</Text>
+                                    <Feather name="chevron-right" size={20}/>
+                                </View>
+                            </View>
+                            <View style={styles.avatarRevieweeContainer}>
+                                {
+                                    (revieweeAccountType === 'phone') ?
+                                        <Entypo
+                                            style={styles.icon}
+                                            name={"phone"}
+                                        />
+                                        :
+                                        <UserAvatar
+                                            size={35}
+                                            fontSize={20}
+                                            backgroundColor={Colors.light.turquoise}
+                                            userName={revieweeName}
+                                            src={revieweeImage}
+                                        />
+                                }
+                                <TouchableOpacity style={styles.revieweeName} onPress={onRevieweePress}>
+                                    <Text style={styles.revieweeText}> {revieweeName} </Text>
+                                    <Feather name="chevron-down" size={20}/>
+                                </TouchableOpacity>
                             </View>
                         </View>
-                        <View style={styles.avatarRevieweeContainer}>
-                            {
-                                (revieweeAccountType === 'phone') ?
-                                    <Entypo
-                                        style={styles.icon}
-                                        name={"phone"}
-                                    />
-                                    :
-                                    <UserAvatar
-                                        size={35}
-                                        fontSize={20}
-                                        backgroundColor={Colors.light.turquoise}
-                                        userName={revieweeName}
-                                        src={revieweeImage}
-                                    />
-                            }
-                            <TouchableOpacity style={styles.revieweeName} onPress={onRevieweePress}>
-                                <Text style={styles.revieweeText}> {revieweeName} </Text>
-                                <Feather name="chevron-down" size={20}/>
+                        <View style={styles.detailTopContainer}>
+                            <TouchableOpacity onPress={onImagePickerPress} style={styles.detailTopButton}>
+                                <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={onDetailPress} style={styles.detailTopButton}>
+                                <MaterialIcons name="category" style={{fontSize: 30, color: Colors.light.tint}}/>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -336,6 +346,13 @@ const styles = StyleSheet.create({
     },
     reviewUsersContainer: {
 
+    },
+    detailTopContainer: {
+        backgroundColor: 'white',
+        borderColor: Colors.light.darkerGrey,
+        flexDirection: 'row',
+        paddingVertical: 5,
+        marginRight: 5,
     },
     imageSelectorContainer: {
         backgroundColor: 'white',
@@ -460,7 +477,18 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         marginHorizontal: 5,
     },
+    detailTopButton: {
+        borderRadius : 5,
+        borderColor: Colors.light.tint,
+        height: 40,
+        width: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 2
+    },
     topContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         backgroundColor: '#ffffff',
         width: '100%',
     },

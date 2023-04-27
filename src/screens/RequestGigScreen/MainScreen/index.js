@@ -214,7 +214,7 @@ export default function RequestGigScreen(props) {
             style={styles.container}
         >
             <ScrollView keyboardShouldPersistTaps="always">
-                <View style={styles.topContainer} onPress={onAnythingElsePress}>
+                <View style={styles.topContainer}>
                     <View style={styles.avatarReviewerContainer}>
                         <UserAvatar
                             size={35}
@@ -226,6 +226,14 @@ export default function RequestGigScreen(props) {
                             <Text style={styles.reviewerText}>{profileName}</Text>
                             <Feather name="chevron-down" size={20}/>
                         </View>
+                    </View>
+                    <View style={styles.detailTopContainer}>
+                        <TouchableOpacity onPress={onImagePickerPress} style={styles.detailTopButton}>
+                            <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={onDetailPress} style={styles.detailTopButton}>
+                            <MaterialIcons name="category" style={{fontSize: 30, color: Colors.light.tint}}/>
+                        </TouchableOpacity>
                     </View>
                 </View>
 
@@ -387,13 +395,21 @@ const styles = StyleSheet.create({
     },
     detailButton: {
         borderRadius : 5,
-        // borderWidth: 1,
         borderColor: Colors.light.tint,
         height: 40,
         width: 40,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5
+    },
+    detailTopButton: {
+        borderRadius : 5,
+        borderColor: Colors.light.tint,
+        height: 40,
+        width: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 5
     },
     infoContainer: {
         padding: 5,
