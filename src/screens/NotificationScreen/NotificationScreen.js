@@ -1,29 +1,24 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
-    View,
     Image,
-    ScrollView, Text, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, Pressable,
+    Text, StyleSheet, FlatList, SafeAreaView,
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native"
 import loading2 from "../../../assets/images/loading2.gif";
-import MessageItem from "../../components/MessageItem";
 import tipoffs from "../../../assets/data/tipoffs";
 import Colors from "../../constants/Colors";
-import {ProfileService} from "../../backend/ProfileService";
-import UserAvatar from "@muhzi/react-native-user-avatar";
-import {TaskService} from "../../backend/TaskService";
-import {Ionicons, MaterialIcons} from "@expo/vector-icons";
+import {Ionicons} from "@expo/vector-icons";
 import NotificationItem from "../../components/NotificationItem";
+import {NotificationService} from "../../backend/NotificationService";
 
 export default function NotificationScreen() {
-    const [profileName, setProfileName] = useState('')
-    const [profileImage, setProfileImage] = useState(null)
-    const [transactions, setTransactions] = useState([])
+
+    const [notifications, setNotifications] = useState([])
+    const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined)
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
     const navigation = useNavigation()
 
-    const profileService = new ProfileService()
-    const taskService = new TaskService()
+    const notificationService = new NotificationService()
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -46,7 +41,12 @@ export default function NotificationScreen() {
 
     async function loadData() {
         setDataBeingLoaded(true)
-
+        const notificationsObj = await notificationService.queryNotifications({
+            limit: 20,
+            lastEvaluatedKey: lastEvaluatedKey
+        })
+        console.log(notificationsObj)
+        setNotifications(notificationsObj)
         setDataBeingLoaded(false)
     }
 

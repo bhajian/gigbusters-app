@@ -11,7 +11,6 @@ import RequestCompletedScreen from "../screens/RequestGigScreen/RequestCompleted
 import ReviewableProfileScreen from "../screens/ReviewableProfileScreen";
 import WorkerChatScreen from "../screens/WorkerMessageScreen/WorkerChatScreen";
 import NewReviewScreen from "../screens/NewReviewScreen";
-import MoreInfoSubmissionScreen from "../screens/NewReviewScreen/MoreInfoSubmissionScreen";
 import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchReviewScreen";
 import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen";
 import {TaskService} from "../backend/TaskService";
@@ -156,15 +155,6 @@ const RootRouter = props => {
                 <Stack.Screen
                     name={'NewReviewScreen'}
                     component={NewReviewScreen}
-                    options={{
-                        headerShown: true,
-                    }}
-                />
-            )}
-            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
-                <Stack.Screen
-                    name={'MoreInfoSubmissionScreen'}
-                    component={MoreInfoSubmissionScreen}
                     options={{
                         headerShown: true,
                     }}

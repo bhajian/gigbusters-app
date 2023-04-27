@@ -3,7 +3,6 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../constants/Colors';
 import {FontAwesome, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
-import {ReviewNavigation} from "./ReviewNavigation";
 import {ProfileNavigation} from "./ProfileNavigation";
 import MatchingCards from "../screens/MatchingScreen/matchingCards";
 import {ReferralFeedNavigation} from "./ReferralFeedNavigation";

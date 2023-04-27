@@ -62,7 +62,7 @@ export default function AccontSearchBottomSheet({bottomSheetModalRef, handleShee
                                 <Pressable onPress={handleClosePress}>
                                     <Feather name="x" size={25} style={styles.closeButton}/>
                                 </Pressable>
-                                <Text style={styles.title}>Reviewable Type</Text>
+                                <Text style={styles.title}>Who do you want to review?</Text>
                                 <View></View>
                             </View>
 

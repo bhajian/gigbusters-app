@@ -7,10 +7,10 @@ import {
     Image,
     View,
     Text,
-    ScrollView, Dimensions, KeyboardAvoidingView, Pressable,
+    ScrollView, Dimensions, KeyboardAvoidingView, Pressable, Keyboard,
 } from 'react-native';
 import Colors from '../../constants/Colors';
-import {Ionicons, MaterialCommunityIcons} from "@expo/vector-icons";
+import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import Feather from "react-native-vector-icons/Feather";
 import AccontSearchBottomSheet from "./AccountSearchReviewScreen/AccontSearchBottomSheet";
@@ -21,11 +21,23 @@ import { Rating, AirbnbRating } from 'react-native-ratings'
 import STAR_IMAGE from '../../../assets/images/star.png'
 import ImageList from "../../components/ImageList";
 import Fontisto from "react-native-vector-icons/Fontisto";
+import {Auth} from "aws-amplify";
+import {ReviewService} from "../../backend/ReviewService";
+import {useNavigation} from "@react-navigation/native";
+import ReviewDetailBottomSheet from "./ReviewDetailBottomSheet";
+import loading from "../../../assets/images/loading2.gif";
 
 let {width, height} = Dimensions.get('window')
 
-export default function NewReviewScreen({navigation, route}) {
+export default function NewReviewScreen({route}) {
 
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
+    const reviewService = new ReviewService()
+    const profileService = new ProfileService()
+    const navigation = useNavigation()
+
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+    const [category, setCategory] = useState('')
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(3)
     const [revieweeAccountType, setRevieweeAccountType] = useState('gigbuster')
@@ -36,16 +48,22 @@ export default function NewReviewScreen({navigation, route}) {
     const [reviewerName, setReviewerName] = useState('')
     const [location, setLocation] = useState('')
     const [profileImage, setProfileImage] = useState(null)
-    const bottomSheetModalRef = useRef(null)
-    const profileService = new ProfileService()
+    const revieweeBottomSheetModalRef = useRef(null)
+    const detailBottomSheetModalRef = useRef(null)
+    const inputTestRef = useRef()
 
-    const handleSheetChanges = useCallback((value) => {
+
+    const handleRevieweeSheetChanges = useCallback((value) => {
+    }, [])
+
+    const handleDetailSheetChanges = useCallback((value) => {
     }, [])
 
     const removeImage = (value) => {
         setImages(images.filter(item => item !== value))
     }
     const getValueFromBottomSheet = (value) => {
+        inputTestRef?.current?.focus()
         setRevieweeAccountType(value.type)
         if(value.type === 'gigbusters'){
             setRevieweeName(value.name)
@@ -58,6 +76,14 @@ export default function NewReviewScreen({navigation, route}) {
             setRevieweeAccountType('phone')
             setRevieweeName(value.uri)
         }
+        Keyboard.dismiss()
+        detailBottomSheetModalRef.current.present()
+    }
+
+    const getValueFromDetailBottomSheet = (props) => {
+        setCategory(props.category)
+        setLocation(props.location)
+        inputTestRef?.current?.focus()
     }
 
     useEffect(() => {
@@ -65,8 +91,9 @@ export default function NewReviewScreen({navigation, route}) {
     }, [getCurrentUserData])
 
     useEffect(() => {
-        bottomSheetModalRef.current.present()
-    }, [bottomSheetModalRef])
+        Keyboard.dismiss()
+        revieweeBottomSheetModalRef.current.present()
+    }, [revieweeBottomSheetModalRef])
 
     useEffect(() => {
         navigation.setOptions({
@@ -82,12 +109,32 @@ export default function NewReviewScreen({navigation, route}) {
                 <Text> </Text>
             ),
             headerRight: () => (
-                <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
-                    <Text style={styles.buttonText}>Next</Text>
-                </TouchableOpacity>
+                dataBeingSaved ?
+                    <Image source={loading} style={{width: 30, height: 30}} />
+                    :
+                    <TouchableOpacity style={styles.button} onPress={onSubmitPress}>
+                        <Text style={styles.buttonText}>Submit</Text>
+                    </TouchableOpacity>
             ),
             headerTintColor: Colors.light.tint
         })
+        const keyboardDidShowListener = Keyboard.addListener(
+            'keyboardDidShow',
+            () => {
+                setKeyboardVisible(true)
+            },
+        )
+        const keyboardDidHideListener = Keyboard.addListener(
+            'keyboardDidHide',
+            () => {
+                setKeyboardVisible(false)
+            },
+        )
+
+        return () => {
+            keyboardDidHideListener.remove()
+            keyboardDidShowListener.remove()
+        }
 
     }, [onSubmitPress])
 
@@ -105,15 +152,34 @@ export default function NewReviewScreen({navigation, route}) {
         }
     }
 
-    function onSubmitPress() {
-        navigation.navigate('MoreInfoSubmissionScreen', {
-            review: review,
-            rating: rating,
-            type: revieweeAccountType,
-            uri: revieweeUri,
-            location: location,
-            images: images
-        });
+    async function onSubmitPress() {
+        setDataBeingSaved(true)
+        try{
+            const response = await reviewService.createReview({
+                reviewable: {
+                    type: revieweeAccountType,
+                    uri: revieweeUri,
+                    categories: [category]
+                },
+                rating: rating,
+                review: review,
+                category: category,
+                location: location
+            })
+            const user = await Auth.currentCredentials()
+            images.map(async(e)=> {
+                await reviewService.addPhoto({
+                    type: 'main',
+                    reviewId: response.id,
+                    identityId: user.identityId,
+                    photo: e
+                })
+            })
+            navigation.navigate('RequestCompletedScreen')
+        } catch (e) {
+            console.log(e)
+        }
+        setDataBeingSaved(false)
     }
 
     async function onImagePickerPress() {
@@ -132,16 +198,23 @@ export default function NewReviewScreen({navigation, route}) {
     }
 
     function onRevieweePress() {
-        bottomSheetModalRef.current.present()
+        Keyboard.dismiss()
+        revieweeBottomSheetModalRef.current.present()
     }
+
+    async function onDetailPress() {
+        Keyboard.dismiss()
+        detailBottomSheetModalRef.current.present()
+    }
+
 
     return (
         <KeyboardAvoidingView
             style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 120}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 95 : 155}
         >
-            <ScrollView>
+            <ScrollView keyboardShouldPersistTaps="always">
                 <View style={styles.newReviewContainer}>
                     <View style={styles.reviewUsersContainer}>
                         <View style={styles.avatarReviewerContainer}>
@@ -152,13 +225,10 @@ export default function NewReviewScreen({navigation, route}) {
                                 userName={reviewerName}
                                 src={profileImage}
                             />
-                            <TouchableOpacity
-                                style={styles.reviewerName}
-                                // onPress={onImagePickerPress}
-                            >
+                            <View style={styles.reviewerName}>
                                 <Text style={styles.reviewerText}>{reviewerName}</Text>
-                                <Feather name="chevron-down" size={20}/>
-                            </TouchableOpacity>
+                                <Feather name="chevron-right" size={20}/>
+                            </View>
                         </View>
                         <View style={styles.avatarRevieweeContainer}>
                             {
@@ -204,6 +274,7 @@ export default function NewReviewScreen({navigation, route}) {
                                 multiline={true}
                                 style={styles.reviewInput}
                                 placeholder={"Review..."}
+                                ref={inputTestRef}
                             />
                         </View>
                     </View>
@@ -215,19 +286,31 @@ export default function NewReviewScreen({navigation, route}) {
                 </View>
             </ScrollView>
 
-            <View style={styles.imageSelectorContainer}>
+            <View style={[{marginBottom: !isKeyboardVisible ? 30: 0}, styles.imageSelectorContainer]}>
                 <TouchableOpacity onPress={onImagePickerPress}  style={styles.detailButton}>
-                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
+                    <MaterialCommunityIcons name="image-plus" style={{fontSize: 30, color: Colors.light.tint}}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.locationBar}>
-                    <Entypo name="location" style={{fontSize: 35, color: Colors.light.tint}}/>
-                    <Text style={styles.locationText}>{location.locationName}</Text>
+                <TouchableOpacity onPress={onRevieweePress}  style={styles.detailButton}>
+                    <Ionicons name="person-circle-sharp" style={{fontSize: 30, color: Colors.light.tint}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onDetailPress}  style={styles.detailButton}>
+                    <MaterialIcons name="category" style={{fontSize: 30, color: Colors.light.tint}}/>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={onDetailPress} style={styles.locationBar}>
+                    <Entypo name="location" style={{fontSize: 30, color: Colors.light.tint}}/>
+                    <Text style={styles.locationText}>{location?.locationName}</Text>
                 </TouchableOpacity>
             </View>
             <AccontSearchBottomSheet
-                handleSheetChanges={handleSheetChanges}
-                bottomSheetModalRef={bottomSheetModalRef}
+                handleSheetChanges={handleRevieweeSheetChanges}
+                bottomSheetModalRef={revieweeBottomSheetModalRef}
                 getValueFromBottomSheet={getValueFromBottomSheet}
+            />
+            <ReviewDetailBottomSheet
+                handleSheetChanges={handleDetailSheetChanges}
+                bottomSheetModalRef={detailBottomSheetModalRef}
+                getValueFromBottomSheet={getValueFromDetailBottomSheet}
+                defaultData={{location: location, category: category}}
             />
         </KeyboardAvoidingView>
     );
@@ -256,7 +339,7 @@ const styles = StyleSheet.create({
     },
     imageSelectorContainer: {
         backgroundColor: 'white',
-        borderTopWidth: 1,
+        // borderTopWidth: 1,
         borderColor: Colors.light.darkerGrey,
         flexDirection: 'row',
         paddingVertical: 5
@@ -314,10 +397,10 @@ const styles = StyleSheet.create({
     },
     detailButton: {
         borderRadius : 5,
-        borderWidth: 1,
+        // borderWidth: 1,
         borderColor: Colors.light.tint,
-        height: 40,
-        width: 40,
+        height: 35,
+        width: 35,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5

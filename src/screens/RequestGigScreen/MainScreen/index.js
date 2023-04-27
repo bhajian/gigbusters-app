@@ -25,7 +25,7 @@ export default function RequestGigScreen(props) {
     const params = props?.route?.params
     const operation = (params?.operation ? params?.operation : 'create')
 
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false)
     const [profileName, setProfileName] = useState('')
     const [category, setCategory] = useState((operation === 'edit' ?
             params?.task?.category :
@@ -65,6 +65,7 @@ export default function RequestGigScreen(props) {
     const bottomSheetModalRef = useRef(null)
     const handleSheetChanges = useCallback((value) => {
     }, [])
+    const inputTestRef = useRef()
 
     async function loadData() {
         const profile = profileService.getProfile()
@@ -82,6 +83,7 @@ export default function RequestGigScreen(props) {
 
     useEffect(() => {
         if(params?.operation === 'create'){
+            Keyboard.dismiss()
             bottomSheetModalRef.current.present()
         }
         loadData().catch((e) => console.log(e))
@@ -111,20 +113,20 @@ export default function RequestGigScreen(props) {
         const keyboardDidShowListener = Keyboard.addListener(
             'keyboardDidShow',
             () => {
-                setKeyboardVisible(true);
+                setKeyboardVisible(true)
             },
-        );
+        )
         const keyboardDidHideListener = Keyboard.addListener(
             'keyboardDidHide',
             () => {
-                setKeyboardVisible(false);
+                setKeyboardVisible(false)
             },
-        );
+        )
 
         return () => {
-            keyboardDidHideListener.remove();
-            keyboardDidShowListener.remove();
-        };
+            keyboardDidHideListener.remove()
+            keyboardDidShowListener.remove()
+        }
 
     }, [navigation, submitRequest, dataBeingSaved])
 
@@ -135,20 +137,23 @@ export default function RequestGigScreen(props) {
     async function onImagePickerPress() {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
+            allowsEditing: false,
             aspect: [3, 3],
             quality: 0.1,
         })
-        const imageUri = result.assets[0].uri
+        const imageUri = result?.assets[0]?.uri
         if (!result.canceled) {
             setImages([...images, imageUri])
-        } else{
-            return
         }
     }
 
     async function onDetailPress() {
+        Keyboard.dismiss()
         bottomSheetModalRef.current.present()
+    }
+
+    async function onAnythingElsePress() {
+        Keyboard.dismiss()
     }
 
     const getValueFromBottomSheet = (props) => {
@@ -156,13 +161,14 @@ export default function RequestGigScreen(props) {
         setPrice(props.price)
         setDistance(props.distance)
         setLocation(props.location)
+        inputTestRef?.current?.focus()
     }
 
     async function submitRequest() {
         setDataBeingSaved(true)
         try{
             if(params?.operation === 'create') {
-                const response = await taskService.createTask({
+                await taskService.createTask({
                     category: category,
                     description: description,
                     distance: distance,
@@ -194,7 +200,6 @@ export default function RequestGigScreen(props) {
                     images: images
                 })
             }
-            // Generate the signedurl and set that in the task object
             navigation.navigate('RequestCompletedScreen')
         } catch (e) {
             console.log(e)
@@ -205,11 +210,11 @@ export default function RequestGigScreen(props) {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 95 : 85}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 155}
             style={styles.container}
         >
-            <ScrollView>
-                <View style={styles.topContainer}>
+            <ScrollView keyboardShouldPersistTaps="always">
+                <View style={styles.topContainer} onPress={onAnythingElsePress}>
                     <View style={styles.avatarReviewerContainer}>
                         <UserAvatar
                             size={35}
@@ -217,18 +222,10 @@ export default function RequestGigScreen(props) {
                             name={profileName}
                             src={profileImage}
                         />
-                        <TouchableOpacity style={styles.reviewerName}>
+                        <View style={styles.taskOwnerName} onPress={onAnythingElsePress}>
                             <Text style={styles.reviewerText}>{profileName}</Text>
                             <Feather name="chevron-down" size={20}/>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.detailTopContainer}>
-                        <TouchableOpacity onPress={onImagePickerPress} style={styles.detailButton}>
-                            <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={onDetailPress} style={styles.detailButton}>
-                            <MaterialIcons name="category" style={{fontSize: 30, color: Colors.light.tint}}/>
-                        </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
 
@@ -250,6 +247,7 @@ export default function RequestGigScreen(props) {
                         multiline={true}
                         style={styles.reviewInput}
                         placeholder={"Details..."}
+                        ref={inputTestRef}
                     />
                 </View>
 
@@ -259,7 +257,7 @@ export default function RequestGigScreen(props) {
                     }
                 </View>
             </ScrollView>
-            <View style={[{marginBottom: !isKeyboardVisible ? 25: 0}, styles.detailContainer]}>
+            <View style={[{marginBottom: !isKeyboardVisible ? 30: 5}, styles.detailContainer]}>
                 <TouchableOpacity onPress={onImagePickerPress} style={styles.detailButton}>
                     <MaterialCommunityIcons name="image-plus" style={{fontSize: 35, color: Colors.light.tint}}/>
                 </TouchableOpacity>
@@ -346,7 +344,7 @@ const styles = StyleSheet.create({
     },
     detailContainer: {
         backgroundColor: 'white',
-        borderTopWidth: 1,
+        // borderTopWidth: 1,
         borderColor: Colors.light.darkerGrey,
         flexDirection: 'row',
         paddingVertical: 5,
@@ -357,7 +355,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    reviewerName: {
+    taskOwnerName: {
         marginHorizontal: 10,
         padding: 5,
         alignItems: 'center',
@@ -389,7 +387,7 @@ const styles = StyleSheet.create({
     },
     detailButton: {
         borderRadius : 5,
-        borderWidth: 1,
+        // borderWidth: 1,
         borderColor: Colors.light.tint,
         height: 40,
         width: 40,

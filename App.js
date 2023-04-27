@@ -30,37 +30,16 @@ export default function App() {
                 .then(() => {
                 })
                 .catch(e => {
-                    console.error(e);
+                    console.error(e)
                 })
         })
         checkAuthState()
             .then(() => {
             })
             .catch(e => {
-                console.error(e);
+                console.error(e)
             })
         return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        const subscription = AppState.addEventListener("change", nextAppState => {
-            if (
-                appState.current.match(/inactive|background/) &&
-                nextAppState === "active"
-            ) {
-                setUserStatus('initializing')
-                checkAuthState()
-                    .then(() => {
-                    })
-                    .catch(e => {
-                        console.error(e)
-                    })
-            }
-            appState.current = nextAppState
-        })
-        return () => {
-            subscription.remove()
-        };
     }, [])
 
     async function checkAuthState() {
