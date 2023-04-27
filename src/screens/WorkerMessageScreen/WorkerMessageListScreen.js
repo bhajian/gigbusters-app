@@ -7,7 +7,6 @@ import {
 import {useNavigation} from "@react-navigation/native"
 import loading2 from "../../../assets/images/loading2.gif";
 import MessageItem from "../../components/MessageItem";
-import tipoffs from "../../../assets/data/tipoffs";
 import Colors from "../../constants/Colors";
 import {ProfileService} from "../../backend/ProfileService";
 import UserAvatar from "@muhzi/react-native-user-avatar";

@@ -116,6 +116,19 @@ const WorkerChatScreen = (props) => {
         }
     }
 
+    async function terminateChat(params) {
+        try{
+            await taskService.terminateTransaction({
+                transactionId: params?.transaction?.id,
+            })
+            taskService.deleteTransaction(params?.transaction?.id)
+            setEditable(false)
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     const header = () => {
         return(<View style={styles.topContainer}>
             <WorkerApplicationStatus
@@ -202,6 +215,8 @@ const WorkerChatScreen = (props) => {
             <OptionsBottomSheet
                 bottomSheetModalRef={editPageBottomSheetModalRef}
                 handleSheetChanges={editPageHandleSheetChanges}
+                transaction={transaction}
+                terminateChat={terminateChat}
             />
         </KeyboardAvoidingView>
     )
