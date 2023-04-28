@@ -3,7 +3,6 @@ import {View, Text, Pressable, StyleSheet} from 'react-native';
 import {FontAwesome5} from "@expo/vector-icons";
 import {Auth} from "aws-amplify"
 import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth'
-import * as WebBrowser from 'expo-web-browser'
 
 const SocialSignInButtons = () => {
     const onSignInFacebook = () => {
@@ -12,7 +11,6 @@ const SocialSignInButtons = () => {
 
     const onSignInGoogle = async () => {
         try{
-            // await WebBrowser.openBrowserAsync('')
             await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Google,})
         } catch (e) {
             alert(e)
