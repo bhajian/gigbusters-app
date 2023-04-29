@@ -14,7 +14,6 @@ import Entypo from "react-native-vector-icons/Entypo";
 
 export default function TaskWorkerScreen({navigation, route}) {
     const {task} = (route.params ? route.params : '')
-    console.log(task)
 
     useEffect(() => {
         navigation.setOptions({
@@ -42,9 +41,6 @@ const styles = StyleSheet.create({
     root: {
         backgroundColor: "#ffffff",
         paddingBottom: 10,
-        // paddingTop: 20,
-        // paddingLeft: 50,
-        // paddingRight: 50,
         height: 800,
     },
 

@@ -1,5 +1,5 @@
-import {Button, Dimensions, Pressable, SafeAreaView, StyleSheet, Text, View} from "react-native";
-import React, {useCallback, useEffect, useMemo, useRef, useState} from "react";
+import {Pressable, SafeAreaView, View} from "react-native";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import {TaskService} from "../../backend/TaskService";
 import MatchingCard from "../../components/MatchingCard";
 import Swiper from "react-native-deck-swiper";
@@ -60,10 +60,14 @@ const MatchingCards = () => {
     }, []);
 
     async function loadData() {
-        const tasksObj = await taskService.listNeighborsTasks({
-            limit: 500,
-        })
-        setCardList(tasksObj)
+        try{
+            const tasksObj = await taskService.listNeighborsTasks({
+                limit: 50,
+            })
+            setCardList(tasksObj)
+        }catch (e) {
+            console.log(e)
+        }
     }
 
     async function onRightSwiped(cardIndex) {
@@ -111,14 +115,15 @@ const MatchingCards = () => {
                 }}
                 onSwipedRight={(e) => {onRightSwiped(e)}}
                 onSwipedLeft={(e) => {onLeftSwiped(e)}}
-                onSwiped={(cardIndex) => {console.log(cardIndex)}}
+                onSwiped={(cardIndex) => {}}
                 onSwipedAll={() => {console.log('onSwipedAll')}}
                 backgroundColor={Colors.light.grey}
                 infinite={true}
                 containerStyle={{top: 0, width: '100%'}}
                 cardStyle={{top: 5, left: '2%', width: '96%', justifyContent: 'center',}}
-                stackSize= {200}
-                keyExtractor={(item) => item?.id}
+                stackSize= {2}
+                showSecondCard={true}
+                // keyExtractor={(item) => (console.log(item))}
             >
 
             </Swiper>

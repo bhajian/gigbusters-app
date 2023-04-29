@@ -32,14 +32,18 @@ const RootRouter = props => {
     }, [])
 
     async function loadData() {
-        await taskService.fetchMyTransaction({
-            limit: 2000,
-            persona: profile.accountType
-        })
-        await taskService.fetchMyTasks({
-            limit: 500,
-        })
-        setDataLoaded(true)
+        try{
+            await taskService.fetchMyTransaction({
+                limit: 2000,
+                persona: profile.accountType
+            })
+            await taskService.fetchMyTasks({
+                limit: 500,
+            })
+            setDataLoaded(true)
+        } catch (e) {
+            console.log(e)
+        }
     }
     function updateAccountType(type) {
         setAccountType(type)

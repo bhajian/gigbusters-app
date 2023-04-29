@@ -12,24 +12,24 @@ import * as WebBrowser from "expo-web-browser";
 
 
 
-async function urlOpener(url, redirectUrl) {
-    try {
-        if(redirectUrl?.endsWith('signout'))
-            return
-        const {type, url: newUrl} = await WebBrowser.openAuthSessionAsync(
-            url,
-            redirectUrl
-        )
-
-        if (type === "success" && Platform.OS === "ios") {
-            WebBrowser.dismissBrowser()
-            return Linking.openURL(newUrl)
-        }
-    }catch (e) {
-        console.log(e)
-    }
-}
-awsconfig.Auth.oauth.urlOpener = urlOpener
+// async function urlOpener(url, redirectUrl) {
+//     try {
+//         if(redirectUrl?.endsWith('signout'))
+//             return
+//         const {type, url: newUrl} = await WebBrowser.openAuthSessionAsync(
+//             url,
+//             redirectUrl
+//         )
+//
+//         if (type === "success" && Platform.OS === "ios") {
+//             WebBrowser.dismissBrowser()
+//             return Linking.openURL(newUrl)
+//         }
+//     }catch (e) {
+//         console.log(e)
+//     }
+// }
+// awsconfig.Auth.oauth.urlOpener = urlOpener
 
 Amplify.configure(awsconfig)
 export default function App() {

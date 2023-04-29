@@ -31,6 +31,7 @@ const MatchingCard = props => {
 
     const onRightPressed = props.onRightPressed
     const onLeftPressed = props.onLeftPressed
+
     return (
         <View style={styles.card}>
             <View style={styles.topContainer}>
@@ -80,11 +81,11 @@ const MatchingCard = props => {
                 <TouchableOpacity style={styles.rejectButton} onPress={onLeftPressed}>
                     <FontAwesome name="ban" size={35} color="white"/>
                 </TouchableOpacity>
-                {/*<MapView*/}
-                {/*    style={{ width: '60%', height: '100%', alignSelf: 'center'}}*/}
-                {/*    region={mapRegion}*/}
-                {/*    provider={PROVIDER_GOOGLE}*/}
-                {/*/>*/}
+                <MapView
+                    style={{ width: '60%', height: '100%', alignSelf: 'center'}}
+                    region={mapRegion}
+                    provider={PROVIDER_GOOGLE}
+                />
                 <TouchableOpacity style={styles.connectButton} onPress={onRightPressed}>
                     <Ionicons name="ios-logo-whatsapp" size={35} color="white"/>
                 </TouchableOpacity>
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         position: 'absolute', //Here is the trick
-        bottom: 30, //Here is the trick
+        bottom: 65, //Here is the trick
     },
     topContainer: {
         padding: 10,
