@@ -14,12 +14,9 @@ import bg from "../../../assets/images/chatbg.png"
 import InputBox from "../../components/InputBox";
 import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
-import {MaterialCommunityIcons} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {useNavigation} from "@react-navigation/native";
-import {API, Auth, graphqlOperation} from "aws-amplify";
-import {listMessagesByTransactionId} from "../../backend/graphql/queries";
-import {onCreateMessage} from "../../backend/graphql/subscriptions";
+import {Auth} from "aws-amplify";
 import { useHeaderHeight } from "@react-navigation/elements"
 import {TaskService} from "../../backend/TaskService";
 import WorkerApplicationStatus from "../../components/AcceptRejectApplication/WorkerApplicationStatus";
@@ -129,6 +126,10 @@ const WorkerChatScreen = (props) => {
         }
     }
 
+    async function onTaskPressed(params) {
+        navigation.navigate('TaskWorkerScreen', {task: transaction?.task})
+    }
+
     const header = () => {
         return(<View style={styles.topContainer}>
             <WorkerApplicationStatus
@@ -217,6 +218,7 @@ const WorkerChatScreen = (props) => {
                 handleSheetChanges={editPageHandleSheetChanges}
                 transaction={transaction}
                 terminateChat={terminateChat}
+                onTaskPressed={onTaskPressed}
             />
         </KeyboardAvoidingView>
     )

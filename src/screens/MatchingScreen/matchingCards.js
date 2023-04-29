@@ -111,13 +111,15 @@ const MatchingCards = () => {
                 }}
                 onSwipedRight={(e) => {onRightSwiped(e)}}
                 onSwipedLeft={(e) => {onLeftSwiped(e)}}
-                onSwiped={(cardIndex) => {}}
+                onSwiped={(cardIndex) => {console.log(cardIndex)}}
                 onSwipedAll={() => {console.log('onSwipedAll')}}
                 backgroundColor={Colors.light.grey}
                 infinite={true}
                 containerStyle={{top: 0, width: '100%'}}
                 cardStyle={{top: 5, left: '2%', width: '96%', justifyContent: 'center',}}
-                stackSize= {2}>
+                stackSize= {200}
+                keyExtractor={(item) => item?.id}
+            >
 
             </Swiper>
             <MatchingSearch

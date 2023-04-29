@@ -2,6 +2,7 @@ import React from "react";
 import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} from "react-native";
 import Colors from "../../constants/Colors";
 import {AntDesign} from "@expo/vector-icons";
+import UserAvatar from "@muhzi/react-native-user-avatar";
 
 export default function NotificationItem({notification, onPressed}) {
 
@@ -9,13 +10,37 @@ export default function NotificationItem({notification, onPressed}) {
         <View style={styles.container}>
             <View style={styles.mainContainer}>
                 <TouchableOpacity style={styles.leftContainer} onPress={e=>onPressed()}>
-                    <Image source={{uri: notification.to.image}} style={styles.image} />
+                    <UserAvatar
+                        size={35}
+                        userName={notification?.subject?.name}
+                        backgroundColor={Colors.light.turquoise}
+                        fontSize={20}
+                        src={notification?.subject?.profilePhotoURL}
+                    />
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
-                            {notification.to.name}
+                            {notification?.subject?.name}
                         </Text>
                         <Text style={styles.notificationText}>
-                            {notification.content}
+                            {
+                                (notification?.notification.type === 'APPLICATION_ACCEPTED' &&
+                                    (notification?.subject?.name + ' has accepted your application for the task: \n'+
+                                        'sometask'
+                                    )
+                                )
+                            }
+                            {
+                                (notification?.notification.type === 'NEW_APPLICATION' &&
+                                    (notification?.subject?.name + ' submitted an application for the task you posted: \n'+
+                                        'sometask'
+                                    )
+                                )
+                            }
+                            {
+                                (notification?.notification.type === 'CHAT_TERMINATED' &&
+                                    ('Your chat is terminated with ' + notification?.subject?.name)
+                                )
+                            }
                         </Text>
                     </View>
                 </TouchableOpacity>

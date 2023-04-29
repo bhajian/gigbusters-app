@@ -70,8 +70,9 @@ export default function ReviewScreen(props) {
                 <UserAvatar
                     size={35}
                     active
-                    name={name}
+                    userName={name}
                     src={profileImage}
+                    backgroundColor={Colors.light.turquoise}
                 />
             ),
         })

@@ -1,15 +1,13 @@
 import React, {useState} from 'react';
-import {Text, ImageBackground, View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import {Text, ImageBackground, View, StyleSheet} from 'react-native';
 import UserAvatar from "@muhzi/react-native-user-avatar";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
-import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import MapView from "react-native-maps";
 import { PROVIDER_GOOGLE } from "react-native-maps"
 
-const MatchingCard = props => {
+const WorkerTask = props => {
     const {
-        mainPhotoURL,
+        photoURL,
         description,
         category,
         price,
@@ -19,7 +17,7 @@ const MatchingCard = props => {
         name,
         profilePhotoURL,
         location
-    } = props.card
+    } = props.task
 
     const [mapRegion, setmapRegion] = useState({
         latitude: location?.latitude,
@@ -29,8 +27,6 @@ const MatchingCard = props => {
     })
 
 
-    const onRightPressed = props.onRightPressed
-    const onLeftPressed = props.onLeftPressed
     return (
         <View style={styles.card}>
             <View style={styles.topContainer}>
@@ -47,7 +43,7 @@ const MatchingCard = props => {
             <View style={styles.contentContainer}>
                 <ImageBackground
                     source={{
-                        uri: mainPhotoURL,
+                        uri: photoURL,
                     }}
                     style={styles.image}>
                     <View style={styles.cardInner}>
@@ -77,17 +73,11 @@ const MatchingCard = props => {
                 </View>
             </View>
             <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.rejectButton} onPress={onLeftPressed}>
-                    <FontAwesome name="ban" size={35} color="white"/>
-                </TouchableOpacity>
-                {/*<MapView*/}
-                {/*    style={{ width: '60%', height: '100%', alignSelf: 'center'}}*/}
-                {/*    region={mapRegion}*/}
-                {/*    provider={PROVIDER_GOOGLE}*/}
-                {/*/>*/}
-                <TouchableOpacity style={styles.connectButton} onPress={onRightPressed}>
-                    <Ionicons name="ios-logo-whatsapp" size={35} color="white"/>
-                </TouchableOpacity>
+                <MapView
+                    style={{ width: '100%', height: '100%', alignSelf: 'center'}}
+                    region={mapRegion}
+                    provider={PROVIDER_GOOGLE}
+                />
             </View>
         </View>
     );
@@ -212,4 +202,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default MatchingCard;
+export default WorkerTask;

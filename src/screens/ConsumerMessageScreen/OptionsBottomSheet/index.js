@@ -6,14 +6,13 @@ import CustomButton from "../../../components/CustomButton";
 import {useNavigation} from "@react-navigation/native";
 
 export default function OptionsBottomSheet({bottomSheetModalRef, handleSheetChanges,
-                                               transaction, terminateChat}) {
+                                               transaction, terminateChat, onTaskPressed}) {
 
     const navigation = useNavigation()
-    const snapPoints = useMemo(() => ['30%', '30%'], []);
-    const [enablePanDownToClose, setEnablePanDownToClose] = useState(true);
-    const [enableDismissOnClose, setEnableDismissOnClose] = useState(true);
-    const [locationMax, setLocationMax] = useState(50);
-    const [rating, setRating] = useState(3);
+    const snapPoints = useMemo(() => ['30%', '30%'], [])
+    const [enablePanDownToClose, setEnablePanDownToClose] = useState(true)
+    const [enableDismissOnClose, setEnableDismissOnClose] = useState(true)
+
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close');
 
     const handleTogglePressBehavior = useCallback(() => {
@@ -69,7 +68,7 @@ export default function OptionsBottomSheet({bottomSheetModalRef, handleSheetChan
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
                 style={styles.sheetContainer}
-                // backdropComponent={renderBackdrop}
+                backdropComponent={renderBackdrop}
             >
                 <BottomSheetView
                     style={styles.contentContainerStyle}
@@ -85,12 +84,21 @@ export default function OptionsBottomSheet({bottomSheetModalRef, handleSheetChan
                     <View style={styles.mainContainer}>
                         <View style={styles.buttonContainer}>
                             <CustomButton
+                                text="View the Task"
+                                onPress={onTaskPressed}
+                                style={styles.regularButton}
+                                bgColor="#E3E8F1"
+                                fgColor="#000"
+                            />
+
+                            <CustomButton
                                 text="Terminate the chat"
                                 onPress={onTerminateChat}
                                 style={styles.regularButton}
                                 bgColor="#E3E8F1"
                                 fgColor="#FB1F1F"
                             />
+
                         </View>
                     </View>
                 </BottomSheetView>

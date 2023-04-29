@@ -15,6 +15,7 @@ import AccountSearchReviewScreen from "../screens/NewReviewScreen/AccountSearchR
 import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen";
 import {TaskService} from "../backend/TaskService";
 import Initializing from "../components/Initializing";
+import TaskWorkerScreen from "../screens/WorkerMessageScreen/TaskWorkerScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -166,6 +167,15 @@ const RootRouter = props => {
                     component={AccountSearchReviewScreen}
                     options={{
                         headerShown: false,
+                    }}
+                />
+            )}
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
+                <Stack.Screen
+                    name={'TaskWorkerScreen'}
+                    component={TaskWorkerScreen}
+                    options={{
+                        headerShown: true,
                     }}
                 />
             )}

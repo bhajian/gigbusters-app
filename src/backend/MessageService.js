@@ -2,7 +2,6 @@ import {API, Auth, graphqlOperation} from "aws-amplify";
 import {listMessagesByTransactionId} from "../backend/graphql/queries";
 import {onCreateMessage} from "../backend/graphql/subscriptions";
 
-
 export class MessageService {
 
     constructor() {

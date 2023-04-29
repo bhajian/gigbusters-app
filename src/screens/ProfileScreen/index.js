@@ -109,8 +109,9 @@ const ProfileScreen = (props) => {
             <View style={styles.topContainer}>
                 <UserAvatar
                     size={80}
-                    name={name}
+                    userName={name}
                     src={image}
+                    backgroundColor={Colors.light.turquoise}
                 />
                 <Text style={styles.name} >
                     {name}

@@ -41,21 +41,16 @@ export default function NotificationScreen() {
 
     async function loadData() {
         setDataBeingLoaded(true)
-        const notificationsObj = await notificationService.queryNotifications({
-            limit: 20,
+        const notificationsObj = await notificationService.fetchNotifications({
+            limit: 100,
             lastEvaluatedKey: lastEvaluatedKey
         })
-        console.log(notificationsObj)
         setNotifications(notificationsObj)
         setDataBeingLoaded(false)
     }
 
-    async function onChatPressed(params) {
-        navigation.navigate('ConsumerChatScreen', params)
-    }
-
-    async function onProfilePressed(params) {
-        navigation.navigate('ReviewableProfileScreen', {reviewable: tipoffs[0]})
+    async function onPressed(params) {
+        // navigation.navigate('ConsumerChatScreen', params)
     }
 
     return (
@@ -65,18 +60,17 @@ export default function NotificationScreen() {
                     <Image source={loading2} style={styles.loading2} />
                     :
                     <FlatList
-                        data={tipoffs}
+                        data={notifications}
                         renderItem={({item}) => {
                             return(
                                 <NotificationItem
                                     notification={item}
                                     accountType={"WORKER"}
-                                    onChatPressed={onChatPressed}
-                                    onProfilePressed={onProfilePressed}
+                                    onPressed={onPressed}
                                 />
                             )
                         }}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item) => item?.notification?.id}
                     />
             }
         </SafeAreaView>

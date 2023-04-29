@@ -5,7 +5,7 @@ import {
     TouchableOpacity,
     TextInput,
     ScrollView,
-    KeyboardAvoidingView, Platform, StyleSheet, Image, Pressable, Keyboard,
+    KeyboardAvoidingView, Platform, StyleSheet, Image, Pressable, Keyboard, Alert,
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native";
 import {Ionicons, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
@@ -136,16 +136,25 @@ export default function RequestGigScreen(props) {
     }
 
     async function onImagePickerPress() {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: false,
-            aspect: [3, 3],
-            quality: 0.1,
-        })
-        const imageUri = result?.assets[0]?.uri
-        if (!result.canceled) {
-            setImages([...images, imageUri])
+        try{
+            let result = await ImagePicker.launchImageLibraryAsync({
+                mediaTypes: ImagePicker.MediaTypeOptions.All,
+                allowsEditing: false,
+                aspect: [3, 3],
+                quality: 0.1,
+            })
+            if(!result || !result?.assets || result?.assets?.length === 0){
+                return
+            }
+
+            const imageUri = result?.assets[0]?.uri
+            if (!result.canceled) {
+                setImages([...images, imageUri])
+            }
+        } catch (e) {
+            console.log(e)
         }
+
     }
 
     async function onDetailPress() {
@@ -166,46 +175,52 @@ export default function RequestGigScreen(props) {
     }
 
     async function submitRequest() {
-        setDataBeingSaved(true)
-        try{
-            if(params?.operation === 'create') {
-                await taskService.createTask({
-                    category: category,
-                    description: description,
-                    distance: distance,
-                    price: price,
-                    priceUnit: priceUnit,
-                    location: {
-                        latitude: location.latitude,
-                        longitude: location.longitude,
-                        locationName: location.locationName,
-                    },
-                    city: location.locationName,
-                    images: images
-                })
+
+        if(images?.length === 0){
+            Alert.alert('Please add a photo to your task posting.')
+        } else {
+
+            setDataBeingSaved(true)
+            try {
+                if (params?.operation === 'create') {
+                    await taskService.createTask({
+                        category: category,
+                        description: description,
+                        distance: distance,
+                        price: price,
+                        priceUnit: priceUnit,
+                        location: {
+                            latitude: location.latitude,
+                            longitude: location.longitude,
+                            locationName: location.locationName,
+                        },
+                        city: location.locationName,
+                        images: images
+                    })
+                }
+                if (params?.operation === 'edit') {
+                    await taskService.updateTask({
+                        id: params?.task?.id,
+                        category: category,
+                        description: description,
+                        distance: distance,
+                        price: price,
+                        priceUnit: priceUnit,
+                        location: {
+                            latitude: location.latitude,
+                            longitude: location.longitude
+                        },
+                        city: location.locationName,
+                        photos: photos,
+                        images: images
+                    })
+                }
+                navigation.navigate('RequestCompletedScreen')
+            } catch (e) {
+                console.log(e)
             }
-            if(params?.operation === 'edit') {
-                await taskService.updateTask({
-                    id: params?.task?.id,
-                    category: category,
-                    description: description,
-                    distance: distance,
-                    price: price,
-                    priceUnit: priceUnit,
-                    location: {
-                        latitude: location.latitude,
-                        longitude: location.longitude
-                    },
-                    city: location.locationName,
-                    photos: photos,
-                    images: images
-                })
-            }
-            navigation.navigate('RequestCompletedScreen')
-        } catch (e) {
-            console.log(e)
+            setDataBeingSaved(false)
         }
-        setDataBeingSaved(false)
     }
 
     return (
