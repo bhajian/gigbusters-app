@@ -13,7 +13,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import Entypo from "react-native-vector-icons/Entypo";
 
 export default function TaskWorkerScreen({navigation, route}) {
-    const {task} = (route.params ? route.params : '')
+    const {task, customer} = (route.params ? route.params : '')
 
     useEffect(() => {
         navigation.setOptions({
@@ -32,6 +32,7 @@ export default function TaskWorkerScreen({navigation, route}) {
         <ScrollView showsVerticalScrollIndicator={false} style={styles.root}>
             <WorkerTask
                 task={task}
+                customer={customer}
             />
         </ScrollView>
     );

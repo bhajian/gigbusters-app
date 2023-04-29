@@ -127,7 +127,10 @@ const WorkerChatScreen = (props) => {
     }
 
     async function onTaskPressed(params) {
-        navigation.navigate('TaskWorkerScreen', {task: transaction?.task})
+        navigation.navigate('TaskWorkerScreen', {
+            task: transaction?.task,
+            customer: transaction.customer
+        })
     }
 
     const header = () => {

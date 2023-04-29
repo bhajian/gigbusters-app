@@ -14,10 +14,13 @@ const WorkerTask = props => {
         priceUnit,
         city,
         country,
-        name,
-        profilePhotoURL,
         location
     } = props.task
+    const {
+        name,
+        profilePhotoURL
+    } = props.customer
+
 
     const [mapRegion, setmapRegion] = useState({
         latitude: location?.latitude,

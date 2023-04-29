@@ -2,7 +2,7 @@
   "expo": {
     "name": "gigbusters",
     "slug": "gigbusters",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -32,7 +32,7 @@
         "NSContactsUsageDescription": "We might need your contact list to invite them to the app only if you allow the app."
       },
       "bundleIdentifier": "com.orbitstellar.gigbusters",
-      "buildNumber": "6"
+      "buildNumber": "8"
     },
     "android": {
       "config": {
@@ -48,7 +48,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "package": "com.orbitstellar.gigbusters",
-      "versionCode": 6
+      "versionCode": 8
     },
     "web": {
       "favicon": "./assets/favicon.png"
