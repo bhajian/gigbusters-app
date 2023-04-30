@@ -167,11 +167,14 @@ export default function RequestGigScreen(props) {
     }
 
     const getValueFromBottomSheet = (props) => {
-        console.log(props.location)
         setCategory(props.category)
         setPrice(props.price)
         setDistance(props.distance)
-        setLocation(props.location)
+        setLocation({
+            locationName: props?.location?.locationName,
+            latitude: props?.location?.coordinates?.lat,
+            longitude: props?.location?.coordinates?.lng,
+        })
         inputTestRef?.current?.focus()
     }
 
@@ -190,11 +193,7 @@ export default function RequestGigScreen(props) {
                         distance: distance,
                         price: price,
                         priceUnit: priceUnit,
-                        location: {
-                            latitude: location.latitude,
-                            longitude: location.longitude,
-                            locationName: location.locationName,
-                        },
+                        location: location,
                         city: location.locationName,
                         images: images
                     })
@@ -207,10 +206,7 @@ export default function RequestGigScreen(props) {
                         distance: distance,
                         price: price,
                         priceUnit: priceUnit,
-                        location: {
-                            latitude: location.latitude,
-                            longitude: location.longitude
-                        },
+                        location: location,
                         city: location.locationName,
                         photos: photos,
                         images: images

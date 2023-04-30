@@ -14,16 +14,16 @@ export default function Footer({review}) {
 
     return (
         <View style={styles.container}>
-            <TouchableOpacity style={styles.iconContainer}>
+            <View style={styles.iconContainer}>
                 <Feather name={"message-circle"} size={25} color={Colors.light.tint}/>
                 <Text style={styles.number}>{review.numberOfReplies}</Text>
-            </TouchableOpacity>
+            </View>
             {/*<TouchableOpacity style={styles.iconContainer}>*/}
             {/*    <AntDesign name="hearto" size={20} color={Colors.light.tint} />*/}
             {/*</TouchableOpacity>*/}
-            <TouchableOpacity style={styles.iconContainer}>
+            <View style={styles.iconContainer}>
                 <EvilIcons name={"share-google"} size={35} color={Colors.light.tint}/>
-            </TouchableOpacity>
+            </View>
         </View>
     )
 }

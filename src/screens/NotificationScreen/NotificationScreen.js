@@ -50,6 +50,7 @@ export default function NotificationScreen() {
     }
 
     async function onPressed(params) {
+        console.log('Notification.')
         // navigation.navigate('ConsumerChatScreen', params)
     }
 

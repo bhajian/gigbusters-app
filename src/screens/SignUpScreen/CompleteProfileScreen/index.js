@@ -50,7 +50,13 @@ const CompleteProfileScreen = ({route, updateAuthState}) => {
                     verified: false // FIX me should be written in the server by default
                 },
                 location: location,
-                interestedCategories: categories
+                interestedCategories: categories,
+                settings: {
+                    allowPublicMessages: true,
+                    notifications: true,
+                    showMyEmailPublicly: true,
+                    showMyPhonePublicly: true,
+                }
             })
             updateAuthState('loggedIn')
         } catch (error) {

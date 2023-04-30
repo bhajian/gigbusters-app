@@ -7,8 +7,8 @@ import Colors from "../../constants/Colors";
 import loading from "../../../assets/images/loading2.gif";
 
 export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
-    const [locationName, setLocationName] = useState((locationNameParam
-        ? locationNameParam : 'Select a Location ..'))
+    const [locationName, setLocationName] = useState(locationNameParam
+        ? locationNameParam : 'Select a Location ..')
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [coordinates, setCoordinates] = useState({
         latitude: 0, logitude: 0})
@@ -30,13 +30,13 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
         });
     }
 
-    useEffect(() => {
-        loadData().then(r => {})
-    }, [loadData, locationNameParam])
-
-    async function loadData() {
-
-    }
+    // useEffect(() => {
+    //     loadData().then(r => {})
+    // }, [loadData, locationNameParam])
+    //
+    // async function loadData() {
+    //
+    // }
 
     return (
         <View style={[style, styles.container]}>

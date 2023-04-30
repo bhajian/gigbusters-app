@@ -12,22 +12,25 @@ import customerImage from '../../../assets/images/customer.png'
 
 const profileService = new ProfileService()
 const ProfileScreen = (props) => {
-    const navigation = useNavigation();
+    const navigation = useNavigation()
+    const profile = profileService.getProfile()
+
     const [name, setName] = useState('');
     const [accountCode, setAccountCode] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [locationName, setLocationName] = useState('')
+    const [locationName, setLocationName] = useState(profile?.location?.locationName)
     const [accountType, setAccountType] = useState('CONSUMER')
     const [image, setImage] = useState(null);
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
+            loadData()
         })
+        return unsubscribe
     }, [])
 
-    async function loadData() {
+    function loadData() {
         const profile = profileService.getProfile()
         if(profile && profile.accountCode){
             setAccountCode(profile.accountCode)
