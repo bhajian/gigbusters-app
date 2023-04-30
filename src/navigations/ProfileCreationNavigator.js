@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import {createStackNavigator} from '@react-navigation/stack'
 import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen"
 import CompleteProfileScreen from "../screens/SignUpScreen/CompleteProfileScreen";
+import LocationSelectorScreen from "../components/LocationSearch/LocationSelectorScreen";
 
 const ProfileCreationStack = createStackNavigator()
 
@@ -30,6 +31,14 @@ const ProfileCreationNavigator = props => {
                 )}
 
             </ProfileCreationStack.Screen>
+            <ProfileCreationStack.Screen
+                name={'LocationSelectorScreen'}
+                component={LocationSelectorScreen}
+                options={{
+                    headerShown: false,
+                    animation: "fade_from_bottom",
+                }}
+            />
         </ProfileCreationStack.Navigator>
     );
 };

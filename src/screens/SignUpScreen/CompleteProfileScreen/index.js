@@ -6,11 +6,13 @@ import Lottie from "lottie-react-native";
 import Colors from "../../../constants/Colors";
 import {ProfileService} from "../../../backend/ProfileService";
 import CategoryMultiSelector from "../../../components/CategoryMultiSelector";
+import {LocationSelector} from "../../../components/LocationSearch";
 
 const CompleteProfileScreen = ({route, updateAuthState}) => {
     const profile = route?.params
     const [accountType, setAccountType] = useState('CONSUMER')
     const [categories, setCategories] = useState([])
+    const [location, setLocation] = useState({})
     const profileService = new ProfileService()
 
     const onCategoriesChanged = async(params) => {
@@ -21,10 +23,20 @@ const CompleteProfileScreen = ({route, updateAuthState}) => {
         setCategories(catList)
     }
 
+    const onLocationChangePressed = async(props) => {
+        setLocation({
+            locationName: props.locationName,
+            latitude: props.coordinates.lat,
+            longitude: props.coordinates.lng,
+        })
+    }
+
     async function onCompletePressed() {
         try {
+            if(!location?.locationName ){
+                throw new Error('Please select your location.')
+            }
             updateAuthState('initializing')
-
             await profileService.createProfile({
                 name: profile.name,
                 subscription: profile.subscription,
@@ -37,6 +49,7 @@ const CompleteProfileScreen = ({route, updateAuthState}) => {
                     phone: profile.phone,
                     verified: false // FIX me should be written in the server by default
                 },
+                location: location,
                 interestedCategories: categories
             })
             updateAuthState('loggedIn')
@@ -55,13 +68,25 @@ const CompleteProfileScreen = ({route, updateAuthState}) => {
                     loop
                 />
                 <View style={styles.form}>
-                    <View style={styles.categoriesContainer}>
-                        <CategoryMultiSelector
-                            onSelectionChanged={onCategoriesChanged}
-                            selectedItems={categories}
+                    {
+                        profile.accountType === 'WORKER' ?
+                            <View style={styles.categoriesContainer}>
+                                <CategoryMultiSelector
+                                    onSelectionChanged={onCategoriesChanged}
+                                    selectedItems={categories}
+                                />
+                            </View>
+                            :
+                            <View></View>
+
+                    }
+
+                    <View style={styles.locationContainer}>
+                        <LocationSelector
+                            onLocationChangePressed={onLocationChangePressed}
+                            locationNameParam={location.locationName}
                         />
                     </View>
-
                 </View>
                 <CustomButton
                     text="Finish"

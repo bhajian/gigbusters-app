@@ -1,4 +1,4 @@
-import {Pressable, SafeAreaView, View} from "react-native";
+import {Alert, Pressable, SafeAreaView, View} from "react-native";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {TaskService} from "../../backend/TaskService";
 import MatchingCard from "../../components/MatchingCard";
@@ -67,6 +67,7 @@ const MatchingCards = () => {
             setCardList(tasksObj)
         }catch (e) {
             console.log(e)
+            Alert.alert(e)
         }
     }
 
@@ -78,6 +79,7 @@ const MatchingCards = () => {
             })
         } catch (e) {
             console.log(e)
+            Alert.alert(e)
         }
     }
 
@@ -92,7 +94,11 @@ const MatchingCards = () => {
         }
     }
     async function onRightPressed() {
-        swiperRef.current.swipeRight()
+        try{
+            swiperRef.current.swipeRight()
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     async function onLeftPressed() {

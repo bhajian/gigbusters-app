@@ -1,10 +1,11 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Pressable, Image} from 'react-native';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from "react-native-vector-icons/Entypo";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+
 
 const CustomButton = ({
   onPress,
@@ -16,6 +17,8 @@ const CustomButton = ({
   iconName,
   iconStyle,
   style,
+  imageUrl,
+  imageStyle
 }) => {
   const renderIcon = (iconCategory, iconName) => {
     if (iconCategory === 'Fontisto') {
@@ -33,7 +36,11 @@ const CustomButton = ({
     if (iconCategory === 'FontAwesome') {
       return <FontAwesome style={[styles.icon, iconStyle]} name={iconName} />;
     }
-  };
+  }
+
+  const renderImage = () => {
+    return <Image source={imageUrl} style={imageStyle} />
+  }
 
   return (
     <Pressable
@@ -44,7 +51,6 @@ const CustomButton = ({
         styles[`container_${type}`],
         bgColor ? {backgroundColor: bgColor} : {},
       ]}>
-
       <Text
         style={[
           styles.text,
@@ -54,20 +60,20 @@ const CustomButton = ({
         {text}
       </Text>
       {renderIcon(iconCategory, iconName)}
+      {renderImage()}
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    // width: '100%',
     padding: 10,
     marginVertical: 5,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 10,
     justifyContent: 'center',
-
+    height: 45
   },
   icon: {
     padding: 0,

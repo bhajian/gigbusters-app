@@ -40,6 +40,8 @@ export default function ConsumerMessageListScreen() {
                     active
                     userName={profileName}
                     src={profileImage}
+                    fontSize={20}
+                    backgroundColor={Colors.light.turquoise}
                 />
             ),
         })

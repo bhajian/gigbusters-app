@@ -2,15 +2,13 @@ import {AppState, Linking, StyleSheet, Text, View} from 'react-native';
 import awsconfig from './src/backend/aws-exports';
 import {Amplify, Auth, Hub} from "aws-amplify";
 import React, {useEffect, useRef, useState} from "react";
-import {NavigationContainer, useNavigation} from "@react-navigation/native";
+import {NavigationContainer} from "@react-navigation/native";
 import RootRouter from "./src/navigations/RootRouter";
 import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
 import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
 import {ProfileService} from "./src/backend/ProfileService";
 import Initializing from "./src/components/Initializing";
 import * as WebBrowser from "expo-web-browser";
-
-
 
 async function urlOpener(url, redirectUrl) {
     try {
@@ -20,7 +18,6 @@ async function urlOpener(url, redirectUrl) {
             url,
             redirectUrl
         )
-
         if (type === "success" && Platform.OS === "ios") {
             WebBrowser.dismissBrowser()
             return Linking.openURL(newUrl)
@@ -38,6 +35,25 @@ export default function App() {
 
     const [userStatus, setUserStatus] = useState('initializing')
 
+    useEffect(() => {
+        const subscription = AppState.addEventListener("change", nextAppState => {
+            if (
+                appState.current.match(/inactive|background/) &&
+                nextAppState === "active"
+            ) {
+                checkAuthState()
+                    .then(() => {
+                    })
+                    .catch(e => {
+                        console.error(e)
+                    })
+            }
+            appState.current = nextAppState
+        })
+        return () => {
+            subscription.remove()
+        }
+    }, [])
 
     useEffect(() => {
         const unsubscribe = Hub.listen("auth",

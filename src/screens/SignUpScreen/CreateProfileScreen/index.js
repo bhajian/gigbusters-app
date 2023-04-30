@@ -6,7 +6,7 @@ import {useNavigation} from '@react-navigation/native';
 import profileAnim from "../../../../assets/animations/67352-profile-creation-loader.json";
 import Lottie from "lottie-react-native";
 import {RadioButton} from "react-native-paper";
-import {FontAwesome5, MaterialCommunityIcons, MaterialIcons} from "@expo/vector-icons";
+import {MaterialIcons} from "@expo/vector-icons";
 import Colors from "../../../constants/Colors";
 import {Auth} from "aws-amplify";
 import {ProfileService} from "../../../backend/ProfileService";
@@ -20,7 +20,6 @@ const CreateProfileScreen = (props) => {
     const [phone, setPhone] = useState('')
     const [name, setName] = useState('')
     const [accountType, setAccountType] = useState('CONSUMER')
-    const profileService = new ProfileService()
     const navigation = useNavigation()
 
     async function onNextPressed() {

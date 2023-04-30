@@ -143,7 +143,7 @@ export default function RequestGigScreen(props) {
                 aspect: [3, 3],
                 quality: 0.1,
             })
-            if(!result || !result?.assets || result?.assets?.length === 0){
+            if(!result || !result?.assets){
                 return
             }
 
@@ -167,6 +167,7 @@ export default function RequestGigScreen(props) {
     }
 
     const getValueFromBottomSheet = (props) => {
+        console.log(props.location)
         setCategory(props.category)
         setPrice(props.price)
         setDistance(props.distance)
@@ -235,7 +236,9 @@ export default function RequestGigScreen(props) {
                         <UserAvatar
                             size={35}
                             active
-                            name={profileName}
+                            fontSize={20}
+                            backgroundColor={Colors.light.turquoise}
+                            userName={profileName}
                             src={profileImage}
                         />
                         <View style={styles.taskOwnerName} onPress={onAnythingElsePress}>

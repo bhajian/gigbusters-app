@@ -10,7 +10,7 @@ import {
 import {useNavigation} from "@react-navigation/native";
 import CustomSettingRowButton from "../../../components/CustomSettingRowButton";
 import CustomSettingRow from "../../../components/CustomSettingRow";
-import UserAvatar from 'react-native-user-avatar';
+import UserAvatar from "@muhzi/react-native-user-avatar";
 import {ProfileService} from "../../../backend/ProfileService";
 import Colors from "../../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
@@ -18,7 +18,6 @@ import * as ImagePicker from "expo-image-picker";
 import {Auth, Storage} from 'aws-amplify';
 import loading from '../../../../assets/images/loading2.gif'
 import CategoryMultiSelector from "../../../components/CategoryMultiSelector";
-import CustomSettingRowSwitch from "../../../components/CustomSettingRowSwitch";
 
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
@@ -163,7 +162,8 @@ const EditProfileScreen = (props) => {
                     userName={name}
                     style={styles.avatar}
                     src={image}
-                    fontSize={50}
+                    fontSize={40}
+                    backgroundColor={Colors.light.turquoise}
                 />
                 {
                     dataBeingSaved ?

@@ -13,7 +13,6 @@ import loading2 from "../../../assets/images/loading2.gif";
 
 export default function RequestActivityScreen({route}) {
     const taskService = new TaskService()
-    // const tasksObj = taskService.getMyTasks()
 
     const [requestList, setRequestList] = useState([])
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)

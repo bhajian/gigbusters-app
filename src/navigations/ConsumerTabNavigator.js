@@ -64,6 +64,8 @@ const ConsumerTabNavigator = props => {
                         <UserAvatar
                             size={35}
                             active
+                            fontSize={20}
+                            backgroundColor={Colors.light.turquoise}
                             userName={profileName}
                             src={profileImage}
                         />

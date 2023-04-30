@@ -4,7 +4,7 @@ import {API, Auth} from "aws-amplify";
 import CustomButton from "../../components/CustomButton";
 import {useIsFocused, useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
-import UserAvatar from 'react-native-user-avatar';
+import UserAvatar from "@muhzi/react-native-user-avatar";
 import {LocationSelector} from "../../components/LocationSearch";
 import {ProfileService} from "../../backend/ProfileService";
 import workerImage from '../../../assets/images/worker.png'
@@ -17,11 +17,9 @@ const ProfileScreen = (props) => {
     const [accountCode, setAccountCode] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [locationName, setLocationName] = useState('');
+    const [locationName, setLocationName] = useState('')
     const [accountType, setAccountType] = useState('CONSUMER')
     const [image, setImage] = useState(null);
-
-
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -112,6 +110,7 @@ const ProfileScreen = (props) => {
                     userName={name}
                     src={image}
                     backgroundColor={Colors.light.turquoise}
+                    fontSize={40}
                 />
                 <Text style={styles.name} >
                     {name}

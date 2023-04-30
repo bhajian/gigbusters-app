@@ -31,11 +31,11 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
     }
 
     useEffect(() => {
-        getCurrentUserData().then(r => {})
-    }, [getCurrentUserData]);
+        loadData().then(r => {})
+    }, [loadData, locationNameParam])
 
-    async function getCurrentUserData() {
-        setLocationName(locationNameParam)
+    async function loadData() {
+
     }
 
     return (

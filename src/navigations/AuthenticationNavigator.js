@@ -3,11 +3,9 @@ import SignIn from '../screens/SignInScreen';
 import SignUp from '../screens/SignUpScreen';
 import VerificationScreen from '../screens/VerificationScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import CreateProfileScreen from "../screens/SignUpScreen/CreateProfileScreen";
 import ForgetPasswordScreen from "../screens/ForgotPassword";
 import PasswordResetScreen from "../screens/ForgotPassword/PasswordResetScreen";
 import FirstScreen from "../screens/FirstScreen";
-import CompleteProfileScreen from "../screens/SignUpScreen/CompleteProfileScreen";
 
 const AuthenticationStack = createStackNavigator();
 

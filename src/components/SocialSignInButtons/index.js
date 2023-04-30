@@ -15,7 +15,6 @@ const SocialSignInButtons = () => {
         } catch (e) {
             alert(e)
         }
-
     }
 
     const onSignInApple = () => {
