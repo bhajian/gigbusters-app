@@ -5,8 +5,6 @@ import {
     Text, TextInput, Image,
 } from 'react-native';
 import Colors from '../../../../constants/Colors';
-import {useNavigation} from "@react-navigation/native";
-import users from '../../../../../assets/data/users';
 
 export default function RequestDetailTopContainer({task}) {
 

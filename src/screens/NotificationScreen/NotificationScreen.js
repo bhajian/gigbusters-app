@@ -5,7 +5,6 @@ import {
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native"
 import loading2 from "../../../assets/images/loading2.gif";
-import tipoffs from "../../../assets/data/tipoffs";
 import Colors from "../../constants/Colors";
 import {Ionicons} from "@expo/vector-icons";
 import NotificationItem from "../../components/NotificationItem";

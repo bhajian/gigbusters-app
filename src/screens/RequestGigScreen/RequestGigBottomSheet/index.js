@@ -148,7 +148,7 @@ export default function GigRequestBottomSheet({
                                         thumbTintColor={Colors.light.turquoise}
                                     />
                                     <LocationSelector
-                                        locationNameParam={location.locationName}
+                                        locationNameParam={location?.locationName}
                                         onLocationChangePressed={onLocationChangePressed}
                                         style={{marginTop: 10}}
                                     />

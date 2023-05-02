@@ -34,7 +34,7 @@ export default function RequestGigScreen(props) {
     ))
     const [location, setLocation] = useState((operation === 'edit' ?
             params?.task?.location :
-            ''
+            undefined
     ))
     const [distance, setDistance] = useState([50])
     const [description, setDescription] = useState((operation === 'edit' ?
@@ -73,7 +73,7 @@ export default function RequestGigScreen(props) {
         if(profile && profile.name){
             setProfileName(profile.name)
         }
-        if(profile && profile.location && profile.location){
+        if(location === undefined && profile && profile.location && profile.location){
             setLocation(profile.location)
         }
         if(profile && profile.photos){
@@ -194,7 +194,7 @@ export default function RequestGigScreen(props) {
                         price: price,
                         priceUnit: priceUnit,
                         location: location,
-                        city: location.locationName,
+                        city: location?.locationName,
                         images: images
                     })
                 }
@@ -207,7 +207,7 @@ export default function RequestGigScreen(props) {
                         price: price,
                         priceUnit: priceUnit,
                         location: location,
-                        city: location.locationName,
+                        city: location?.locationName,
                         photos: photos,
                         images: images
                     })
@@ -254,7 +254,7 @@ export default function RequestGigScreen(props) {
 
                 <View style={styles.tagsContainer}>
                     <View style={styles.tag}>
-                        <Text style={styles.text} >{location.locationName}</Text>
+                        <Text style={styles.text} >{location?.locationName}</Text>
                     </View>
                     <View style={styles.tag}>
                         <Text style={styles.text} >{price}$/hr</Text>

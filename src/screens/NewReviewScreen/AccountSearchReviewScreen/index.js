@@ -6,11 +6,9 @@ import PhoneInput from "react-phone-number-input/react-native-input";
 import SocialNetworkSelector from "../SocialNetworkSelector";
 import Entypo from "react-native-vector-icons/Entypo";
 import {FontAwesome5, MaterialCommunityIcons} from "@expo/vector-icons";
-import CustomButton from "../../../components/CustomButton";
 import loading2 from "../../../../assets/images/loading2.gif";
 import ProfileListItem from "../../../components/ProfileListItem";
 import {ProfileService} from "../../../backend/ProfileService";
-import tipoffs from "../../../../assets/data/tipoffs";
 
 const SocialIcon = ({ name }) => {
     if(name === 'gigbusters'){

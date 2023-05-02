@@ -3,8 +3,6 @@ import {Button, FlatList, Image, Pressable, StyleSheet, Text, View} from "react-
 import {BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView} from "@gorhom/bottom-sheet";
 import Feather from "react-native-vector-icons/Feather";
 import loading2 from "../../../../assets/images/loading2.gif";
-import tipoffs from "../../../../assets/data/tipoffs";
-import MessageItem from "../../../components/MessageItem";
 import {useNavigation} from "@react-navigation/native";
 import ProfileListItem from "../../../components/ProfileListItem";
 import {ProfileService} from "../../../backend/ProfileService";

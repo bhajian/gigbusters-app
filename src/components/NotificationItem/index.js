@@ -3,13 +3,25 @@ import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} f
 import Colors from "../../constants/Colors";
 import {AntDesign} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
+import {useNavigation} from "@react-navigation/native";
 
 export default function NotificationItem({notification, onPressed}) {
+
+    const navigation = useNavigation()
+
+    async function onNotificationPressed(params) {
+        // if(notification?.notification.type === 'NEW_APPLICATION'){
+        //     navigation.navigate('ConsumerChatScreen', {
+        //         transactionId: notification?.notification?.objectId
+        //     })
+        // }
+
+    }
 
     return (
         <View style={styles.container}>
             <View style={styles.mainContainer}>
-                <TouchableOpacity style={styles.leftContainer} onPress={e=>onPressed()}>
+                <TouchableOpacity style={styles.leftContainer} onPress={e=>onNotificationPressed()}>
                     <UserAvatar
                         size={35}
                         userName={notification?.subject?.name}
@@ -31,8 +43,7 @@ export default function NotificationItem({notification, onPressed}) {
                             }
                             {
                                 (notification?.notification.type === 'NEW_APPLICATION' &&
-                                    (notification?.subject?.name + ' submitted an application for the task you posted: \n'+
-                                        'sometask'
+                                    (notification?.subject?.name + ' submitted an application for the task you posted. \n'
                                     )
                                 )
                             }
