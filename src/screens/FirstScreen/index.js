@@ -12,6 +12,7 @@ import Lottie from "lottie-react-native"
 import {Auth} from "aws-amplify";
 import {CognitoHostedUIIdentityProvider} from "@aws-amplify/auth"
 import google from "../../../assets/images/google-logo.png"
+import Colors from "../../constants/Colors";
 
 export default function FirstScreen() {
 
@@ -52,10 +53,14 @@ export default function FirstScreen() {
                     <CustomButton
                         text="Sign In With Gmail"
                         onPress={onSignInGoogle}
-                        bgColor="#E3E8F1"
+                        bgColor="#FFFFFF"
                         fgColor="#5B67CA"
                         imageUrl={google}
                         imageStyle={{width: 25, height: 25}}
+                        style={{
+                                borderWidth: 1,
+                                borderColor: Colors.light.tint
+                            }}
                     />
                     <CustomButton
                         text="Sign Up"

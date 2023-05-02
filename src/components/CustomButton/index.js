@@ -5,6 +5,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Entypo from "react-native-vector-icons/Entypo";
 import {MaterialCommunityIcons} from "@expo/vector-icons";
+import Colors from "../../constants/Colors";
 
 
 const CustomButton = ({
@@ -57,7 +58,7 @@ const CustomButton = ({
           styles[`text_${type}`],
           fgColor ? {color: fgColor} : {},
         ]}>
-        {text}
+        {text+ ' '}
       </Text>
       {renderIcon(iconCategory, iconName)}
       {renderImage()}
@@ -73,7 +74,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     justifyContent: 'center',
-    height: 45
+    height: 45,
   },
   icon: {
     padding: 0,
