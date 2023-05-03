@@ -1,14 +1,16 @@
-import {AppState, Linking, StyleSheet, Text, View} from 'react-native';
-import awsconfig from './src/backend/aws-exports';
-import {Amplify, Auth, Hub} from "aws-amplify";
-import React, {useEffect, useRef, useState} from "react";
-import {NavigationContainer} from "@react-navigation/native";
-import RootRouter from "./src/navigations/RootRouter";
-import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator";
-import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator";
-import {ProfileService} from "./src/backend/ProfileService";
-import Initializing from "./src/components/Initializing";
-import * as WebBrowser from "expo-web-browser";
+import {AppState, Linking, Platform, StyleSheet} from 'react-native'
+import awsconfig from './src/backend/aws-exports'
+import {Amplify, Auth, Hub} from "aws-amplify"
+import React, {useEffect, useRef, useState} from "react"
+import {NavigationContainer} from "@react-navigation/native"
+import RootRouter from "./src/navigations/RootRouter"
+import AuthenticationNavigator from "./src/navigations/AuthenticationNavigator"
+import ProfileCreationNavigator from "./src/navigations/ProfileCreationNavigator"
+import {ProfileService} from "./src/backend/ProfileService"
+import Initializing from "./src/components/Initializing"
+import * as WebBrowser from "expo-web-browser"
+import * as Notifications from 'expo-notifications'
+import * as Device from 'expo-device'
 
 async function urlOpener(url, redirectUrl) {
     try {
@@ -29,10 +31,22 @@ async function urlOpener(url, redirectUrl) {
 awsconfig.Auth.oauth.urlOpener = urlOpener
 
 Amplify.configure(awsconfig)
+
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: true,
+        shouldSetBadge: true,
+    }),
+})
 export default function App() {
     const profileService = new ProfileService()
     const appState = useRef(AppState.currentState)
+    const notificationListener = useRef()
+    const responseListener = useRef()
 
+    const [expoPushToken, setExpoPushToken] = useState('')
+    const [notification, setNotification] = useState(false)
     const [userStatus, setUserStatus] = useState('initializing')
 
     useEffect(() => {
@@ -88,6 +102,8 @@ export default function App() {
                     (profile.accountType === 'CONSUMER' || profile.accountType === 'WORKER')
                     && profile.active) {
                     setUserStatus('loggedIn')
+                    await setPushNotificationsAsync(profile)
+                    await schedulePushNotification()
                 } else {
                     setUserStatus('profileCreation')
                 }
@@ -98,6 +114,71 @@ export default function App() {
             // console.error(err)
             setUserStatus('loggedOut')
         }
+    }
+
+    async function schedulePushNotification() {
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: "Welcome to gigbusters",
+                body: 'Here is the notification body',
+                data: { data: 'goes here' },
+                sound: 'notification.wav',
+                badge: 1,
+            },
+            trigger: { seconds: 1 },
+        })
+    }
+
+    async function setPushNotificationsAsync(profile) {
+        const token = await registerForPushNotificationsAsync()
+        if(token){
+            profile.notificationToken = token
+            await profileService.updateProfile(profile)
+
+            notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
+                setNotification(notification)
+            })
+            responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
+                // console.log(response)
+            })
+            return () => {
+                Notifications.removeNotificationSubscription(notificationListener.current)
+                Notifications.removeNotificationSubscription(responseListener.current)
+            }
+        }
+        return undefined
+    }
+
+    async function registerForPushNotificationsAsync() {
+        let token
+
+        if (Device.modelName === 'android') {
+            await Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+
+        if (Device.isDevice) {
+            const { status: existingStatus } = await Notifications.getPermissionsAsync()
+            let finalStatus = existingStatus
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!')
+                return
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data
+            console.log(token)
+        } else {
+            return undefined
+        }
+
+        return token
     }
 
     function updateAuthState(userStatus) {

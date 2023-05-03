@@ -59,6 +59,12 @@
         {
           "photosPermission": "The app accesses your photos to select a task related photo."
         }
+      ],
+      [
+        "expo-notifications",
+        {
+          "sounds": ["./assets/sounds/notification.wav"]
+        }
       ]
     ],
     "extra": {
