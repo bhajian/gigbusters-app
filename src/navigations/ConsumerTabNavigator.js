@@ -13,8 +13,6 @@ import NotificationScreen from "../screens/NotificationScreen/NotificationScreen
 import RequestActivityScreen from "../screens/RequestActivityScreen"
 import UserAvatar from "@muhzi/react-native-user-avatar"
 import {ProfileService} from "../backend/ProfileService"
-import {useNavigation} from "@react-navigation/native"
-import * as Notifications from 'expo-notifications'
 
 const Tab = createBottomTabNavigator()
 const TopTab = createMaterialTopTabNavigator()
@@ -40,48 +38,15 @@ const TopTabNavigator = () => {
                 }}
             />
         </TopTab.Navigator>
-    );
-};
+    )
+}
 
 const ConsumerTabNavigator = props => {
     const profileService = new ProfileService()
     const profile = profileService.getProfile()
-    const navigation = useNavigation()
-
 
     const [profileName, setProfileName] = useState(profile.name)
     const [profileImage, setProfileImage] = useState(profile.mainPhotoUrl)
-
-    useEffect(() => {
-        const notificationInteractionSubscription =
-            Notifications.addNotificationResponseReceivedListener(
-            response => {
-                handleNewNotification(response.notification, () =>
-                    navigation.navigate('Notifications')
-                ).then(r => {})
-            }
-        )
-        return () => {
-            notificationInteractionSubscription.remove()
-        }
-    }, [])
-
-    const handleNewNotification = async notificationObject => {
-        try {
-            const newNotification = {
-                id: notificationObject.messageId,
-                date: notificationObject.sentTime,
-                title: notificationObject.data.title,
-                body: notificationObject.data.message,
-                data: JSON.parse(notificationObject.data.body),
-            }
-            // add the code to do what you need with the received notification  and, e.g., set badge number on app icon
-            console.log(newNotification)
-            await Notifications.setBadgeCountAsync(1)
-        } catch (error) {
-            console.error(error)
-        }
-    }
 
     return (
         <Tab.Navigator screenOptions={{}}>

@@ -17,8 +17,12 @@ const SocialSignInButtons = () => {
         }
     }
 
-    const onSignInApple = () => {
-        console.warn('onSignInApple');
+    const onSignInApple = async () => {
+        try{
+            await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Apple,})
+        } catch (e) {
+            alert(e)
+        }
     }
 
     return (
@@ -48,14 +52,14 @@ const SocialSignInButtons = () => {
                     />
                 </Pressable>
 
-                {/*<Pressable*/}
-                {/*    onPress={onSignInFacebook}*/}
-                {/*    style={styles.APPL_container}>*/}
-                {/*    <FontAwesome5*/}
-                {/*        style={styles.icon}*/}
-                {/*        name={"apple"}*/}
-                {/*    />*/}
-                {/*</Pressable>*/}
+                <Pressable
+                    onPress={onSignInApple}
+                    style={styles.APPL_container}>
+                    <FontAwesome5
+                        style={styles.icon}
+                        name={"apple"}
+                    />
+                </Pressable>
             </View>
         </>
     );
