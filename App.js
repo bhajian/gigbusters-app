@@ -45,7 +45,6 @@ export default function App() {
     const notificationListener = useRef()
     const responseListener = useRef()
 
-    const [expoPushToken, setExpoPushToken] = useState('')
     const [notification, setNotification] = useState(false)
     const [userStatus, setUserStatus] = useState('initializing')
 
@@ -103,7 +102,6 @@ export default function App() {
                     && profile.active) {
                     setUserStatus('loggedIn')
                     await setPushNotificationsAsync(profile)
-                    await schedulePushNotification()
                 } else {
                     setUserStatus('profileCreation')
                 }
@@ -116,19 +114,6 @@ export default function App() {
         }
     }
 
-    async function schedulePushNotification() {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "Welcome to gigbusters",
-                body: 'Here is the notification body',
-                data: { data: 'goes here' },
-                sound: 'notification.wav',
-                badge: 1,
-            },
-            trigger: { seconds: 1 },
-        })
-    }
-
     async function setPushNotificationsAsync(profile) {
         const token = await registerForPushNotificationsAsync()
         if(token){
@@ -136,7 +121,7 @@ export default function App() {
             await profileService.updateProfile(profile)
 
             notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-                setNotification(notification)
+                // setNotification(notification)
             })
             responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
                 // console.log(response)
@@ -151,7 +136,6 @@ export default function App() {
 
     async function registerForPushNotificationsAsync() {
         let token
-
         if (Device.modelName === 'android') {
             await Notifications.setNotificationChannelAsync('default', {
                 name: 'default',
@@ -160,7 +144,6 @@ export default function App() {
                 lightColor: '#FF231F7C',
             });
         }
-
         if (Device.isDevice) {
             const { status: existingStatus } = await Notifications.getPermissionsAsync()
             let finalStatus = existingStatus
@@ -177,7 +160,6 @@ export default function App() {
         } else {
             return undefined
         }
-
         return token
     }
 

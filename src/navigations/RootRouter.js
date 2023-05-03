@@ -42,9 +42,11 @@ const RootRouter = props => {
                 limit: 500,
             })
             setDataLoaded(true)
+
         } catch (e) {
             console.log(e)
         }
+
     }
     function updateAccountType(type) {
         setAccountType(type)
