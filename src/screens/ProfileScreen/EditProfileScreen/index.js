@@ -5,7 +5,7 @@ import {
     Pressable,
     StyleSheet,
     ScrollView,
-    Image,
+    Image, Linking,
 } from "react-native";
 import {useNavigation} from "@react-navigation/native";
 import CustomSettingRowButton from "../../../components/CustomSettingRowButton";
@@ -18,6 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import {Auth, Storage} from 'aws-amplify';
 import loading from '../../../../assets/images/loading2.gif'
 import CategoryMultiSelector from "../../../components/CategoryMultiSelector";
+import CustomSettingInfoRow from "../../../components/CustomSettingInfoRow";
 
 const profileService = new ProfileService()
 const EditProfileScreen = (props) => {
@@ -214,8 +215,7 @@ const EditProfileScreen = (props) => {
                     iconCategory="FontAwesome5"
                     iconName="phone"
                 />
-                <CustomSettingRowButton
-                    // onPress={onEditEmailPressed}
+                <CustomSettingInfoRow
                     name="Email"
                     value={email}
                     iconCategory="FontAwesome5"
@@ -229,6 +229,7 @@ const EditProfileScreen = (props) => {
                     iconName="cog"
                 />
                 <CustomSettingRowButton
+                    onPress={ ()=>{ Linking.openURL('https://gigbusters.app/?p=1638')}}
                     name="Help"
                     value=""
                     iconCategory="FontAwesome5"

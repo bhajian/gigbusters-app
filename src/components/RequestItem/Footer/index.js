@@ -6,7 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Colors from "../../../constants/Colors";
 
-export default function Footer({review}) {
+export default function Footer({review, onSharePressed}) {
 
     const [user, setUser] = useState(null);
     const [myLike, setMyLike] = useState(null);
@@ -21,9 +21,9 @@ export default function Footer({review}) {
             {/*<TouchableOpacity style={styles.iconContainer}>*/}
             {/*    <AntDesign name="hearto" size={20} color={Colors.light.tint} />*/}
             {/*</TouchableOpacity>*/}
-            <View style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconContainer} onPress={onSharePressed}>
                 <EvilIcons name={"share-google"} size={35} color={Colors.light.tint}/>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }

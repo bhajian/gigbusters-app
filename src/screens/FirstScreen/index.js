@@ -12,6 +12,7 @@ import Lottie from "lottie-react-native"
 import {Auth} from "aws-amplify";
 import {CognitoHostedUIIdentityProvider} from "@aws-amplify/auth"
 import google from "../../../assets/images/google-logo.png"
+import apple from "../../../assets/images/apple-logo.png"
 import Colors from "../../constants/Colors";
 
 export default function FirstScreen() {
@@ -34,6 +35,14 @@ export default function FirstScreen() {
         }
     }
 
+    const onSignInApple = async () => {
+        try{
+            await Auth.federatedSignIn({provider: CognitoHostedUIIdentityProvider.Apple,})
+        } catch (e) {
+            alert(e)
+        }
+    }
+
 
     return (
         <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: "#ffffff"}}>
@@ -51,6 +60,12 @@ export default function FirstScreen() {
                     </Text>
                     <CustomButton text="Sign In" onPress={onSignInPressed} />
                     <CustomButton
+                        text="Sign Up"
+                        onPress={onSignUpPressed}
+                        bgColor="#E3E8F1"
+                        fgColor="#5B67CA"
+                    />
+                    <CustomButton
                         text="Sign In With Gmail"
                         onPress={onSignInGoogle}
                         bgColor="#FFFFFF"
@@ -63,11 +78,18 @@ export default function FirstScreen() {
                             }}
                     />
                     <CustomButton
-                        text="Sign Up"
-                        onPress={onSignUpPressed}
-                        bgColor="#E3E8F1"
+                        text="Sign In With Apple"
+                        onPress={onSignInApple}
+                        bgColor="#FFFFFF"
                         fgColor="#5B67CA"
+                        imageUrl={apple}
+                        imageStyle={{width: 25, height: 25, margin: 5}}
+                        style={{
+                            borderWidth: 1,
+                            borderColor: Colors.light.tint
+                        }}
                     />
+
                 </View>
             </View>
 

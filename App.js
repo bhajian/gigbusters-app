@@ -20,7 +20,7 @@ async function urlOpener(url, redirectUrl) {
             url,
             redirectUrl
         )
-        if (type === "success" && Platform.OS === "ios") {
+        if (type === "success" && Device.modelName === "ios") {
             WebBrowser.dismissBrowser()
             return Linking.openURL(newUrl)
         }
