@@ -11,29 +11,41 @@ import {
     createMessage,
 } from "../../backend/graphql/mutations"
 import {API, graphqlOperation} from "aws-amplify";
+import {TaskService} from "../../backend/TaskService";
 
 const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
-    const [text, setText] = useState("");
-    const [files, setFiles] = useState([]);
-    const [progresses, setProgresses] = useState({});
+    const taskService = new TaskService()
 
-    async function onSendPressed(params) {
-        try{
-            const newMessage = {
-                transactionId: transactionId,
-                message: text,
-                fromUserId: fromUserId,
-                toUserId: toUserId,
-                dateTime: (new Date()).toISOString()
+    const [text, setText] = useState("")
+    const [files, setFiles] = useState([])
+    const [progresses, setProgresses] = useState({})
+
+    async function onSendPressed() {
+        if(text.trim() !== ''){
+            try{
+                const newMessage = {
+                    transactionId: transactionId,
+                    message: text,
+                    fromUserId: fromUserId,
+                    toUserId: toUserId,
+                    dateTime: (new Date()).toISOString()
+                }
+
+                const messageObj = await API.graphql(
+                    graphqlOperation(createMessage, { input: newMessage })
+                )
+                setText('')
+                await taskService.updateLastUpdatedMessage({
+                    id: transactionId,
+                    lastMessage: text,
+                    senderId: fromUserId,
+                    receiverId: toUserId,
+                    lastSenderRead: messageObj?.data?.messageObj?.id,
+                })
+            } catch (e) {
+                console.log(e)
             }
-
-            const newMessageData = await API.graphql(
-                graphqlOperation(createMessage, { input: newMessage })
-            )
-        } catch (e) {
-            console.log(e)
         }
-        setText('')
     }
 
     return (

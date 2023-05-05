@@ -10,6 +10,7 @@ const acceptPath = '/accept'
 const rejectPath = '/reject'
 const photoPath = '/photo'
 const queryPath = '/query'
+const updateLastMessagePath = '/updateLastMessage'
 let myTaskLastEvaluatedKey = undefined
 let neighboursTaskLastEvaluatedKey = undefined
 let lastTimeMyTasksFetched = null
@@ -171,9 +172,7 @@ export class TaskService {
         const data = {
             body: params,
         }
-
         const task = await API.put(taskApiName, path, data)
-
         const user = await Auth.currentCredentials()
         for(let x=0; x<images.length; x++){
             const photo = await this.addPhoto({
@@ -218,6 +217,22 @@ export class TaskService {
         return res
     }
 
+    async updateLastUpdatedMessage(params) {
+        const path = `${taskPath}/${updateLastMessagePath}`
+        const data = {
+            body: {
+                id: params.id,
+                lastMessage: params.lastMessage,
+                senderId: (params.senderId? params.senderId : ''),
+                receiverId: (params.receiverId? params.receiverId : ''),
+                lastSenderRead: (params.lastSenderRead? params.lastSenderRead : ''),
+                lastReceiverRead: (params.lastReceiverRead? params.lastReceiverRead : ''),
+            },
+        }
+        await API.put(taskApiName, path, data)
+        return
+    }
+
     async withdrawApplication(params) {
         const path = `${taskPath}/${params.taskId}${withdrawPath}`
         const data = {
@@ -241,6 +256,7 @@ export class TaskService {
         transactions.set(params.transactionId, t)
         return res
     }
+
     async rejectApplication(params) {
         const path = `${taskPath}/${params.taskId}${rejectPath}`
         const data = {
