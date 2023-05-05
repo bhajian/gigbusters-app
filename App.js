@@ -101,7 +101,7 @@ export default function App() {
                     (profile.accountType === 'CONSUMER' || profile.accountType === 'WORKER')
                     && profile.active) {
                     setUserStatus('loggedIn')
-                    // return await setPushNotificationsAsync(profile)
+                    return await setPushNotificationsAsync(profile)
                 } else {
                     setUserStatus('profileCreation')
                 }
