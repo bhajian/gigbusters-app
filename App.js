@@ -136,7 +136,7 @@ export default function App() {
 
     async function registerForPushNotificationsAsync() {
         let token
-        if (Device.modelName === 'android') {
+        if (Platform.OS === 'android') {
             await Notifications.setNotificationChannelAsync('default', {
                 name: 'default',
                 importance: Notifications.AndroidImportance.MAX,
@@ -156,7 +156,6 @@ export default function App() {
                 return
             }
             token = (await Notifications.getExpoPushTokenAsync()).data
-            console.log(token)
         } else {
             return undefined
         }
