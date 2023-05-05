@@ -41,32 +41,32 @@ Notifications.setNotificationHandler({
 })
 export default function App() {
     const profileService = new ProfileService()
-    const appState = useRef(AppState.currentState)
+    // const appState = useRef(AppState.currentState)
     const notificationListener = useRef()
     const responseListener = useRef()
 
     const [notification, setNotification] = useState(false)
     const [userStatus, setUserStatus] = useState('initializing')
 
-    useEffect(() => {
-        const subscription = AppState.addEventListener('change', nextAppState => {
-            if (
-                appState.current.match(/inactive|background/) &&
-                nextAppState === 'active'
-            ) {
-                checkAuthState()
-                    .then(() => {
-                    })
-                    .catch(e => {
-                        console.error(e)
-                    })
-            }
-            appState.current = nextAppState
-        })
-        return () => {
-            subscription.remove()
-        }
-    }, [])
+    // useEffect(() => {
+        // const subscription = AppState.addEventListener('change', nextAppState => {
+        //     if (
+        //         appState.current.match(/inactive|background/) &&
+        //         nextAppState === 'active'
+        //     ) {
+        //         checkAuthState()
+        //             .then(() => {
+        //             })
+        //             .catch(e => {
+        //                 console.error(e)
+        //             })
+        //     }
+        //     appState.current = nextAppState
+        // })
+        // return () => {
+        //     subscription.remove()
+        // }
+    // }, [])
 
     useEffect(() => {
         const unsubscribe = Hub.listen("auth",
