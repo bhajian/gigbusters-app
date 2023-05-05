@@ -20,7 +20,7 @@ async function urlOpener(url, redirectUrl) {
             url,
             redirectUrl
         )
-        if (type === "success" && Device.modelName === "ios") {
+        if (type === "success" && Platform.OS === "ios") {
             WebBrowser.dismissBrowser()
             return Linking.openURL(newUrl)
         }
@@ -101,7 +101,7 @@ export default function App() {
                     (profile.accountType === 'CONSUMER' || profile.accountType === 'WORKER')
                     && profile.active) {
                     setUserStatus('loggedIn')
-                    await setPushNotificationsAsync(profile)
+                    // return await setPushNotificationsAsync(profile)
                 } else {
                     setUserStatus('profileCreation')
                 }

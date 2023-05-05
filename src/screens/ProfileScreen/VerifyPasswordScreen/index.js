@@ -22,7 +22,7 @@ const VerifyPasswordScreen = ({route}) => {
                 {
                     currentTime: currentTime.getMilliseconds(),
                     phoneParam: phone
-                });
+                })
         } catch (e){
             Alert.alert(e.message)
         }

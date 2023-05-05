@@ -146,6 +146,15 @@ export class ProfileService {
         return res
     }
 
+    async deactivateProfile(props) {
+        const data = {
+        }
+        const path = profilePath + '/' + profile.userId
+        const res = await API.del(profileApiName, path , data)
+        profile.settings = res
+        return res
+    }
+
     async changeUserLocation(props) {
         const data = {
             body: props,
