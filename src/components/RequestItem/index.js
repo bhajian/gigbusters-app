@@ -11,15 +11,11 @@ export default function RequestItem({request}) {
 
     const ref = useRef()
 
-    // const onCapture = useCallback(uri => {
-    //     console.log("do something with ", uri);
-    // }, [])
 
     async function onSharePressed() {
         ref.current.capture().then(uri => {
             Sharing.shareAsync(`file://${uri}`, {
                 dialogTitle: 'Share to social media',
-
             })
         })
     }
@@ -43,7 +39,7 @@ export default function RequestItem({request}) {
                     </View>
                 </Pressable>
                 <Footer
-                    review={request}
+                    request={request}
                     onSharePressed={onSharePressed}
                 />
             </View>

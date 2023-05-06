@@ -11,29 +11,31 @@ export default function MainContainer({request}) {
 
 
     return (
-        <View style={styles.container}>
+        <View style={styles.taskContainer}>
             <View style={styles.infoContainer}>
                 <View style={styles.info}>
-                    <Text style={styles.text} >{request.country}</Text>
+                    <Text style={styles.text} >{request?.location?.locationName}</Text>
                 </View>
                 <View style={styles.info}>
-                    <Text style={styles.text} >{request.price}$/{request.priceUnit}</Text>
+                    <Text style={styles.text} >{request?.price}$/{request?.priceUnit}</Text>
                 </View>
+            </View>
+            <View style={styles.infoContainer}>
                 <View style={styles.info}>
-                    <Text style={styles.text} >{request.category}</Text>
+                    <Text style={styles.text} >{request?.category}</Text>
                 </View>
             </View>
             <View style={styles.mainContainer}>
-                <Text style={styles.text} >{request.description}</Text>
-                {!!request.photos && <Image source={{uri: request.mainPhotoURL}} style={styles.image} />}
+                <Text style={styles.text} >{request?.description}</Text>
+                {!!request.photos && <Image source={{uri: request?.mainPhotoURL}} style={styles.image} />}
             </View>
         </View>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        width: '100%',
+    taskContainer: {
+        // width: '100%',
     },
     mainContainer: {
         justifyContent: 'space-between'
@@ -46,6 +48,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     info: {
+        marginTop: 5,
         borderRadius: 50,
         backgroundColor: Colors.light.grey,
         marginHorizontal: 2

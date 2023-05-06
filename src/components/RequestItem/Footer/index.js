@@ -5,19 +5,21 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Colors from "../../../constants/Colors";
+import {useNavigation} from "@react-navigation/native";
 
-export default function Footer({review, onSharePressed}) {
+export default function Footer({request, onSharePressed}) {
+    const navigation = useNavigation()
 
-    const [user, setUser] = useState(null);
-    const [myLike, setMyLike] = useState(null);
-    const [likesCount, setLikesCount] = useState(null);
+    async function onMakeReferralPressed() {
+        navigation.navigate('ReferralResponseScreen', {request: request})
+    }
 
     return (
         <View style={styles.container}>
-            <View style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconContainer} onPress={onMakeReferralPressed}>
                 <Feather name={"message-circle"} size={25} color={Colors.light.tint}/>
-                <Text style={styles.number}>{review.numberOfReplies}</Text>
-            </View>
+                <Text style={styles.number}></Text>
+            </TouchableOpacity>
             {/*<TouchableOpacity style={styles.iconContainer}>*/}
             {/*    <AntDesign name="hearto" size={20} color={Colors.light.tint} />*/}
             {/*</TouchableOpacity>*/}

@@ -16,7 +16,6 @@ export default function PhotoContainer({profile}) {
                 backgroundColor={Colors.light.turquoise}
                 fontSize={25}
             />
-
         </View>
     );
 }
