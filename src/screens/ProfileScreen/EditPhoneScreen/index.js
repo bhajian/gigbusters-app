@@ -5,6 +5,9 @@ import CustomButton from "../../../components/CustomButton";
 import PhoneInput from 'react-phone-number-input/react-native-input'
 import {ProfileService} from "../../../backend/ProfileService";
 import {useNavigation} from "@react-navigation/native";
+import Lottie from "lottie-react-native";
+import phoneAnim from "../../../../assets/animations/96660-phone-call.json";
+import Colors from "../../../constants/Colors";
 
 const EditPhoneScreen = ({route}) => {
     const profileService = new ProfileService()
@@ -23,7 +26,7 @@ const EditPhoneScreen = ({route}) => {
         }
     }
     async function onNextPress() {
-        profileService.changeAndRequestPhoneValidation({
+        await profileService.changeAndRequestPhoneValidation({
             phoneNumber: phone,
             verifyObject: 'phone'
         })
@@ -32,10 +35,29 @@ const EditPhoneScreen = ({route}) => {
         })
     }
 
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontSize: 16}}>Confirm Phone Number</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
+
     return (
         <View style={styles.container} >
             <View style={styles.topContainer} >
-
+                <Lottie
+                    style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
+                    source={phoneAnim}
+                    autoPlay
+                    loop
+                />
             </View>
             <View style={styles.mainContainer}>
                 <View style={styles.settingItem}>
@@ -61,7 +83,7 @@ const EditPhoneScreen = ({route}) => {
             </View>
         </View>
     )
-};
+}
 
 export default EditPhoneScreen;
 
@@ -80,7 +102,7 @@ const styles = StyleSheet.create({
     },
     mainContainer:{
         margin: 20,
-        marginTop: 5,
+        marginTop: 100,
     },
     settingItem:{
         // flexDirection: "column",

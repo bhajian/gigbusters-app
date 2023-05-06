@@ -8,11 +8,21 @@ import Colors from "../../../constants/Colors";
 import CustomButton from "../../../components/CustomButton";
 
 export default function SignupCompletedScreen({route}) {
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
     useEffect(() => {
-
-    }, [navigation]);
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontWeight: 'bold'}}> Profile Details</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
 
     function closeWindow() {
         navigation.navigate('HomeScreen')

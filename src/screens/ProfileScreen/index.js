@@ -15,10 +15,10 @@ const ProfileScreen = (props) => {
     const navigation = useNavigation()
     const profile = profileService.getProfile()
 
-    const [name, setName] = useState('');
-    const [accountCode, setAccountCode] = useState('');
-    const [email, setEmail] = useState('');
-    const [phone, setPhone] = useState('');
+    const [name, setName] = useState('')
+    const [accountCode, setAccountCode] = useState('')
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
     const [locationName, setLocationName] = useState(profile?.location?.locationName)
     const [accountType, setAccountType] = useState('CONSUMER')
     const [image, setImage] = useState(null);
@@ -44,8 +44,13 @@ const ProfileScreen = (props) => {
         if(profile && profile.email && profile.email.email){
             setEmail(profile.email.email)
         }
-        if(profile && profile.phone && profile.phone.phone){
-            setPhone(profile.phone.phone)
+        if(profile && profile.phone){
+            if(profile.phone && profile.phone.phone && profile.phone.verified){
+                setPhone(profile.phone.phone)
+            } else{
+                setPhone('Not Verified Yet')
+            }
+
         }
         if(profile && profile.location && profile.location.locationName){
             setLocationName(profile.location.locationName)
@@ -69,7 +74,7 @@ const ProfileScreen = (props) => {
         try {
             profileService.clearProfile()
             await Auth.signOut({global: true})
-            props.updateAuthState('loggedOut');
+            props.updateAuthState('loggedOut')
         } catch (error) {
             console.log('Error signing out: ', error);
         }
@@ -131,13 +136,14 @@ const ProfileScreen = (props) => {
                     <Text style={styles.roleText}>
                         Role:
                     </Text>
+
+                    <Text style={styles.roleText}>
+                        {accountType === 'CONSUMER'? 'Customer' : 'Worker'}
+                    </Text>
                     <Image
                         source={accountType === 'CONSUMER' ?
                             customerImage : workerImage} style={styles.roleImage}
                     />
-                    <Text style={styles.roleText}>
-                        {accountType === 'CONSUMER'? 'Customer' : 'Worker'}
-                    </Text>
                 </View>
             </View>
 

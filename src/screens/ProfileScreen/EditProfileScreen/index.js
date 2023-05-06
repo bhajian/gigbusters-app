@@ -34,8 +34,6 @@ const EditProfileScreen = (props) => {
     const [categories, setCategories] = useState(profile?.interestedCategories)
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
-
-
     async function onSavePress() {
         try{
             setDataBeingSaved(true)
@@ -77,7 +75,7 @@ const EditProfileScreen = (props) => {
                 <Fontisto name="home" size={25} color={color}/>
             ),
             headerTitle: () => (
-                <Text> Edit Profile</Text>
+                <Text style={{fontSize: 16}}> Edit Profile</Text>
             ),
             headerRight: () => (
                 dataBeingSaved ?

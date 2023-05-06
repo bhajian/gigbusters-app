@@ -48,6 +48,13 @@ const EditSettingsScreen = (props) => {
         setBeingSaved(false)
     }
 
+    const onDeactivateAccountPressed = () => {
+        navigation.navigate('VerifyPasswordScreen',
+            {
+                changeObject: 'deactivate',
+            })
+    }
+
     async function loadData() {
         try{
             const settings = profileService.getProfile()?.settings
@@ -78,7 +85,7 @@ const EditSettingsScreen = (props) => {
                 <Fontisto name="home" size={25} color={color}/>
             ),
             headerTitle: () => (
-                <Text> Edit Profile</Text>
+                <Text> Edit Settings</Text>
             ),
             headerRight: () => (
                 beingSaved ?
@@ -97,7 +104,7 @@ const EditSettingsScreen = (props) => {
         })
         return
 
-    }, [navigation, onSavePress, beingSaved]);
+    }, [navigation, onSavePress, beingSaved])
 
 
 
@@ -163,6 +170,7 @@ const EditSettingsScreen = (props) => {
                     iconName="cog"
                 />
                 <CustomSettingRowButton
+                    onPress={onDeactivateAccountPressed}
                     name="Deactivate My Account"
                     value=""
                     iconCategory="MaterialCommunityIcons"

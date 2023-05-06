@@ -11,9 +11,14 @@ export default function VerificationScreen({navigation, route, updateAuthState})
     const [authCode, setAuthCode] = useState('');
     const [username, setUsername] = useState(usernameParam);
 
+
     async function resendConfirmationCode() {
         try {
-            await Auth.resendSignUp(username);
+            if(!username?.trim()){
+                Alert.alert('Please enter the email associated to the account.')
+                return
+            }
+            await Auth.resendSignUp(username)
         } catch (error) {
             Alert.alert(error.message)
         }

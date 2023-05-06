@@ -1,38 +1,80 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet, Alert} from "react-native";
 import {Auth} from "aws-amplify";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import CustomButton from "../../../components/CustomButton";
 import CustomInput from "../../../components/CustomInput";
 import {useNavigation} from "@react-navigation/native";
+import jobAnim from "../../../../assets/animations/107800-login-leady.json";
+import Lottie from "lottie-react-native";
+import Colors from "../../../constants/Colors";
 
 const VerifyPasswordScreen = ({route}) => {
     const {changeObject, phone} = (route.params ? route.params : '');
-    const [password, setPassword] = useState('');
-    const navigation = useNavigation();
+    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('')
+    const navigation = useNavigation()
+
+    useEffect( () => {
+        loadData().catch(e => console.log(e))
+    }, [])
+
+    async function loadData() {
+        const currentUser = await Auth.currentAuthenticatedUser()
+        setUsername(currentUser.attributes.email)
+    }
 
     async function onNextPressed() {
         try{
             const currentTime = new Date()
-            const currentUser = await Auth.currentAuthenticatedUser()
-            const username = currentUser.attributes.email
+
             await Auth.signIn(username, password)
-            navigation.navigate((changeObject === 'email'?
-                'EditEmailScreen' : 'EditPhoneScreen'),
-                {
-                    currentTime: currentTime.getMilliseconds(),
-                    phoneParam: phone
-                })
+            let nextScreen = 'deactivateProfile'
+            let payload = {
+                currentTime: currentTime.getMilliseconds(),
+            }
+
+            if(changeObject === 'deactivate'){
+                nextScreen = 'DeactivateProfileScreen'
+            }
+            if(changeObject === 'email'){
+                nextScreen = 'EditEmailScreen'
+            }
+            if(changeObject === 'phone'){
+                nextScreen = 'EditPhoneScreen'
+                payload.phoneParam = phone
+            }
+
+            navigation.navigate(nextScreen, payload)
         } catch (e){
             Alert.alert(e.message)
+            navigation.goBack()
         }
-
     }
+
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontSize: 16}}>Verify Your Password</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
 
     return (
         <View style={styles.container} >
             <View style={styles.topContainer} >
-
+                <Lottie
+                    style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
+                    source={jobAnim}
+                    autoPlay
+                    loop
+                />
             </View>
             <View style={styles.mainContainer}>
                 <View style={styles.settingItem}>
@@ -41,6 +83,14 @@ const VerifyPasswordScreen = ({route}) => {
                         <Text style={styles.settingName}> Verify Your Password </Text>
                     </View>
                     <View style={styles.settingValueContainer}>
+                        <CustomInput
+                            placeholder="Email"
+                            value={username}
+                            setValue={setUsername}
+                            iconCategory="Fontisto"
+                            iconName="email"
+                            editable={false}
+                        />
                         <CustomInput
                             placeholder="Password"
                             iconCategory="FontAwesome5"
@@ -81,7 +131,7 @@ const styles = StyleSheet.create({
     },
     mainContainer:{
         margin: 20,
-        marginTop: 5,
+        marginTop: 100,
     },
     settingsContainer:{
         margin: 10,

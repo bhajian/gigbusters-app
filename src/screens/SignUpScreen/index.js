@@ -1,18 +1,32 @@
-import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, StyleSheet, ScrollView, Alert, Linking} from 'react-native';
 import {Auth} from 'aws-amplify';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-import SocialSignInButtons from '../../components/SocialSignInButtons';
 import {useNavigation} from '@react-navigation/native';
 import jobAnim from "../../../assets/animations/107800-login-leady.json";
 import Lottie from "lottie-react-native";
+import Colors from "../../constants/Colors";
 
 const SignUpScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordRepeat, setPasswordRepeat] = useState('')
     const navigation = useNavigation()
+
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontWeight: 'bold'}}> Sign Up</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
 
     async function onRegisterPressed() {
         try {
@@ -47,12 +61,12 @@ const SignUpScreen = () => {
         navigation.navigate('Verification');
     };
 
-    const onTermsOfUsePressed = () => {
-        console.warn('onTermsOfUsePressed');
+    const onTermsOfUsePressed = async () => {
+        await Linking.openURL('https://gigbusters.app/?page_id=3')
     };
 
-    const onPrivacyPressed = () => {
-        console.warn('onPrivacyPressed');
+    const onPrivacyPressed = async() => {
+        await Linking.openURL('https://gigbusters.app/?page_id=1045')
     };
 
     return (
@@ -105,11 +119,10 @@ const SignUpScreen = () => {
                         Privacy Policy
                     </Text>
                 </Text>
-
                 <CustomButton
                     text="Have an account? Sign in"
                     onPress={onSignInPress}
-                    type="TERTIARY"
+                    type="SECONDARY"
                 />
                 <CustomButton
                     text="Verify an existing account"

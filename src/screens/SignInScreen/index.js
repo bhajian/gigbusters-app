@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, Image, useWindowDimensions, ScrollView, Text, Alert} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Image, useWindowDimensions, ScrollView, Text, Alert, Pressable} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import styles from './styles';
 import CustomInput from '../../components/CustomInput';
@@ -9,14 +9,31 @@ import {Auth} from 'aws-amplify';
 import jobAnim from "../../../assets/animations/104042-recolored-job-proposal-review-animation.json";
 import Lottie from "lottie-react-native";
 import {ProfileService} from "../../backend/ProfileService";
+import Colors from "../../constants/Colors";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import loading from "../../../assets/images/loading2.gif";
 
 function SignInScreen(props) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const profileService = new ProfileService()
 
-    const {height} = useWindowDimensions();
-    const navigation = useNavigation();
+    const {height} = useWindowDimensions()
+    const navigation = useNavigation()
+
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontWeight: 'bold'}}> Sign In</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
 
     async function onSignInPressed() {
         try {
@@ -88,7 +105,7 @@ function SignInScreen(props) {
                     <CustomButton
                         text="Don't have an account? Sign Up"
                         onPress={onSignUpPress}
-                        type="TERTIARY"
+                        type="SECONDARY"
                         style={styles.components}
                     />
                 </View>

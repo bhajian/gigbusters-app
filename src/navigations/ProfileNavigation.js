@@ -8,6 +8,7 @@ import EditPhoneScreen from "../screens/ProfileScreen/EditPhoneScreen";
 import VerifyPasswordScreen from "../screens/ProfileScreen/VerifyPasswordScreen";
 import VerifyCodeScreen from "../screens/ProfileScreen/VerifyCodeScreen";
 import EditSettingsScreen from "../screens/ProfileScreen/EditSettingsScreen";
+import DeactivateProfileScreen from "../screens/ProfileScreen/DeactivateProfileScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -56,6 +57,20 @@ export function ProfileNavigation(props) {
                     headerShown: true,
                 }}
             />
+            <Stack.Screen
+                name={'DeactivateProfileScreen'}
+                options={{
+                    headerShown: true,
+                }}
+            >
+                {screenProps => (
+                    <DeactivateProfileScreen
+                        {...screenProps}
+                        updateAuthState={props.updateAuthState}
+                        updateAccountType={props.updateAccountType}
+                    />
+                )}
+            </Stack.Screen>
             <Stack.Screen
                 name={'VerifyCodeScreen'}
                 component={VerifyCodeScreen}

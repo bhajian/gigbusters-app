@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Auth} from 'aws-amplify';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -6,19 +6,31 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import jobAnim from "../../../assets/animations/107800-login-leady.json";
 import Lottie from "lottie-react-native";
+import Colors from "../../constants/Colors";
 
 export default function ForgetPasswordScreen({navigation, route}) {
     const {emailParam} = (route.params ? route.params : '');
     const [email, setEmail] = useState(emailParam);
 
-    const onBackToSignUpPress = () => {
-        navigation.navigate('SignUp');
-    };
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontWeight: 'bold'}}> Forgot Password</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
+
 
     async function confirmSignUp() {
         try {
-            var lowerEmail = email.toLowerCase();
-            await Auth.forgotPassword(lowerEmail);
+            var lowerEmail = email.toLowerCase()
+            await Auth.forgotPassword(lowerEmail)
             navigation.navigate('PasswordResetScreen',
                 {
                     emailParam: lowerEmail,
@@ -40,7 +52,7 @@ export default function ForgetPasswordScreen({navigation, route}) {
                     autoPlay
                     loop
                 />
-                <Text style={styles.title}>Forget Password</Text>
+                <Text style={styles.title}>Forgot Password</Text>
                 <CustomInput
                     placeholder="Email"
                     value={email}

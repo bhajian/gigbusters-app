@@ -1,41 +1,48 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
-import {Auth} from 'aws-amplify';
-import CustomInput from '../../../components/CustomInput';
 import CustomButton from '../../../components/CustomButton';
 import Lottie from "lottie-react-native";
-import jobAnim from "../../../../assets/animations/107800-login-leady.json";
+import shredAnim from "../../../../assets/animations/99314-delete-files-loop.json";
 import {ProfileService} from "../../../backend/ProfileService";
+import {CheckBox} from "react-native-elements";
+import {Auth} from "aws-amplify";
+import Colors from "../../../constants/Colors";
 
-export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
-    const {phoneParam} = (route.params ? route.params : '');
-    const [authCode, setAuthCode] = useState('');
-    const [phone, setPhone] = useState(phoneParam);
+
+
+export default function DeactivateProfileScreen({navigation, route, updateAuthState}) {
+    const {phoneParam} = (route.params ? route.params : '')
+    const [confirm, setConfirm] = useState(false)
+    const [phone, setPhone] = useState(phoneParam)
     const profileService = new ProfileService()
 
-    async function resendConfirmationCode() {
-        try {
-            // await Auth.resendSignUp(phone.toString());
-        } catch (error) {
-            Alert.alert(error.message)
-        }
-    }
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontWeight: 'bold'}}>Deactivate Your Profile</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
 
-    async function VerifyAccount() {
-        try {
-            await profileService.validatePhone({
-                code: authCode,
-                verifyObject: 'phone'
-            })
-            navigation.navigate('MainProfileScreen')
-
-        } catch (error) {
-            Alert.alert(error.message)
-            if(error.name === 'NotAuthorizedException'){
-                updateAuthState('loggedOut');
-                navigation.navigate('SignIn');
+    async function deactivateAccount() {
+        if(confirm){
+            try {
+                await profileService.deactivateProfile()
+                await Auth.signOut({global: true})
+                updateAuthState('loggedOut')
+            } catch (error) {
+                console.log(error)
             }
+        } else{
+            Alert.alert('Please turn the checkbox on if you want to deactivate your account.')
         }
+
     }
 
     return (
@@ -43,43 +50,25 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
             <View style={styles.root}>
                 <Lottie
                     style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
-                    source={jobAnim}
+                    source={shredAnim}
                     autoPlay
                     loop
                 />
                 <View style={styles.form}>
-                    <CustomInput
-                        placeholder="Email"
-                        value={phone}
-                        iconCategory="Fontisto"
-                        iconName="email"
-                        editable={false}
+                    <CheckBox
+                        checked={confirm}
+                        onPress={() => setConfirm(!confirm)}
+                        style={styles.checkbox}
                     />
-                    <CustomInput
-                        placeholder="Code"
-                        value={authCode}
-                        setValue={setAuthCode}
-                        iconCategory="Fontisto"
-                        iconName="email"
-                    />
+                    <Text style={styles.text}>
+                        You are about to delete your account. By Checking this box I confirm that my account to be deleted.
+                    </Text>
                 </View>
                 <CustomButton
-                    text="Verify Your Account"
-                    onPress={VerifyAccount}
+                    text="Deactivate My Account"
+                    onPress={deactivateAccount}
                     style={styles.component}
                 />
-                <CustomButton
-                    text="Register a new account"
-                    // onPress={onBackToSignUpPress}
-                    type="TERTIARY"
-                />
-                <Text style={styles.text}>
-                    Didn't receive the verification code? {' '}
-                    <Text style={styles.link} onPress={resendConfirmationCode}>
-                        Click Here.
-                    </Text>
-                </Text>
-
             </View>
         </ScrollView>
     );
@@ -96,6 +85,7 @@ const styles = StyleSheet.create({
     },
     form: {
         marginTop: 15,
+        flexDirection: 'row',
     },
     component: {
         marginTop: 20
@@ -103,7 +93,6 @@ const styles = StyleSheet.create({
     title: {
         marginTop: 20,
         paddingBottom: 90,
-        // textAlign: "justify",
         fontSize: 40,
         color: "#ff6200"
     },
@@ -112,8 +101,12 @@ const styles = StyleSheet.create({
     },
     text: {
         marginTop: 20,
+        marginRight: 50
     },
     registerButton: {
         marginTop: 40,
+    },
+    checkbox: {
+        justifyContent: 'center'
     },
 });

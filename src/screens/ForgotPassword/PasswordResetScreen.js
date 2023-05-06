@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -6,6 +6,7 @@ import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import jobAnim from "../../../assets/animations/107800-login-leady.json";
 import Lottie from "lottie-react-native";
+import Colors from "../../constants/Colors";
 
 export default function PasswordResetScreen({navigation, route}) {
     const {emailParam} = (route.params ? route.params : '');
@@ -13,24 +14,35 @@ export default function PasswordResetScreen({navigation, route}) {
     const [email, setEmail] = useState(emailParam);
     const [password, setPassword] = useState('');
 
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontWeight: 'bold', fontSize: 15}}> Reset Password</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
+
     async function resendConfirmationCode() {
         try {
-            // await Auth.resendSignUp(username);
-            console.log('code resent successfully');
+            let lowerEmail = email.toLowerCase()
+            await Auth.forgotPassword(lowerEmail)
+            alert('You will receive a code shorty.')
         } catch (err) {
             console.log('error resending code: ', err);
         }
     }
 
-    const onBackToSignUpPress = () => {
-        navigation.navigate('SignUp');
-    };
-
     async function confirmSignUp() {
         try {
-            var lowerEmail = email.toLowerCase();
-            await Auth.forgotPasswordSubmit(lowerEmail, authCode, password);
-            navigation.navigate('SignIn');
+            let lowerEmail = email.toLowerCase()
+            await Auth.forgotPasswordSubmit(lowerEmail, authCode, password)
+            navigation.navigate('SignIn')
         } catch (error) {
             Alert.alert(error.message)
         }
@@ -45,7 +57,7 @@ export default function PasswordResetScreen({navigation, route}) {
                     autoPlay
                     loop
                 />
-                <Text style={styles.title}>Forget Password</Text>
+                <Text style={styles.title}>Reset Password</Text>
                 <CustomInput
                     placeholder="Email"
                     value={email}
@@ -62,7 +74,7 @@ export default function PasswordResetScreen({navigation, route}) {
                     iconName="email"
                 />
                 <CustomInput
-                    placeholder="Password"
+                    placeholder="New Password"
                     value={password}
                     setValue={setPassword}
                     secureTextEntry

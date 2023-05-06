@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
 import CustomInput from '../../../components/CustomInput';
@@ -6,6 +6,7 @@ import CustomButton from '../../../components/CustomButton';
 import Lottie from "lottie-react-native";
 import jobAnim from "../../../../assets/animations/107800-login-leady.json";
 import {ProfileService} from "../../../backend/ProfileService";
+import Colors from "../../../constants/Colors";
 
 export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
     const {phoneParam} = (route.params ? route.params : '');
@@ -38,6 +39,20 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
         }
     }
 
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontSize: 16}}>Verify Your Phone Number</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
+
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
@@ -64,21 +79,16 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
                     />
                 </View>
                 <CustomButton
-                    text="Verify Your Account"
+                    text="Verify Your Phone Number"
                     onPress={VerifyAccount}
                     style={styles.component}
                 />
-                <CustomButton
-                    text="Register a new account"
-                    // onPress={onBackToSignUpPress}
-                    type="TERTIARY"
-                />
-                <Text style={styles.text}>
-                    Didn't receive the verification code? {' '}
-                    <Text style={styles.link} onPress={resendConfirmationCode}>
-                        Click Here.
-                    </Text>
-                </Text>
+                {/*<Text style={styles.text}>*/}
+                {/*    Didn't receive the verification code? {' '}*/}
+                {/*    <Text style={styles.link} onPress={resendConfirmationCode}>*/}
+                {/*        Click Here.*/}
+                {/*    </Text>*/}
+                {/*</Text>*/}
 
             </View>
         </ScrollView>
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
         height: 800,
     },
     form: {
-        marginTop: 15,
+        marginTop: 50,
     },
     component: {
         marginTop: 20

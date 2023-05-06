@@ -9,7 +9,6 @@ import {RadioButton} from "react-native-paper";
 import {MaterialIcons} from "@expo/vector-icons";
 import Colors from "../../../constants/Colors";
 import {Auth} from "aws-amplify";
-import {ProfileService} from "../../../backend/ProfileService";
 import PhoneInput from "react-phone-number-input/react-native-input";
 import Fontisto from "react-native-vector-icons/Fontisto";
 
@@ -21,6 +20,20 @@ const CreateProfileScreen = (props) => {
     const [name, setName] = useState('')
     const [accountType, setAccountType] = useState('CONSUMER')
     const navigation = useNavigation()
+
+    useEffect(() => {
+        navigation.setOptions({
+            tabBarActiveTintColor: Colors.light.tint,
+            headerLargeTitle: false,
+            headerLeftContainerStyle: {
+                left: 10,
+            },
+            headerTitle: () => (
+                <Text style={{fontWeight: 'bold'}}>Create a Profile</Text>
+            ),
+            headerTintColor: Colors.light.tint
+        })
+    }, [])
 
     async function onNextPressed() {
         try {
