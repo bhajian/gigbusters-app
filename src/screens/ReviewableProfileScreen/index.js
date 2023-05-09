@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     StyleSheet,
     View,
@@ -11,6 +11,8 @@ import Colors from "../../constants/Colors";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import {ReviewService} from "../../backend/ReviewService";
 import loading2 from "../../../assets/images/loading2.gif";
+import * as Sharing from "expo-sharing";
+import ViewShot from "react-native-view-shot";
 
 export default function ReviewableProfileScreen({navigation, route}) {
     let reviewableParam = route?.params?.reviewable
@@ -20,10 +22,19 @@ export default function ReviewableProfileScreen({navigation, route}) {
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
 
     const reviewService = new ReviewService()
+    const ref = useRef()
 
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
     }, [])
+
+    async function onSharePressed() {
+        ref.current.capture().then(uri => {
+            Sharing.shareAsync(`file://${uri}`, {
+                dialogTitle: 'Share to social media',
+            })
+        })
+    }
 
     async function loadData() {
         setDataBeingLoaded(true)
@@ -62,21 +73,27 @@ export default function ReviewableProfileScreen({navigation, route}) {
     }, [navigation])
 
     return (
-        <SafeAreaView style={styles.container}>
-            {
-                dataBeingLoaded ?
-                    <Image source={loading2} style={styles.loading2} />
-                    :
-                    <View style={styles.reviewsList}>
-                        <FlatList
-                            data={reviews}
-                            renderItem={({item}) => <Review review={item} />}
-                            keyExtractor={(item) => item.id}
-                            ListHeaderComponent={<ReviewableProfileTopContainer reviewable={reviewable} />}
-                        />
-                    </View>
-            }
-        </SafeAreaView>
+            <SafeAreaView style={styles.container}>
+                {
+                    dataBeingLoaded ?
+                        <Image source={loading2} style={styles.loading2} />
+                        :
+                        <ViewShot ref={ref} options={{ fileName: "Your-File-Name", format: "jpg", quality: 0.9 }}>
+                            <View style={styles.reviewsList}>
+                                <FlatList
+                                    data={reviews}
+                                    renderItem={({item}) => <Review review={item} />}
+                                    keyExtractor={(item) => item.id}
+                                    ListHeaderComponent={<ReviewableProfileTopContainer
+                                        reviewable={reviewable}
+                                        onSharePressed={onSharePressed}
+                                    />}
+                                />
+                            </View>
+                        </ViewShot>
+                }
+            </SafeAreaView>
+
     );
 }
 

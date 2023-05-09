@@ -12,9 +12,11 @@ import {
 } from "../../backend/graphql/mutations"
 import {API, graphqlOperation} from "aws-amplify";
 import {TaskService} from "../../backend/TaskService";
+import {MessageService} from "../../backend/MessageService";
 
 const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
     const taskService = new TaskService()
+    const messageService = new MessageService()
 
     const [text, setText] = useState("")
     const [files, setFiles] = useState([])
@@ -28,19 +30,16 @@ const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
                     message: text,
                     fromUserId: fromUserId,
                     toUserId: toUserId,
-                    dateTime: (new Date()).toISOString()
                 }
+                const newMessageRes = await messageService.createMessage(newMessage)
 
-                const messageObj = await API.graphql(
-                    graphqlOperation(createMessage, { input: newMessage })
-                )
                 setText('')
                 await taskService.updateLastUpdatedMessage({
                     id: transactionId,
                     lastMessage: text,
                     senderId: fromUserId,
                     receiverId: toUserId,
-                    lastSenderRead: messageObj?.data?.messageObj?.id,
+                    lastSenderRead: newMessageRes?.data?.newMessageRes?.id,
                 })
             } catch (e) {
                 console.log(e)

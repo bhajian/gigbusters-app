@@ -14,7 +14,12 @@ type EagerMessage = {
   readonly id: string;
   readonly fromUserId: string;
   readonly toUserId: string;
+  readonly type?: string | null;
+  readonly status?: string | null;
   readonly message?: string | null;
+  readonly referredPhone?: string | null;
+  readonly referredEmail?: string | null;
+  readonly referredName?: string | null;
   readonly dateTime: string;
   readonly transactionId?: string | null;
   readonly createdAt?: string | null;
@@ -29,7 +34,12 @@ type LazyMessage = {
   readonly id: string;
   readonly fromUserId: string;
   readonly toUserId: string;
+  readonly type?: string | null;
+  readonly status?: string | null;
   readonly message?: string | null;
+  readonly referredPhone?: string | null;
+  readonly referredEmail?: string | null;
+  readonly referredName?: string | null;
   readonly dateTime: string;
   readonly transactionId?: string | null;
   readonly createdAt?: string | null;

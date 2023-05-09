@@ -96,13 +96,18 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
   },
-
   text_SECONDARY: {
     color: '#3B71F3',
   },
-
   text_TERTIARY: {
     color: Colors.dark.grey,
+  },
+  container_FORTHSTYLE: {
+    borderColor: '#ff6200',
+    borderWidth: 1,
+  },
+  text_FORTHSTYLE: {
+    color: '#3B71F3',
   },
 });
 

@@ -2,12 +2,20 @@
 // this is an auto generated file. This will be overwritten
 
 export const onCreateMessage = /* GraphQL */ `
-  subscription OnCreateMessage($filter: ModelSubscriptionMessageFilterInput) {
-    onCreateMessage(filter: $filter) {
+  subscription OnCreateMessage(
+    $filter: ModelSubscriptionMessageFilterInput
+    $owner: String
+  ) {
+    onCreateMessage(filter: $filter, owner: $owner) {
       id
       fromUserId
       toUserId
+      type
+      status
       message
+      referredPhone
+      referredEmail
+      referredName
       dateTime
       transactionId
       createdAt
@@ -15,16 +23,25 @@ export const onCreateMessage = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onUpdateMessage = /* GraphQL */ `
-  subscription OnUpdateMessage($filter: ModelSubscriptionMessageFilterInput) {
-    onUpdateMessage(filter: $filter) {
+  subscription OnUpdateMessage(
+    $filter: ModelSubscriptionMessageFilterInput
+    $owner: String
+  ) {
+    onUpdateMessage(filter: $filter, owner: $owner) {
       id
       fromUserId
       toUserId
+      type
+      status
       message
+      referredPhone
+      referredEmail
+      referredName
       dateTime
       transactionId
       createdAt
@@ -32,16 +49,25 @@ export const onUpdateMessage = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
 export const onDeleteMessage = /* GraphQL */ `
-  subscription OnDeleteMessage($filter: ModelSubscriptionMessageFilterInput) {
-    onDeleteMessage(filter: $filter) {
+  subscription OnDeleteMessage(
+    $filter: ModelSubscriptionMessageFilterInput
+    $owner: String
+  ) {
+    onDeleteMessage(filter: $filter, owner: $owner) {
       id
       fromUserId
       toUserId
+      type
+      status
       message
+      referredPhone
+      referredEmail
+      referredName
       dateTime
       transactionId
       createdAt
@@ -49,6 +75,7 @@ export const onDeleteMessage = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;

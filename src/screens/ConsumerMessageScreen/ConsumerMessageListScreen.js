@@ -1,8 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
-    View,
     Image,
-    ScrollView, Text, StyleSheet, FlatList, SafeAreaView,
+    Text, StyleSheet, FlatList, SafeAreaView,
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native"
 import loading2 from "../../../assets/images/loading2.gif";
@@ -63,6 +62,7 @@ export default function ConsumerMessageListScreen() {
         setTransactions(transactionsObj)
         setDataBeingLoaded(false)
     }
+
     async function loadData() {
         setDataBeingLoaded(true)
         const profile = profileService.getProfile()

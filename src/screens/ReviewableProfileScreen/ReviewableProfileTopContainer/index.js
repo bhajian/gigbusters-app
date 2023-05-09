@@ -10,7 +10,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import RatingStack from "../../../components/RatingStack";
 
-export default function ReviewableProfileTopContainer({reviewable, navigation}) {
+export default function ReviewableProfileTopContainer({reviewable, navigation, onSharePressed}) {
 
     const [rating, setRating] = useState(Math.round(
         (reviewable && reviewable?.cumulativeRating && reviewable?.numberOfReviews ?
@@ -55,7 +55,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation}) 
                     </View>
                 </View>
                 <View style={styles.headerRight}>
-                    <TouchableOpacity style={styles.shareButton}>
+                    <TouchableOpacity style={styles.shareButton} onPress={onSharePressed}>
                         <EvilIcons name={"share-google"} size={30} color={Colors.light.tint}/>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.shareButton}>

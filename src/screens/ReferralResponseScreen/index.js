@@ -1,16 +1,27 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
-import {Auth} from 'aws-amplify';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
-import jobAnim from "../../../assets/animations/5673-referral.json";
-import Lottie from "lottie-react-native";
 import Colors from "../../constants/Colors";
 import UserAvatar from "@muhzi/react-native-user-avatar";
+import Fontisto from "react-native-vector-icons/Fontisto";
+import PhoneInput from "react-phone-number-input/react-native-input";
+import {TaskService} from "../../backend/TaskService";
+import {MessageService} from "../../backend/MessageService";
+import * as Sharing from "expo-sharing";
+import ViewShot from "react-native-view-shot";
+import {ProfileService} from "../../backend/ProfileService";
 
 export default function ReferralResponseScreen({navigation, route}) {
+    const taskService = new TaskService()
+    const messageService = new MessageService()
+    const profileService = new ProfileService()
+    const ref = useRef()
+
     const {request} = (route.params ? route.params : '')
-    const [email, setEmail] = useState(request);
+    const [email, setEmail] = useState('')
+    const [phone, setPhone] = useState('')
+    const [referredName, setReferredName] = useState('')
 
     useEffect(() => {
         navigation.setOptions({
@@ -26,78 +37,122 @@ export default function ReferralResponseScreen({navigation, route}) {
         })
     }, [])
 
-
     async function referralSubmission() {
-        try {
-
-        } catch (error) {
-
+        try{
+            const profile = profileService.getProfile()
+            const transaction = await taskService.createTransaction({
+                tyoe: 'referral',
+                taskId: request.id,
+                customerId: request.userId
+            })
+            const messageRes = await messageService.createReferralMessage({
+                transactionId: transaction?.id,
+                fromUserId: profile?.userId,
+                toUserId: request.userId,
+                type: 'referral',
+                status: 'initiated',
+                dateTime: (new Date()).toISOString(),
+                referredName: referredName,
+                referredEmail: email,
+                referredPhone: phone
+            })
+            navigation.goBack()
+        } catch (e) {
+            console.log(e)
         }
+
+    }
+
+    async function shareTaskPressed() {
+        ref.current.capture().then(uri => {
+            Sharing.shareAsync(`file://${uri}`, {
+                dialogTitle: 'Share to social media',
+            })
+        })
     }
 
     return (
         <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.root}>
-                <View style={styles.topContainer}>
-                    <View style={styles.customerContainer}>
-                        <UserAvatar
-                            size={40}
-                            userName={request.name}
-                            style={styles.avatar}
-                            src={request.profilePhotoURL}
-                            backgroundColor={Colors.light.turquoise}
-                            fontSize={25}
-                        />
-                        <View style={styles.mainContainer}>
-                            <View>
-                                <Text style={styles.toName} >{request.name}</Text>
-                            </View>
-                            <View style={styles.userIdContainer}>
-                                <Text style={styles.fromName}>ID: {request.accountCode}</Text>
-                            </View>
-                        </View>
-                    </View>
-                </View>
-                <View style={styles.taskContainer}>
-                    <View style={styles.infoContainer}>
-                        <View style={styles.info}>
-                            <Text style={styles.text} >{request?.location?.locationName}</Text>
-                        </View>
-                        <View style={styles.info}>
-                            <Text style={styles.text} >{request?.price}$/{request?.priceUnit}</Text>
-                        </View>
-                        <View style={styles.info}>
-                            <Text style={styles.text} >{request?.category}</Text>
-                        </View>
-                    </View>
+                <ViewShot ref={ref} options={{ fileName: "Your-File-Name", format: "jpg", quality: 0.9 }}>
 
-                    <View style={styles.mainContainer}>
-                        <Text style={styles.text} >{request?.description}</Text>
-                        {!!request.photos && <Image source={{uri: request?.mainPhotoURL}} style={styles.image} />}
+                    <View style={styles.topContainer}>
+                        <View style={styles.customerContainer}>
+                            <UserAvatar
+                                size={40}
+                                userName={request.name}
+                                style={styles.avatar}
+                                src={request.profilePhotoURL}
+                                backgroundColor={Colors.light.turquoise}
+                                fontSize={25}
+                            />
+                            <View style={styles.mainContainer}>
+                                <View>
+                                    <Text style={styles.toName} >{request.name}</Text>
+                                </View>
+                                <View style={styles.userIdContainer}>
+                                    <Text style={styles.fromName}>ID: {request.accountCode}</Text>
+                                </View>
+                            </View>
+                        </View>
                     </View>
-                </View>
+                    <View style={styles.taskContainer}>
+                        <View style={styles.infoContainer}>
+                            <View style={styles.info}>
+                                <Text style={styles.text} >{request?.location?.locationName}</Text>
+                            </View>
+                            <View style={styles.info}>
+                                <Text style={styles.text} >{request?.price}$/{request?.priceUnit}</Text>
+                            </View>
+                            <View style={styles.info}>
+                                <Text style={styles.text} >{request?.category}</Text>
+                            </View>
+                        </View>
+                        <View style={styles.mainContainer}>
+                            <Text style={styles.text} >{request?.description}</Text>
+                            {!!request.photos && <Image source={{uri: request?.mainPhotoURL}} style={styles.image} />}
+                        </View>
+                    </View>
+                </ViewShot>
 
                 <Text style={styles.text}>
-                    Share the worker's Email or Phone number. Someone you know who this task and gain points.
+                    Refer a gigbuster or share with someone who is interested in this task.
                 </Text>
                 <CustomInput
-                    placeholder="Email"
-                    // value={email}
-                    // setValue={setEmail}
-                    iconCategory="Fontisto"
-                    iconName="email"
+                    placeholder="Name [Optional]"
+                    value={referredName}
+                    setValue={setReferredName}
+                    iconCategory="FontAwesome"
+                    iconName="user"
                 />
                 <CustomInput
-                    placeholder="Phone Number"
-                    // value={phone}
-                    // setValue={setPhone}
+                    placeholder="Email"
+                    value={email}
+                    setValue={setEmail}
                     iconCategory="Fontisto"
                     iconName="email"
                 />
+                <View style={styles.phoneContainer}>
+                    <Fontisto style={styles.phoneIcon} name='phone' />
+                    <PhoneInput
+                        style={styles.phoneInput}
+                        countrySelectProps={{ unicodeFlags: true }}
+                        defaultCountry={"CA"}
+                        value={phone}
+                        onChange={setPhone}
+                        placeholder="Phone Number"
+                    />
+                </View>
                 <CustomButton
                     text="Make a Referral"
                     onPress={referralSubmission}
                     style={styles.component}
+                />
+                <CustomButton
+                    text="Share the task"
+                    onPress={shareTaskPressed}
+                    style={styles.component}
+                    type="FORTHSTYLE"
                 />
             </View>
         </ScrollView>
@@ -111,7 +166,7 @@ const styles = StyleSheet.create({
         paddingTop: 20,
         paddingLeft: 20,
         paddingRight: 20,
-        height: 800,
+        height: 700,
     },
     topContainer: {
         flexDirection: 'row',
@@ -126,7 +181,7 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     component: {
-        marginTop: 20
+        marginTop: 10
     },
     title: {
         marginTop: 20,
@@ -137,6 +192,29 @@ const styles = StyleSheet.create({
     },
     link: {
         color: "#ff6200"
+    },
+    phoneContainer: {
+        backgroundColor: 'white',
+        width: '100%',
+        borderColor: '#e8e8e8',
+        borderWidth: 1,
+        borderTopWidth: 0,
+        borderLeftWidth: 0,
+        borderRightWidth: 0,
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        marginVertical: 5,
+        flexDirection: 'row',
+    },
+    phoneIcon: {
+        padding: 0,
+        color: '#b8b8b8',
+        fontSize: 20,
+    },
+    phoneInput: {
+        flex: 1,
+        paddingLeft: 5,
     },
     registerButton: {
         marginTop: 40,
@@ -163,12 +241,12 @@ const styles = StyleSheet.create({
         marginHorizontal: 4,
         marginTop: 1,
         marginBottom: 2,
-        color: '#000',
+        color: '#065a98',
     },
     image: {
         marginVertical: 10,
         width: "100%",
-        height: 150,
+        height: 200,
         resizeMode: 'cover',
         borderRadius: 15,
         overflow: 'hidden',

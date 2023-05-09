@@ -1,6 +1,32 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage(
+    $input: DeleteMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    deleteMessage(input: $input, condition: $condition) {
+      id
+      fromUserId
+      toUserId
+      type
+      status
+      message
+      referredPhone
+      referredEmail
+      referredName
+      dateTime
+      transactionId
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      owner
+    }
+  }
+`;
 export const createMessage = /* GraphQL */ `
   mutation CreateMessage(
     $input: CreateMessageInput!
@@ -10,7 +36,12 @@ export const createMessage = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      type
+      status
       message
+      referredPhone
+      referredEmail
+      referredName
       dateTime
       transactionId
       createdAt
@@ -18,6 +49,7 @@ export const createMessage = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -30,7 +62,12 @@ export const updateMessage = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      type
+      status
       message
+      referredPhone
+      referredEmail
+      referredName
       dateTime
       transactionId
       createdAt
@@ -38,26 +75,7 @@ export const updateMessage = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
-    }
-  }
-`;
-export const deleteMessage = /* GraphQL */ `
-  mutation DeleteMessage(
-    $input: DeleteMessageInput!
-    $condition: ModelMessageConditionInput
-  ) {
-    deleteMessage(input: $input, condition: $condition) {
-      id
-      fromUserId
-      toUserId
-      message
-      dateTime
-      transactionId
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
+      owner
     }
   }
 `;

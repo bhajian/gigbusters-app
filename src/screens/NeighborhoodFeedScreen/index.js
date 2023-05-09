@@ -64,7 +64,6 @@ export default function NeighborhoodFeedScreen(props) {
                 </Pressable>
             ),
         })
-
     }, [navigation])
 
     return (

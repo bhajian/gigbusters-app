@@ -7,7 +7,12 @@ export const getMessage = /* GraphQL */ `
       id
       fromUserId
       toUserId
+      type
+      status
       message
+      referredPhone
+      referredEmail
+      referredName
       dateTime
       transactionId
       createdAt
@@ -15,6 +20,7 @@ export const getMessage = /* GraphQL */ `
       _version
       _deleted
       _lastChangedAt
+      owner
     }
   }
 `;
@@ -29,7 +35,12 @@ export const listMessages = /* GraphQL */ `
         id
         fromUserId
         toUserId
+        type
+        status
         message
+        referredPhone
+        referredEmail
+        referredName
         dateTime
         transactionId
         createdAt
@@ -37,6 +48,7 @@ export const listMessages = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -60,7 +72,12 @@ export const syncMessages = /* GraphQL */ `
         id
         fromUserId
         toUserId
+        type
+        status
         message
+        referredPhone
+        referredEmail
+        referredName
         dateTime
         transactionId
         createdAt
@@ -68,6 +85,48 @@ export const syncMessages = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
+      }
+      nextToken
+      startedAt
+    }
+  }
+`;
+export const listMessagesByType = /* GraphQL */ `
+  query ListMessagesByType(
+    $type: String!
+    $status: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelMessageFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMessagesByType(
+      type: $type
+      status: $status
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        fromUserId
+        toUserId
+        type
+        status
+        message
+        referredPhone
+        referredEmail
+        referredName
+        dateTime
+        transactionId
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -95,7 +154,12 @@ export const listMessagesByTransactionId = /* GraphQL */ `
         id
         fromUserId
         toUserId
+        type
+        status
         message
+        referredPhone
+        referredEmail
+        referredName
         dateTime
         transactionId
         createdAt
@@ -103,6 +167,7 @@ export const listMessagesByTransactionId = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       startedAt
@@ -130,7 +195,12 @@ export const searchMessages = /* GraphQL */ `
         id
         fromUserId
         toUserId
+        type
+        status
         message
+        referredPhone
+        referredEmail
+        referredName
         dateTime
         transactionId
         createdAt
@@ -138,6 +208,7 @@ export const searchMessages = /* GraphQL */ `
         _version
         _deleted
         _lastChangedAt
+        owner
       }
       nextToken
       total

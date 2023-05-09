@@ -233,6 +233,19 @@ export class TaskService {
         return
     }
 
+    async createTransaction(params) {
+        const path = `${taskPath}/${transactionPath}`
+        const data = {
+            body: {
+                type: params.type,
+                taskId: params.taskId,
+                customerId: params.customerId,
+            },
+        }
+        const transaction = await API.post(taskApiName, path, data)
+        return transaction
+    }
+
     async withdrawApplication(params) {
         const path = `${taskPath}/${params.taskId}${withdrawPath}`
         const data = {

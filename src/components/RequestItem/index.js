@@ -11,7 +11,6 @@ export default function RequestItem({request}) {
 
     const ref = useRef()
 
-
     async function onSharePressed() {
         ref.current.capture().then(uri => {
             Sharing.shareAsync(`file://${uri}`, {
