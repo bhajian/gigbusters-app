@@ -41,7 +41,7 @@ export default function ReferralResponseScreen({navigation, route}) {
         try{
             const profile = profileService.getProfile()
             const transaction = await taskService.createTransaction({
-                tyoe: 'referral',
+                type: 'referral',
                 taskId: request.id,
                 customerId: request.userId
             })

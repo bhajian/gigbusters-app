@@ -5,7 +5,21 @@ import {AntDesign} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 
 export default function MessageItem({transaction, accountType, onChatPressed, onProfilePressed}) {
-    const profile = (accountType === 'WORKER' ? transaction?.customer : transaction?.worker)
+
+    const profile = getProfile()
+
+    function getProfile(){
+        if(accountType === 'CONSUMER' && transaction?.transaction.type === 'referral'){
+            return transaction?.referrer
+        }
+        if(accountType === 'CONSUMER' && transaction?.transaction.type === 'application'){
+            return transaction?.worker
+        }
+        if(accountType === 'WORKER'){
+            return transaction?.customer
+        }
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.mainContainer} onPress={e => onChatPressed(transaction)}>

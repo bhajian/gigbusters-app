@@ -6,7 +6,7 @@ import {Auth} from "aws-amplify";
 import Colors from "../../constants/Colors";
 dayjs.extend(relativeTime)
 
-const Message = ({message, myUserId}) => {
+const Message = ({message, myUserId, transaction}) => {
     const [isMe, setIsMe] = useState(false);
     const { width } = useWindowDimensions()
 
@@ -17,10 +17,19 @@ const Message = ({message, myUserId}) => {
     useEffect(() => {
         const isMyMessage = async () => {
             setIsMe(message.fromUserId === myUserId);
-        };
-
+        }
         isMyMessage().then(r => {});
-    }, []);
+    }, [])
+
+    function getMessageBody(){
+        const type = message?.type
+        if(type === 'referral'){
+            return `someone has referred ${message.referredName} to you with the following 
+            information: Phone: ${message.referredPhone}, Email: ${message.referredEmail}`
+        } else{
+            return message.message
+        }
+    }
 
     return (
         <View
@@ -33,7 +42,7 @@ const Message = ({message, myUserId}) => {
             ]}
         >
 
-            <Text>{message.message}</Text>
+            <Text>{getMessageBody()}</Text>
             <Text style={styles.time}>{dayjs(message.dateTime).fromNow(true)}</Text>
         </View>
     );

@@ -57,6 +57,10 @@ export class TaskService {
                 trnsactionArray[i].customer.profilePhotoURL =
                     await this.getMainPhoto(trnsactionArray[i]?.customer?.profilePhoto)
             }
+            if(trnsactionArray[i]?.referrer?.profilePhoto){
+                trnsactionArray[i].referrer.profilePhotoURL =
+                    await this.getMainPhoto(trnsactionArray[i]?.referrer?.profilePhoto)
+            }
             if(trnsactionArray[i]?.task?.photos && trnsactionArray[i]?.task?.photos[0]){
                 const photo = trnsactionArray[i]?.task?.photos[0]
                 trnsactionArray[i].task.photoURL =

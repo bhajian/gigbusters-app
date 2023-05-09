@@ -7,10 +7,6 @@ import { AntDesign, MaterialIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import "react-native-get-random-values";
 import Colors from "../../constants/Colors";
-import {
-    createMessage,
-} from "../../backend/graphql/mutations"
-import {API, graphqlOperation} from "aws-amplify";
 import {TaskService} from "../../backend/TaskService";
 import {MessageService} from "../../backend/MessageService";
 
@@ -62,6 +58,7 @@ const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
                     style={styles.input}
                     placeholder="Type your message..."
                     editable={!disabled}
+                    multiline={true}
                 />
 
                 <TouchableOpacity

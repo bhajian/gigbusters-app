@@ -27,6 +27,21 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
 
     }, [])
 
+    function getHeaderText(){
+        if(transaction?.transaction?.type === 'application'){
+            if(transaction?.transaction?.status === 'applicationAccepted'){
+                return `You have accepted a request from ${transaction?.worker?.name}`
+            }
+            if(transaction?.transaction?.status === 'rejected'){
+                return `You have rejected a request from ${transaction?.worker?.name}`
+            }
+        }
+        if(transaction?.transaction?.type === 'referral'){
+            return 'You have a new referral for the following task.'
+        }
+    }
+
+
     return (
         <View
             style={[
@@ -57,7 +72,7 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
                         <Text style={styles.messageText}>{dayjs(transaction.createdAt).fromNow(true)}</Text>
                     </View>
                 :
-                <Text style={{color: 'black', }} >You have {(transaction?.transaction?.status === 'applicationAccepted'? 'accepted': 'rejected')} {transaction?.worker?.name} request.</Text>
+                <Text style={{color: 'black', }} >{getHeaderText()}</Text>
             }
         </View>
     )
