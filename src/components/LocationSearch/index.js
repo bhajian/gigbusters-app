@@ -5,12 +5,15 @@ import {MaterialIcons} from "@expo/vector-icons";
 import CountryFlag from "react-native-country-flag";
 import Colors from "../../constants/Colors";
 import loading from "../../../assets/images/loading2.gif";
+import * as Location from 'expo-location'
 
 export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
     const [locationName, setLocationName] = useState(locationNameParam
         ? locationNameParam : 'Select a Location ..')
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [coordinates, setCoordinates] = useState({
+        latitude: 0, logitude: 0})
+    const [myLocation, setMylocation] = useState({
         latitude: 0, logitude: 0})
     const navigation = useNavigation()
 
@@ -19,6 +22,8 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
         setLocationName(location.locationName)
         setCoordinates(location.coordinates)
         if(onLocationChangePressed){
+            location.myLatitude = myLocation?.coords?.latitude
+            location.myLongitude = myLocation?.coords?.longitude
             onLocationChangePressed(location).then(e=>{
                 setDataBeingSaved(false)
             })
@@ -27,16 +32,22 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
     function onPress() {
         navigation.navigate('LocationSelectorScreen', {
             onGoBack: setLocationHook
-        });
+        })
     }
 
-    // useEffect(() => {
-    //     loadData().then(r => {})
-    // }, [loadData, locationNameParam])
-    //
-    // async function loadData() {
-    //
-    // }
+    useEffect(() => {
+        getCurrentLocation().then(r => {})
+    }, [])
+
+    async function getCurrentLocation() {
+        let { status } = await Location.requestForegroundPermissionsAsync()
+        if (status !== 'granted') {
+            alert('Permission to access location was denied')
+            return
+        }
+        let location = await Location.getCurrentPositionAsync({})
+        setMylocation(location)
+    }
 
     return (
         <View style={[style, styles.container]}>
@@ -60,7 +71,6 @@ export function LocationSelector({style, locationNameParam, onLocationChangePres
 const styles = StyleSheet.create({
     container: {
         backgroundColor: '#ffffff',
-        // marginHorizontal: 10,
         width: '100%'
     },
     searchBarContainer: {

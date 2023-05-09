@@ -10,7 +10,6 @@ Location.installWebGeolocationPolyfill()
 const LocationSelectorScreen = ({route, navigation}) => {
     const {onGoBack} = (route && route.params ? route.params : null)
 
-
     return (
         <View style={styles.container}>
             <GooglePlacesAutocomplete

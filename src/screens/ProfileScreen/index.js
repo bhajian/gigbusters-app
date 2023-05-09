@@ -63,9 +63,11 @@ const ProfileScreen = (props) => {
 
     const onLocationChangePressed = async(props) => {
         await profileService.changeUserLocation({
-            locationName: props.locationName,
-            latitude: props.coordinates.lat,
-            longitude: props.coordinates.lng,
+            locationName: props?.locationName,
+            latitude: props?.coordinates?.lat,
+            longitude: props?.coordinates?.lng,
+            myLatitude: props?.myLatitude,
+            myLongitude: props?.myLongitude,
         })
         setLocationName(props.locationName)
     }
