@@ -25,7 +25,7 @@ const MatchingCards = () => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
             tabBarIcon: ({color}) => (
-                <Octicons name="stack" size={25} color={color}/>
+                <MaterialCommunityIcons name="cards" size={25} color={color}/>
             ),
             headerTitle: () => (
                 <View style={{marginHorizontal: 15}}>
@@ -119,8 +119,8 @@ const MatchingCards = () => {
                             onLeftPressed={onLeftPressed} />
                     )
                 }}
-                onSwipedRight={(e) => {onRightSwiped(e)}}
-                onSwipedLeft={(e) => {onLeftSwiped(e)}}
+                onSwipedRight={(e) => {onRightSwiped(e).then(r => {}).catch(e => console.log(e))}}
+                onSwipedLeft={(e) => {onLeftSwiped(e).then(r => {}).catch(e => console.log(e))}}
                 onSwiped={(cardIndex) => {}}
                 onSwipedAll={() => {console.log('onSwipedAll')}}
                 backgroundColor={Colors.light.grey}

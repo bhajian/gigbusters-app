@@ -28,8 +28,9 @@
         "LSApplicationQueriesSchemes": [
           "gigbusters"
         ],
-        "NSLocationAlwaysUsageDescription": "We need your location to route requests to your neighbourhood.",
-        "NSContactsUsageDescription": "We might need your contact list to invite them to the app only if you allow the app."
+        "NSLocationAlwaysUsageDescription": "In order to find the workers or tasks within your location, we need to access your location.",
+        "NSLocationWhenInUseUsageDescription": "In order to find the workers or tasks within your location, we need to access your location.",
+        "NSContactsUsageDescription": "We need your contact list to invite your friends to the app only if you allow the app."
       },
       "bundleIdentifier": "com.orbitstellar.gigbusters",
       "buildNumber": "8"

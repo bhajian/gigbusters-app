@@ -4,6 +4,7 @@ const tintColorGrey = '#eeefff'
 const tintColorDarkerGrey = '#b4b7c9'
 const tintColorGreyDark = '#858585'
 const turquoise = '#30D5C8'
+const darkTurquoise = '#2f918c'
 
 export default {
   light: {
@@ -18,6 +19,7 @@ export default {
   },
   dark: {
     grey: tintColorGreyDark,
+    darkTurquoise: darkTurquoise,
     text: '#fff',
     background: '#000',
     tint: tintColorDark,

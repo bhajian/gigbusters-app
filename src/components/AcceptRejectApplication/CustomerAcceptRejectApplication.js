@@ -18,8 +18,6 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 dayjs.extend(relativeTime)
 
 const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejectPressed}) => {
-
-
     const [status, setStatus] = useState(transaction?.transaction?.status)
     const { width } = useWindowDimensions()
 
@@ -30,14 +28,14 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
     function getHeaderText(){
         if(transaction?.transaction?.type === 'application'){
             if(transaction?.transaction?.status === 'applicationAccepted'){
-                return `You have accepted a request from ${transaction?.worker?.name}`
+                return `You have accepted the application from ${transaction?.worker?.name}`
             }
             if(transaction?.transaction?.status === 'rejected'){
-                return `You have rejected a request from ${transaction?.worker?.name}`
+                return `You have rejected the application from ${transaction?.worker?.name}`
             }
         }
         if(transaction?.transaction?.type === 'referral'){
-            return 'You have a new referral for the following task.'
+            return 'You have a new referral for the above task. Would you like to chat with the person who sent the recommendation?'
         }
     }
 
@@ -47,20 +45,20 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
             style={[
                 styles.container,
                 {
-                    backgroundColor: (status === 'applied'? Colors.light.tint : Colors.light.grey),
+                    backgroundColor: (status === 'applied'? Colors.light.tint : Colors.dark.darkTurquoise),
                     alignSelf: "center",
                 },
             ]}
         >
+            <Text style={styles.messageText}>Category: {transaction?.task?.category}</Text>
+            <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
             {
-                status === 'applied'?
+                (status === 'applied' || status === 'initiated') ?
                     <View>
 
-                        <Text style={styles.messageText}>Do you accept the request from </Text>
+                        <Text style={styles.messageText}>Do you accept the application from </Text>
                         <Text style={styles.workerName}>{transaction?.worker?.name}</Text>
-                        <Text style={styles.messageText}>for the {transaction?.task?.category} posting ? </Text>
 
-                        <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
                         <View style={styles.decisionContainer}>
                             <TouchableOpacity style={styles.rejectButton} onPress={e=> onRejectPressed(transaction)}>
                                 <Feather name="x-circle" size={30} color="red"/>
@@ -69,11 +67,11 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
                                 <AntDesign name="checkcircle" size={27} color="green"/>
                             </TouchableOpacity>
                         </View>
-                        <Text style={styles.messageText}>{dayjs(transaction.createdAt).fromNow(true)}</Text>
                     </View>
                 :
-                <Text style={{color: 'black', }} >{getHeaderText()}</Text>
+                <Text style={styles.messageText} >{getHeaderText()}</Text>
             }
+            <Text style={styles.time}>{dayjs(transaction.transaction?.lastUpdatedAt).fromNow(true)}</Text>
         </View>
     )
 }
@@ -104,17 +102,13 @@ const styles = StyleSheet.create({
     },
     taskImage: {
         alignSelf: 'center',
-        width: 70,
-        height: 70,
+        width: 100,
+        height: 80,
         marginVertical: 10,
         borderRadius: 5,
     },
-    // messageContainer: {
-    //     maxWidth: "100%",
-    // },
     messageText:{
         color: 'white',
-        // alignSelf: "flex-end",
     },
     workerName:{
         color: 'white',
@@ -139,7 +133,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     time: {
-        color: "gray",
+        color: Colors.light.grey,
         alignSelf: "flex-end",
     },
     images: {

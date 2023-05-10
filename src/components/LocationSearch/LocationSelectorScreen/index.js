@@ -17,16 +17,15 @@ const LocationSelectorScreen = ({route, navigation}) => {
                 query={{
                     key: 'AIzaSyBPwz2HLlWGxU6vZrGNcFiyD23-tawiH0s',
                     language: 'en',
-                    types: '(cities)',
                 }}
                 GooglePlacesDetailsQuery={{ fields: 'geometry', }}
                 fetchDetails={true}
-                currentLocation={false}
-                // currentLocationLabel='Current location'
+                currentLocation={true}
+                currentLocationLabel='Current location'
                 onPress={(data, details ) => {
                     if(onGoBack){
                         onGoBack({
-                            locationName: (data.description ? data.description : data.vicinity),
+                            locationName: (data.description ? data.description : data.formatted_address),
                             coordinates: details.geometry.location
                         })
                         navigation.goBack()
@@ -35,6 +34,10 @@ const LocationSelectorScreen = ({route, navigation}) => {
                 styles={{
                     textInput: styles.textInput,
                 }}
+                nearbyPlacesAPI='GoogleReverseGeocoding'
+                GoogleReverseGeocodingQuery={{
+                }}
+                // filterReverseGeocodingByTypes={['locality']}
             />
             <TouchableOpacity
                 onPress={() => navigation.goBack()}

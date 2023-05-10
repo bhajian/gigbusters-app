@@ -30,12 +30,9 @@ const ConsumerChatScreen = (props) => {
     const transactionProp = props?.route?.params
     const taskService = new TaskService()
     const tr = taskService.getTransaction(transactionProp.transactionId)
-
     const messageService = new MessageService()
 
-    const [name, setName] = useState(tr?.worker?.name)
     const [transaction, setTransaction] = useState(tr)
-    const [profilePhoto, setProfilePhoto] = useState(tr?.worker?.profilePhotoURL)
     const [messages, setMessages] = useState([])
     const [currentUserId, setCurrentUserId] = useState('')
     const [editable, setEditable] = useState(false)
@@ -96,7 +93,6 @@ const ConsumerChatScreen = (props) => {
         }
     }
 
-
     async function terminateChat(params) {
         try{
             await taskService.terminateTransaction({
@@ -131,6 +127,22 @@ const ConsumerChatScreen = (props) => {
         navigation.navigate('ReviewableProfileScreen', {reviewable: params})
     }
 
+    function getProfileName(){
+        if(tr?.transaction?.type === 'referral'){
+            return tr?.referrer?.name
+        } else{
+            return tr?.worker?.name
+        }
+    }
+
+    function getProfilePhoto(){
+        if(tr?.transaction?.type === 'referral'){
+            return tr?.referrer?.profilePhotoURL
+        } else{
+            return tr?.worker?.profilePhotoURL
+        }
+    }
+
     useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
@@ -146,12 +158,12 @@ const ConsumerChatScreen = (props) => {
                     }), styles.avatar]}>
                     <UserAvatar
                         size={35}
-                        userName={name}
+                        userName={getProfileName()}
                         backgroundColor={Colors.light.turquoise}
                         fontSize={20}
-                        src={profilePhoto}
+                        src={getProfilePhoto()}
                     />
-                    <Text style={styles.name}>{name}</Text>
+                    <Text style={styles.name}>{getProfileName()}</Text>
                 </Pressable>
 
             ),
@@ -187,7 +199,7 @@ const ConsumerChatScreen = (props) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 105}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 115}
             style={styles.container}
         >
             <ImageBackground source={bg} style={styles.bg}>
@@ -195,6 +207,7 @@ const ConsumerChatScreen = (props) => {
                     ListFooterComponent={header}
                     data={messages}
                     renderItem={({ item }) => <Message
+                        transaction={transaction}
                         myUserId={currentUserId}
                         message={item}
                     />}

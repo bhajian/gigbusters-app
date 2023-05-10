@@ -22,19 +22,25 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import {useHeaderHeight} from "@react-navigation/elements";
 
 export default function RequestGigScreen(props) {
+    const navigation = useNavigation()
+    const taskService = new TaskService()
+    const profileService = new ProfileService()
+    const profile = profileService.getProfile()
+    const bottomSheetModalRef = useRef(null)
+    const inputTestRef = useRef()
+    const headerHeight = useHeaderHeight()
     const params = props?.route?.params
     const operation = (params?.operation ? params?.operation : 'create')
 
-    const headerHeight = useHeaderHeight()
     const [isKeyboardVisible, setKeyboardVisible] = useState(false)
-    const [profileName, setProfileName] = useState('')
+    const [profileName, setProfileName] = useState(profile.name)
     const [category, setCategory] = useState((operation === 'edit' ?
             params?.task?.category :
             ''
     ))
     const [location, setLocation] = useState((operation === 'edit' ?
             params?.task?.location :
-            undefined
+            profile.location
     ))
     const [distance, setDistance] = useState([50])
     const [description, setDescription] = useState((operation === 'edit' ?
@@ -49,7 +55,7 @@ export default function RequestGigScreen(props) {
             params?.task?.priceUnit :
             'hr'
     ))
-    const [profileImage, setProfileImage] = useState(null)
+    const [profileImage, setProfileImage] = useState(profile.mainPhotoUrl)
     const [images, setImages] = useState((operation === 'edit' ?
         (params?.task?.mainPhotoURL? [params?.task?.mainPhotoURL] : []) :
             []
@@ -59,35 +65,29 @@ export default function RequestGigScreen(props) {
             []
     ))
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
-
-    const navigation = useNavigation()
-    const taskService = new TaskService()
-    const profileService = new ProfileService()
-    const bottomSheetModalRef = useRef(null)
     const handleSheetChanges = useCallback((value) => {
     }, [])
-    const inputTestRef = useRef()
 
-    async function loadData() {
-        const profile = profileService.getProfile()
-        if(profile && profile.name){
-            setProfileName(profile.name)
-        }
-        if(location === undefined && profile && profile.location && profile.location){
-            setLocation(profile.location)
-        }
-        if(profile && profile.photos){
-            const url = profile.mainPhotoUrl
-            setProfileImage(url)
-        }
-    }
+
+    // function loadData() {
+    //     const profile = profileService.getProfile()
+    //     if(profile && profile.name){
+    //         setProfileName(profile.name)
+    //     }
+    //     if(location === undefined && profile && profile.location && profile.location){
+    //         setLocation(profile.location)
+    //     }
+    //     if(profile && profile.photos){
+    //         const url = profile.mainPhotoUrl
+    //         setProfileImage(url)
+    //     }
+    // }
 
     useEffect(() => {
         if(params?.operation === 'create'){
             Keyboard.dismiss()
             bottomSheetModalRef.current.present()
         }
-        loadData().catch((e) => console.log(e))
     }, [])
 
     useEffect(() => {
@@ -252,10 +252,12 @@ export default function RequestGigScreen(props) {
                     </View>
                 </View>
 
-                <View style={styles.tagsContainer}>
+                <View style={styles.tagsAddressContainer}>
                     <View style={styles.tag}>
                         <Text style={styles.text} >{location?.locationName}</Text>
                     </View>
+                </View>
+                <View style={styles.tagsContainer}>
                     <View style={styles.tag}>
                         <Text style={styles.text} >{price}$/hr</Text>
                     </View>
@@ -432,7 +434,14 @@ const styles = StyleSheet.create({
         alignContent: 'flex-start'
     },
     tagsContainer: {
-        paddingVertical: 10,
+        paddingVertical: 0,
+        marginHorizontal: 5,
+        width: '100%',
+        flexDirection: 'row',
+        justifyContent: 'flex-start'
+    },
+    tagsAddressContainer: {
+        paddingVertical: 5,
         marginHorizontal: 5,
         width: '100%',
         flexDirection: 'row',

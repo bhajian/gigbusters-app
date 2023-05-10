@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Fontisto from 'react-native-vector-icons/Fontisto';
 import Colors from '../constants/Colors';
-import {FontAwesome, Ionicons, MaterialIcons, Octicons} from "@expo/vector-icons";
+import {FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ProfileNavigation} from "./ProfileNavigation";
 import MatchingCards from "../screens/MatchingScreen/matchingCards";
 import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
@@ -21,7 +21,7 @@ const WorkerTabNavigator = props => {
                     tabBarActiveTintColor: Colors.light.tint,
                     headerShown: true,
                     tabBarIcon: ({color}) => (
-                        <Octicons name="stack" size={25} color={color}/>
+                        <MaterialCommunityIcons name="cards" size={25} color={color}/>
                     ),
                 }}
             >
@@ -45,18 +45,18 @@ const WorkerTabNavigator = props => {
                     ),
                 }}
             />
-            <Tab.Screen
-                name={'Neighborhood'}
-                component={ReferralFeedNavigation}
-                options={{
-                    tabBarActiveTintColor: Colors.light.tint,
-                    headerLargeTitle: false,
-                    headerShown: false,
-                    tabBarIcon: ({color}) => (
-                        <FontAwesome name="feed" size={25} color={color}/>
-                    ),
-                }}
-            />
+            {/*<Tab.Screen*/}
+            {/*    name={'Neighborhood'}*/}
+            {/*    component={ReferralFeedNavigation}*/}
+            {/*    options={{*/}
+            {/*        tabBarActiveTintColor: Colors.light.tint,*/}
+            {/*        headerLargeTitle: false,*/}
+            {/*        headerShown: false,*/}
+            {/*        tabBarIcon: ({color}) => (*/}
+            {/*            <FontAwesome name="feed" size={25} color={color}/>*/}
+            {/*        ),*/}
+            {/*    }}*/}
+            {/*/>*/}
             <Tab.Screen
                 name={'Notifications'}
                 component={NotificationScreen}

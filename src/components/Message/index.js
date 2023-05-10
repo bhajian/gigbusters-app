@@ -24,8 +24,10 @@ const Message = ({message, myUserId, transaction}) => {
     function getMessageBody(){
         const type = message?.type
         if(type === 'referral'){
-            return `someone has referred ${message.referredName} to you with the following 
-            information: Phone: ${message.referredPhone}, Email: ${message.referredEmail}`
+            return `${transaction?.referrer?.name} has referred someone for the above task with with the following information: 
+Name: ${message.referredName}, 
+Phone: ${message.referredPhone}, 
+Email: ${message.referredEmail}`
         } else{
             return message.message
         }
