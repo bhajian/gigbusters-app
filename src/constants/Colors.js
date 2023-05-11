@@ -4,7 +4,7 @@ const tintColorGrey = '#eeefff'
 const tintColorDarkerGrey = '#b4b7c9'
 const tintColorGreyDark = '#858585'
 const turquoise = '#30D5C8'
-const darkTurquoise = '#2f918c'
+const darkTurquoise = '#2b4f57'
 
 export default {
   light: {

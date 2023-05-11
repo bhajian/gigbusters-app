@@ -24,6 +24,18 @@ export default function ReviewableProfileTopContainer({reviewable, navigation, o
             * 100 + Number.EPSILON) / 100)
     }, [reviewable])
 
+    function getPhone(){
+        if (reviewable?.profile?.settings?.showMyPhonePublicly){
+            if(reviewable?.profile?.phone?.verified){
+                return 'Phone: ' + reviewable?.profile?.phone?.phone
+            } else{
+                return 'Phone Not Verified.'
+            }
+        } else{
+            return ''
+        }
+    }
+
     return (
         <View style={styles.topContainer}>
             <View style={styles.headerContainer}>
@@ -46,11 +58,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation, o
                             )}
                         </Text>
                         <Text style={styles.personalInfo}>
-                            {(reviewable?.profile?.settings?.showMyPhonePublicly
-                                    ?
-                                    'Phone: ' + reviewable?.profile?.phone?.phone
-                                    :   ''
-                            )}
+                            {getPhone()}
                         </Text>
                     </View>
                 </View>

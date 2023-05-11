@@ -27,7 +27,7 @@ export default function MainContainer({review}) {
                 <Text>{review.review}</Text>
                 {!!review.mainPhotoURL && <Image source={{uri: review.mainPhotoURL}} style={styles.image} />}
             </View>
-            <Footer review={review} />
+            {/*<Footer review={review} />*/}
         </View>
     );
 }

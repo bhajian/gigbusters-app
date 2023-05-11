@@ -50,7 +50,7 @@ const ConsumerChatScreen = (props) => {
     }, [navigation])
 
     useEffect(() => {
-        setEditable(transaction?.transaction?.status === 'applicationAccepted')
+        setEditableComponent()
         const subscription = messageService.subscribeToMessages({
             next: ({ value }) => {
                 setMessages((m) => [value?.data?.onCreateMessage, ...m]);
@@ -61,6 +61,17 @@ const ConsumerChatScreen = (props) => {
             subscription.unsubscribe()
         }
     }, [])
+
+    function setEditableComponent(){
+        if(transaction?.transaction?.type === 'application' &&
+            transaction?.transaction?.status === 'applicationAccepted'){
+            setEditable(true)
+        }
+        if(transaction?.transaction?.type === 'referral' &&
+            transaction?.transaction?.status === 'requestAccepted'){
+            setEditable(true)
+        }
+    }
 
     async function loadData() {
         try{
@@ -76,21 +87,8 @@ const ConsumerChatScreen = (props) => {
         }
     }
 
-    async function onAcceptPressed(params) {
-        try{
-            await taskService.acceptApplication({
-                applicantId: params?.transaction?.workerId,
-                transactionId: params?.transaction?.id,
-                taskId: params?.task?.id
-            })
-            let clone = JSON.parse(JSON.stringify(transaction))
-            clone.transaction.status = 'applicationAccepted'
-            taskService.setTransaction(clone)
-            setTransaction(clone)
-            setEditable(true)
-        } catch (e) {
-            console.log(e)
-        }
+    async function viewTaskPressed(params) {
+        navigation.navigate('TaskDetailScreen', transaction?.task)
     }
 
     async function terminateChat(params) {
@@ -105,13 +103,44 @@ const ConsumerChatScreen = (props) => {
             console.log(e)
         }
     }
+
+    async function onAcceptPressed(params) {
+        try{
+            if(params?.transaction?.type === 'referral'){
+                await taskService.acceptTransactionRequest({
+                    transactionId: params?.transaction?.id,
+                })
+            } else {
+                await taskService.acceptApplication({
+                    applicantId: params?.transaction?.workerId,
+                    transactionId: params?.transaction?.id,
+                    taskId: params?.task?.id
+                })
+            }
+
+            let clone = JSON.parse(JSON.stringify(transaction))
+            clone.transaction.status = 'applicationAccepted'
+            taskService.setTransaction(clone)
+            setTransaction(clone)
+            setEditable(true)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     async function onRejectPressed(params) {
         try{
-            await taskService.rejectApplication({
-                applicantId: params?.transaction?.workerId,
-                transactionId: params?.transaction?.id,
-                taskId: params?.task?.id
-            })
+            if(params?.transaction?.type === 'referral'){
+                await taskService.rejectTransactionRequest({
+                    transactionId: params?.transaction?.id,
+                })
+            } else {
+                await taskService.rejectApplication({
+                    applicantId: params?.transaction?.workerId,
+                    transactionId: params?.transaction?.id,
+                    taskId: params?.task?.id
+                })
+            }
             let clone = JSON.parse(JSON.stringify(transaction))
             clone.transaction.status = 'rejected'
             taskService.deleteTransaction(clone?.transaction?.id)
@@ -199,7 +228,7 @@ const ConsumerChatScreen = (props) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 115}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 110}
             style={styles.container}
         >
             <ImageBackground source={bg} style={styles.bg}>
@@ -216,9 +245,7 @@ const ConsumerChatScreen = (props) => {
                     inverted
                 />
                 <InputBox
-                    transactionId={transaction?.transaction?.id}
-                    fromUserId={transaction?.transaction?.customerId}
-                    toUserId={transaction?.transaction?.workerId}
+                    transaction={transaction?.transaction}
                     disabled={!editable}
                 />
             </ImageBackground>
@@ -227,6 +254,7 @@ const ConsumerChatScreen = (props) => {
                 handleSheetChanges={editPageHandleSheetChanges}
                 transaction={transaction}
                 terminateChat={terminateChat}
+                onTaskPressed={viewTaskPressed}
             />
         </KeyboardAvoidingView>
     )

@@ -9,6 +9,7 @@ import Colors from "../../constants/Colors";
 import {Ionicons} from "@expo/vector-icons";
 import NotificationItem from "../../components/NotificationItem";
 import {NotificationService} from "../../backend/NotificationService";
+import * as Notifications from 'expo-notifications'
 
 export default function NotificationScreen() {
 
@@ -45,6 +46,7 @@ export default function NotificationScreen() {
             lastEvaluatedKey: lastEvaluatedKey
         })
         setNotifications(notificationsObj)
+        await Notifications.setBadgeCountAsync(0)
         setDataBeingLoaded(false)
     }
 

@@ -38,10 +38,11 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
                     </View>
                 </View>
                 <View style={styles.rightContainer}>
-                    <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
                     <View style={styles.chatButton} >
                         <AntDesign name="wechat" size={30} color={Colors.light.tint}/>
                     </View>
+                    <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
+
                 </View>
             </TouchableOpacity>
         </View>
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     taskImage: {
         width: 70,
         height: 70,
-        borderRadius: 5,
+        borderRadius: 35,
     },
     container: {
         flexDirection: 'row',

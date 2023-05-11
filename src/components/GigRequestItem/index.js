@@ -13,7 +13,7 @@ export default function GigRequestItem({item, handler}) {
         >
             <View style={styles.mainContainer}>
                 <View style={styles.leftContainer}>
-                    <Image source={{uri: item.mainPhotoURL}} style={styles.image}/>
+                    <Image source={{uri: item.photoURL}} style={styles.image}/>
                     <View style={styles.middleContainer}>
                         <Text style={styles.titleText}>
                             {item.category}

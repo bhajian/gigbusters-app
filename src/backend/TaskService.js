@@ -2,6 +2,8 @@ import {API, Auth, Storage} from "aws-amplify"
 const taskApiName = 'GigbusterApi'
 const taskPath = '/task'
 const applicantPath = '/applicant'
+const transactionRequestAcceptPath = '/requestAccept'
+const transactionRequestRejectPath = '/requestReject'
 const transactionPath = '/transaction'
 const applyPath = '/apply'
 const withdrawPath = '/withdraw'
@@ -82,7 +84,7 @@ export class TaskService {
             if(tasksArray[i]?.photos){
                 const mainPhoto = tasksArray[i].photos
                     .filter((item) => item?.type === 'main')
-                tasksArray[i].mainPhotoURL = await this.getMainPhoto(mainPhoto[0])
+                tasksArray[i].photoURL = await this.getMainPhoto(mainPhoto[0])
             }
         }
         myTasks = new Map(tasksArray.map(i => [i?.id, i]))
@@ -238,7 +240,7 @@ export class TaskService {
     }
 
     async createTransaction(params) {
-        const path = `${taskPath}/${transactionPath}`
+        const path = `${taskPath}${transactionPath}`
         const data = {
             body: {
                 type: params.type,
@@ -283,6 +285,34 @@ export class TaskService {
             },
         }
         const res = await API.put(taskApiName, path, data)
+        return res
+    }
+
+    async acceptTransactionRequest(params) {
+        const path = `${taskPath}${transactionPath}${transactionRequestAcceptPath}`
+        const data = {
+            body: {
+                transactionId: params.transactionId,
+            },
+        }
+        const res = await API.put(taskApiName, path, data)
+        const t = transactions.get(params.transactionId)
+        t.transaction.status = 'applicationAccepted'
+        transactions.set(params.transactionId, t)
+        return res
+    }
+
+    async rejectTransactionRequest(params) {
+        const path = `${taskPath}${transactionPath}${transactionRequestRejectPath}`
+        const data = {
+            body: {
+                transactionId: params.transactionId,
+            },
+        }
+        const res = await API.put(taskApiName, path, data)
+        const t = transactions.get(params.transactionId)
+        t.transaction.status = 'applicationAccepted'
+        transactions.set(params.transactionId, t)
         return res
     }
 

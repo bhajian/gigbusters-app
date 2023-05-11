@@ -87,7 +87,7 @@ const MatchingCard = props => {
                     provider={PROVIDER_GOOGLE}
                 />
                 <TouchableOpacity style={styles.connectButton} onPress={onRightPressed}>
-                    <Ionicons name="ios-logo-whatsapp" size={35} color="white"/>
+                    <FontAwesome name="check-circle" size={35} color="white"/>
                 </TouchableOpacity>
             </View>
         </View>

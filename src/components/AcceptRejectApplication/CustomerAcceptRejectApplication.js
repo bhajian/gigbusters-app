@@ -27,6 +27,9 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
 
     function getHeaderText(){
         if(transaction?.transaction?.type === 'application'){
+            if(transaction?.transaction?.status === 'applied'){
+                return `Would you accept an application from ${transaction?.worker?.name}`
+            }
             if(transaction?.transaction?.status === 'applicationAccepted'){
                 return `You have accepted the application from ${transaction?.worker?.name}`
             }
@@ -39,37 +42,45 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
         }
     }
 
+    function getBackgroundColor(){
+        if(status === 'applied' || status === 'initiated'){
+            return Colors.light.tint
+        } else{
+            return Colors.dark.darkTurquoise
+        }
+    }
+
+    function getAcceptRejectComponent(){
+        if(status === 'applied' || status === 'initiated') {
+            return <View>
+                <Text style={styles.workerName}>{transaction?.worker?.name}</Text>
+                <View style={styles.decisionContainer}>
+                    <TouchableOpacity style={styles.rejectButton} onPress={e=> onRejectPressed(transaction)}>
+                        <Feather name="x-circle" size={30} color="red"/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.acceptButton} onPress={e=> onAcceptPressed(transaction)}>
+                        <AntDesign name="checkcircle" size={27} color="green"/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        }
+    }
 
     return (
         <View
             style={[
                 styles.container,
                 {
-                    backgroundColor: (status === 'applied'? Colors.light.tint : Colors.dark.darkTurquoise),
+                    backgroundColor: getBackgroundColor(),
                     alignSelf: "center",
                 },
             ]}
         >
             <Text style={styles.messageText}>Category: {transaction?.task?.category}</Text>
             <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
+            <Text style={styles.messageText} >{getHeaderText()}</Text>
             {
-                (status === 'applied' || status === 'initiated') ?
-                    <View>
-
-                        <Text style={styles.messageText}>Do you accept the application from </Text>
-                        <Text style={styles.workerName}>{transaction?.worker?.name}</Text>
-
-                        <View style={styles.decisionContainer}>
-                            <TouchableOpacity style={styles.rejectButton} onPress={e=> onRejectPressed(transaction)}>
-                                <Feather name="x-circle" size={30} color="red"/>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.acceptButton} onPress={e=> onAcceptPressed(transaction)}>
-                                <AntDesign name="checkcircle" size={27} color="green"/>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                :
-                <Text style={styles.messageText} >{getHeaderText()}</Text>
+                getAcceptRejectComponent()
             }
             <Text style={styles.time}>{dayjs(transaction.transaction?.lastUpdatedAt).fromNow(true)}</Text>
         </View>
@@ -103,7 +114,7 @@ const styles = StyleSheet.create({
     taskImage: {
         alignSelf: 'center',
         width: 100,
-        height: 80,
+        height: 100,
         marginVertical: 10,
         borderRadius: 5,
     },

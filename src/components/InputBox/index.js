@@ -10,19 +10,21 @@ import Colors from "../../constants/Colors";
 import {TaskService} from "../../backend/TaskService";
 import {MessageService} from "../../backend/MessageService";
 
-const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
+const InputBox = ({ transaction, disabled }) => {
+    console.log(transaction)
     const taskService = new TaskService()
     const messageService = new MessageService()
 
     const [text, setText] = useState("")
-    const [files, setFiles] = useState([])
-    const [progresses, setProgresses] = useState({})
 
     async function onSendPressed() {
         if(text.trim() !== ''){
+            const fromUserId = transaction.customerId
+            const toUserId = (transaction?.type === 'application' ?
+                transaction.workerId: transaction.referrerId)
             try{
                 const newMessage = {
-                    transactionId: transactionId,
+                    transactionId: transaction.id,
                     message: text,
                     fromUserId: fromUserId,
                     toUserId: toUserId,
@@ -31,7 +33,7 @@ const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
 
                 setText('')
                 await taskService.updateLastUpdatedMessage({
-                    id: transactionId,
+                    id: transaction.id,
                     lastMessage: text,
                     senderId: fromUserId,
                     receiverId: toUserId,
@@ -45,9 +47,7 @@ const InputBox = ({ transactionId, fromUserId, toUserId, disabled }) => {
 
     return (
             <SafeAreaView edges={["bottom"]} style={styles.container}>
-                {/* Icon */}
                 <AntDesign
-                    // onPress={pickImage}
                     name="plus"
                     size={20}
                     color="royalblue"

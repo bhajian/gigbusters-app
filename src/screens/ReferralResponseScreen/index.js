@@ -11,6 +11,7 @@ import {MessageService} from "../../backend/MessageService";
 import * as Sharing from "expo-sharing";
 import ViewShot from "react-native-view-shot";
 import {ProfileService} from "../../backend/ProfileService";
+import loading from "../../../assets/images/loading2.gif";
 
 export default function ReferralResponseScreen({navigation, route}) {
     const taskService = new TaskService()
@@ -22,6 +23,7 @@ export default function ReferralResponseScreen({navigation, route}) {
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
     const [referredName, setReferredName] = useState('')
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
     useEffect(() => {
         navigation.setOptions({
@@ -39,6 +41,7 @@ export default function ReferralResponseScreen({navigation, route}) {
 
     async function referralSubmission() {
         try{
+            setDataBeingSaved(true)
             const profile = profileService.getProfile()
             const transaction = await taskService.createTransaction({
                 type: 'referral',
@@ -60,7 +63,7 @@ export default function ReferralResponseScreen({navigation, route}) {
         } catch (e) {
             console.log(e)
         }
-
+        setDataBeingSaved(false)
     }
 
     async function shareTaskPressed() {
@@ -143,11 +146,16 @@ export default function ReferralResponseScreen({navigation, route}) {
                         placeholder="Phone Number"
                     />
                 </View>
-                <CustomButton
-                    text="Make a Referral"
-                    onPress={referralSubmission}
-                    style={styles.component}
-                />
+                {
+                    dataBeingSaved ?
+                        <Image source={loading} style={{width: 30, height: 30, alignSelf: 'center'}} />
+                        :
+                        <CustomButton
+                            text="Make a Referral"
+                            onPress={referralSubmission}
+                            style={styles.component}
+                        />
+                }
                 <CustomButton
                     text="Share the task"
                     onPress={shareTaskPressed}
