@@ -38,7 +38,8 @@ export class ProfileService {
                 lastEvaluatedCategory: params.lastEvaluatedCategory
             }
         }
-        const profiles = await API.get(profileApiName, profilePath, data)
+        const response = await API.get(profileApiName, profilePath, data)
+        const profiles = response.Items
         for(let i=0; i< profiles.length; i++){
             const profile = profiles[i]
             if(profile && profile.photos){
