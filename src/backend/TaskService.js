@@ -8,8 +8,8 @@ const transactionPath = '/transaction'
 const applyPath = '/apply'
 const withdrawPath = '/withdraw'
 const passPath = '/pass'
-const acceptPath = '/accept'
-const rejectPath = '/reject'
+const acceptPath = '/applicationAccept'
+const rejectPath = '/applicationReject'
 const photoPath = '/photo'
 const queryPath = '/query'
 const updateLastMessagePath = '/updateLastMessage'
@@ -262,10 +262,9 @@ export class TaskService {
     }
 
     async acceptApplication(params) {
-        const path = `${taskPath}/${params.taskId}${acceptPath}`
+        const path = `${taskPath}${transactionPath}${acceptPath}`
         const data = {
             body: {
-                applicantId: params.applicantId,
                 transactionId: params.transactionId,
             },
         }
@@ -277,10 +276,9 @@ export class TaskService {
     }
 
     async rejectApplication(params) {
-        const path = `${taskPath}/${params.taskId}${rejectPath}`
+        const path = `${taskPath}${transactionPath}${rejectPath}`
         const data = {
             body: {
-                applicantId: params.applicantId,
                 transactionId: params.transactionId,
             },
         }

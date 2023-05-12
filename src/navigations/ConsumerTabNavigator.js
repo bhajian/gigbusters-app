@@ -100,7 +100,6 @@ const ConsumerTabNavigator = props => {
             />
             <Tab.Screen
                 name={'Notifications'}
-                component={NotificationScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerShown: true,
@@ -108,7 +107,15 @@ const ConsumerTabNavigator = props => {
                         <Ionicons name="notifications-sharp" size={25} color={color}/>
                     ),
                 }}
-            />
+            >
+                {screenProps => (
+                    <NotificationScreen
+                        {...screenProps}
+                        updateAccountType={props.updateAccountType}
+                        updateAuthState={props.updateAuthState}
+                    />
+                )}
+            </Tab.Screen>
             <Tab.Screen
                 name={'Profile'}
                 options={{

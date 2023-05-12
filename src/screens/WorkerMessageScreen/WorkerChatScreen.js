@@ -211,8 +211,7 @@ const WorkerChatScreen = (props) => {
                 />
                 <InputBox
                     transactionId={transaction?.transaction?.id}
-                    fromUserId={transaction?.transaction?.workerId}
-                    toUserId={transaction?.transaction?.customerId}
+                    transaction={transaction?.transaction}
                     disabled={!editable}
                 />
             </ImageBackground>

@@ -9,19 +9,50 @@ import "react-native-get-random-values";
 import Colors from "../../constants/Colors";
 import {TaskService} from "../../backend/TaskService";
 import {MessageService} from "../../backend/MessageService";
+import {Auth} from "aws-amplify";
 
 const InputBox = ({ transaction, disabled }) => {
-    console.log(transaction)
     const taskService = new TaskService()
     const messageService = new MessageService()
 
-    const [text, setText] = useState("")
+    const [text, setText] = useState('')
+
+    async function getSubjectIds() {
+        const currentUser = await Auth.currentAuthenticatedUser()
+        const userId = currentUser?.attributes?.sub
+        if(transaction?.type === 'application'){
+            if(transaction?.customerId === userId){
+                return {
+                    fromUserId: transaction?.customerId,
+                    toUserId: transaction?.workerId
+                }
+            } else{
+                return {
+                    toUserId: transaction?.customerId,
+                    fromUserId: transaction?.workerId
+                }
+            }
+        } else if(transaction?.type === 'referral'){
+            if(transaction?.customerId === userId){
+                return {
+                    fromUserId: transaction?.customerId,
+                    toUserId: transaction?.referrer
+                }
+            } else{
+                return {
+                    toUserId: transaction?.customerId,
+                    fromUserId: transaction?.referrer
+                }
+            }
+        }
+    }
+
 
     async function onSendPressed() {
         if(text.trim() !== ''){
-            const fromUserId = transaction.customerId
-            const toUserId = (transaction?.type === 'application' ?
-                transaction.workerId: transaction.referrerId)
+            const subjectIds = await getSubjectIds()
+            const fromUserId = subjectIds?.fromUserId
+            const toUserId = subjectIds?.toUserId
             try{
                 const newMessage = {
                     transactionId: transaction.id,
@@ -29,6 +60,7 @@ const InputBox = ({ transaction, disabled }) => {
                     fromUserId: fromUserId,
                     toUserId: toUserId,
                 }
+
                 const newMessageRes = await messageService.createMessage(newMessage)
 
                 setText('')
@@ -37,7 +69,7 @@ const InputBox = ({ transaction, disabled }) => {
                     lastMessage: text,
                     senderId: fromUserId,
                     receiverId: toUserId,
-                    lastSenderRead: newMessageRes?.data?.newMessageRes?.id,
+                    lastSenderRead: newMessageRes?.data?.newMessage?.id,
                 })
             } catch (e) {
                 console.log(e)

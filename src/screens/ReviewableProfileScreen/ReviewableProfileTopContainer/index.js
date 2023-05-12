@@ -66,9 +66,9 @@ export default function ReviewableProfileTopContainer({reviewable, navigation, o
                     <TouchableOpacity style={styles.shareButton} onPress={onSharePressed}>
                         <EvilIcons name={"share-google"} size={30} color={Colors.light.tint}/>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.shareButton}>
-                        <EvilIcons name={"envelope"} size={30} color={Colors.light.tint}/>
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity style={styles.shareButton}>*/}
+                    {/*    <EvilIcons name={"envelope"} size={30} color={Colors.light.tint}/>*/}
+                    {/*</TouchableOpacity>*/}
                 </View>
             </View>
             <View style={styles.numberContainer}>

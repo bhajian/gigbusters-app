@@ -20,6 +20,14 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
         }
     }
 
+    function getStatusStyle(){
+        if(transaction?.transaction?.type === 'application' && transaction?.transaction?.status === 'applied'){
+            return Colors.light.tint
+        } else{
+            return Colors.dark.grey
+        }
+    }
+
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.mainContainer} onPress={e => onChatPressed(transaction)}>
@@ -39,7 +47,7 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
                 </View>
                 <View style={styles.rightContainer}>
                     <View style={styles.chatButton} >
-                        <AntDesign name="wechat" size={30} color={Colors.light.tint}/>
+                        <AntDesign name="wechat" size={30} color={getStatusStyle()}/>
                     </View>
                     <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
 

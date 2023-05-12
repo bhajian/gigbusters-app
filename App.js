@@ -93,13 +93,11 @@ export default function App() {
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
-            const profile = await profileService.fetchProfile({
-                userId: currentUser.sub
-            })
+            const profile = await profileService.fetchProfile()
             if(currentUser) {
                 if (profile && profile.userId &&
-                    (profile.accountType === 'CONSUMER' || profile.accountType === 'WORKER')
-                    && profile.active) {
+                    (profile?.accountType === 'CONSUMER' || profile?.accountType === 'WORKER')
+                    && profile?.active) {
                     setUserStatus('loggedIn')
                     return await setPushNotificationsAsync(profile)
                 } else {

@@ -13,9 +13,9 @@ export class ProfileService {
     constructor() {
 
     }
-    async fetchProfile(params) {
+    async fetchProfile() {
         const currentUser = await Auth.currentAuthenticatedUser()
-        const userId = currentUser.sub
+        const userId = currentUser?.attributes?.sub
         const path = `${profilePath}/${userId}`
         const data = {}
         profile = await API.get(profileApiName, path, data)

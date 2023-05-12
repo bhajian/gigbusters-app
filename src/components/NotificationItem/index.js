@@ -7,21 +7,26 @@ import {useNavigation} from "@react-navigation/native";
 
 export default function NotificationItem({notification, onPressed}) {
 
-    const navigation = useNavigation()
 
-    async function onNotificationPressed(params) {
-        // if(notification?.notification.type === 'NEW_APPLICATION'){
-        //     navigation.navigate('ConsumerChatScreen', {
-        //         transactionId: notification?.notification?.objectId
-        //     })
-        // }
-
+    function buildNotificationText(){
+        if(notification?.notification.type === 'APPLICATION_ACCEPTED'){
+            return notification?.subject?.name + ' has accepted your application for the following task: '
+        }
+        if(notification?.notification.type === 'NEW_APPLICATION'){
+            return notification?.subject?.name + ' submitted an application for the task you posted.'
+        }
+        if(notification?.notification.type === 'TRANSACTION_TERMINATED'){
+            return 'Your chat is terminated with ' + notification?.subject?.name
+        }
+        if(notification?.notification.type === 'NEW_REFERRAL'){
+            return 'You have a new referral for the following task: '
+        }
     }
 
     return (
         <View style={styles.container}>
-            <View style={styles.mainContainer}>
-                <TouchableOpacity style={styles.leftContainer} onPress={e=>onNotificationPressed()}>
+            <TouchableOpacity style={styles.mainContainer} onPress={e=>onPressed(notification)}>
+                <View style={styles.leftContainer}>
                     <UserAvatar
                         size={35}
                         userName={notification?.subject?.name}
@@ -30,33 +35,23 @@ export default function NotificationItem({notification, onPressed}) {
                         src={notification?.subject?.profilePhotoURL}
                     />
                     <View style={styles.nameContainer}>
-                        <Text style={styles.titleText}>
+                        <Text style={styles.nameText}>
                             {notification?.subject?.name}
                         </Text>
                         <Text style={styles.notificationText}>
                             {
-                                (notification?.notification.type === 'APPLICATION_ACCEPTED' &&
-                                    (notification?.subject?.name + ' has accepted your application for the task: \n'+
-                                        'sometask'
-                                    )
-                                )
-                            }
-                            {
-                                (notification?.notification.type === 'NEW_APPLICATION' &&
-                                    (notification?.subject?.name + ' submitted an application for the task you posted. \n'
-                                    )
-                                )
-                            }
-                            {
-                                (notification?.notification.type === 'CHAT_TERMINATED' &&
-                                    ('Your chat is terminated with ' + notification?.subject?.name)
-                                )
+                                buildNotificationText()
                             }
                         </Text>
                     </View>
-                </TouchableOpacity>
-
-            </View>
+                </View>
+                <View style={styles.taskContainer}>
+                    <Image source={{uri: notification?.task?.photoURL}} style={styles.taskImage}/>
+                    <Text style={styles.titleText}>
+                        {notification?.task?.category}
+                    </Text>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -66,15 +61,21 @@ const styles = StyleSheet.create({
         width: 40,
         height: 40,
         borderRadius: 30,
+        marginHorizontal: 5
     },
     taskImage: {
         width: 50,
         height: 50,
         borderRadius: 5,
     },
+    taskContainer: {
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        marginRight: 5,
+    },
     container: {
         flexDirection: 'row',
-        width: '100%',
+        // width: '80%',
         padding: 10,
         backgroundColor: '#fff',
         borderBottomWidth: .5,
@@ -85,28 +86,33 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     leftContainer: {
+        width: '75%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         flexDirection: 'row',
+        marginLeft: 10,
     },
     centralContainer: {
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    rightContainer: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end'
     },
     mainContainer: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
-    titleText: {
+    nameText: {
         fontWeight: '500',
         fontSize: 10,
         marginHorizontal: 10,
         alignSelf: 'flex-start',
+        marginTop: 5,
+    },
+    titleText: {
+        fontWeight: '500',
+        fontSize: 10,
+        marginHorizontal: 10,
+        alignSelf: 'center',
         marginTop: 5,
     },
     notificationText: {

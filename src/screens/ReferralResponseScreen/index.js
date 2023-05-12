@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Image} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Image, KeyboardAvoidingView, Platform} from 'react-native';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import Colors from "../../constants/Colors";
@@ -75,10 +75,13 @@ export default function ReferralResponseScreen({navigation, route}) {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <KeyboardAvoidingView
+            behavior='position'
+            keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
+        >
+            <ScrollView>
             <View style={styles.root}>
                 <ViewShot ref={ref} options={{ fileName: "Your-File-Name", format: "jpg", quality: 0.9 }}>
-
                     <View style={styles.topContainer}>
                         <View style={styles.customerContainer}>
                             <UserAvatar
@@ -163,7 +166,8 @@ export default function ReferralResponseScreen({navigation, route}) {
                     type="FORTHSTYLE"
                 />
             </View>
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 

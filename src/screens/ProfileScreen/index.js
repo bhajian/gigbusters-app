@@ -110,7 +110,7 @@ const ProfileScreen = (props) => {
         } catch (e) {
             console.log(e)
         }
-    };
+    }
 
     return (
         <ScrollView style={styles.container}>

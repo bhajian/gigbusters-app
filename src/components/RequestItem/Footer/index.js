@@ -6,6 +6,7 @@ import Feather from 'react-native-vector-icons/Feather';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import Colors from "../../../constants/Colors";
 import {useNavigation} from "@react-navigation/native";
+import {Octicons} from "@expo/vector-icons";
 
 export default function Footer({request, onSharePressed}) {
     const navigation = useNavigation()
@@ -17,7 +18,7 @@ export default function Footer({request, onSharePressed}) {
     return (
         <View style={styles.container}>
             <TouchableOpacity style={styles.iconContainer} onPress={onMakeReferralPressed}>
-                <Feather name={"message-circle"} size={25} color={Colors.light.tint}/>
+                <Octicons name={"cross-reference"} size={25} color={Colors.light.tint}/>
                 <Text style={styles.number}></Text>
             </TouchableOpacity>
             {/*<TouchableOpacity style={styles.iconContainer}>*/}

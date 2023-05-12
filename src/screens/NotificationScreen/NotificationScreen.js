@@ -10,9 +10,11 @@ import {Ionicons} from "@expo/vector-icons";
 import NotificationItem from "../../components/NotificationItem";
 import {NotificationService} from "../../backend/NotificationService";
 import * as Notifications from 'expo-notifications'
+import {ProfileService} from "../../backend/ProfileService";
 
-export default function NotificationScreen() {
+export default function NotificationScreen({updateAccountType, updateAuthState}) {
 
+    const profileService = new ProfileService()
     const [notifications, setNotifications] = useState([])
     const [lastEvaluatedKey, setLastEvaluatedKey] = useState(undefined)
     const [dataBeingLoaded, setDataBeingLoaded] = useState(false)
@@ -50,9 +52,45 @@ export default function NotificationScreen() {
         setDataBeingLoaded(false)
     }
 
+    async function switchAccountType () {
+        try{
+            updateAuthState('initializing')
+            const profile = profileService.getProfile()
+            if(profile.accountType === 'WORKER'){
+                profile.accountType = 'CONSUMER'
+            } else{
+                profile.accountType = 'WORKER'
+            }
+            await profileService.updateProfile(profile)
+            updateAccountType(profile.accountType)
+            updateAuthState('loggedIn')
+        } catch (e) {
+            console.log(e)
+            updateAuthState('loggedOut')
+        }
+    }
+
     async function onPressed(params) {
-        console.log('Notification.')
-        // navigation.navigate('ConsumerChatScreen', params)
+        const profile = profileService.getProfile()
+        if(params?.notification?.type === 'APPLICATION_ACCEPTED'){
+            if(profile.accountType === 'CONSUMER'){
+                await switchAccountType()
+            } else{
+                navigation.navigate('WorkerChatScreen', {
+                    transactionId: params?.notification?.transactionId
+                })
+            }
+        }
+        if(params?.notification?.type === 'NEW_APPLICATION' ||
+            params?.notification?.type === 'NEW_REFERRAL'){
+            if(profile.accountType === 'WORKER'){
+                await switchAccountType()
+            } else{
+                navigation.navigate('ConsumerChatScreen', {
+                    transactionId: params?.notification?.transactionId
+                })
+            }
+        }
     }
 
     return (

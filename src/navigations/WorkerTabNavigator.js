@@ -5,7 +5,6 @@ import Colors from '../constants/Colors';
 import {FontAwesome, Ionicons, MaterialCommunityIcons, MaterialIcons, Octicons} from "@expo/vector-icons";
 import {ProfileNavigation} from "./ProfileNavigation";
 import MatchingCards from "../screens/MatchingScreen/matchingCards";
-import {ReferralFeedNavigation} from "./ReferralFeedNavigation";
 import WorkerMessageListScreen from "../screens/WorkerMessageScreen/WorkerMessageListScreen";
 import NotificationScreen from "../screens/NotificationScreen/NotificationScreen";
 
@@ -45,21 +44,8 @@ const WorkerTabNavigator = props => {
                     ),
                 }}
             />
-            {/*<Tab.Screen*/}
-            {/*    name={'Neighborhood'}*/}
-            {/*    component={ReferralFeedNavigation}*/}
-            {/*    options={{*/}
-            {/*        tabBarActiveTintColor: Colors.light.tint,*/}
-            {/*        headerLargeTitle: false,*/}
-            {/*        headerShown: false,*/}
-            {/*        tabBarIcon: ({color}) => (*/}
-            {/*            <FontAwesome name="feed" size={25} color={color}/>*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
             <Tab.Screen
                 name={'Notifications'}
-                component={NotificationScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     headerShown: true,
@@ -67,7 +53,15 @@ const WorkerTabNavigator = props => {
                         <Ionicons name="notifications-sharp" size={25} color={color}/>
                     ),
                 }}
-            />
+            >
+                {screenProps => (
+                    <NotificationScreen
+                        {...screenProps}
+                        updateAccountType={props.updateAccountType}
+                        updateAuthState={props.updateAuthState}
+                    />
+                )}
+            </Tab.Screen>
             <Tab.Screen
                 name={'Profile'}
                 options={{

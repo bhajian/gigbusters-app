@@ -7,7 +7,7 @@ import {
     Platform,
     Text,
     Pressable,
-    View
+    View, Keyboard
 } from "react-native";
 import Message from "../../components/Message"
 import bg from "../../../assets/images/chatbg.png"
@@ -38,9 +38,13 @@ const ConsumerChatScreen = (props) => {
     const [editable, setEditable] = useState(false)
 
     const editPageBottomSheetModalRef = useRef(null)
-    const editPageHandlePresentPress = () => editPageBottomSheetModalRef.current.present()
     const editPageHandleSheetChanges = useCallback((index) => {
     }, [])
+
+    const editPageHandlePresentPress = () =>{
+        editPageBottomSheetModalRef.current.present()
+        Keyboard.dismiss()
+    }
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
