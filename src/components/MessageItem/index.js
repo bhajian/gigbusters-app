@@ -24,6 +24,10 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
         if(transaction?.transaction?.type === 'application' && transaction?.transaction?.status === 'applied'){
             return Colors.light.tint
         } else{
+            if(profile?.userId === transaction?.transaction?.receiverId &&
+                !transaction?.transaction?.lastMessageRead){
+                return Colors.light.tint
+            }
             return Colors.dark.grey
         }
     }
@@ -81,8 +85,9 @@ const styles = StyleSheet.create({
         marginLeft: 10
     },
     leftContainer: {
+        width: '65%',
         alignItems: 'center',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         flexDirection: 'row',
     },
     centralContainer: {

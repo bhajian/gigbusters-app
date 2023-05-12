@@ -82,7 +82,18 @@ export default function ConsumerMessageListScreen() {
     }, [])
 
     async function onChatPressed(params) {
-        navigation.navigate('ConsumerChatScreen', {transactionId: params?.transaction?.id})
+        try{
+            await taskService.updateLastUpdatedMessage({
+                id: params?.transaction?.id,
+                lastMessage: params?.transaction?.text,
+                senderId: params?.transaction?.senderId,
+                receiverId: params?.transaction?.receiverId,
+                lastMessageRead: true,
+            })
+            navigation.navigate('ConsumerChatScreen', {transactionId: params?.transaction?.id})
+        } catch (e){
+            console.log(e)
+        }
     }
 
     const onNewMessagePress = () => {

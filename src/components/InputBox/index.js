@@ -47,7 +47,6 @@ const InputBox = ({ transaction, disabled }) => {
         }
     }
 
-
     async function onSendPressed() {
         if(text.trim() !== ''){
             const subjectIds = await getSubjectIds()
@@ -69,7 +68,7 @@ const InputBox = ({ transaction, disabled }) => {
                     lastMessage: text,
                     senderId: fromUserId,
                     receiverId: toUserId,
-                    lastSenderRead: newMessageRes?.data?.newMessage?.id,
+                    lastMessageRead: false,
                 })
             } catch (e) {
                 console.log(e)

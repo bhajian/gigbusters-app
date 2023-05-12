@@ -231,8 +231,7 @@ export class TaskService {
                 lastMessage: params.lastMessage,
                 senderId: (params.senderId? params.senderId : ''),
                 receiverId: (params.receiverId? params.receiverId : ''),
-                lastSenderRead: (params.lastSenderRead? params.lastSenderRead : ''),
-                lastReceiverRead: (params.lastReceiverRead? params.lastReceiverRead : ''),
+                lastMessageRead: (params.lastMessageRead? params.lastMessageRead : false),
             },
         }
         await API.put(taskApiName, path, data)
