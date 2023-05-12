@@ -17,7 +17,7 @@ import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
 dayjs.extend(relativeTime)
 
-const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejectPressed}) => {
+const CustomerMessageHeader = ({transaction, subject, onAcceptPressed, onRejectPressed}) => {
     const [status, setStatus] = useState(transaction?.transaction?.status)
     const { width } = useWindowDimensions()
 
@@ -87,7 +87,7 @@ const AcceptRejectApplication = ({transaction, subject, onAcceptPressed, onRejec
     )
 }
 
-export default AcceptRejectApplication
+export default CustomerMessageHeader
 
 const styles = StyleSheet.create({
     container: {

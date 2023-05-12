@@ -36,12 +36,12 @@ const InputBox = ({ transaction, disabled }) => {
             if(transaction?.customerId === userId){
                 return {
                     fromUserId: transaction?.customerId,
-                    toUserId: transaction?.referrer
+                    toUserId: transaction?.referrerId
                 }
             } else{
                 return {
                     toUserId: transaction?.customerId,
-                    fromUserId: transaction?.referrer
+                    fromUserId: transaction?.referrerId
                 }
             }
         }
@@ -50,6 +50,7 @@ const InputBox = ({ transaction, disabled }) => {
     async function onSendPressed() {
         if(text.trim() !== ''){
             const subjectIds = await getSubjectIds()
+            console.log(subjectIds)
             const fromUserId = subjectIds?.fromUserId
             const toUserId = subjectIds?.toUserId
             try{

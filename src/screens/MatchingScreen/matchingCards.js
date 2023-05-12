@@ -124,7 +124,7 @@ const MatchingCards = () => {
                 onSwiped={(cardIndex) => {}}
                 onSwipedAll={() => {console.log('onSwipedAll')}}
                 backgroundColor={Colors.light.grey}
-                infinite={true}
+                infinite={false}
                 containerStyle={{top: 0, width: '100%'}}
                 cardStyle={{top: 5, left: '2%', width: '96%', justifyContent: 'center',}}
                 stackSize= {2}

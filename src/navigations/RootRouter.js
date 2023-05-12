@@ -16,7 +16,6 @@ import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen"
 import {TaskService} from "../backend/TaskService";
 import Initializing from "../components/Initializing";
 import TaskWorkerScreen from "../screens/WorkerMessageScreen/TaskWorkerScreen";
-import {useNavigation} from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator()
 

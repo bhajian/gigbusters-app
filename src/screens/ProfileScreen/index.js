@@ -75,7 +75,7 @@ const ProfileScreen = (props) => {
     async function signOut() {
         try {
             profileService.clearProfile()
-            await Auth.signOut({global: true})
+            await Auth.signOut()
             props.updateAuthState('loggedOut')
         } catch (error) {
             console.log('Error signing out: ', error);

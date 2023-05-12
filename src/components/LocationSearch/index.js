@@ -7,24 +7,30 @@ import Colors from "../../constants/Colors";
 import loading from "../../../assets/images/loading2.gif";
 import * as Location from 'expo-location'
 
-export function LocationSelector({style, locationNameParam, onLocationChangePressed}) {
-    const [locationName, setLocationName] = useState(locationNameParam
-        ? locationNameParam : 'Select a Location ..')
+export function LocationSelector({style, initialLocation, onLocationChangePressed}) {
+
+    const [locationName, setLocationName] = useState(initialLocation
+        ? initialLocation?.locationName : 'Select a Location ..')
     const [dataBeingSaved, setDataBeingSaved] = useState(false)
     const [coordinates, setCoordinates] = useState({
-        latitude: 0, logitude: 0})
+        latitude: initialLocation?.latitude, longitude: initialLocation?.longitude})
     const [myLocation, setMylocation] = useState({
-        latitude: 0, logitude: 0})
+        latitude: 0, longitude: 0})
     const navigation = useNavigation()
 
     function setLocationHook(location){
+
         setDataBeingSaved(true)
         setLocationName(location.locationName)
         setCoordinates(location.coordinates)
         if(onLocationChangePressed){
-            location.myLatitude = myLocation?.coords?.latitude
-            location.myLongitude = myLocation?.coords?.longitude
-            onLocationChangePressed(location).then(e=>{
+            onLocationChangePressed({
+                locationName: location?.locationName,
+                latitude: location?.coordinates?.lat,
+                longitude: location?.coordinates?.lng,
+                myLatitude: myLocation?.coords?.latitude,
+                myLongitude: myLocation?.coords?.longitude,
+            }).then(e=>{
                 setDataBeingSaved(false)
             })
         }

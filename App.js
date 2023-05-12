@@ -44,9 +44,18 @@ export default function App() {
     const appState = useRef(AppState.currentState)
     const notificationListener = useRef()
     const responseListener = useRef()
+    let notificationUnSubscribe
 
     const [notification, setNotification] = useState(false)
     const [userStatus, setUserStatus] = useState('initializing')
+
+    function unsubscribe(){
+        if(notificationUnSubscribe){
+            console.log('UNSUBSCRIBED')
+            notificationUnSubscribe()
+        }
+
+    }
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
@@ -99,15 +108,16 @@ export default function App() {
                     (profile?.accountType === 'CONSUMER' || profile?.accountType === 'WORKER')
                     && profile?.active) {
                     setUserStatus('loggedIn')
-                    return await setPushNotificationsAsync(profile)
+                    notificationUnSubscribe = await setPushNotificationsAsync(profile)
                 } else {
                     setUserStatus('profileCreation')
                 }
             } else{
+                unsubscribe()
                 setUserStatus('loggedOut')
             }
         } catch (err) {
-            // console.error(err)
+            unsubscribe()
             setUserStatus('loggedOut')
         }
     }

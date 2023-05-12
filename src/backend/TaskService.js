@@ -164,7 +164,7 @@ export class TaskService {
         }
 
         if(task?.photos?.length > 0){
-            task.mainPhotoURL = await this.getMainPhoto(task?.photos[0])
+            task.photoURL = await this.getMainPhoto(task?.photos[0])
         }
 
         this.setTask(task)
@@ -240,7 +240,7 @@ export class TaskService {
         t.transaction.lastMessage = params.lastMessage
         t.transaction.senderId = params.senderId
         t.transaction.receiverId = params.receiverId
-        transactions.set(params.transactionId, t)
+        transactions.set(params.id, t)
         return
     }
 

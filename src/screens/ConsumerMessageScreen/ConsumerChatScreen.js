@@ -18,7 +18,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import {useNavigation} from "@react-navigation/native";
 import {Auth} from "aws-amplify";
 import { useHeaderHeight } from "@react-navigation/elements"
-import AcceptRejectApplication from "../../components/AcceptRejectApplication/CustomerAcceptRejectApplication";
+import CustomerMessageHeader from "../../components/AcceptRejectApplication/CustomerMessageHeader";
 import {TaskService} from "../../backend/TaskService";
 import Entypo from "react-native-vector-icons/Entypo";
 import OptionsBottomSheet from "./OptionsBottomSheet";
@@ -228,7 +228,7 @@ const ConsumerChatScreen = (props) => {
 
     const header = () => {
         return(<View style={styles.topContainer}>
-            <AcceptRejectApplication
+            <CustomerMessageHeader
                 transaction={transaction}
                 onAcceptPressed={onAcceptPressed}
                 onRejectPressed={onRejectPressed}

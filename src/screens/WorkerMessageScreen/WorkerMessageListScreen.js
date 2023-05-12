@@ -19,6 +19,7 @@ export default function WorkerMessageListScreen() {
     const taskService = new TaskService()
     const profile = profileService.getProfile()
 
+    const [userId, setUserId] = useState(profile?.userId)
     const [profileName, setProfileName] = useState(profile?.name)
     const [profileImage, setProfileImage] = useState(profile?.mainPhotoUrl)
     const [transactions, setTransactions] = useState([])
@@ -96,7 +97,7 @@ export default function WorkerMessageListScreen() {
                                     transaction={item}
                                     accountType={"WORKER"}
                                     onChatPressed={onChatPressed}
-                                    onProfilePressed={onProfilePressed}
+                                    userId={userId}
                                 />
                             )
                         }}

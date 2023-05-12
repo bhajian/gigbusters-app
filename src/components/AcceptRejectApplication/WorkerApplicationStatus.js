@@ -18,7 +18,6 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 dayjs.extend(relativeTime)
 
 const WorkerApplicationStatus = ({transaction, subject, onAcceptPressed, onRejectPressed}) => {
-
     const [status, setStatus] = useState(transaction?.transaction?.status)
     const { width } = useWindowDimensions()
 
@@ -26,19 +25,62 @@ const WorkerApplicationStatus = ({transaction, subject, onAcceptPressed, onRejec
 
     }, [])
 
+    function getHeaderText(){
+        if(transaction?.transaction?.type === 'application'){
+            if(transaction?.transaction?.status === 'applied'){
+                return `Would you accept an application from ${transaction?.worker?.name}`
+            }
+            if(transaction?.transaction?.status === 'applicationAccepted'){
+                return `${transaction?.customer?.name} has accepted your application for the above task.`
+            }
+            if(transaction?.transaction?.status === 'rejected'){
+                return `You have rejected the application from ${transaction?.worker?.name}`
+            }
+        }
+        if(transaction?.transaction?.type === 'referral'){
+            return 'You have a new referral for the above task. Would you like to chat with the person who sent the recommendation?'
+        }
+    }
+
+    function getBackgroundColor(){
+        if(status === 'applied' || status === 'initiated'){
+            return Colors.light.tint
+        } else{
+            return Colors.dark.darkTurquoise
+        }
+    }
+
+    function getAcceptRejectComponent(){
+        if(status === 'applied' || status === 'initiated') {
+            return <View>
+                <Text style={styles.workerName}>{transaction?.worker?.name}</Text>
+                <View style={styles.decisionContainer}>
+                    <TouchableOpacity style={styles.rejectButton} onPress={e=> onRejectPressed(transaction)}>
+                        <Feather name="x-circle" size={30} color="red"/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.acceptButton} onPress={e=> onAcceptPressed(transaction)}>
+                        <AntDesign name="checkcircle" size={27} color="green"/>
+                    </TouchableOpacity>
+                </View>
+            </View>
+        }
+    }
+
     return (
         <View
             style={[
                 styles.container,
                 {
-                    backgroundColor: Colors.light.grey,
+                    backgroundColor: getBackgroundColor(),
                     alignSelf: "center",
                 },
             ]}
         >
-            <Text style={{color: 'black', }} > {transaction?.customer?.name + ' '}
-                {(transaction?.transaction?.status === 'applicationAccepted'? 'accepted': 'rejected')} your request.</Text>
+            <Text style={styles.messageText}>Category: {transaction?.task?.category}</Text>
+            <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
+            <Text style={styles.messageText} >{getHeaderText()}</Text>
 
+            <Text style={styles.time}>{dayjs(transaction.transaction?.lastUpdatedAt).fromNow(true)}</Text>
         </View>
     )
 }
@@ -69,17 +111,13 @@ const styles = StyleSheet.create({
     },
     taskImage: {
         alignSelf: 'center',
-        width: 70,
-        height: 70,
+        width: 110,
+        height: 110,
         marginVertical: 10,
         borderRadius: 5,
     },
-    // messageContainer: {
-    //     maxWidth: "100%",
-    // },
     messageText:{
         color: 'white',
-        // alignSelf: "flex-end",
     },
     workerName:{
         color: 'white',
@@ -104,7 +142,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     time: {
-        color: "gray",
+        color: Colors.light.grey,
         alignSelf: "flex-end",
     },
     images: {

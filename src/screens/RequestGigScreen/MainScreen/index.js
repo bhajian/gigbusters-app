@@ -139,13 +139,13 @@ export default function RequestGigScreen(props) {
         try{
             let result = await ImagePicker.launchImageLibraryAsync({
                 mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: false,
+                allowsEditing: true,
                 aspect: [3, 3],
                 quality: 0.1,
             })
-            if(!result || !result?.assets){
-                return
-            }
+            // if(!result || !result?.assets){
+            //     return
+            // }
 
             const imageUri = result?.assets[0]?.uri
             if (!result.canceled) {
@@ -172,8 +172,8 @@ export default function RequestGigScreen(props) {
         setDistance(props.distance)
         setLocation({
             locationName: props?.location?.locationName,
-            latitude: props?.location?.coordinates?.lat,
-            longitude: props?.location?.coordinates?.lng,
+            latitude: props?.location?.latitude,
+            longitude: props?.location?.longitude,
         })
         inputTestRef?.current?.focus()
     }
@@ -183,7 +183,6 @@ export default function RequestGigScreen(props) {
         if(images?.length === 0){
             Alert.alert('Please add a photo to your task posting.')
         } else {
-
             setDataBeingSaved(true)
             try {
                 if (params?.operation === 'create') {

@@ -17,8 +17,8 @@ export default function GigRequestBottomSheet({
 
     const snapPoints = useMemo(() => ['80%', '80%'], [])
     const [category, setCategory] = useState('')
-    const [location, setLocation] = useState(defaultData.location?
-        defaultData.location : {})
+    const [location, setLocation] = useState(defaultData?.location?
+        defaultData?.location : undefined)
     const [distance, setDistance] = useState([50])
     const [price, setPrice] = useState([20])
     const [backdropPressBehavior, setBackdropPressBehavior] = useState('close');
@@ -90,10 +90,6 @@ export default function GigRequestBottomSheet({
         setLocation(props)
     }
 
-    useEffect(() => {
-        setLocation(defaultData.location)
-    }, [defaultData])
-
     return (
         <BottomSheetModalProvider>
             <BottomSheetModal
@@ -148,7 +144,7 @@ export default function GigRequestBottomSheet({
                                         thumbTintColor={Colors.light.turquoise}
                                     />
                                     <LocationSelector
-                                        locationNameParam={location?.locationName}
+                                        initialLocation={location}
                                         onLocationChangePressed={onLocationChangePressed}
                                         style={{marginTop: 10}}
                                     />
