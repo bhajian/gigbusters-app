@@ -19,7 +19,7 @@ const ProfileScreen = (props) => {
     const [accountCode, setAccountCode] = useState('')
     const [email, setEmail] = useState('')
     const [phone, setPhone] = useState('')
-    const [locationName, setLocationName] = useState(profile?.location?.locationName)
+    const [location, setLocation] = useState(profile?.location)
     const [accountType, setAccountType] = useState('CONSUMER')
     const [image, setImage] = useState(null);
 
@@ -53,7 +53,7 @@ const ProfileScreen = (props) => {
 
         }
         if(profile && profile.location && profile.location.locationName){
-            setLocationName(profile.location.locationName)
+            setLocation(profile.location.locationName)
         }
         if(profile && profile.photos){
             const url = profile.mainPhotoUrl
@@ -64,12 +64,12 @@ const ProfileScreen = (props) => {
     const onLocationChangePressed = async(props) => {
         await profileService.changeUserLocation({
             locationName: props?.locationName,
-            latitude: props?.coordinates?.lat,
-            longitude: props?.coordinates?.lng,
+            latitude: props?.latitude,
+            longitude: props?.longitude,
             myLatitude: props?.myLatitude,
             myLongitude: props?.myLongitude,
         })
-        setLocationName(props.locationName)
+        setLocation(props.locationName)
     }
 
     async function signOut() {
@@ -153,7 +153,7 @@ const ProfileScreen = (props) => {
                 <View style={styles.locationContainer}>
                     <LocationSelector
                         onLocationChangePressed={onLocationChangePressed}
-                        locationNameParam={locationName}
+                        initialLocation={location}
                     />
                 </View>
                 <CustomButton

@@ -201,7 +201,7 @@ const WorkerChatScreen = (props) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 85}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 110}
             style={styles.container}
         >
             <ImageBackground source={bg} style={styles.bg}>

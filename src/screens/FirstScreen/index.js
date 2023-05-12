@@ -13,11 +13,12 @@ import {Auth} from "aws-amplify";
 import {CognitoHostedUIIdentityProvider} from "@aws-amplify/auth"
 import google from "../../../assets/images/google-logo.png"
 import apple from "../../../assets/images/apple-logo.png"
-import Colors from "../../constants/Colors";
+import Colors from "../../constants/Colors"
 
 export default function FirstScreen() {
 
-    const navigation = useNavigation();
+    const navigation = useNavigation()
+
 
     const onSignInPressed = () => {
         navigation.navigate('SignIn')
@@ -65,31 +66,32 @@ export default function FirstScreen() {
                         bgColor="#E3E8F1"
                         fgColor="#5B67CA"
                     />
-                    <CustomButton
-                        text="Sign In With Gmail"
-                        onPress={onSignInGoogle}
-                        bgColor="#FFFFFF"
-                        fgColor="#5B67CA"
-                        imageUrl={google}
-                        imageStyle={{width: 25, height: 25}}
-                        style={{
+                    <View>
+                        <CustomButton
+                            text="Sign In With Gmail"
+                            onPress={onSignInGoogle}
+                            bgColor="#FFFFFF"
+                            fgColor="#5B67CA"
+                            imageUrl={google}
+                            imageStyle={{width: 25, height: 25}}
+                            style={{
+                                    borderWidth: 1,
+                                    borderColor: Colors.light.tint
+                                }}
+                        />
+                        <CustomButton
+                            text="Sign In With Apple"
+                            onPress={onSignInApple}
+                            bgColor="#FFFFFF"
+                            fgColor="#5B67CA"
+                            imageUrl={apple}
+                            imageStyle={{width: 25, height: 25, margin: 5}}
+                            style={{
                                 borderWidth: 1,
                                 borderColor: Colors.light.tint
                             }}
-                    />
-                    <CustomButton
-                        text="Sign In With Apple"
-                        onPress={onSignInApple}
-                        bgColor="#FFFFFF"
-                        fgColor="#5B67CA"
-                        imageUrl={apple}
-                        imageStyle={{width: 25, height: 25, margin: 5}}
-                        style={{
-                            borderWidth: 1,
-                            borderColor: Colors.light.tint
-                        }}
-                    />
-
+                        />
+                    </View>
                 </View>
             </View>
 
