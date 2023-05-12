@@ -86,6 +86,13 @@ const ConsumerChatScreen = (props) => {
                 sortDirection: "DESC"
             })
             setMessages(messagesObj)
+            await taskService.updateLastUpdatedMessage({
+                id: tr?.transaction?.id,
+                lastMessage: tr?.transaction?.lastMessage,
+                senderId: tr?.transaction?.senderId,
+                receiverId: tr?.transaction?.receiverId,
+                lastMessageRead: true,
+            })
         } catch (e) {
             console.log(e)
         }

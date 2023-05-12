@@ -235,6 +235,12 @@ export class TaskService {
             },
         }
         await API.put(taskApiName, path, data)
+        const t = transactions.get(params.id)
+        t.transaction.lastMessageRead = params.lastMessageRead
+        t.transaction.lastMessage = params.lastMessage
+        t.transaction.senderId = params.senderId
+        t.transaction.receiverId = params.receiverId
+        transactions.set(params.transactionId, t)
         return
     }
 

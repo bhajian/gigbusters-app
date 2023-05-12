@@ -3,8 +3,9 @@ import {Image, Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View} f
 import Colors from "../../constants/Colors";
 import {AntDesign} from "@expo/vector-icons";
 import UserAvatar from "@muhzi/react-native-user-avatar";
+import {Auth} from "aws-amplify";
 
-export default function MessageItem({transaction, accountType, onChatPressed, onProfilePressed}) {
+export default function MessageItem({transaction, accountType, onChatPressed, userId}) {
 
     const profile = getProfile()
 
@@ -21,14 +22,17 @@ export default function MessageItem({transaction, accountType, onChatPressed, on
     }
 
     function getStatusStyle(){
-        if(transaction?.transaction?.type === 'application' && transaction?.transaction?.status === 'applied'){
+        if((transaction?.transaction?.type === 'application' && transaction?.transaction?.status === 'applied') ||
+            (transaction?.transaction?.type === 'referral' && transaction?.transaction?.status === 'initiated')){
             return Colors.light.tint
         } else{
-            if(profile?.userId === transaction?.transaction?.receiverId &&
+            if(userId === transaction?.transaction?.receiverId &&
                 !transaction?.transaction?.lastMessageRead){
                 return Colors.light.tint
+            } else{
+                return Colors.dark.grey
             }
-            return Colors.dark.grey
+
         }
     }
 

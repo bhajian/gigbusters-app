@@ -14,6 +14,7 @@ import {TaskService} from "../../backend/TaskService";
 import {MaterialIcons} from "@expo/vector-icons";
 
 export default function ConsumerMessageListScreen() {
+    const [userId, setUserId] = useState('')
     const [profileName, setProfileName] = useState('')
     const [profileImage, setProfileImage] = useState(null)
     const [transactions, setTransactions] = useState([])
@@ -66,11 +67,11 @@ export default function ConsumerMessageListScreen() {
     async function loadData() {
         setDataBeingLoaded(true)
         const profile = profileService.getProfile()
-        if(profile && profile.name){
-            setProfileName(profile.name)
-        }
+        setUserId(profile?.userId)
+        setProfileName(profile?.name)
+
         if(profile && profile.photos){
-            const url = profile.mainPhotoUrl
+            const url = profile?.mainPhotoUrl
             setProfileImage(url)
         }
         const transactionsObj = taskService.getMyTransactions()
@@ -82,18 +83,7 @@ export default function ConsumerMessageListScreen() {
     }, [])
 
     async function onChatPressed(params) {
-        try{
-            await taskService.updateLastUpdatedMessage({
-                id: params?.transaction?.id,
-                lastMessage: params?.transaction?.text,
-                senderId: params?.transaction?.senderId,
-                receiverId: params?.transaction?.receiverId,
-                lastMessageRead: true,
-            })
-            navigation.navigate('ConsumerChatScreen', {transactionId: params?.transaction?.id})
-        } catch (e){
-            console.log(e)
-        }
+        navigation.navigate('ConsumerChatScreen', {transactionId: params?.transaction?.id})
     }
 
     const onNewMessagePress = () => {
@@ -114,6 +104,7 @@ export default function ConsumerMessageListScreen() {
                                     transaction={item}
                                     accountType={"CONSUMER"}
                                     onChatPressed={onChatPressed}
+                                    userId={userId}
                                 />
                             )
                         }}
