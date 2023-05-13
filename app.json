@@ -50,7 +50,7 @@
       ],
       "package": "com.orbitstellar.gigbusters",
       "versionCode": 8,
-      "googleServicesFile": "./config/google-services.json"
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"

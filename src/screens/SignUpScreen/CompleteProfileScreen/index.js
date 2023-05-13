@@ -26,8 +26,8 @@ const CompleteProfileScreen = ({route, updateAuthState}) => {
     const onLocationChangePressed = async(props) => {
         setLocation({
             locationName: props.locationName,
-            latitude: props.coordinates.lat,
-            longitude: props.coordinates.lng,
+            latitude: props.latitude,
+            longitude: props.longitude,
         })
     }
 
