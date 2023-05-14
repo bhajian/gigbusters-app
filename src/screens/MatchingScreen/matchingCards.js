@@ -130,6 +130,10 @@ const MatchingCards = (props) => {
         swiperRef.current.swipeLeft()
     }
 
+    async function onSwipedAll() {
+        setNoMoreCards(true)
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             {
@@ -162,7 +166,7 @@ const MatchingCards = (props) => {
                     onSwipedRight={(e) => {onRightSwiped(e).then(r => {}).catch(e => console.log(e))}}
                     onSwipedLeft={(e) => {onLeftSwiped(e).then(r => {}).catch(e => console.log(e))}}
                     onSwiped={(cardIndex) => {}}
-                    onSwipedAll={() => {setNoMoreCards(true)}}
+                    onSwipedAll={() => {onSwipedAll().then(r => {}).catch(e => console.log(e))}}
                     backgroundColor={Colors.light.grey}
                     infinite={false}
                     containerStyle={{top: 0, width: '100%'}}
