@@ -84,13 +84,15 @@ export default function SwitchRoleScreen(props) {
                     You are about to change your role from {previousRole()} to {newRole()}
                 </Text>
                 <View style={styles.buttonContainer}>
-                    <CustomButton text="Cancel"
-                          onPress={()=> navigation.goBack()}
-                        style={styles.closeBotton}
+                    <CustomButton
+                        text="Cancel"
+                        onPress={()=> navigation.goBack()}
+                        style={styles.doubleBotton}
                     />
-                    <CustomButton text="Confirm"
+                    <CustomButton
+                        text="Confirm"
                         onPress={onSwitchRolePressed}
-                        style={styles.closeBotton}
+                        style={styles.doubleBotton}
                         bgColor={Colors.light.turquoise}
                     />
                 </View>
@@ -128,9 +130,10 @@ const styles = StyleSheet.create({
         fontSize: 41,
         color: "#5B67CA"
     },
-    closeBotton: {
+    doubleBotton: {
         width: '48%',
         marginTop: 10,
+        height: 80,
     }
 })
 

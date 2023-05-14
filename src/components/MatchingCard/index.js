@@ -36,7 +36,6 @@ const MatchingCard = props => {
             <View style={styles.topContainer}>
                 <UserAvatar
                     size={45}
-                    active
                     src={profilePhotoURL}
                     backgroundColor={Colors.light.turquoise}
                     userName={name}

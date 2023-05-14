@@ -1,4 +1,4 @@
-import {Alert, Pressable, SafeAreaView, Text, View} from "react-native";
+import {Alert, Platform, Pressable, SafeAreaView, Text, View} from "react-native";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {TaskService} from "../../backend/TaskService";
 import MatchingCard from "../../components/MatchingCard";
@@ -131,7 +131,11 @@ const MatchingCards = (props) => {
     }
 
     async function onSwipedAll() {
-        setNoMoreCards(true)
+        try{
+            setNoMoreCards(true)
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     return (
@@ -173,7 +177,7 @@ const MatchingCards = (props) => {
                     cardStyle={{top: 5, left: '2%', width: '96%', justifyContent: 'center',}}
                     stackSize= {2}
                     showSecondCard={true}
-                    // keyExtractor={(item) => (console.log(item))}
+                    useViewOverflow={false}
                 >
 
                 </Swiper>
