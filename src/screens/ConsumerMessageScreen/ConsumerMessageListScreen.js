@@ -13,7 +13,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import {TaskService} from "../../backend/TaskService";
 import {MaterialIcons} from "@expo/vector-icons";
 
-export default function ConsumerMessageListScreen() {
+export default function ConsumerMessageListScreen(props) {
     const [userId, setUserId] = useState('')
     const [profileName, setProfileName] = useState('')
     const [profileImage, setProfileImage] = useState(null)
@@ -54,7 +54,11 @@ export default function ConsumerMessageListScreen() {
             loadData().then().catch(e => console.log(e))
         })
         return unsubscribe
-    }, [])
+    }, [props.appState])
+
+    useEffect(() => {
+        loadData().then().catch(e => console.log(e))
+    }, [props.appState, props.notification])
 
     async function fetchData() {
         setDataBeingLoaded(true)

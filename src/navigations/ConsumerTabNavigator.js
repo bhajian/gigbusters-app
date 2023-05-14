@@ -76,14 +76,24 @@ const ConsumerTabNavigator = props => {
             />
             <Tab.Screen
                 name={'Messages'}
-                component={ConsumerMessageListScreen}
+                // component={ConsumerMessageListScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     tabBarIcon: ({color}) => (
                         <MaterialIcons name="message" size={25} color={color}/>
                     )
                 }}
-            />
+            >
+                {screenProps => (
+                    <ConsumerMessageListScreen
+                        {...screenProps}
+                        updateAccountType={props.updateAccountType}
+                        updateAuthState={props.updateAuthState}
+                        appState={props.appState}
+                        notification={props.notification}
+                    />
+                )}
+            </Tab.Screen>
             {/*<Tab.Screen*/}
             {/*    name={'Messages'}*/}
             {/*    component={MessageNavigation}*/}

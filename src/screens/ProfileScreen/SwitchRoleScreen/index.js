@@ -68,7 +68,7 @@ export default function SwitchRoleScreen(props) {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: "#ffffff"}}>
+        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: "#ffffff", height: '100%'}}>
             <View style={styles.root}>
                 <Lottie
                     style={{height: 300, width: 300, alignSelf: 'center', marginTop: 5}}
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
         alignItems: "stretch",
     },
     buttonContainer: {
-        marginTop: 100,
+        marginTop: 50,
         backgroundColor: "#ffffff",
         margin: 30,
         flexDirection: 'row',

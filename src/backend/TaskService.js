@@ -49,28 +49,28 @@ export class TaskService {
                 persona: params.persona
             }
         }
-        const trnsactionArray = await API.get(taskApiName, path, data)
-        for(let i=0; i<trnsactionArray?.length; i++){
-            if(trnsactionArray[i]?.worker?.profilePhoto){
-                trnsactionArray[i].worker.profilePhotoURL =
-                    await this.getMainPhoto(trnsactionArray[i]?.worker?.profilePhoto)
+        const transactionArray = await API.get(taskApiName, path, data)
+        for(let i=0; i<transactionArray?.length; i++){
+            if(transactionArray[i]?.worker?.profilePhoto){
+                transactionArray[i].worker.profilePhotoURL =
+                    await this.getMainPhoto(transactionArray[i]?.worker?.profilePhoto)
             }
-            if(trnsactionArray[i]?.customer?.profilePhoto){
-                trnsactionArray[i].customer.profilePhotoURL =
-                    await this.getMainPhoto(trnsactionArray[i]?.customer?.profilePhoto)
+            if(transactionArray[i]?.customer?.profilePhoto){
+                transactionArray[i].customer.profilePhotoURL =
+                    await this.getMainPhoto(transactionArray[i]?.customer?.profilePhoto)
             }
-            if(trnsactionArray[i]?.referrer?.profilePhoto){
-                trnsactionArray[i].referrer.profilePhotoURL =
-                    await this.getMainPhoto(trnsactionArray[i]?.referrer?.profilePhoto)
+            if(transactionArray[i]?.referrer?.profilePhoto){
+                transactionArray[i].referrer.profilePhotoURL =
+                    await this.getMainPhoto(transactionArray[i]?.referrer?.profilePhoto)
             }
-            if(trnsactionArray[i]?.task?.photos && trnsactionArray[i]?.task?.photos[0]){
-                const photo = trnsactionArray[i]?.task?.photos[0]
-                trnsactionArray[i].task.photoURL =
+            if(transactionArray[i]?.task?.photos && transactionArray[i]?.task?.photos[0]){
+                const photo = transactionArray[i]?.task?.photos[0]
+                transactionArray[i].task.photoURL =
                     await this.getMainPhoto(photo)
             }
         }
-        transactions = new Map(trnsactionArray.map(i => [i?.transaction?.id, i]))
-        return trnsactionArray
+        transactions = new Map(transactionArray.map(i => [i?.transaction?.id, i]))
+        return transactionArray
     }
 
     async fetchMyTasks(params) {

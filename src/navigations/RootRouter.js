@@ -30,7 +30,7 @@ const RootRouter = props => {
 
     useEffect(() => {
         loadData().then(r => {})
-    }, [])
+    }, [props.appState, props.notification])
 
     async function loadData() {
         try{
@@ -46,8 +46,8 @@ const RootRouter = props => {
         } catch (e) {
             console.log(e)
         }
-
     }
+
     function updateAccountType(type) {
         setAccountType(type)
     }
@@ -65,6 +65,8 @@ const RootRouter = props => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
+                            appState={props.appState}
+                            notification={props.notification}
                         />
                     )}
                 </Stack.Screen>

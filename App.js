@@ -41,13 +41,14 @@ Notifications.setNotificationHandler({
 })
 export default function App() {
     const profileService = new ProfileService()
-    const appState = useRef(AppState.currentState)
+    const appStateRef = useRef(AppState.currentState)
     const notificationListener = useRef()
     const responseListener = useRef()
     let notificationUnSubscribe
 
     const [notification, setNotification] = useState(false)
     const [userStatus, setUserStatus] = useState('initializing')
+    const [appState, setAppState] = useState('initializing')
 
     function unsubscribe(){
         if(notificationUnSubscribe){
@@ -59,10 +60,12 @@ export default function App() {
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
+            setAppState(nextAppState)
             if (
-                appState.current.match(/inactive|background/) &&
+                appStateRef.current.match(/inactive|background/) &&
                 nextAppState === 'active'
             ) {
+
                 checkAuthState()
                     .then(() => {
                     })
@@ -70,7 +73,7 @@ export default function App() {
                         console.error(e)
                     })
             }
-            appState.current = nextAppState
+            appStateRef.current = nextAppState
         })
         return () => {
             subscription.remove()
@@ -129,13 +132,14 @@ export default function App() {
             await profileService.updateProfile(profile)
 
             notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-                alert(JSON.stringify(notification))
-                // setNotification(notification)
+                // alert(JSON.stringify(notification))
+                setNotification(notification)
             })
             responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-                alert(JSON.stringify(response))
+                // alert(JSON.stringify(response))
                 // console.log(response)
             })
+
             return () => {
                 Notifications.removeNotificationSubscription(notificationListener.current)
                 Notifications.removeNotificationSubscription(responseListener.current)
@@ -162,7 +166,7 @@ export default function App() {
                 finalStatus = status
             }
             if (finalStatus !== 'granted') {
-                alert('Failed to get push token for push notification!')
+                console.log('Failed to get push token for push notification!')
                 return
             }
             token = (await Notifications.getExpoPushTokenAsync()).data
@@ -180,7 +184,7 @@ export default function App() {
         <NavigationContainer>
             {userStatus === 'initializing' && <Initializing/>}
             {userStatus === 'loggedIn' && (
-                <RootRouter updateAuthState={updateAuthState}/>
+                <RootRouter updateAuthState={updateAuthState} appState={appState} notification={notification}/>
             )}
             {userStatus === 'loggedOut' && (
                 <AuthenticationNavigator
