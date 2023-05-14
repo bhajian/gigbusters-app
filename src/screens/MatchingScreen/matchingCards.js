@@ -7,16 +7,21 @@ import {useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
 import {Ionicons, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
 import MatchingSearch from "./MatchingSearch";
+import UserAvatar from "@muhzi/react-native-user-avatar";
+import {ProfileService} from "../../backend/ProfileService";
 
 
 const MatchingCards = () => {
-    const [cardList, setCardList] = useState([])
     const swiperRef = useRef(null)
     const bottomSheetModalRef = useRef(null)
-
     const taskService = new TaskService()
     const navigation = useNavigation()
+    const profileService = new ProfileService()
+    const profile = profileService.getProfile()
 
+    const [cardList, setCardList] = useState([])
+    const [profileName, setProfileName] = useState(profile?.name)
+    const [profileImage, setProfileImage] = useState(profile?.mainPhotoUrl)
     const handlePresentPress = () => bottomSheetModalRef.current.present()
     const handleSheetChanges = useCallback((index) => {
     }, [])
@@ -47,8 +52,15 @@ const MatchingCards = () => {
                 </Pressable>
             ),
             headerLeft: () => (
-                <View style={{marginHorizontal: 15}}>
-                    <Ionicons name="notifications-sharp" size={25} color={Colors.light.darkerGrey}/>
+                <View style={{marginLeft: 5}}>
+                    <UserAvatar
+                        size={35}
+                        active
+                        userName={profileName}
+                        src={profileImage}
+                        fontSize={20}
+                        backgroundColor={Colors.light.turquoise}
+                    />
                 </View>
             ),
         })

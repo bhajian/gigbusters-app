@@ -129,11 +129,11 @@ export default function App() {
             await profileService.updateProfile(profile)
 
             notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-                alert(notification)
+                alert(JSON.stringify(notification))
                 // setNotification(notification)
             })
             responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-                alert(response)
+                alert(JSON.stringify(response))
                 // console.log(response)
             })
             return () => {

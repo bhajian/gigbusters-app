@@ -20,8 +20,6 @@ const MatchingCard = props => {
         location
     } = props.card
 
-    console.log(location)
-
     const [mapRegion, setmapRegion] = useState({
         latitude: location?.latitude,
         longitude: location?.longitude,
@@ -66,6 +64,8 @@ const MatchingCard = props => {
                         <View style={styles.tag}>
                             <Text style={styles.text} >{city}</Text>
                         </View>
+                    </View>
+                    <View style={styles.tagsContainer}>
                         <View style={styles.tag}>
                             <Text style={styles.text} >{price}$/{priceUnit}</Text>
                         </View>
@@ -83,7 +83,7 @@ const MatchingCard = props => {
                     <FontAwesome name="ban" size={35} color="white"/>
                 </TouchableOpacity>
                 <MapView
-                    style={{ width: '60%', height: '100%', alignSelf: 'center'}}
+                    style={{ width: '55%', height: '100%', alignSelf: 'center'}}
                     region={mapRegion}
                     provider={PROVIDER_GOOGLE}
                 />
@@ -113,8 +113,8 @@ const styles = StyleSheet.create({
     connectButton: {
         backgroundColor: Colors.light.tint,
         borderRadius: 5,
-        width: 60,
-        height: 60,
+        width: 70,
+        height: 70,
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'flex-end',
@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
     rejectButton: {
         backgroundColor: Colors.light.tint,
         borderRadius: 5,
-        width: 60,
-        height: 60,
+        width: 70,
+        height: 70,
         alignItems: 'center',
         justifyContent: 'center',
         marginHorizontal: 5,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         position: 'absolute', //Here is the trick
-        bottom: 65, //Here is the trick
+        bottom: 70, //Here is the trick
     },
     topContainer: {
         padding: 10,
@@ -186,7 +186,7 @@ const styles = StyleSheet.create({
         lineHeight: 25,
     },
     tagsContainer: {
-        paddingVertical: 10,
+        marginTop: 5,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'flex-start'
@@ -210,7 +210,8 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
     description: {
-        fontSize: 18,
+        fontSize: 16,
+        marginTop: 5,
     }
 });
 

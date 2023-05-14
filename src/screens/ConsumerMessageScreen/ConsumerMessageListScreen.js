@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
     Image,
-    Text, StyleSheet, FlatList, SafeAreaView,
+    Text, StyleSheet, FlatList, SafeAreaView, View,
 } from 'react-native'
 import {useNavigation} from "@react-navigation/native"
 import loading2 from "../../../assets/images/loading2.gif";
@@ -35,14 +35,16 @@ export default function ConsumerMessageListScreen() {
                 <Text>Messages</Text>
             ),
             headerLeft: () => (
-                <UserAvatar
-                    size={35}
-                    active
-                    userName={profileName}
-                    src={profileImage}
-                    fontSize={20}
-                    backgroundColor={Colors.light.turquoise}
-                />
+                <View style={{marginLeft: 5}}>
+                    <UserAvatar
+                        size={35}
+                        active
+                        userName={profileName}
+                        src={profileImage}
+                        fontSize={20}
+                        backgroundColor={Colors.light.turquoise}
+                    />
+                </View>
             ),
         })
     }, [navigation, profileName])

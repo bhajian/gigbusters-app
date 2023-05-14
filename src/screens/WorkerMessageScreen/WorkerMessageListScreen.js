@@ -36,7 +36,6 @@ export default function WorkerMessageListScreen() {
     useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
-            // headerLargeTitle: true,
             tabBarIcon: ({color}) => (
                 <MaterialIcons name="message" size={25} color={color}/>
             ),
@@ -44,11 +43,16 @@ export default function WorkerMessageListScreen() {
                 <Text>Messages</Text>
             ),
             headerLeft: () => (
-                <UserAvatar
-                    size={35}
-                    userName={profileName}
-                    src={profileImage}
-                />
+                <View style={{marginLeft: 5}}>
+                    <UserAvatar
+                        size={35}
+                        active
+                        userName={profileName}
+                        src={profileImage}
+                        fontSize={20}
+                        backgroundColor={Colors.light.turquoise}
+                    />
+                </View>
             ),
         })
     }, [navigation, profileName])

@@ -37,7 +37,6 @@ const WorkerTabNavigator = props => {
                 component={WorkerMessageListScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
-                    headerLargeTitle: true,
                     headerShown: true,
                     tabBarIcon: ({color}) => (
                         <MaterialIcons name="message" size={25} color={color}/>
