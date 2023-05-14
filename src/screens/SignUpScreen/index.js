@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert, Linking} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert, Linking, Platform, KeyboardAvoidingView} from 'react-native';
 import {Auth} from 'aws-amplify';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
@@ -55,82 +55,88 @@ const SignUpScreen = () => {
 
     const onSignInPress = () => {
         navigation.navigate('SignIn');
-    };
+    }
 
     const onConfirmCodePress = () => {
         navigation.navigate('Verification');
-    };
+    }
 
     const onTermsOfUsePressed = async () => {
         await Linking.openURL('https://gigbusters.app/?page_id=3')
-    };
+    }
 
     const onPrivacyPressed = async() => {
         await Linking.openURL('https://gigbusters.app/?page_id=1045')
-    };
+    }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.root}>
-                <Lottie
-                    style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
-                    source={jobAnim}
-                    autoPlay
-                    loop
-                />
-                <View style={styles.form}>
-                    <CustomInput
-                        placeholder="Email [UserName]"
-                        value={email}
-                        setValue={setEmail}
-                        iconCategory="Fontisto"
-                        iconName="email"
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
+            style={styles.root}
+        >
+            <ScrollView keyboardShouldPersistTaps='handled'>
+                <View style={styles.container}>
+                    <Lottie
+                        style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
+                        source={jobAnim}
+                        autoPlay
+                        loop
                     />
-                    <CustomInput
-                        placeholder="Password"
-                        value={password}
-                        setValue={setPassword}
-                        secureTextEntry
-                        iconCategory="FontAwesome5"
-                        iconName="key"
+                    <View style={styles.form}>
+                        <CustomInput
+                            placeholder="Email [UserName]"
+                            value={email}
+                            setValue={setEmail}
+                            iconCategory="Fontisto"
+                            iconName="email"
+                        />
+                        <CustomInput
+                            placeholder="Password"
+                            value={password}
+                            setValue={setPassword}
+                            secureTextEntry
+                            iconCategory="FontAwesome5"
+                            iconName="key"
+                        />
+                        <CustomInput
+                            placeholder="Repeat Password"
+                            value={passwordRepeat}
+                            setValue={setPasswordRepeat}
+                            secureTextEntry
+                            iconCategory="FontAwesome5"
+                            iconName="key"
+                        />
+                    </View>
+                    <CustomButton
+                        text="Register"
+                        style={styles.component}
+                        onPress={onRegisterPressed}
                     />
-                    <CustomInput
-                        placeholder="Repeat Password"
-                        value={passwordRepeat}
-                        setValue={setPasswordRepeat}
-                        secureTextEntry
-                        iconCategory="FontAwesome5"
-                        iconName="key"
+
+                    <Text style={styles.text}>
+                        By registering, you confirm that you accept our{' '}
+                        <Text style={styles.link} onPress={onTermsOfUsePressed}>
+                            Terms of Use
+                        </Text>{' '}
+                        and{' '}
+                        <Text style={styles.link} onPress={onPrivacyPressed}>
+                            Privacy Policy
+                        </Text>
+                    </Text>
+                    <CustomButton
+                        text="Have an account? Sign in"
+                        onPress={onSignInPress}
+                        type="SECONDARY"
+                    />
+                    <CustomButton
+                        text="Verify an existing account"
+                        onPress={onConfirmCodePress}
+                        type="TERTIARY"
                     />
                 </View>
-                <CustomButton
-                    text="Register"
-                    style={styles.component}
-                    onPress={onRegisterPressed}
-                />
-
-                <Text style={styles.text}>
-                    By registering, you confirm that you accept our{' '}
-                    <Text style={styles.link} onPress={onTermsOfUsePressed}>
-                        Terms of Use
-                    </Text>{' '}
-                    and{' '}
-                    <Text style={styles.link} onPress={onPrivacyPressed}>
-                        Privacy Policy
-                    </Text>
-                </Text>
-                <CustomButton
-                    text="Have an account? Sign in"
-                    onPress={onSignInPress}
-                    type="SECONDARY"
-                />
-                <CustomButton
-                    text="Verify an existing account"
-                    onPress={onConfirmCodePress}
-                    type="TERTIARY"
-                />
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -139,12 +145,12 @@ export default SignUpScreen;
 const styles = StyleSheet.create({
     root: {
         backgroundColor: "#ffffff",
-        // alignItems: "center",
         paddingBottom: 10,
         paddingTop: 20,
-        paddingLeft: 50,
-        paddingRight: 50,
-        height: 800,
+        height: '100%',
+    },
+    container:{
+        marginHorizontal: 30
     },
     form: {
         marginTop: 15,

@@ -1,7 +1,17 @@
 import React, {useEffect, useState} from 'react';
-import {View, Image, useWindowDimensions, ScrollView, Text, Alert, Pressable} from 'react-native';
+import {
+    View,
+    Image,
+    useWindowDimensions,
+    ScrollView,
+    Text,
+    Alert,
+    Pressable,
+    StyleSheet,
+    Platform,
+    KeyboardAvoidingView
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import styles from './styles';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import SocialSignInButtons from '../../components/SocialSignInButtons';
@@ -10,10 +20,8 @@ import jobAnim from "../../../assets/animations/104042-recolored-job-proposal-re
 import Lottie from "lottie-react-native";
 import {ProfileService} from "../../backend/ProfileService";
 import Colors from "../../constants/Colors";
-import Fontisto from "react-native-vector-icons/Fontisto";
-import loading from "../../../assets/images/loading2.gif";
 
-function SignInScreen(props) {
+export default function SignInScreen(props) {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const profileService = new ProfileService()
@@ -65,53 +73,84 @@ function SignInScreen(props) {
     };
 
     return (
-        <ScrollView showsVerticalScrollIndicator={true} keyboardShouldPersistTaps='handled'>
-            <View style={styles.root}>
-                <Lottie
-                    style={{height: 200, width: 250, alignSelf: 'center', marginTop: 5}}
-                    source={jobAnim}
-                    autoPlay
-                    loop
-                />
-                <CustomInput
-                    style={styles.components}
-                    placeholder="Username"
-                    iconCategory="Fontisto"
-                    iconName="email"
-                    value={username}
-                    setValue={setUsername}
-                />
-                <CustomInput
-                    placeholder="Password"
-                    value={password}
-                    iconCategory="FontAwesome5"
-                    iconName="key"
-                    setValue={setPassword}
-                    secureTextEntry
-                />
-                <CustomButton
-                    text="Sign In"
-                    onPress={onSignInPressed}
-                    style={styles.components}
-                />
-                <CustomButton
-                    text="Forgot password?"
-                    onPress={onForgotPasswordPressed}
-                    type="TERTIARY"
-                />
-                <View style={styles.components}>
-                    <SocialSignInButtons/>
-
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 70 : 70}
+            style={styles.root}
+        >
+            <ScrollView keyboardShouldPersistTaps='handled'>
+                <View style={styles.container}>
+                    <Lottie
+                        style={{height: 200, width: 250, alignSelf: 'center', marginTop: 5}}
+                        source={jobAnim}
+                        autoPlay
+                        loop
+                    />
+                    <CustomInput
+                        style={styles.components}
+                        placeholder="Username"
+                        iconCategory="Fontisto"
+                        iconName="email"
+                        value={username}
+                        setValue={setUsername}
+                    />
+                    <CustomInput
+                        placeholder="Password"
+                        value={password}
+                        iconCategory="FontAwesome5"
+                        iconName="key"
+                        setValue={setPassword}
+                        secureTextEntry
+                    />
                     <CustomButton
-                        text="Don't have an account? Sign Up"
-                        onPress={onSignUpPress}
-                        type="SECONDARY"
+                        text="Sign In"
+                        onPress={onSignInPressed}
                         style={styles.components}
                     />
+                    <CustomButton
+                        text="Forgot password?"
+                        onPress={onForgotPasswordPressed}
+                        type="TERTIARY"
+                    />
+                    <View style={styles.components}>
+                        <SocialSignInButtons/>
+
+                        <CustomButton
+                            text="Don't have an account? Sign Up"
+                            onPress={onSignUpPress}
+                            type="SECONDARY"
+                            style={styles.components}
+                        />
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
-export default SignInScreen;
+const styles = StyleSheet.create({
+    root: {
+        backgroundColor: "#ffffff",
+        paddingBottom: 10,
+        paddingTop: 20,
+        height: '100%',
+    },
+    container:{
+        marginHorizontal: 30
+    },
+    logo: {
+        width: '70%',
+        maxWidth: 300,
+        maxHeight: 200,
+    },
+    components: {
+        width: '100%',
+        marginTop: 15,
+    },
+    socialButtons: {
+        marginTop: 10
+    },
+    signupButton: {
+        marginTop: 10
+    },
+})

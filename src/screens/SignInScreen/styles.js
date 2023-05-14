@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     signupButton: {
         marginTop: 10
     },
-});
+})
 
 export default styles;

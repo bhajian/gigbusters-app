@@ -76,11 +76,12 @@ export default function ReferralResponseScreen({navigation, route}) {
 
     return (
         <KeyboardAvoidingView
-            behavior='position'
-            keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 200}
+            style={styles.root}
         >
-            <ScrollView>
-            <View style={styles.root}>
+            <ScrollView keyboardShouldPersistTaps='handled'>
+            <View style={styles.container}>
                 <ViewShot ref={ref} options={{ fileName: "Your-File-Name", format: "jpg", quality: 0.9 }}>
                     <View style={styles.topContainer}>
                         <View style={styles.customerContainer}>
@@ -122,7 +123,8 @@ export default function ReferralResponseScreen({navigation, route}) {
                 </ViewShot>
 
                 <Text style={styles.text}>
-                    Refer a gigbuster or share with someone who is interested in this task.
+                    Refer a new gigbuster to your neighbour that requires a worker or share with
+                    {' '}someone who is interested in this task and collect points.
                 </Text>
                 <CustomInput
                     placeholder="Name [Optional]"
@@ -176,10 +178,11 @@ const styles = StyleSheet.create({
     root: {
         backgroundColor: "#ffffff",
         paddingBottom: 10,
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
-        height: 700,
+        paddingTop: 5,
+        height: '100%',
+    },
+    container: {
+        marginHorizontal: 30
     },
     topContainer: {
         flexDirection: 'row',

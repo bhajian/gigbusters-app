@@ -13,7 +13,7 @@ const AuthenticationNavigator = props => {
 
     return (
         <AuthenticationStack.Navigator headerShown="false">
-                <AuthenticationStack.Screen name="Gig Buster">
+                <AuthenticationStack.Screen name="Gig Busters">
                         {screenProps => (
                             <FirstScreen
                                 {...screenProps}
