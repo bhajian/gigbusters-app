@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import {Text, ImageBackground, View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import {Ionicons} from "@expo/vector-icons";
 import Colors from "../../constants/Colors";
 import MapView from "react-native-maps";
 import { PROVIDER_GOOGLE } from "react-native-maps"
@@ -20,6 +19,8 @@ const MatchingCard = props => {
         profilePhotoURL,
         location
     } = props.card
+
+    console.log(location)
 
     const [mapRegion, setmapRegion] = useState({
         latitude: location?.latitude,
