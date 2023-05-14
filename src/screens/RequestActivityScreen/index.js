@@ -43,7 +43,6 @@ export default function RequestActivityScreen({route}) {
     }, [navigation])
 
     useEffect(() => {
-
         const unsubscribe = navigation.addListener('focus', () => {
             loadData().then().catch(e => console.log(e))
         })

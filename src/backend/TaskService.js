@@ -214,7 +214,7 @@ export class TaskService {
         }
 
         if(task?.photos?.length > 0){
-            task.mainPhotoURL = await this.getMainPhoto(task?.photos[0])
+            task.photoURL = await this.getMainPhoto(task?.photos[0])
         }
         this.setTask(task)
         return task

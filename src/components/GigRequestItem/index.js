@@ -33,9 +33,7 @@ export default function GigRequestItem({item, handler}) {
                         </View>
                     </View>
                     <View style={styles.notificationNumberContainer}>
-                        {/*<View style={styles.notificationInfo}>*/}
-                        {/*    <Text style={styles.notificationTag}>3</Text>*/}
-                        {/*</View>*/}
+
                     </View>
                 </View>
             </View>
