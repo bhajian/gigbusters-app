@@ -1,6 +1,7 @@
 import {API, Auth, Storage} from "aws-amplify"
 const taskApiName = 'GigbusterApi'
 const taskPath = '/task'
+const cardPath = '/card'
 const applicantPath = '/applicant'
 const transactionRequestAcceptPath = '/requestAccept'
 const transactionRequestRejectPath = '/requestReject'
@@ -93,6 +94,28 @@ export class TaskService {
 
     async listNeighborsTasks(params) {
         const path = taskPath + queryPath
+        const data = {
+            queryStringParameters: params
+        }
+        const response = await API.get(taskApiName, path, data)
+        neighboursTasks = response?.Items
+        for(let i=0; i< neighboursTasks?.length; i++){
+            if(neighboursTasks[i].photos) {
+                const mainPhoto = neighboursTasks[i]?.photos
+                    .filter((item) => item?.type === 'main')
+                neighboursTasks[i].mainPhotoURL =
+                    await this.getMainPhoto(mainPhoto[0])
+            }
+            if(neighboursTasks[i]?.profilePhoto){
+                neighboursTasks[i].profilePhotoURL =
+                    await this.getMainPhoto(neighboursTasks[i]?.profilePhoto)
+            }
+        }
+        return neighboursTasks
+    }
+
+    async listMyCards(params) {
+        const path = taskPath + cardPath
         const data = {
             queryStringParameters: params
         }

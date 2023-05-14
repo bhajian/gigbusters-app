@@ -82,7 +82,7 @@ const MatchingCards = (props) => {
 
     async function loadData() {
         try{
-            const tasksObj = await taskService.listNeighborsTasks({
+            const tasksObj = await taskService.listMyCards({
                 limit: 50,
             })
             setNoMoreCards(false)

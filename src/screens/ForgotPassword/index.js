@@ -53,21 +53,23 @@ export default function ForgetPasswordScreen({navigation, route}) {
                     loop
                 />
                 <Text style={styles.title}>Forgot Password</Text>
-                <CustomInput
-                    placeholder="Email"
-                    value={email}
-                    setValue={setEmail}
-                    iconCategory="Fontisto"
-                    iconName="email"
-                />
-                <CustomButton
-                    text="Verify Email"
-                    onPress={confirmSignUp}
-                    style={styles.component}
-                />
-                <Text style={styles.text}>
-                    Shortly you will receive a code in your email.
-                </Text>
+                <View style={styles.formContainer}>
+                    <CustomInput
+                        placeholder="Email"
+                        value={email}
+                        setValue={setEmail}
+                        iconCategory="Fontisto"
+                        iconName="email"
+                    />
+                    <CustomButton
+                        text="Verify Email"
+                        onPress={confirmSignUp}
+                        style={styles.component}
+                    />
+                    <Text style={styles.text}>
+                        Please check your email, shortly you will receive a code in your email.
+                    </Text>
+                </View>
 
             </View>
         </ScrollView>
@@ -79,25 +81,29 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         paddingBottom: 10,
         paddingTop: 20,
-        paddingLeft: 50,
-        paddingRight: 50,
+        paddingLeft: 30,
+        paddingRight: 30,
         height: 800,
     },
     component: {
         marginTop: 20
     },
     title: {
-        marginTop: 20,
-        paddingBottom: 90,
-        // textAlign: "justify",
+        marginTop: 30,
         fontSize: 40,
-        color: "#ff6200"
+        color: Colors.light.tint,
+        textAlign: 'center'
+    },
+    formContainer: {
+        marginTop: 30
     },
     link: {
-        color: "#ff6200"
+        color: Colors.light.tint
     },
     text: {
         marginTop: 20,
+        textAlign: 'center',
+        fontSize: 16
     },
     registerButton: {
         marginTop: 40,
