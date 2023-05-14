@@ -19,9 +19,9 @@ export default function GigRequestBottomSheet({
     const [category, setCategory] = useState('')
     const [location, setLocation] = useState(defaultData?.location?
         defaultData?.location : undefined)
-    const [distance, setDistance] = useState([50])
-    const [price, setPrice] = useState([20])
-    const [backdropPressBehavior, setBackdropPressBehavior] = useState('close');
+    const [distance, setDistance] = useState([(defaultData?.distance ? defaultData?.distance: 50)])
+    const [price, setPrice] = useState([(defaultData?.price ? defaultData?.price: 20)])
+    const [backdropPressBehavior, setBackdropPressBehavior] = useState('close')
 
     const handleTogglePressBehavior = useCallback(() => {
         getValueFromBottomSheet({

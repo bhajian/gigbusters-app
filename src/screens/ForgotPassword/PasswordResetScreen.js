@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
 import {Auth} from 'aws-amplify';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import jobAnim from "../../../assets/animations/107800-login-leady.json";
@@ -49,7 +48,7 @@ export default function PasswordResetScreen({navigation, route}) {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
             <View style={styles.root}>
                 <Lottie
                     style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}

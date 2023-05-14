@@ -68,7 +68,11 @@ export default function SwitchRoleScreen(props) {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} style={{backgroundColor: "#ffffff", height: '100%'}}>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            style={{backgroundColor: "#ffffff", height: '100%'}}
+            keyboardShouldPersistTaps='handled'
+        >
             <View style={styles.root}>
                 <Lottie
                     style={{height: 300, width: 300, alignSelf: 'center', marginTop: 5}}

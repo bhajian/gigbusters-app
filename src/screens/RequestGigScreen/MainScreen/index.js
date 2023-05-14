@@ -57,7 +57,7 @@ export default function RequestGigScreen(props) {
     ))
     const [profileImage, setProfileImage] = useState(profile.mainPhotoUrl)
     const [images, setImages] = useState((operation === 'edit' ?
-        (params?.task?.mainPhotoURL? [params?.task?.mainPhotoURL] : []) :
+        (params?.task?.photoURL? [params?.task?.photoURL] : []) :
             []
     ))
     const [photos, setPhotos] = useState((operation === 'edit' ?
@@ -68,20 +68,6 @@ export default function RequestGigScreen(props) {
     const handleSheetChanges = useCallback((value) => {
     }, [])
 
-
-    // function loadData() {
-    //     const profile = profileService.getProfile()
-    //     if(profile && profile.name){
-    //         setProfileName(profile.name)
-    //     }
-    //     if(location === undefined && profile && profile.location && profile.location){
-    //         setLocation(profile.location)
-    //     }
-    //     if(profile && profile.photos){
-    //         const url = profile.mainPhotoUrl
-    //         setProfileImage(url)
-    //     }
-    // }
 
     useEffect(() => {
         if(params?.operation === 'create'){
@@ -179,7 +165,6 @@ export default function RequestGigScreen(props) {
     }
 
     async function submitRequest() {
-
         if(images?.length === 0){
             Alert.alert('Please add a photo to your task posting.')
         } else {
@@ -253,6 +238,9 @@ export default function RequestGigScreen(props) {
 
                 <View style={styles.tagsAddressContainer}>
                     <View style={styles.tag}>
+                        <Text style={styles.text} >{distance}km from</Text>
+                    </View>
+                    <View style={styles.tag}>
                         <Text style={styles.text} >{location?.locationName}</Text>
                     </View>
                 </View>
@@ -293,7 +281,13 @@ export default function RequestGigScreen(props) {
                 handleSheetChanges={handleSheetChanges}
                 bottomSheetModalRef={bottomSheetModalRef}
                 getValueFromBottomSheet={getValueFromBottomSheet}
-                defaultData={{location: location, category: category}}
+                defaultData={{
+                    location: location,
+                    category: category,
+                    price: price,
+                    priceUnit: priceUnit,
+                    distance: distance
+            }}
             />
         </KeyboardAvoidingView>
     )

@@ -46,7 +46,7 @@ export default function DeactivateProfileScreen({navigation, route, updateAuthSt
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
             <View style={styles.root}>
                 <Lottie
                     style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}

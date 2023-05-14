@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet, Alert} from "react-native";
+import {View, Text, ImageBackground, Pressable, TextInput, StyleSheet, Alert, ScrollView} from "react-native";
 import {Auth} from "aws-amplify";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import CustomButton from "../../../components/CustomButton";
@@ -67,7 +67,7 @@ const VerifyPasswordScreen = ({route}) => {
     }, [])
 
     return (
-        <View style={styles.container} >
+        <ScrollView style={styles.container} keyboardShouldPersistTaps='handled'>
             <View style={styles.topContainer} >
                 <Lottie
                     style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
@@ -110,7 +110,7 @@ const VerifyPasswordScreen = ({route}) => {
                 </View>
 
             </View>
-        </View>
+        </ScrollView>
     )
 };
 

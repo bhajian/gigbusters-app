@@ -63,8 +63,6 @@ export default function CategorySelector(props) {
         value.key = categories.length
         value.backgroundColor = Colors.light.tint
         value.textColor = '#fff'
-        // console.log(value)
-
         changeColor({
             key: categories.length,
             categories: [...categories, value]
