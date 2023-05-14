@@ -96,17 +96,9 @@ const ProfileScreen = (props) => {
     }
     const onSwitchProfilePressed = async() => {
         try{
-            props.updateAuthState('initializing')
-            const profile = profileService.getProfile()
-            if(accountType === 'WORKER'){
-                profile.accountType = 'CONSUMER'
-            } else{
-                profile.accountType = 'WORKER'
-            }
-            setAccountType(profile.accountType)
-            await profileService.updateProfile(profile)
-            props.updateAccountType(profile.accountType)
-            props.updateAuthState('loggedIn')
+            navigation.navigate('SwitchRoleScreen', {
+                accountType: accountType
+            })
         } catch (e) {
             console.log(e)
         }
@@ -138,7 +130,6 @@ const ProfileScreen = (props) => {
                     <Text style={styles.roleText}>
                         Role:
                     </Text>
-
                     <Text style={styles.roleText}>
                         {accountType === 'CONSUMER'? 'Customer' : 'Worker'}
                     </Text>
@@ -171,8 +162,11 @@ const ProfileScreen = (props) => {
                     fgColor="#000000"
                 />
                 <CustomButton
-                    text={'Switch to ' +
-                        (accountType === 'CONSUMER'? 'Worker': 'Customer')+ ' Account'}
+                    text={'Switch role to ' +
+                        (accountType === 'CONSUMER'? 'Worker': 'Customer')}
+                    imageUrl={accountType === 'WORKER' ?
+                        customerImage : workerImage}
+                    imageStyle={{marginLeft: 5, width: 30, height: 30}}
                     onPress={onSwitchProfilePressed}
                     style={styles.regularButton}
                     bgColor="#E3E8F1"

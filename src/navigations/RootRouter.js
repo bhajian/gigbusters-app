@@ -16,6 +16,7 @@ import TaskDetailScreen from "../screens/RequestActivityScreen/TaskDetailScreen"
 import {TaskService} from "../backend/TaskService";
 import Initializing from "../components/Initializing";
 import TaskWorkerScreen from "../screens/WorkerMessageScreen/TaskWorkerScreen";
+import SwitchRoleScreen from "../screens/ProfileScreen/SwitchRoleScreen";
 
 const Stack = createNativeStackNavigator()
 
@@ -184,6 +185,22 @@ const RootRouter = props => {
                         headerShown: true,
                     }}
                 />
+            )}
+            {(accountType === 'WORKER' || accountType === 'CONSUMER') && (
+                <Stack.Screen
+                    name={'SwitchRoleScreen'}
+                    options={{
+                        headerShown: true,
+                    }}
+                >
+                    {screenProps => (
+                        <SwitchRoleScreen
+                            {...screenProps}
+                            updateAuthState={props.updateAuthState}
+                            updateAccountType={updateAccountType}
+                        />
+                    )}
+                </Stack.Screen>
             )}
         </Stack.Navigator>
     )

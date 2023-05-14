@@ -9,6 +9,7 @@ import VerifyPasswordScreen from "../screens/ProfileScreen/VerifyPasswordScreen"
 import VerifyCodeScreen from "../screens/ProfileScreen/VerifyCodeScreen";
 import EditSettingsScreen from "../screens/ProfileScreen/EditSettingsScreen";
 import DeactivateProfileScreen from "../screens/ProfileScreen/DeactivateProfileScreen";
+import SwitchRoleScreen from "../screens/ProfileScreen/SwitchRoleScreen";
 
 const Stack = createNativeStackNavigator()
 

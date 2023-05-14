@@ -19,7 +19,8 @@ const CustomButton = ({
   iconStyle,
   style,
   imageUrl,
-  imageStyle
+  imageStyle,
+  disabled
 }) => {
   const renderIcon = (iconCategory, iconName) => {
     if (iconCategory === 'Fontisto') {
@@ -45,6 +46,7 @@ const CustomButton = ({
 
   return (
     <Pressable
+      disabled={disabled}
       onPress={onPress}
       style={[
         style,

@@ -157,6 +157,7 @@ export default function ReferralResponseScreen({navigation, route}) {
                             text="Make a Referral"
                             onPress={referralSubmission}
                             style={styles.component}
+                            disabled={dataBeingSaved}
                         />
                 }
                 <CustomButton

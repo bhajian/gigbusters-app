@@ -69,13 +69,13 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     taskContainer: {
+        width: '25%',
         alignItems: 'center',
         justifyContent: 'flex-end',
         marginRight: 5,
     },
     container: {
         flexDirection: 'row',
-        // width: '80%',
         padding: 10,
         backgroundColor: '#fff',
         borderBottomWidth: .5,

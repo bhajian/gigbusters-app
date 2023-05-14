@@ -53,21 +53,10 @@ export default function NotificationScreen({updateAccountType, updateAuthState})
     }
 
     async function switchAccountType () {
-        try{
-            updateAuthState('initializing')
-            const profile = profileService.getProfile()
-            if(profile.accountType === 'WORKER'){
-                profile.accountType = 'CONSUMER'
-            } else{
-                profile.accountType = 'WORKER'
-            }
-            await profileService.updateProfile(profile)
-            updateAccountType(profile.accountType)
-            updateAuthState('loggedIn')
-        } catch (e) {
-            console.log(e)
-            updateAuthState('loggedOut')
-        }
+        const profile = profileService.getProfile()
+        navigation.navigate('SwitchRoleScreen', {
+            accountType: profile.accountType
+        })
     }
 
     async function onPressed(params) {
