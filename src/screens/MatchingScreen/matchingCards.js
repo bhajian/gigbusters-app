@@ -1,17 +1,19 @@
-import {Alert, Pressable, SafeAreaView, View} from "react-native";
+import {Alert, Pressable, SafeAreaView, Text, View} from "react-native";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {TaskService} from "../../backend/TaskService";
 import MatchingCard from "../../components/MatchingCard";
 import Swiper from "react-native-deck-swiper";
 import {useNavigation} from "@react-navigation/native";
 import Colors from "../../constants/Colors";
-import {Ionicons, MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
+import {MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
 import MatchingSearch from "./MatchingSearch";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {ProfileService} from "../../backend/ProfileService";
+import waitAnim from "../../../assets/animations/135765-clown.json";
+import Lottie from "lottie-react-native";
 
 
-const MatchingCards = () => {
+const MatchingCards = (props) => {
     const swiperRef = useRef(null)
     const bottomSheetModalRef = useRef(null)
     const taskService = new TaskService()
@@ -22,6 +24,7 @@ const MatchingCards = () => {
     const [cardList, setCardList] = useState([])
     const [profileName, setProfileName] = useState(profile?.name)
     const [profileImage, setProfileImage] = useState(profile?.mainPhotoUrl)
+    const [noMoreCards, setNoMoreCards] = useState(false)
     const handlePresentPress = () => bottomSheetModalRef.current.present()
     const handleSheetChanges = useCallback((index) => {
     }, [])
@@ -52,7 +55,7 @@ const MatchingCards = () => {
                 </Pressable>
             ),
             headerLeft: () => (
-                <View style={{marginLeft: 5}}>
+                <View style={{marginLeft: 10}}>
                     <UserAvatar
                         size={35}
                         active
@@ -64,19 +67,29 @@ const MatchingCards = () => {
                 </View>
             ),
         })
-    }, [navigation]);
+    }, [navigation])
 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            loadData().then().catch(e => console.log(e))
+        })
+        return unsubscribe
+    }, [])
 
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
-    }, []);
+    }, [props.appState])
 
     async function loadData() {
         try{
             const tasksObj = await taskService.listNeighborsTasks({
                 limit: 50,
             })
+            setNoMoreCards(false)
             setCardList(tasksObj)
+            if(tasksObj.length === 0) {
+                setNoMoreCards(true)
+            }
         }catch (e) {
             console.log(e)
             Alert.alert(e)
@@ -119,32 +132,48 @@ const MatchingCards = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Swiper
-                ref={swiperRef}
-                cards={cardList}
-                cardIndex={0}
-                renderCard={(card) => {
-                    return (
-                        card&&<MatchingCard
-                            card={card}
-                            onRightPressed={onRightPressed}
-                            onLeftPressed={onLeftPressed} />
-                    )
-                }}
-                onSwipedRight={(e) => {onRightSwiped(e).then(r => {}).catch(e => console.log(e))}}
-                onSwipedLeft={(e) => {onLeftSwiped(e).then(r => {}).catch(e => console.log(e))}}
-                onSwiped={(cardIndex) => {}}
-                onSwipedAll={() => {console.log('onSwipedAll')}}
-                backgroundColor={Colors.light.grey}
-                infinite={false}
-                containerStyle={{top: 0, width: '100%'}}
-                cardStyle={{top: 5, left: '2%', width: '96%', justifyContent: 'center',}}
-                stackSize= {2}
-                showSecondCard={true}
-                // keyExtractor={(item) => (console.log(item))}
-            >
+            {
+                noMoreCards ?
+                    <View style={styles.waitContainer}>
+                        <Lottie
+                            style={{height: 300, width: 300, alignSelf: 'center', marginTop: 5}}
+                            source={waitAnim}
+                            autoPlay
+                            loop
+                        />
+                        <Text style={styles.text}>
+                            There will be more tasks and jobs available soon. {'\n'}
+                            Stay tuned!
+                        </Text>
+                    </View>
+                    :
+                <Swiper
+                    ref={swiperRef}
+                    cards={cardList}
+                    cardIndex={0}
+                    renderCard={(card) => {
+                        return (
+                            card&&<MatchingCard
+                                card={card}
+                                onRightPressed={onRightPressed}
+                                onLeftPressed={onLeftPressed} />
+                        )
+                    }}
+                    onSwipedRight={(e) => {onRightSwiped(e).then(r => {}).catch(e => console.log(e))}}
+                    onSwipedLeft={(e) => {onLeftSwiped(e).then(r => {}).catch(e => console.log(e))}}
+                    onSwiped={(cardIndex) => {}}
+                    onSwipedAll={() => {setNoMoreCards(true)}}
+                    backgroundColor={Colors.light.grey}
+                    infinite={false}
+                    containerStyle={{top: 0, width: '100%'}}
+                    cardStyle={{top: 5, left: '2%', width: '96%', justifyContent: 'center',}}
+                    stackSize= {2}
+                    showSecondCard={true}
+                    // keyExtractor={(item) => (console.log(item))}
+                >
 
-            </Swiper>
+                </Swiper>
+            }
             <MatchingSearch
                 bottomSheetModalRef={bottomSheetModalRef}
                 handleSheetChanges={handleSheetChanges}
@@ -206,5 +235,16 @@ const styles = {
         justifyContent: 'center',
         display: 'flex',
         zIndex: -100,
+    },
+    waitContainer: {
+        backgroundColor: 'white',
+        height: '100%',
+        width: '100%',
+    },
+    text: {
+        textAlign: 'center',
+        alignSelf: 'center',
+        fontSize: 22,
+        marginTop: 20,
     }
 }

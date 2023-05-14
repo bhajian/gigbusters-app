@@ -35,7 +35,7 @@ export default function ConsumerMessageListScreen(props) {
                 <Text>Messages</Text>
             ),
             headerLeft: () => (
-                <View style={{marginLeft: 5}}>
+                <View style={{marginLeft: 10}}>
                     <UserAvatar
                         size={35}
                         active
@@ -54,11 +54,11 @@ export default function ConsumerMessageListScreen(props) {
             loadData().then().catch(e => console.log(e))
         })
         return unsubscribe
-    }, [props.appState])
+    }, [])
 
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
-    }, [props.appState, props.notification])
+    }, [props.appState])
 
     async function fetchData() {
         setDataBeingLoaded(true)

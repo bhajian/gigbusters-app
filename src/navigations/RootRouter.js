@@ -41,6 +41,7 @@ const RootRouter = props => {
             await taskService.fetchMyTasks({
                 limit: 500,
             })
+            await profileService.fetchProfile()
             setDataLoaded(true)
 
         } catch (e) {
@@ -66,7 +67,6 @@ const RootRouter = props => {
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
                             appState={props.appState}
-                            notification={props.notification}
                         />
                     )}
                 </Stack.Screen>
@@ -82,6 +82,7 @@ const RootRouter = props => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
+                            appState={props.appState}
                         />
                     )}
                 </Stack.Screen>

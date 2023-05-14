@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     taskImage: {
         width: 70,
         height: 70,
-        borderRadius: 35,
+        borderRadius: 10,
     },
     container: {
         flexDirection: 'row',

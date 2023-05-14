@@ -13,7 +13,7 @@ import UserAvatar from "@muhzi/react-native-user-avatar";
 import {TaskService} from "../../backend/TaskService";
 import {MaterialIcons} from "@expo/vector-icons";
 
-export default function WorkerMessageListScreen() {
+export default function WorkerMessageListScreen(props) {
     const navigation = useNavigation()
     const profileService = new ProfileService()
     const taskService = new TaskService()
@@ -34,6 +34,10 @@ export default function WorkerMessageListScreen() {
     }, [])
 
     useEffect(() => {
+        loadData().then().catch(e => console.log(e))
+    }, [props.appState])
+
+    useEffect(() => {
         navigation.setOptions({
             tabBarActiveTintColor: Colors.light.tint,
             tabBarIcon: ({color}) => (
@@ -43,7 +47,7 @@ export default function WorkerMessageListScreen() {
                 <Text>Messages</Text>
             ),
             headerLeft: () => (
-                <View style={{marginLeft: 5}}>
+                <View style={{marginLeft: 10}}>
                     <UserAvatar
                         size={35}
                         active

@@ -31,8 +31,10 @@ export default function ReviewableProfileScreen({navigation, route}) {
     async function onSharePressed() {
         ref.current.capture().then(uri => {
             Sharing.shareAsync(`file://${uri}`, {
+                mimeType: 'image/jpeg',
                 dialogTitle: 'Share to social media',
             })
+
         })
     }
 

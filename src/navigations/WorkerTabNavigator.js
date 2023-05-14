@@ -7,6 +7,7 @@ import {ProfileNavigation} from "./ProfileNavigation";
 import MatchingCards from "../screens/MatchingScreen/matchingCards";
 import WorkerMessageListScreen from "../screens/WorkerMessageScreen/WorkerMessageListScreen";
 import NotificationScreen from "../screens/NotificationScreen/NotificationScreen";
+import ConsumerMessageListScreen from "../screens/ConsumerMessageScreen/ConsumerMessageListScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,21 +29,29 @@ const WorkerTabNavigator = props => {
                     <MatchingCards
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
+                        appState={props.appState}
                     />
 
                 )}
             </Tab.Screen>
             <Tab.Screen
                 name={'Messages'}
-                component={WorkerMessageListScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
-                    headerShown: true,
                     tabBarIcon: ({color}) => (
                         <MaterialIcons name="message" size={25} color={color}/>
-                    ),
+                    )
                 }}
-            />
+            >
+                {screenProps => (
+                    <WorkerMessageListScreen
+                        {...screenProps}
+                        updateAccountType={props.updateAccountType}
+                        updateAuthState={props.updateAuthState}
+                        appState={props.appState}
+                    />
+                )}
+            </Tab.Screen>
             <Tab.Screen
                 name={'Notifications'}
                 options={{

@@ -7,7 +7,7 @@ import {
     Platform,
     Text,
     Pressable,
-    View
+    View, Keyboard
 } from "react-native";
 import Message from "../../components/Message"
 import bg from "../../../assets/images/chatbg.png"
@@ -40,7 +40,6 @@ const WorkerChatScreen = (props) => {
     const [editable, setEditable] = useState(false)
 
     const editPageBottomSheetModalRef = useRef(null)
-    const editPageHandlePresentPress = () => editPageBottomSheetModalRef.current.present()
     const editPageHandleSheetChanges = useCallback((index) => {
     }, [])
 
@@ -84,6 +83,11 @@ const WorkerChatScreen = (props) => {
         } catch (e) {
             console.log(e)
         }
+    }
+
+    const editPageHandlePresentPress = () =>{
+        editPageBottomSheetModalRef.current.present()
+        Keyboard.dismiss()
     }
 
     async function onAcceptPressed(params) {
@@ -201,7 +205,7 @@ const WorkerChatScreen = (props) => {
     return (
         <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={Platform.OS === "ios" ? 65 : headerHeight + 110}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 60 : headerHeight + 105}
             style={styles.container}
         >
             <ImageBackground source={bg} style={styles.bg}>

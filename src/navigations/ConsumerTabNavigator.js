@@ -61,7 +61,7 @@ const ConsumerTabNavigator = props => {
                         <Fontisto name="home" size={25} color={color}/>
                     ),
                     headerLeft: () => (
-                        <View style={{marginLeft: 5}}>
+                        <View style={{marginLeft: 10}}>
                             <UserAvatar
                                 size={35}
                                 active
@@ -76,7 +76,6 @@ const ConsumerTabNavigator = props => {
             />
             <Tab.Screen
                 name={'Messages'}
-                // component={ConsumerMessageListScreen}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,
                     tabBarIcon: ({color}) => (
@@ -90,21 +89,9 @@ const ConsumerTabNavigator = props => {
                         updateAccountType={props.updateAccountType}
                         updateAuthState={props.updateAuthState}
                         appState={props.appState}
-                        notification={props.notification}
                     />
                 )}
             </Tab.Screen>
-            {/*<Tab.Screen*/}
-            {/*    name={'Messages'}*/}
-            {/*    component={MessageNavigation}*/}
-            {/*    options={{*/}
-            {/*        tabBarActiveTintColor: Colors.light.tint,*/}
-            {/*        headerShown: false,*/}
-            {/*        tabBarIcon: ({color}) => (*/}
-            {/*            <MaterialIcons name="message" size={25} color={color}/>*/}
-            {/*        ),*/}
-            {/*    }}*/}
-            {/*/>*/}
             <Tab.Screen
                 name={'Neighborhood'}
                 component={ReferralFeedNavigation}
