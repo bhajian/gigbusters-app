@@ -57,17 +57,6 @@ export default function App() {
         }
     }
 
-    async function schedulePushNotification() {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "You've got mail! 📬",
-                body: 'Here is the notification body',
-                data: { data: 'SOME' },
-            },
-            trigger: { seconds: 6 },
-        });
-    }
-
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
             setAppState(nextAppState)
@@ -81,8 +70,6 @@ export default function App() {
                     .catch(e => {
                         console.error(e)
                     })
-
-                schedulePushNotification().then(r => {})
             }
             appStateRef.current = nextAppState
         })
