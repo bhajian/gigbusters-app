@@ -82,7 +82,7 @@ const CustomerMessageHeader = ({transaction, subject, onAcceptPressed, onRejectP
             {
                 getAcceptRejectComponent()
             }
-            <Text style={styles.time}>{dayjs(transaction.transaction?.lastUpdatedAt).fromNow(true)}</Text>
+            <Text style={styles.time}>{dayjs(transaction?.transaction?.lastUpdatedAt).fromNow(true)}</Text>
         </View>
     )
 }

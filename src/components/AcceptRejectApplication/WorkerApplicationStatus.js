@@ -80,7 +80,7 @@ const WorkerApplicationStatus = ({transaction, subject, onAcceptPressed, onRejec
             <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
             <Text style={styles.messageText} >{getHeaderText()}</Text>
 
-            <Text style={styles.time}>{dayjs(transaction.transaction?.lastUpdatedAt).fromNow(true)}</Text>
+            <Text style={styles.time}>{dayjs(transaction?.transaction?.lastUpdatedAt).fromNow(true)}</Text>
         </View>
     )
 }

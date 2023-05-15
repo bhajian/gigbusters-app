@@ -29,11 +29,14 @@ const RootRouter = props => {
     const [dataLoaded, setDataLoaded] = useState(false)
 
     useEffect(() => {
-        loadData().then(r => {})
+        if(props.appState !== 'inactive' && props.appState !== 'background'){
+            loadData().then(r => {})
+        }
     }, [props.appState, props.notification])
 
     async function loadData() {
         try{
+            setDataLoaded(false)
             await taskService.fetchMyTransaction({
                 limit: 2000,
                 persona: profile.accountType
@@ -43,7 +46,6 @@ const RootRouter = props => {
             })
             await profileService.fetchProfile()
             setDataLoaded(true)
-
         } catch (e) {
             console.log(e)
         }
@@ -66,7 +68,7 @@ const RootRouter = props => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
-                            appState={props.appState}
+                            dataLoaded={dataLoaded}
                         />
                     )}
                 </Stack.Screen>
@@ -82,7 +84,7 @@ const RootRouter = props => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
-                            appState={props.appState}
+                            dataLoaded={dataLoaded}
                         />
                     )}
                 </Stack.Screen>

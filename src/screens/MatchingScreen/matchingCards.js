@@ -76,16 +76,17 @@ const MatchingCards = (props) => {
         return unsubscribe
     }, [])
 
-    // useEffect(() => {
-    //     loadData().then().catch(e => console.log(e))
-    // }, [])
+    useEffect(() => {
+        if(props.dataLoaded){
+            loadData().then().catch(e => console.log(e))
+        }
+    }, [props.dataLoaded])
 
     async function loadData() {
         try{
             const tasksObj = await taskService.listMyCards({
                 limit: 50,
             })
-
             setNoMoreCards(false)
             setCardList(tasksObj)
             if(tasksObj.length === 0) {

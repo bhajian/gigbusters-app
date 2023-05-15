@@ -100,6 +100,8 @@ export default function NotificationScreen({updateAccountType, updateAuthState})
                             )
                         }}
                         keyExtractor={(item) => item?.notification?.id}
+                        onRefresh={loadData}
+                        refreshing={dataBeingLoaded}
                     />
             }
         </SafeAreaView>
