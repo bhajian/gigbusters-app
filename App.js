@@ -46,7 +46,7 @@ export default function App() {
     const responseListener = useRef()
     let notificationUnSubscribe
 
-    const [notification, setNotification] = useState(false)
+    const [notification, setNotification] = useState({})
     const [userStatus, setUserStatus] = useState('initializing')
     const [appState, setAppState] = useState('initializing')
 
@@ -55,7 +55,17 @@ export default function App() {
             console.log('UNSUBSCRIBED')
             notificationUnSubscribe()
         }
+    }
 
+    async function schedulePushNotification() {
+        await Notifications.scheduleNotificationAsync({
+            content: {
+                title: "You've got mail! 📬",
+                body: 'Here is the notification body',
+                data: { data: 'SOME' },
+            },
+            trigger: { seconds: 2 },
+        });
     }
 
     useEffect(() => {
@@ -65,13 +75,14 @@ export default function App() {
                 appStateRef.current.match(/inactive|background/) &&
                 nextAppState === 'active'
             ) {
-
                 checkAuthState()
                     .then(() => {
                     })
                     .catch(e => {
                         console.error(e)
                     })
+
+                schedulePushNotification().then(r => {})
             }
             appStateRef.current = nextAppState
         })
@@ -102,6 +113,17 @@ export default function App() {
         return unsubscribe
     }, [])
 
+    useEffect(() => {
+        const profile = profileService.getProfile()
+        if(userStatus === 'loggedIn'){
+            setPushNotificationsAsync(profile).then(r => {}).catch(e => console.log(e))
+        }
+        const subscription = Notifications.addNotificationReceivedListener(notification => {
+            setNotification(notification)
+        })
+        return () => subscription.remove()
+    }, [userStatus])
+
     async function checkAuthState() {
         try {
             const currentUser = await Auth.currentAuthenticatedUser()
@@ -111,7 +133,6 @@ export default function App() {
                     (profile?.accountType === 'CONSUMER' || profile?.accountType === 'WORKER')
                     && profile?.active) {
                     setUserStatus('loggedIn')
-                    notificationUnSubscribe = await setPushNotificationsAsync(profile)
                 } else {
                     setUserStatus('profileCreation')
                 }
@@ -130,20 +151,7 @@ export default function App() {
         if(token){
             profile.notificationToken = token
             await profileService.updateProfile(profile)
-
-            notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
-                // alert(JSON.stringify(notification))
-                setNotification(notification)
-            })
-            responseListener.current = Notifications.addNotificationResponseReceivedListener(response => {
-                // alert(JSON.stringify(response))
-                // console.log(response)
-            })
-
-            return () => {
-                Notifications.removeNotificationSubscription(notificationListener.current)
-                Notifications.removeNotificationSubscription(responseListener.current)
-            }
+            return
         }
         return undefined
     }

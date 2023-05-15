@@ -9,6 +9,7 @@ import {LocationSelector} from "../../components/LocationSearch";
 import {ProfileService} from "../../backend/ProfileService";
 import workerImage from '../../../assets/images/worker.png'
 import customerImage from '../../../assets/images/customer.png'
+import loading from "../../../assets/images/loading2.gif";
 
 const profileService = new ProfileService()
 const ProfileScreen = (props) => {
@@ -21,7 +22,8 @@ const ProfileScreen = (props) => {
     const [phone, setPhone] = useState('')
     const [location, setLocation] = useState(profile?.location)
     const [accountType, setAccountType] = useState('CONSUMER')
-    const [image, setImage] = useState(null);
+    const [image, setImage] = useState(null)
+    const [dataBeingSaved, setDataBeingSaved] = useState(false)
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -74,8 +76,12 @@ const ProfileScreen = (props) => {
 
     async function signOut() {
         try {
+            setDataBeingSaved(true)
+            profile.notificationToken = ''
+            await profileService.updateProfile(profile)
             profileService.clearProfile()
             await Auth.signOut()
+            setDataBeingSaved(false)
             props.updateAuthState('loggedOut')
         } catch (error) {
             console.log('Error signing out: ', error);
@@ -172,13 +178,18 @@ const ProfileScreen = (props) => {
                     bgColor="#E3E8F1"
                     fgColor="#000000"
                 />
-                <CustomButton
-                    text="Sign Out"
-                    onPress={signOut}
-                    style={styles.regularButton}
-                    bgColor="#E3E8F1"
-                    fgColor="#FB1F1F"
-                />
+                {
+                    dataBeingSaved ?
+                        <Image source={loading} style={{width: 30, height: 30, alignSelf: 'center'}} />
+                        :
+                        <CustomButton
+                            text="Sign Out"
+                            onPress={signOut}
+                            style={styles.regularButton}
+                            bgColor="#E3E8F1"
+                            fgColor="#FB1F1F"
+                        />
+                }
             </View>
         </ScrollView>
     )
