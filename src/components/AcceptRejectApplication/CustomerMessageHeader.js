@@ -28,7 +28,7 @@ const CustomerMessageHeader = ({transaction, subject, onAcceptPressed, onRejectP
     function getHeaderText(){
         if(transaction?.transaction?.type === 'application'){
             if(transaction?.transaction?.status === 'applied'){
-                return `Would you accept an application from ${transaction?.worker?.name}`
+                return `Would you accept an application from `
             }
             if(transaction?.transaction?.status === 'applicationAccepted'){
                 return `You have accepted the application from ${transaction?.worker?.name}`
@@ -76,7 +76,7 @@ const CustomerMessageHeader = ({transaction, subject, onAcceptPressed, onRejectP
                 },
             ]}
         >
-            <Text style={styles.messageText}>Category: {transaction?.task?.category}</Text>
+            <Text style={styles.categoryText}>Category: {transaction?.task?.category}</Text>
             <Image source={{uri: transaction?.task?.photoURL}} style={styles.taskImage} />
             <Text style={styles.messageText} >{getHeaderText()}</Text>
             {
@@ -120,6 +120,10 @@ const styles = StyleSheet.create({
     },
     messageText:{
         color: 'white',
+    },
+    categoryText: {
+        color: 'white',
+        fontWeight: 'bold'
     },
     workerName:{
         color: 'white',

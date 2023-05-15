@@ -21,6 +21,18 @@ export default function MessageItem({transaction, accountType, onChatPressed, us
         }
     }
 
+    function getMessageType(){
+        if(accountType === 'CONSUMER' && transaction?.transaction.type === 'referral'){
+            return 'Referral'
+        }
+        if(accountType === 'CONSUMER' && transaction?.transaction.type === 'application'){
+            return 'Application'
+        }
+        if(accountType === 'WORKER'){
+            return 'Task'
+        }
+    }
+
     function getStatusStyle(){
         if((transaction?.transaction?.type === 'application' && transaction?.transaction?.status === 'applied') ||
             (transaction?.transaction?.type === 'referral' && transaction?.transaction?.status === 'initiated')){
@@ -50,6 +62,9 @@ export default function MessageItem({transaction, accountType, onChatPressed, us
                     <View style={styles.nameContainer}>
                         <Text style={styles.titleText}>
                             {profile.name}
+                        </Text>
+                        <Text style={styles.messageTypeText}>
+                            {getMessageType()}
                         </Text>
                     </View>
                 </View>
@@ -113,10 +128,15 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         marginTop: 5,
     },
+    messageTypeText: {
+        fontWeight: '200',
+        marginHorizontal: 10,
+        alignSelf: 'flex-start',
+        color: 'grey',
+        marginTop: 5,
+    },
     infoContainer: {
-        // flexDirection: 'columns',
-        // marginHorizontal: 15,
-        // justifyContent: 'flex-end'
+
     },
     info: {
         borderRadius: 50,

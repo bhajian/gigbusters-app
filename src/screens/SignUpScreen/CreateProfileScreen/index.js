@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert, TextInput} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert, TextInput, Platform, KeyboardAvoidingView} from 'react-native';
 import CustomInput from '../../../components/CustomInput';
 import CustomButton from '../../../components/CustomButton';
 import {useNavigation} from '@react-navigation/native';
@@ -62,60 +62,66 @@ const CreateProfileScreen = (props) => {
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.root}>
-                <Lottie
-                    style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
-                    source={profileAnim}
-                    autoPlay
-                    loop
-                />
-                <View style={styles.form}>
-                    <CustomInput
-                        placeholder="Full Name"
-                        value={name}
-                        setValue={setName}
-                        iconCategory="AntDesign"
-                        iconName="profile"
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 80}
+            style={styles.root}
+        >
+            <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
+                <View style={styles.container}>
+                    <Lottie
+                        style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
+                        source={profileAnim}
+                        autoPlay
+                        loop
                     />
-                    <View style={styles.phoneContainer}>
-                        <Fontisto style={styles.phoneIcon} name='phone' />
-                        <PhoneInput
-                            style={styles.phoneInput}
-                            countrySelectProps={{ unicodeFlags: true }}
-                            defaultCountry={"CA"}
-                            value={phone}
-                            onChange={setPhone}
-                            placeholder="Phone [Optional]"
+                    <View style={styles.form}>
+                        <CustomInput
+                            placeholder="Full Name"
+                            value={name}
+                            setValue={setName}
+                            iconCategory="AntDesign"
+                            iconName="profile"
                         />
+                        <View style={styles.phoneContainer}>
+                            <Fontisto style={styles.phoneIcon} name='phone' />
+                            <PhoneInput
+                                style={styles.phoneInput}
+                                countrySelectProps={{ unicodeFlags: true }}
+                                defaultCountry={"CA"}
+                                value={phone}
+                                onChange={setPhone}
+                                placeholder="Phone [Optional]"
+                            />
+                        </View>
+                        <RadioButton.Group
+                            onValueChange={setAccountType}
+                            value={accountType}
+                        >
+                            <View style={styles.radioRow}>
+                                <MaterialIcons
+                                    style={styles.icon}
+                                    name={"emoji-transportation"}
+                                />
+                                <RadioButton.Item label="I need a Service Provider." value="CONSUMER" style={styles.radioButton} />
+                            </View>
+                            <View style={styles.radioRow}>
+                                <MaterialIcons
+                                    style={styles.icon}
+                                    name={"sports-handball"}
+                                />
+                                <RadioButton.Item label="I Provide a Service." value="WORKER" style={styles.radioButton} />
+                            </View>
+                        </RadioButton.Group>
                     </View>
-                    <RadioButton.Group
-                        onValueChange={setAccountType}
-                        value={accountType}
-                    >
-                        <View style={styles.radioRow}>
-                            <MaterialIcons
-                                style={styles.icon}
-                                name={"emoji-transportation"}
-                            />
-                            <RadioButton.Item label="I need a Service Provider." value="CONSUMER" style={styles.radioButton} />
-                        </View>
-                        <View style={styles.radioRow}>
-                            <MaterialIcons
-                                style={styles.icon}
-                                name={"sports-handball"}
-                            />
-                            <RadioButton.Item label="I Provide a Service." value="WORKER" style={styles.radioButton} />
-                        </View>
-                    </RadioButton.Group>
+                    <CustomButton
+                        text="Next"
+                        style={styles.component}
+                        onPress={onNextPressed}
+                    />
                 </View>
-                <CustomButton
-                    text="Next"
-                    style={styles.component}
-                    onPress={onNextPressed}
-                />
-            </View>
-        </ScrollView>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -124,12 +130,12 @@ export default CreateProfileScreen;
 const styles = StyleSheet.create({
     root: {
         backgroundColor: "#ffffff",
-        // alignItems: "center",
         paddingBottom: 10,
         paddingTop: 20,
-        paddingLeft: 25,
-        paddingRight: 25,
-        height: 800,
+        height: '100%',
+    },
+    container:{
+        marginHorizontal: 30
     },
     form: {
         marginTop: 20,
