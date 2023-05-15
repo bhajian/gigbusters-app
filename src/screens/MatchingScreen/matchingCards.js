@@ -76,9 +76,9 @@ const MatchingCards = (props) => {
         return unsubscribe
     }, [])
 
-    useEffect(() => {
-        loadData().then().catch(e => console.log(e))
-    }, [props.appState])
+    // useEffect(() => {
+    //     loadData().then().catch(e => console.log(e))
+    // }, [])
 
     async function loadData() {
         try{
