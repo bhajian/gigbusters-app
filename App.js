@@ -107,7 +107,6 @@ export default function App() {
         }
         const subscription = Notifications.addNotificationReceivedListener(notification => {
             setNotification(notification)
-            alert(JSON.stringify(notification))
         })
         return () => subscription.remove()
     }, [userStatus])
