@@ -85,6 +85,7 @@ const MatchingCards = (props) => {
             const tasksObj = await taskService.listMyCards({
                 limit: 50,
             })
+
             setNoMoreCards(false)
             setCardList(tasksObj)
             if(tasksObj.length === 0) {

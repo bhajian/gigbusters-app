@@ -50,7 +50,6 @@ const InputBox = ({ transaction, disabled }) => {
     async function onSendPressed() {
         if(text.trim() !== ''){
             const subjectIds = await getSubjectIds()
-            console.log(subjectIds)
             const fromUserId = subjectIds?.fromUserId
             const toUserId = subjectIds?.toUserId
             try{
@@ -61,7 +60,7 @@ const InputBox = ({ transaction, disabled }) => {
                     toUserId: toUserId,
                 }
 
-                const newMessageRes = await messageService.createMessage(newMessage)
+                await messageService.createMessage(newMessage)
 
                 setText('')
                 await taskService.updateLastUpdatedMessage({
