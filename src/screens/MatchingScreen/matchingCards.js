@@ -69,12 +69,12 @@ const MatchingCards = (props) => {
         })
     }, [navigation])
 
-    useEffect(() => {
-        const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
-        })
-        return unsubscribe
-    }, [])
+    // useEffect(() => {
+    //     const unsubscribe = navigation.addListener('focus', () => {
+    //         loadData().then().catch(e => console.log(e))
+    //     })
+    //     return unsubscribe
+    // }, [])
 
     useEffect(() => {
         loadData().then().catch(e => console.log(e))
