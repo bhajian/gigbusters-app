@@ -50,16 +50,16 @@ export default function ReviewableProfileTopContainer({reviewable, navigation, o
                     <View>
                         <Text style={styles.contactName}>{reviewable?.profile?.name}</Text>
                         <Text style={styles.personalInfo}>ID: {reviewable?.uri}</Text>
-                        <Text style={styles.personalInfo}>
-                            {(reviewable?.profile?.settings?.showMyEmailPublicly
-                                ?
-                                    'Email: ' + reviewable?.profile?.email?.email
-                                :   ''
-                            )}
-                        </Text>
-                        <Text style={styles.personalInfo}>
-                            {getPhone()}
-                        </Text>
+                        {/*<Text style={styles.personalInfo}>*/}
+                        {/*    {(reviewable?.profile?.settings?.showMyEmailPublicly*/}
+                        {/*        ?*/}
+                        {/*            'Email: ' + reviewable?.profile?.email?.email*/}
+                        {/*        :   ''*/}
+                        {/*    )}*/}
+                        {/*</Text>*/}
+                        {/*<Text style={styles.personalInfo}>*/}
+                        {/*    {getPhone()}*/}
+                        {/*</Text>*/}
                     </View>
                 </View>
                 <View style={styles.headerRight}>
@@ -71,6 +71,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation, o
                     {/*</TouchableOpacity>*/}
                 </View>
             </View>
+            {/*<Text style={styles.bio}>Bio: {reviewable?.bio}</Text>*/}
             <View style={styles.numberContainer}>
                 <Text style={styles.text}> Rating:</Text>
                 <Text style={styles.average}>{rating}</Text>
@@ -132,6 +133,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         zIndex: 10,
         width: '100%',
+    },
+    bio: {
+        fontWeight: '500',
+        marginTop: 10,
+        marginLeft: 40,
+        width: '80%',
     },
     accountContainer: {
         flexDirection: 'row',

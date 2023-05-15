@@ -8,9 +8,19 @@ import styles from './styles';
 import Fontisto from "react-native-vector-icons/Fontisto";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import {AntDesign} from "@expo/vector-icons";
+import {AntDesign, Octicons} from "@expo/vector-icons";
 
-const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, iconCategory, iconName, editable}) => {
+const CustomInput = ({
+                         value,
+                         setValue,
+                         placeholder,
+                         secureTextEntry,
+                         style,
+                         iconCategory,
+                         iconName,
+                         editable,
+                         keyboardType
+}) => {
 
     const renderIcon = (iconCategory, iconName) => {
         if (iconCategory === "Fontisto") {
@@ -25,6 +35,9 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, icon
         if (iconCategory === "AntDesign") {
             return <AntDesign style={styles.icon} name={iconName} />
         }
+        if (iconCategory === "Octicons") {
+            return <Octicons style={styles.icon} name={iconName} />
+        }
     }
 
     return (
@@ -38,6 +51,7 @@ const CustomInput = ({value, setValue, placeholder, secureTextEntry, style, icon
                 style={styles.input}
                 secureTextEntry={secureTextEntry}
                 editable={editable}
+                keyboardType={keyboardType}
             />
         </View>
     );

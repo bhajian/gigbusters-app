@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Alert, Platform, KeyboardAvoidingView} from 'react-native';
 import {Auth} from 'aws-amplify';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
@@ -47,50 +47,60 @@ export default function VerificationScreen({navigation, route, updateAuthState})
     }
 
     return (
-        <ScrollView showsVerticalScrollIndicator={false} keyboardShouldPersistTaps='handled'>
-            <View style={styles.root}>
-                <Lottie
-                    style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
-                    source={jobAnim}
-                    autoPlay
-                    loop
-                />
-                <View style={styles.form}>
-                    <CustomInput
-                        placeholder="Email"
-                        value={username}
-                        setValue={setUsername}
-                        iconCategory="Fontisto"
-                        iconName="email"
-                        editable={(!usernameParam? true : false)}
+        <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 90 : 90}
+            style={styles.root}
+        >
+            <ScrollView
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps='handled'
+            >
+                <View style={styles.container}>
+                    <Lottie
+                        style={{height: 180, width: 180, alignSelf: 'center', margin: 5}}
+                        source={jobAnim}
+                        autoPlay
+                        loop
                     />
-                    <CustomInput
-                        placeholder="Code"
-                        value={authCode}
-                        setValue={setAuthCode}
-                        iconCategory="Fontisto"
-                        iconName="email"
+                    <View style={styles.form}>
+                        <CustomInput
+                            placeholder="Email"
+                            value={username}
+                            setValue={setUsername}
+                            iconCategory="Fontisto"
+                            iconName="email"
+                            editable={(!usernameParam? true : false)}
+                        />
+                        <CustomInput
+                            placeholder="Code"
+                            value={authCode}
+                            setValue={setAuthCode}
+                            iconCategory="Octicons"
+                            iconName="number"
+                            keyboardType="numeric"
+                        />
+                    </View>
+                    <CustomButton
+                        text="Verify Your Account"
+                        onPress={VerifyAccount}
+                        style={styles.component}
                     />
-                </View>
-                <CustomButton
-                    text="Verify Your Account"
-                    onPress={VerifyAccount}
-                    style={styles.component}
-                />
-                <CustomButton
-                    text="Register a new account"
-                    onPress={onBackToSignUpPress}
-                    type="TERTIARY"
-                />
-                <Text style={styles.text}>
-                    Didn't receive the verification code? {' '}
-                    <Text style={styles.link} onPress={resendConfirmationCode}>
-                        Click Here.
+                    <CustomButton
+                        text="Register a new account"
+                        onPress={onBackToSignUpPress}
+                        type="TERTIARY"
+                    />
+                    <Text style={styles.text}>
+                        Didn't receive the verification code? {' '}
+                        <Text style={styles.link} onPress={resendConfirmationCode}>
+                            Click Here.
+                        </Text>
                     </Text>
-                </Text>
 
-            </View>
-        </ScrollView>
+                </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -99,9 +109,10 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         paddingBottom: 10,
         paddingTop: 20,
-        paddingLeft: 50,
-        paddingRight: 50,
-        height: 800,
+        height: '100%',
+    },
+    container:{
+        marginHorizontal: 30
     },
     form: {
         marginTop: 15,
