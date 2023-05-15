@@ -64,7 +64,7 @@ export default function App() {
                 body: 'Here is the notification body',
                 data: { data: 'SOME' },
             },
-            trigger: { seconds: 2 },
+            trigger: { seconds: 6 },
         });
     }
 

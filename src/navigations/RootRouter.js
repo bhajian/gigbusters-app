@@ -27,16 +27,21 @@ const RootRouter = props => {
 
     const [accountType, setAccountType] = useState(profile.accountType)
     const [dataLoaded, setDataLoaded] = useState(false)
+    const [dataReLoaded, setReDataLoaded] = useState(false)
+
+    useEffect(() => {
+        loadData().then(r => {})
+    }, [])
 
     useEffect(() => {
         if(props.appState !== 'inactive' && props.appState !== 'background'){
-            loadData().then(r => {})
+            fetchData().then(r => {})
         }
     }, [props.appState, props.notification])
 
-    async function loadData() {
+    async function fetchData() {
         try{
-            setDataLoaded(false)
+            setReDataLoaded(false)
             await taskService.fetchMyTransaction({
                 limit: 2000,
                 persona: profile.accountType
@@ -45,6 +50,16 @@ const RootRouter = props => {
                 limit: 500,
             })
             await profileService.fetchProfile()
+            setReDataLoaded(false)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    async function loadData() {
+        try{
+            setDataLoaded(false)
+            await fetchData()
             setDataLoaded(true)
         } catch (e) {
             console.log(e)
@@ -68,7 +83,7 @@ const RootRouter = props => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
-                            dataLoaded={dataLoaded}
+                            dataLoaded={dataReLoaded}
                         />
                     )}
                 </Stack.Screen>
@@ -84,7 +99,7 @@ const RootRouter = props => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
-                            dataLoaded={dataLoaded}
+                            dataLoaded={dataReLoaded}
                         />
                     )}
                 </Stack.Screen>
