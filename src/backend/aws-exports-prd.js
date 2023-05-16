@@ -2,7 +2,7 @@ import {Auth} from "aws-amplify";
 
 const awsmobile = {
 
-    "aws_appsync_graphqlEndpoint": "https://dmbojpsinzbffcfy2enkbuim5e.appsync-api.us-east-1.amazonaws.com/graphql",
+    "aws_appsync_graphqlEndpoint": "https://graphql.prd.gigbusters.app/graphql",
     "aws_appsync_region": "us-east-1",
     "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
 

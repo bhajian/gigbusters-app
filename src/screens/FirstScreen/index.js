@@ -13,6 +13,7 @@ import {CognitoHostedUIIdentityProvider} from "@aws-amplify/auth"
 import google from "../../../assets/images/google-logo.png"
 import apple from "../../../assets/images/apple-logo.png"
 import Colors from "../../constants/Colors"
+import App from "../../../app.json"
 
 export default function FirstScreen() {
 
@@ -105,6 +106,7 @@ export default function FirstScreen() {
                         />
                     </View>
                 </View>
+                <Text style={styles.versionText}> Version: {App.expo.version} </Text>
             </View>
         </ScrollView>
     )
@@ -135,6 +137,10 @@ const styles = StyleSheet.create({
     },
     text:{
         textAlign: "center",
+    },
+    versionText: {
+        textAlign: "center",
+        marginTop: 20,
     },
     textLogo: {
         textAlign: "center",
