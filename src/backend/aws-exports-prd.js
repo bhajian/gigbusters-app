@@ -2,14 +2,14 @@ import {Auth} from "aws-amplify";
 
 const awsmobile = {
 
-    "aws_appsync_graphqlEndpoint": "https://keiak4c5vvgxraldm24md3mklq.appsync-api.us-east-1.amazonaws.com/graphql",
+    "aws_appsync_graphqlEndpoint": "https://dmbojpsinzbffcfy2enkbuim5e.appsync-api.us-east-1.amazonaws.com/graphql",
     "aws_appsync_region": "us-east-1",
     "aws_appsync_authenticationType": "AMAZON_COGNITO_USER_POOLS",
 
     Auth: {
 
         // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-        identityPoolId: 'us-east-1:5be7a2cd-2d01-4af0-bc35-9ca58fab26da',
+        identityPoolId: 'us-east-1:5bfdcf24-353d-417b-a11e-945ad3dd8db5',
 
         // REQUIRED - Amazon Cognito Region
         region: 'us-east-1',
@@ -19,10 +19,10 @@ const awsmobile = {
         identityPoolRegion: 'us-east-1',
 
         // OPTIONAL - Amazon Cognito User Pool ID
-        userPoolId: 'us-east-1_CzI0ql6Mi',
+        userPoolId: 'us-east-1_iQeMJz211',
 
         // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-        userPoolWebClientId: '1ssolv5otr9st30m8qkuqgmdb5',
+        userPoolWebClientId: '2efucs7hll6sbosndfc84aj3rv',
 
         // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
         mandatorySignIn: false,
@@ -42,7 +42,7 @@ const awsmobile = {
 
         // OPTIONAL - Hosted UI configuration
         oauth: {
-            domain: 'auth.dev.gigbusters.app',
+            domain: 'auth.prd.gigbusters.app',
             scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
             redirectSignIn: 'gigb://',
             redirectSignOut: 'gigb://signout',
@@ -53,7 +53,7 @@ const awsmobile = {
         endpoints: [
             {
                 name: "GigbusterApi",
-                endpoint: "https://api.dev.gigbusters.app",
+                endpoint: "https://api.prd.gigbusters.app",
                 custom_header: async () => {
                     return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }
                 }
@@ -64,7 +64,7 @@ const awsmobile = {
         AWSS3: {
             bucket: '',
             region: 'us-east-1',
-            identityPoolId: 'us-east-1:5be7a2cd-2d01-4af0-bc35-9ca58fab26da'
+            identityPoolId: 'us-east-1:5bfdcf24-353d-417b-a11e-945ad3dd8db5'
         }
     }
 };

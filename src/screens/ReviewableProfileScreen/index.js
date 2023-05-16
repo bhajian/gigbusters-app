@@ -34,7 +34,6 @@ export default function ReviewableProfileScreen({navigation, route}) {
                 mimeType: 'image/jpeg',
                 dialogTitle: 'Share to social media',
             })
-
         })
     }
 

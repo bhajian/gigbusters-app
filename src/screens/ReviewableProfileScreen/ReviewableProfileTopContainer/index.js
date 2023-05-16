@@ -71,7 +71,7 @@ export default function ReviewableProfileTopContainer({reviewable, navigation, o
                     {/*</TouchableOpacity>*/}
                 </View>
             </View>
-            {/*<Text style={styles.bio}>Bio: {reviewable?.bio}</Text>*/}
+            <Text style={styles.bio}>Bio: {reviewable?.bio}</Text>
             <View style={styles.numberContainer}>
                 <Text style={styles.text}> Rating:</Text>
                 <Text style={styles.average}>{rating}</Text>
