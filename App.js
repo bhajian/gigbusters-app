@@ -60,11 +60,14 @@ export default function App() {
             const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
             // Listen to expo push notifications
             const subscription = Notifications.addNotificationResponseReceivedListener(response => {
-                if(response?.notification?.request?.content?.data?.extraData?.notificationType === 'MESSAGE'){
-                    listener(prefix + 'Consumer/Messages')
-                } else{
-                    listener(prefix + 'Consumer/Notifications')
+                const notificationType = response?.notification?.request?.content?.data?.extraData?.notificationType
+                if(notificationType.startsWith('Worker')){
+                    const profile = profileService.getProfile()
+                    if(profile){
+                        profile.accountType = 'WORKER'
+                    }
                 }
+                listener(prefix + notificationType)
             })
             return () => {
                 eventListenerSubscription.remove()
@@ -72,7 +75,6 @@ export default function App() {
             }
         },
     }
-
 
     const [notification, setNotification] = useState({})
     const [userStatus, setUserStatus] = useState('initializing')
