@@ -151,18 +151,18 @@ const EditSettingsScreen = (props) => {
                     iconCategory="FontAwesome5"
                     iconName="envelope"
                 />
-                <CustomSettingRowButton
-                    name="Language"
-                    value={language}
-                    iconCategory="FontAwesome5"
-                    iconName="globe"
-                />
-                <CustomSettingRowButton
-                    name="Country"
-                    value={country}
-                    iconCategory="FontAwesome5"
-                    iconName="globe"
-                />
+                {/*<CustomSettingRowButton*/}
+                {/*    name="Language"*/}
+                {/*    value={language}*/}
+                {/*    iconCategory="FontAwesome5"*/}
+                {/*    iconName="globe"*/}
+                {/*/>*/}
+                {/*<CustomSettingRowButton*/}
+                {/*    name="Country"*/}
+                {/*    value={country}*/}
+                {/*    iconCategory="FontAwesome5"*/}
+                {/*    iconName="globe"*/}
+                {/*/>*/}
                 <CustomSettingRowCategory
                     name="Deactivate"
                     value=""

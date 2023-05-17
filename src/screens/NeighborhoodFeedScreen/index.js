@@ -46,11 +46,11 @@ export default function NeighborhoodFeedScreen(props) {
                 <Fontisto name="react" size={25} color={color}/>
             ),
             headerTitle: () => (
-                <Text>Feed</Text>
+                <Text>Referral</Text>
             ),
             headerRight: () => (
                 <Pressable
-                    onPress={handlePresentPress}
+                    // onPress={handlePresentPress}
                     style={({pressed}) => ({
                         opacity: pressed ? 0.5 : 1,
                         marginRight: 10,

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs'
 import Fontisto from 'react-native-vector-icons/Fontisto'
@@ -93,7 +93,7 @@ const ConsumerTabNavigator = props => {
                 )}
             </Tab.Screen>
             <Tab.Screen
-                name={'Neighborhood'}
+                name={'Referral'}
                 component={ReferralFeedNavigation}
                 options={{
                     tabBarActiveTintColor: Colors.light.tint,

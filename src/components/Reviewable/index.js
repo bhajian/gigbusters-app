@@ -29,9 +29,9 @@ export default function Reviewable({reviewable}) {
                     />
                 </View>
             </Pressable>
-            <Footer
-                reviewable={reviewable}
-            />
+            {/*<Footer*/}
+            {/*    reviewable={reviewable}*/}
+            {/*/>*/}
         </View>
     );
 }

@@ -11,6 +11,7 @@ import Initializing from "./src/components/Initializing"
 import * as WebBrowser from "expo-web-browser"
 import * as Notifications from 'expo-notifications'
 import * as Device from 'expo-device'
+import * as ELinking from 'expo-linking'
 
 async function urlOpener(url, redirectUrl) {
     try {
@@ -39,23 +40,43 @@ Notifications.setNotificationHandler({
         shouldSetBadge: true,
     }),
 })
+
+const prefix = ELinking.createURL('/')
 export default function App() {
     const profileService = new ProfileService()
     const appStateRef = useRef(AppState.currentState)
-    const notificationListener = useRef()
-    const responseListener = useRef()
-    let notificationUnSubscribe
+    const linking = {
+        prefixes: [prefix],
+        async getInitialURL() {
+            const url = await Linking.getInitialURL()
+
+            if (url != null) {
+                return url
+            }
+        },
+        subscribe(listener) {
+            const onReceiveURL = ({ url }) => listener(url);
+            // Listen to incoming links from deep linking
+            const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
+            // Listen to expo push notifications
+            const subscription = Notifications.addNotificationResponseReceivedListener(response => {
+                if(response?.notification?.request?.content?.data?.extraData?.notificationType === 'MESSAGE'){
+                    listener(prefix + 'Consumer/Messages')
+                } else{
+                    listener(prefix + 'Consumer/Notifications')
+                }
+            })
+            return () => {
+                eventListenerSubscription.remove()
+                subscription.remove()
+            }
+        },
+    }
+
 
     const [notification, setNotification] = useState({})
     const [userStatus, setUserStatus] = useState('initializing')
     const [appState, setAppState] = useState('initializing')
-
-    function unsubscribe(){
-        if(notificationUnSubscribe){
-            console.log('UNSUBSCRIBED')
-            notificationUnSubscribe()
-        }
-    }
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
@@ -124,11 +145,9 @@ export default function App() {
                     setUserStatus('profileCreation')
                 }
             } else{
-                unsubscribe()
                 setUserStatus('loggedOut')
             }
         } catch (err) {
-            unsubscribe()
             setUserStatus('loggedOut')
         }
     }
@@ -176,7 +195,9 @@ export default function App() {
     }
 
     return (
-        <NavigationContainer>
+        <NavigationContainer
+            linking={linking}
+        >
             {userStatus === 'initializing' && <Initializing/>}
             {userStatus === 'loggedIn' && (
                 <RootRouter updateAuthState={updateAuthState} appState={appState} notification={notification}/>
