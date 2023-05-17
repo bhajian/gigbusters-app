@@ -15,9 +15,6 @@ export default function MainContainer({reviewable}) {
                 <View style={styles.info}>
                     <Text style={styles.text} >{reviewable.location ? reviewable.location.locationName : ''}</Text>
                 </View>
-                {/*<View style={styles.info}>*/}
-                {/*    <Text style={styles.text} >10$/hr</Text>*/}
-                {/*</View>*/}
                 <View style={styles.info}>
                     <Text style={styles.text} >{reviewable.categories ? reviewable.categories[0] : ''}</Text>
                 </View>

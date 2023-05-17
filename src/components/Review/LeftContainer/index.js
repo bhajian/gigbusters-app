@@ -2,6 +2,7 @@ import React from "react";
 import {Image, StyleSheet, Text, View} from "react-native";
 import ProfilePicture from "../../ProfilePicture";
 import UserAvatar from "@muhzi/react-native-user-avatar";
+import Colors from "../../../constants/Colors";
 
 export default function LeftContainer({user}) {
     return (
@@ -9,7 +10,9 @@ export default function LeftContainer({user}) {
             <UserAvatar
                 size={40}
                 active
-                name={user?.profile?.name}
+                userName={user?.profile?.name}
+                backgroundColor={Colors.light.turquoise}
+                fontSize={25}
                 src={user?.profile?.profilePhotoURL}
             />
             <View style={styles.nameContainer}>

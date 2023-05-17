@@ -1,7 +1,9 @@
 import {API, Auth, Storage} from "aws-amplify";
 
 const profileApiName = 'GigbusterApi'
+const publicApiName = 'GigbusterPublicApi'
 const profilePath = '/profile'
+const versionPath = '/version'
 const requestValidationPath = '/requestValidation'
 const validatePath = '/validate'
 const addProfilePhotoPath = '/photo'
@@ -28,6 +30,13 @@ export class ProfileService {
             }
         }
         return profile
+    }
+
+    async getVersion() {
+        const path = `${profilePath}/${versionPath}`
+        const data = {}
+        const version = await API.get(publicApiName, path, data)
+        return version
     }
 
     async listProfiles(params) {

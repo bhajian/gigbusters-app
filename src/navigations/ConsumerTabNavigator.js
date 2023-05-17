@@ -45,8 +45,8 @@ const ConsumerTabNavigator = props => {
     const profileService = new ProfileService()
     const profile = profileService.getProfile()
 
-    const [profileName, setProfileName] = useState(profile.name)
-    const [profileImage, setProfileImage] = useState(profile.mainPhotoUrl)
+    const [profileName, setProfileName] = useState(profile?.name)
+    const [profileImage, setProfileImage] = useState(profile?.mainPhotoUrl)
 
     return (
         <Tab.Navigator screenOptions={{}}>

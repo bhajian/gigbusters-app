@@ -55,14 +55,14 @@ export default function NotificationScreen({updateAccountType, updateAuthState})
     async function switchAccountType () {
         const profile = profileService.getProfile()
         navigation.navigate('SwitchRoleScreen', {
-            accountType: profile.accountType
+            accountType: profile?.accountType
         })
     }
 
     async function onPressed(params) {
         const profile = profileService.getProfile()
         if(params?.notification?.type === 'APPLICATION_ACCEPTED'){
-            if(profile.accountType === 'CONSUMER'){
+            if(profile?.accountType === 'CONSUMER'){
                 await switchAccountType()
             } else{
                 navigation.navigate('WorkerChatScreen', {
@@ -72,7 +72,7 @@ export default function NotificationScreen({updateAccountType, updateAuthState})
         }
         if(params?.notification?.type === 'NEW_APPLICATION' ||
             params?.notification?.type === 'NEW_REFERRAL'){
-            if(profile.accountType === 'WORKER'){
+            if(profile?.accountType === 'WORKER'){
                 await switchAccountType()
             } else{
                 navigation.navigate('ConsumerChatScreen', {

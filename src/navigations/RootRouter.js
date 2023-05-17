@@ -25,7 +25,7 @@ const RootRouter = forwardRef((props, ref) => {
     const taskService = new TaskService()
     const profile = profileService.getProfile()
 
-    const [accountType, setAccountType] = useState(profile.accountType)
+    const [accountType, setAccountType] = useState(profile?.accountType)
     const [dataLoaded, setDataLoaded] = useState(false)
     const [dataReLoaded, setReDataLoaded] = useState(false)
 
@@ -44,7 +44,7 @@ const RootRouter = forwardRef((props, ref) => {
             setReDataLoaded(false)
             await taskService.fetchMyTransaction({
                 limit: 2000,
-                persona: profile.accountType
+                persona: profile?.accountType
             })
             await taskService.fetchMyTasks({
                 limit: 500,
@@ -76,7 +76,7 @@ const RootRouter = forwardRef((props, ref) => {
                     profile.accountType = 'WORKER'
                 }
                 await profileService.updateProfile(profile)
-                setAccountType(profile.accountType)
+                setAccountType(profile?.accountType)
             } catch (e) {
                 console.log(e)
             }

@@ -12,6 +12,7 @@ import * as WebBrowser from "expo-web-browser"
 import * as Notifications from 'expo-notifications'
 import * as Device from 'expo-device'
 import * as ELinking from 'expo-linking'
+import AppSettings from "./app.json"
 
 async function urlOpener(url, redirectUrl) {
     try {
@@ -62,13 +63,13 @@ export default function App() {
         subscribe(listener) {
             const onReceiveURL = ({ url }) => listener(url);
             // Listen to incoming links from deep linking
-            const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL);
+            const eventListenerSubscription = Linking.addEventListener('url', onReceiveURL)
             // Listen to expo push notifications
             const subscription = Notifications.addNotificationResponseReceivedListener(response => {
                 const notificationType = response?.notification?.request?.content?.data?.extraData?.notificationType
                 const profile = profileService.getProfile()
-                if(notificationType?.startsWith('Worker') && profile.accountType === 'CONSUMER' ||
-                    notificationType?.startsWith('Consumer') && profile.accountType === 'WORKER'){
+                if(notificationType?.startsWith('Worker') && profile?.accountType === 'CONSUMER' ||
+                    notificationType?.startsWith('Consumer') && profile?.accountType === 'WORKER'){
                     rootNavigatorRef.current.switchRole().then(r => {
                         listener(prefix + notificationType)
                     })
@@ -83,6 +84,25 @@ export default function App() {
         },
     }
 
+    async function checkAppVersion(){
+        const appVersion = AppSettings?.expo?.version
+        const versionObj = await profileService.getVersion()
+        const availableVersion = versionObj?.version
+        if(appVersion && availableVersion){
+            const appVersionArr = appVersion.split('.')
+            const availableVersionArr = availableVersion.split('.')
+            const appMajorVersion = appVersionArr[0] + '.' + appVersionArr[1]
+            const majorAvailableVersion = availableVersionArr[0] + '.' + availableVersionArr[1]
+
+            if(appMajorVersion !== majorAvailableVersion){
+                alert(`Version ${availableVersion} is available. You may need to upgrade your app.`)
+                await Auth.signOut()
+                updateAuthState('loggedOut')
+                return false
+            }
+        }
+    }
+
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
             setAppState(nextAppState)
@@ -90,12 +110,15 @@ export default function App() {
                 appStateRef.current.match(/inactive|background/) &&
                 nextAppState === 'active'
             ) {
-                checkAuthState()
+                checkAppVersion()
                     .then(() => {
-                    })
-                    .catch(e => {
-                        console.error(e)
-                    })
+                        checkAuthState()
+                            .then(() => {
+                            })
+                            .catch(e => {
+                                console.error(e)
+                            })
+                    }).catch(e => console.log(e))
             }
             appStateRef.current = nextAppState
         })
@@ -175,7 +198,7 @@ export default function App() {
                 importance: Notifications.AndroidImportance.MAX,
                 vibrationPattern: [0, 250, 250, 250],
                 lightColor: '#FF231F7C',
-            });
+            })
         }
         if (Device.isDevice) {
             const { status: existingStatus } = await Notifications.getPermissionsAsync()

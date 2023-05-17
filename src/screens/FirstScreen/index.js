@@ -15,11 +15,12 @@ import apple from "../../../assets/images/apple-logo.png"
 import Colors from "../../constants/Colors"
 import App from "../../../app.json"
 
+
 export default function FirstScreen() {
 
     const navigation = useNavigation()
 
-    const onSignInPressed = () => {
+    const onSignInPressed = async() => {
         navigation.navigate('SignIn')
     }
 
