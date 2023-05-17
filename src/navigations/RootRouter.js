@@ -50,7 +50,7 @@ const RootRouter = forwardRef((props, ref) => {
                 limit: 500,
             })
             await profileService.fetchProfile()
-            setReDataLoaded(false)
+            setReDataLoaded(true)
         } catch (e) {
             console.log(e)
         }
@@ -69,7 +69,6 @@ const RootRouter = forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         async switchRole(){
             try{
-                // props.updateAuthState('initializing')
                 const profile = profileService.getProfile()
                 if(accountType === 'WORKER'){
                     profile.accountType = 'CONSUMER'
@@ -78,13 +77,11 @@ const RootRouter = forwardRef((props, ref) => {
                 }
                 await profileService.updateProfile(profile)
                 setAccountType(profile.accountType)
-                // props.updateAuthState('loggedIn')
             } catch (e) {
                 console.log(e)
             }
         }
     }))
-    // async function
 
     function updateAccountType(type) {
         setAccountType(type)
