@@ -37,7 +37,7 @@ const RootRouter = forwardRef((props, ref) => {
         if(props.appState !== 'inactive' && props.appState !== 'background'){
             fetchData().then(r => {})
         }
-    }, [props.appState, props.notification])
+    }, [props.appState, props.notification, accountType])
 
     async function fetchData() {
         try{
