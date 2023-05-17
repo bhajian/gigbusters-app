@@ -32,7 +32,7 @@ export default function ConsumerMessageListScreen(props) {
                 <MaterialIcons name="message" size={25} color={color}/>
             ),
             headerTitle: () => (
-                <Text>Messages</Text>
+                <Text>Customer Messages</Text>
             ),
             headerLeft: () => (
                 <View style={{marginLeft: 10}}>

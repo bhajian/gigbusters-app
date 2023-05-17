@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ConsumerTabNavigator from './ConsumerTabNavigator';
 import WorkerTabNavigator from "./WorkerTabNavigator";
@@ -20,7 +20,7 @@ import SwitchRoleScreen from "../screens/ProfileScreen/SwitchRoleScreen";
 
 const Stack = createNativeStackNavigator()
 
-const RootRouter = props => {
+const RootRouter = forwardRef((props, ref) => {
     const profileService = new ProfileService()
     const taskService = new TaskService()
     const profile = profileService.getProfile()
@@ -65,6 +65,26 @@ const RootRouter = props => {
             console.log(e)
         }
     }
+
+    useImperativeHandle(ref, () => ({
+        async switchRole(){
+            try{
+                // props.updateAuthState('initializing')
+                const profile = profileService.getProfile()
+                if(accountType === 'WORKER'){
+                    profile.accountType = 'CONSUMER'
+                } else{
+                    profile.accountType = 'WORKER'
+                }
+                await profileService.updateProfile(profile)
+                setAccountType(profile.accountType)
+                // props.updateAuthState('loggedIn')
+            } catch (e) {
+                console.log(e)
+            }
+        }
+    }))
+    // async function
 
     function updateAccountType(type) {
         setAccountType(type)
@@ -227,6 +247,6 @@ const RootRouter = props => {
             :
         <Initializing/>
     )
-}
+})
 
 export default RootRouter;

@@ -44,7 +44,7 @@ export default function WorkerMessageListScreen(props) {
                 <MaterialIcons name="message" size={25} color={color}/>
             ),
             headerTitle: () => (
-                <Text>Messages</Text>
+                <Text>Worker Messages</Text>
             ),
             headerLeft: () => (
                 <View style={{marginLeft: 10}}>

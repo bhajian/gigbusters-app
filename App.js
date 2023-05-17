@@ -45,6 +45,11 @@ const prefix = ELinking.createURL('/')
 export default function App() {
     const profileService = new ProfileService()
     const appStateRef = useRef(AppState.currentState)
+    const rootNavigatorRef = useRef(null)
+    const [notification, setNotification] = useState({})
+    const [userStatus, setUserStatus] = useState('initializing')
+    const [appState, setAppState] = useState('initializing')
+
     const linking = {
         prefixes: [prefix],
         async getInitialURL() {
@@ -61,13 +66,15 @@ export default function App() {
             // Listen to expo push notifications
             const subscription = Notifications.addNotificationResponseReceivedListener(response => {
                 const notificationType = response?.notification?.request?.content?.data?.extraData?.notificationType
-                if(notificationType.startsWith('Worker')){
-                    const profile = profileService.getProfile()
-                    if(profile){
-                        profile.accountType = 'WORKER'
-                    }
+                const profile = profileService.getProfile()
+                if(notificationType?.startsWith('Worker') && profile.accountType === 'CONSUMER' ||
+                    notificationType?.startsWith('Consumer') && profile.accountType === 'WORKER'){
+                    rootNavigatorRef.current.switchRole().then(r => {
+                        listener(prefix + notificationType)
+                    })
+                } else{
+                    listener(prefix + notificationType)
                 }
-                listener(prefix + notificationType)
             })
             return () => {
                 eventListenerSubscription.remove()
@@ -75,10 +82,6 @@ export default function App() {
             }
         },
     }
-
-    const [notification, setNotification] = useState({})
-    const [userStatus, setUserStatus] = useState('initializing')
-    const [appState, setAppState] = useState('initializing')
 
     useEffect(() => {
         const subscription = AppState.addEventListener('change', nextAppState => {
@@ -202,7 +205,12 @@ export default function App() {
         >
             {userStatus === 'initializing' && <Initializing/>}
             {userStatus === 'loggedIn' && (
-                <RootRouter updateAuthState={updateAuthState} appState={appState} notification={notification}/>
+                <RootRouter
+                    updateAuthState={updateAuthState}
+                    appState={appState}
+                    notification={notification}
+                    ref={rootNavigatorRef}
+                />
             )}
             {userStatus === 'loggedOut' && (
                 <AuthenticationNavigator
