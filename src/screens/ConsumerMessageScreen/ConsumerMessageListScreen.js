@@ -57,10 +57,10 @@ export default function ConsumerMessageListScreen(props) {
     }, [])
 
     useEffect(() => {
-        if(props.dataLoaded){
+        if(props.dataReLoaded){
             loadData().then().catch(e => console.log(e))
         }
-    }, [props.dataLoaded])
+    }, [props.dataReLoaded])
 
     async function fetchData() {
         setDataBeingLoaded(true)

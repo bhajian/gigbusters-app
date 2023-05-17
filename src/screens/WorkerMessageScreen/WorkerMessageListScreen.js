@@ -34,8 +34,10 @@ export default function WorkerMessageListScreen(props) {
     }, [])
 
     useEffect(() => {
-        loadData().then().catch(e => console.log(e))
-    }, [props.appState])
+        if(props.dataReLoaded){
+            loadData().then().catch(e => console.log(e))
+        }
+    }, [props.dataReLoaded])
 
     useEffect(() => {
         navigation.setOptions({

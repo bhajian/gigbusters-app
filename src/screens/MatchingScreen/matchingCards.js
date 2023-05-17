@@ -77,10 +77,10 @@ const MatchingCards = (props) => {
     }, [])
 
     useEffect(() => {
-        if(props.dataLoaded){
+        if(props.dataReLoaded){
             loadData().then().catch(e => console.log(e))
         }
-    }, [props.dataLoaded])
+    }, [props.dataReLoaded])
 
     async function loadData() {
         try{

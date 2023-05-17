@@ -88,7 +88,7 @@ const ConsumerTabNavigator = props => {
                         {...screenProps}
                         updateAccountType={props.updateAccountType}
                         updateAuthState={props.updateAuthState}
-                        dataLoaded={props.dataLoaded}
+                        dataReLoaded={props.dataReLoaded}
                     />
                 )}
             </Tab.Screen>

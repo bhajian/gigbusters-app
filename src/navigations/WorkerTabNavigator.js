@@ -28,7 +28,7 @@ const WorkerTabNavigator = props => {
                     <MatchingCards
                         {...screenProps}
                         updateAuthState={props.updateAuthState}
-                        dataLoaded={props.dataLoaded}
+                        dataReLoaded={props.dataReLoaded}
                     />
 
                 )}
@@ -47,7 +47,7 @@ const WorkerTabNavigator = props => {
                         {...screenProps}
                         updateAccountType={props.updateAccountType}
                         updateAuthState={props.updateAuthState}
-                        appState={props.appState}
+                        dataReLoaded={props.dataReLoaded}
                     />
                 )}
             </Tab.Screen>

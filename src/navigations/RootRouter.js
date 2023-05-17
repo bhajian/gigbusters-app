@@ -100,7 +100,7 @@ const RootRouter = forwardRef((props, ref) => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
-                            dataLoaded={dataReLoaded}
+                            dataReLoaded={dataReLoaded}
                         />
                     )}
                 </Stack.Screen>
@@ -116,7 +116,7 @@ const RootRouter = forwardRef((props, ref) => {
                             {...screenProps}
                             updateAuthState={props.updateAuthState}
                             updateAccountType={updateAccountType}
-                            dataLoaded={dataReLoaded}
+                            dataReLoaded={dataReLoaded}
                         />
                     )}
                 </Stack.Screen>
