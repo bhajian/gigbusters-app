@@ -1,4 +1,4 @@
-import {Alert, Platform, Pressable, SafeAreaView, Text, View} from "react-native";
+import {Alert, Image, Platform, Pressable, SafeAreaView, Text, View} from "react-native";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {TaskService} from "../../backend/TaskService";
 import MatchingCard from "../../components/MatchingCard";
@@ -9,8 +9,7 @@ import {MaterialCommunityIcons, Octicons} from "@expo/vector-icons";
 import MatchingSearch from "./MatchingSearch";
 import UserAvatar from "@muhzi/react-native-user-avatar";
 import {ProfileService} from "../../backend/ProfileService";
-import waitAnim from "../../../assets/animations/135765-clown.json";
-import Lottie from "lottie-react-native";
+import waitGif from "../../../assets/images/wait.gif";
 
 
 const MatchingCards = (props) => {
@@ -145,12 +144,7 @@ const MatchingCards = (props) => {
             {
                 noMoreCards ?
                     <View style={styles.waitContainer}>
-                        <Lottie
-                            style={{height: 300, width: 300, alignSelf: 'center', marginTop: 5}}
-                            source={waitAnim}
-                            autoPlay
-                            loop
-                        />
+                        <Image source={waitGif} style={styles.waitImage}/>
                         <Text style={styles.text}>
                             There will be more tasks and jobs available soon. {'\n'}
                             Stay tuned!
@@ -223,6 +217,12 @@ const styles = {
         shadowRadius: 20,
         borderRadius: 20,
         resizeMode: 'cover',
+    },
+    waitImage:{
+        marginTop: 10,
+        width: '95%',
+        alignSelf: 'center'
+        // height: '100%',
     },
     cardImage: {
         width: '100%',

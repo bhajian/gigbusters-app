@@ -57,6 +57,10 @@ const awsmobile = {
                 custom_header: async () => {
                     return { Authorization: `Bearer ${(await Auth.currentSession()).getIdToken().getJwtToken()}` }
                 }
+            },
+            {
+                name: "GigbusterPublicApi",
+                endpoint: "https://api.prd.gigbusters.app",
             }
         ]
     },
