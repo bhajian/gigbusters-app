@@ -8,7 +8,7 @@ import MatchingCards from "../screens/MatchingScreen/matchingCards";
 import WorkerMessageListScreen from "../screens/WorkerMessageScreen/WorkerMessageListScreen";
 import NotificationScreen from "../screens/NotificationScreen/NotificationScreen";
 
-const Tab = createBottomTabNavigator();
+const Tab = createBottomTabNavigator()
 
 const WorkerTabNavigator = props => {
 
