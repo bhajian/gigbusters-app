@@ -1,5 +1,5 @@
 import {AppState, Linking, Platform, StyleSheet} from 'react-native'
-import awsconfig from './src/backend/aws-exports-dev'
+import awsconfig from './src/backend/aws-exports-prd'
 import {Amplify, Auth, Hub} from "aws-amplify"
 import React, {useEffect, useRef, useState} from "react"
 import {NavigationContainer} from "@react-navigation/native"
