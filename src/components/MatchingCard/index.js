@@ -21,8 +21,8 @@ const MatchingCard = props => {
     } = props.card
 
     const [mapRegion, setmapRegion] = useState({
-        latitude: location?.latitude,
-        longitude: location?.longitude,
+        latitude: (location?.latitude? location?.latitude : 43.6542599),
+        longitude: (location?.longitude? location?.longitude : -79.3606359),
         latitudeDelta: 0.0222,
         longitudeDelta: 0.0121,
     })

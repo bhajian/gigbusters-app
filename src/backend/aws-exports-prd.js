@@ -44,7 +44,7 @@ const awsmobile = {
         oauth: {
             domain: 'auth.prd.gigbusters.app',
             scope: ['phone', 'email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
-            redirectSignIn: 'gigb://',
+            redirectSignIn: 'exp://127.0.0.1:19000/--/',
             redirectSignOut: 'gigb://signout',
             responseType: 'token' // or 'token', note that REFRESH token will only be generated when the responseType is code
         }

@@ -70,9 +70,7 @@ const MatchingCards = (props) => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            if(props.dataReLoaded) {
-                loadData().then().catch(e => console.log(e))
-            }
+            loadData().then().catch(e => console.log(e))
         })
         return unsubscribe
     }, [])
@@ -93,7 +91,7 @@ const MatchingCards = (props) => {
             if(tasksObj.length === 0) {
                 setNoMoreCards(true)
             }
-        }catch (e) {
+        } catch (e) {
             throw e
         }
     }
