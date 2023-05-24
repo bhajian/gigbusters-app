@@ -58,7 +58,9 @@ const WorkerChatScreen = (props) => {
 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            loadData().then().catch(e => console.log(e))
+            loadData()
+                .then()
+                .catch(e => console.log(e))
         })
         return unsubscribe
 
@@ -81,7 +83,7 @@ const WorkerChatScreen = (props) => {
                 lastMessageRead: true,
             })
         } catch (e) {
-            console.log(e)
+            throw e
         }
     }
 

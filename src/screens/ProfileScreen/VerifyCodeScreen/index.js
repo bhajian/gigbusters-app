@@ -18,7 +18,7 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
         try {
             // await Auth.resendSignUp(phone.toString());
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
         }
     }
 
@@ -31,7 +31,7 @@ export default function VerifyCodeScreen({navigation, route, updateAuthState}) {
             navigation.navigate('MainProfileScreen')
 
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
             if(error.name === 'NotAuthorizedException'){
                 updateAuthState('loggedOut');
                 navigation.navigate('SignIn');

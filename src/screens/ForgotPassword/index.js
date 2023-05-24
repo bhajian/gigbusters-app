@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import {Auth} from 'aws-amplify';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
 import jobAnim from "../../../assets/animations/107800-login-leady.json";
@@ -36,6 +35,7 @@ export default function ForgetPasswordScreen({navigation, route}) {
                     emailParam: lowerEmail,
                 });
         } catch (error) {
+            alert(error)
             console.log(
                 '❌ VerificationScreen code does not match. Please enter a valid verification code.',
                 error.code,

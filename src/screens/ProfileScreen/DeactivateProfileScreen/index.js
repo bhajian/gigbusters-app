@@ -40,7 +40,7 @@ export default function DeactivateProfileScreen({navigation, route, updateAuthSt
                 console.log(error)
             }
         } else{
-            Alert.alert('Please turn the checkbox on if you want to deactivate your account.')
+            alert('Please turn the checkbox on if you want to deactivate your account.')
         }
 
     }

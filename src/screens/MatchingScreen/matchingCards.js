@@ -94,8 +94,7 @@ const MatchingCards = (props) => {
                 setNoMoreCards(true)
             }
         }catch (e) {
-            console.log(e)
-            Alert.alert(e)
+            throw e
         }
     }
 
@@ -107,7 +106,6 @@ const MatchingCards = (props) => {
             })
         } catch (e) {
             console.log(e)
-            Alert.alert(e)
         }
     }
 

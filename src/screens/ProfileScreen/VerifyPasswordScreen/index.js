@@ -47,7 +47,7 @@ const VerifyPasswordScreen = ({route}) => {
 
             navigation.navigate(nextScreen, payload)
         } catch (e){
-            Alert.alert(e.message)
+            alert(e.message)
             navigation.goBack()
         }
     }

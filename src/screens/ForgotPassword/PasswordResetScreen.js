@@ -43,7 +43,7 @@ export default function PasswordResetScreen({navigation, route}) {
             await Auth.forgotPasswordSubmit(lowerEmail, authCode, password)
             navigation.navigate('SignIn')
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
         }
     }
 

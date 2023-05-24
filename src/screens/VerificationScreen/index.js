@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, ScrollView, Alert, Platform, KeyboardAvoidingView} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, Platform, KeyboardAvoidingView} from 'react-native';
 import {Auth} from 'aws-amplify';
 import CustomInput from '../../components/CustomInput';
 import CustomButton from '../../components/CustomButton';
@@ -7,20 +7,20 @@ import Lottie from "lottie-react-native";
 import jobAnim from "../../../assets/animations/107800-login-leady.json";
 
 export default function VerificationScreen({navigation, route, updateAuthState}) {
-    const {usernameParam, passwordParam} = (route.params ? route.params : '');
-    const [authCode, setAuthCode] = useState('');
-    const [username, setUsername] = useState(usernameParam);
+    const {usernameParam, passwordParam} = (route.params ? route.params : '')
+    const [authCode, setAuthCode] = useState('')
+    const [username, setUsername] = useState(usernameParam)
 
 
     async function resendConfirmationCode() {
         try {
             if(!username?.trim()){
-                Alert.alert('Please enter the email associated to the account.')
+                alert('Please enter the email associated to the account.')
                 return
             }
             await Auth.resendSignUp(username)
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
         }
     }
     const onBackToSignUpPress = () => {
@@ -28,20 +28,20 @@ export default function VerificationScreen({navigation, route, updateAuthState})
     };
     async function VerifyAccount() {
         try {
-            updateAuthState('initializing');
-            await Auth.confirmSignUp(username, authCode);
+            updateAuthState('initializing')
+            await Auth.confirmSignUp(username, authCode)
             if(username && passwordParam){
                 const user = await Auth.signIn(username, passwordParam)
-                updateAuthState('profileCreation');
+                updateAuthState('profileCreation')
             } else{
-                updateAuthState('loggedOut');
-                navigation.navigate('SignIn');
+                updateAuthState('loggedOut')
+                navigation.navigate('SignIn')
             }
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
+            updateAuthState('loggedOut')
             if(error.name === 'NotAuthorizedException'){
-                updateAuthState('loggedOut');
-                navigation.navigate('SignIn');
+                navigation.navigate('SignIn')
             }
         }
     }

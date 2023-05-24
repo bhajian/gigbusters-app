@@ -60,7 +60,7 @@ const CompleteProfileScreen = ({route, updateAuthState}) => {
             })
             updateAuthState('loggedIn')
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
         }
     }
 

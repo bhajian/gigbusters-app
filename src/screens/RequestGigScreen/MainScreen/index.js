@@ -166,7 +166,7 @@ export default function RequestGigScreen(props) {
 
     async function submitRequest() {
         if(images?.length === 0){
-            Alert.alert('Please add a photo to your task posting.')
+            alert('Please add a photo to your task posting.')
         } else {
             setDataBeingSaved(true)
             try {

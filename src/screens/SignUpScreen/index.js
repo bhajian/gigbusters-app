@@ -49,7 +49,7 @@ const SignUpScreen = () => {
                     passwordParam: password,
                 })
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
         }
     }
 

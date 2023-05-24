@@ -57,9 +57,9 @@ export default function SignInScreen(props) {
         } catch (error) {
             props.updateAuthState('loggedOut');
             if(error.name !== 'InvalidParameterException'){
-                Alert.alert(error.message)
+                alert(error.message)
             } else{
-                Alert.alert('Sorry Something went wrong or something is missing.')
+                alert('Sorry Something went wrong or something is missing.')
             }
         }
     }

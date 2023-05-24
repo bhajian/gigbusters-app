@@ -57,7 +57,7 @@ const CreateProfileScreen = (props) => {
                 })
 
         } catch (error) {
-            Alert.alert(error.message)
+            alert(error.message)
         }
     }
 
