@@ -1,5 +1,5 @@
 import {AppState, Linking, Platform, StyleSheet} from 'react-native'
-import awsconfig from './src/backend/aws-exports-dev'
+import awsconfig from './src/backend/aws-exports-prd'
 import {Amplify, Auth, Hub} from "aws-amplify"
 import React, {useEffect, useRef, useState} from "react"
 import {NavigationContainer} from "@react-navigation/native"
@@ -204,7 +204,7 @@ export default function App() {
             const { status: existingStatus } = await Notifications.getPermissionsAsync()
             let finalStatus = existingStatus
             if (existingStatus !== 'granted') {
-                const { status } = await Notifications.requestPermissionsAsync();
+                const { status } = await Notifications.requestPermissionsAsync()
                 finalStatus = status
             }
             if (finalStatus !== 'granted') {
