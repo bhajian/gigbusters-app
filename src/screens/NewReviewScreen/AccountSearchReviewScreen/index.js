@@ -104,7 +104,7 @@ export default function AccountSearchReviewScreen({navigation, route, handleChan
 
     async function loadData() {
         const profilesObj = await profileService.listProfiles({
-            limit: 20,
+            limit: 1000,
         })
         setProfiles(profilesObj)
     }

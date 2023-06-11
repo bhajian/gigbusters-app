@@ -51,7 +51,7 @@ export default function ProfileSearchBottomSheet({bottomSheetModalRef, handleShe
 
     async function loadData() {
         const profilesObj = await profileService.listProfiles({
-            limit: 20,
+            limit: 1000,
         })
         setProfiles(profilesObj)
     }

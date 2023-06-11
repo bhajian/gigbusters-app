@@ -49,25 +49,25 @@ export default function ReviewableProfileTopContainer({reviewable, navigation, o
                     <View>
                         <Text style={styles.contactName}>{reviewable?.profile?.name}</Text>
                         <Text style={styles.personalInfo}>ID: {reviewable?.uri}</Text>
-                        {/*<Text style={styles.personalInfo}>*/}
-                        {/*    {(reviewable?.profile?.settings?.showMyEmailPublicly*/}
-                        {/*        ?*/}
-                        {/*            'Email: ' + reviewable?.profile?.email?.email*/}
-                        {/*        :   ''*/}
-                        {/*    )}*/}
-                        {/*</Text>*/}
-                        {/*<Text style={styles.personalInfo}>*/}
-                        {/*    {getPhone()}*/}
-                        {/*</Text>*/}
+                        <Text style={styles.personalInfo}>
+                            {(reviewable?.profile?.settings?.showMyEmailPublicly
+                                ?
+                                    'Email: ' + reviewable?.profile?.email?.email
+                                :   ''
+                            )}
+                        </Text>
+                        <Text style={styles.personalInfo}>
+                            {getPhone()}
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.headerRight}>
                     <TouchableOpacity style={styles.shareButton} onPress={onSharePressed}>
                         <EvilIcons name={"share-google"} size={30} color={Colors.light.tint}/>
                     </TouchableOpacity>
-                    {/*<TouchableOpacity style={styles.shareButton}>*/}
-                    {/*    <EvilIcons name={"envelope"} size={30} color={Colors.light.tint}/>*/}
-                    {/*</TouchableOpacity>*/}
+                    <TouchableOpacity style={styles.shareButton}>
+                        <EvilIcons name={"envelope"} size={30} color={Colors.light.tint}/>
+                    </TouchableOpacity>
                 </View>
             </View>
             <Text style={styles.bio}>Bio: {reviewable?.profile?.bio}</Text>
