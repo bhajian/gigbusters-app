@@ -66,7 +66,7 @@ export default function WorkerMessageListScreen(props) {
     async function fetchData() {
         setDataBeingLoaded(true)
         const transactionsObj = await taskService.fetchMyTransaction({
-            limit: 2000,
+            limit: 50,
             persona: 'WORKER'
         })
         setTransactions(transactionsObj)

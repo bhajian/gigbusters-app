@@ -43,11 +43,11 @@ const RootRouter = forwardRef((props, ref) => {
         try{
             setReDataLoaded(false)
             await taskService.fetchMyTransaction({
-                limit: 2000,
+                limit: 50,
                 persona: profile?.accountType
             })
             await taskService.fetchMyTasks({
-                limit: 500,
+                limit: 50,
             })
             await profileService.fetchProfile()
             setReDataLoaded(true)
